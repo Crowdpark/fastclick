@@ -7,7 +7,7 @@ package com.crowdpark.fastclick.mvcs.core
 	 */
 	public class StateMachineModel extends Actor
 	{
-		private var _state : String = "start";
+		private var _state : String = StateMachineState.START;
 
 		public function StateMachineModel()
 		{

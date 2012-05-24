@@ -17,7 +17,6 @@ package com.crowdpark.fastclick.mvcs.core
 		
 		override public function onRegister() : void
 		{
-
 			addContextListener(StateMachineEvents.START, handleStart);
 			addContextListener(StateMachineEvents.GAME, handleGame);
 			addContextListener(StateMachineEvents.FINISH, handleFinish);

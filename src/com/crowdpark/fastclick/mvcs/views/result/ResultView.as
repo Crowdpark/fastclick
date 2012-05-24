@@ -1,4 +1,4 @@
-package com.crowdpark.fastclick.mvcs.views
+package com.crowdpark.fastclick.mvcs.views.result
 {
 	import utils.draw.createRectangleShape;
 	import utils.textField.createField;

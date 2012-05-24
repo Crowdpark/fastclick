@@ -1,5 +1,7 @@
-package com.crowdpark.fastclick.mvcs.views
+package com.crowdpark.fastclick.mvcs.views.game
 {
+	import com.crowdpark.fastclick.mvcs.views.hud.HudView;
+	import com.crowdpark.fastclick.mvcs.views.points.PointsView;
 	import flash.display.Sprite;
 
 	/**

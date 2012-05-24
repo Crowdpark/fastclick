@@ -7,7 +7,8 @@ package com.crowdpark.fastclick.mvcs.events
 	 */
 	public class PointClickEvent extends Event
 	{
-		public static const POINT_CLICK:String = "pointClick";
+		public static const POINT_CLICK : String = "POINT_CLICK";
+
 		public function PointClickEvent(type : String, bubbles : Boolean = false, cancelable : Boolean = false)
 		{
 			super(type, bubbles, cancelable);

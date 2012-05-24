@@ -1,4 +1,4 @@
-package com.crowdpark.fastclick.mvcs.views
+package com.crowdpark.fastclick.mvcs.views.countrdown
 {
 	import flash.events.Event;
 
@@ -12,7 +12,7 @@ package com.crowdpark.fastclick.mvcs.views
 	/**
 	 * @author fatmatekin
 	 */
-	public class CountDownMeditor extends StateMachineMediator
+	public class CountDownViewMeditor extends StateMachineMediator
 	{
 		private var cdNumber : uint = 3;
 

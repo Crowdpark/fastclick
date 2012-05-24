@@ -1,8 +1,8 @@
-package com.crowdpark.fastclick.mvcs.views
+package com.crowdpark.fastclick.mvcs.views.hud
 {
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
-	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
+
 	import flash.events.Event;
 
 	/**
@@ -18,22 +18,24 @@ package com.crowdpark.fastclick.mvcs.views
 
 			view.timeTitle.x = contextView.stage.stageWidth - 100;
 			view.time.x = contextView.stage.stageWidth - 30;
-			
-			eventMap.mapListener(view, "finish", handleFinishGame);
+
+			addContextListener(HudViewEvent.UPDATE, updateTime);
 			addContextListener(PointClickEvent.POINT_CLICK, handlePointClickEvent);
 		}
 
-		private function handlePointClickEvent(event:PointClickEvent) : void
+		private function updateTime(e : HudViewEvent) : void
+		{
+			view.time.text = String(playerModel.time);
+		}
+
+		private function handlePointClickEvent(event : PointClickEvent) : void
 		{
 			view.score.text = String(playerModel.score);
 		}
+
 		override protected function handleFinish(e : Event) : void
 		{
-				super.handleFinish(e);						
-		}
-		private function handleFinishGame(e:Event) : void
-		{
-			dispatch(new StateMachineEvents(StateMachineEvents.FINISH));	
+			super.handleFinish(e);
 		}
 
 		public function get view() : HudView

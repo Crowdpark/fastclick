@@ -1,4 +1,4 @@
-package com.crowdpark.fastclick.mvcs.views
+package com.crowdpark.fastclick.mvcs.views.start
 {
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;

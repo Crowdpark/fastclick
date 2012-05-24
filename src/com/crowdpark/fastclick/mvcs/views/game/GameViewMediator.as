@@ -1,4 +1,4 @@
-package com.crowdpark.fastclick.mvcs.views
+package com.crowdpark.fastclick.mvcs.views.game
 {
 	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
 	/**
@@ -10,11 +10,6 @@ package com.crowdpark.fastclick.mvcs.views
 		override public function onRegister() : void
 		{
 			super.onRegister();
-		}
-
-		private function get view() : GameView
-		{
-			return viewComponent as GameView;
 		}
 	}
 }

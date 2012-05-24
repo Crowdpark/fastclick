@@ -1,6 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.views.ResultView;
+	import com.crowdpark.fastclick.mvcs.views.result.ResultView;
 	import org.robotlegs.mvcs.Command;
 
 	/**

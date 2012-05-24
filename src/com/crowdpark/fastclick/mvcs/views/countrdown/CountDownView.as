@@ -1,4 +1,4 @@
-package com.crowdpark.fastclick.mvcs.views
+package com.crowdpark.fastclick.mvcs.views.countrdown
 {
 	import utils.textField.createField;
 	import utils.draw.createCircleShape;

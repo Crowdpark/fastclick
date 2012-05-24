@@ -1,8 +1,10 @@
-package com.crowdpark.fastclick.mvcs.views
+package com.crowdpark.fastclick.mvcs.views.start
 {
 	import flash.events.Event;
+
 	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
+
 	import flash.events.MouseEvent;
 
 	/**
@@ -10,27 +12,25 @@ package com.crowdpark.fastclick.mvcs.views
 	 */
 	public class StartViewMediator extends StateMachineMediator
 	{
-		
-		override public function onRegister():void{
-			
+		override public function onRegister() : void
+		{
 			super.onRegister();
-			view.gameTitleSprite.x = (contextView.stage.stageWidth-view.gameTitleSprite.width)/2;			
-			
-			view.startButtonSprite.y = 200; 
-			view.startButtonSprite.x = (contextView.stage.stageWidth-view.startButtonSprite.width)/2;
+			view.gameTitleSprite.x = (contextView.stage.stageWidth - view.gameTitleSprite.width) / 2;
+
+			view.startButtonSprite.y = 200;
+			view.startButtonSprite.x = (contextView.stage.stageWidth - view.startButtonSprite.width) / 2;
 			view.startButtonSprite.buttonMode = true;
-			
-			eventMap.mapListener(view.startButtonSprite, "click", handleStartClickEvent);
-			
+
+			eventMap.mapListener(view.startButtonSprite, MouseEvent.CLICK, handleStartClickEvent);
 		}
-		
-		protected function get view(): StartView{
-			
+
+		protected function get view() : StartView
+		{
 			return viewComponent as StartView;
 		}
-		
-		private function handleStartClickEvent(e:MouseEvent):void{
-			
+
+		private function handleStartClickEvent(e : MouseEvent) : void
+		{
 			dispatch(new StateMachineEvents(StateMachineEvents.START));
 		}
 
@@ -38,6 +38,5 @@ package com.crowdpark.fastclick.mvcs.views
 		{
 			super.handleStart(e);
 		}
-
 	}
 }

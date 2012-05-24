@@ -1,21 +1,14 @@
 package com.crowdpark.fastclick.mvcs.views
 {
-	import com.crowdpark.fastclick.mvcs.events.RetryGameEvent;
+	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
+	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
 	import flash.events.MouseEvent;
-	import flash.text.TextField;
-
-	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
-
-	import org.robotlegs.mvcs.Mediator;
 
 	/**
 	 * @author fatmatekin
 	 */
-	public class ResultViewMediator extends Mediator
+	public class ResultViewMediator extends StateMachineMediator
 	{
-		[Inject]
-		public var playerModel : PlayerModel;
-
 		override public function onRegister() : void
 		{
 			view.result.text = (String(playerModel.score));
@@ -27,12 +20,12 @@ package com.crowdpark.fastclick.mvcs.views
 			
 			view.retryButton.x = (contextView.stage.stageWidth-view.retryButton.width)/2;			
 			view.retryButton.y = 200;
-			view.retryButton.addEventListener(MouseEvent.CLICK, handleRetryButton);
+			eventMap.mapListener(view.retryButton, "click", handleRetryButton);
 		}
 
 		private function handleRetryButton(event:MouseEvent) : void
 		{
-			dispatch(new RetryGameEvent(RetryGameEvent.RETRY_GAME));
+			dispatch(new StateMachineEvents(StateMachineEvents.RETRY));
 		}
 
 		private function get view() : ResultView

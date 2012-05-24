@@ -7,17 +7,17 @@ package com.crowdpark.fastclick.mvcs.models
 	 */
 	public class PlayerModel extends Actor
 	{
-		private var _score : Number = 0;
+		private var _score : uint = 0;
 		public function PlayerModel()
 		{
 		}
 
-		public function get score() : Number
+		public function get score() : uint
 		{
 			return _score;
 		}
 
-		public function set score(score : Number) : void
+		public function set score(score : uint) : void
 		{
 			this._score = score;
 		}

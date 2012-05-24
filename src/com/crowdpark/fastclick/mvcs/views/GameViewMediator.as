@@ -1,25 +1,15 @@
 package com.crowdpark.fastclick.mvcs.views
 {
-	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
-	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
-
-	import org.robotlegs.mvcs.Mediator;
-
+	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
 	/**
 	 * @author fatmatekin
 	 */
-	public class GameViewMediator extends Mediator
+	public class GameViewMediator extends StateMachineMediator
 	{
-		[Inject]
-		public var playerModel:PlayerModel
+
 		override public function onRegister() : void
 		{
-			addContextListener(PointClickEvent.POINT_CLICK, handlePointClickEvent);
-		}
-
-		private function handlePointClickEvent(event:PointClickEvent) : void
-		{
-			view.hudView.score.text = String(playerModel.score);
+			super.onRegister();
 		}
 
 		private function get view() : GameView

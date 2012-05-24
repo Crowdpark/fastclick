@@ -1,8 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views
 {
 	import flash.events.Event;
-	import com.crowdpark.fastclick.mvcs.events.FinishGameEvent;
-	import org.osmf.events.TimeEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	import flash.text.TextField;

@@ -1,8 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views
 {
-	import flash.trace.Trace;
 	import flash.events.Event;
-	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	import utils.number.randomIntegerWithinRange;
@@ -26,14 +24,14 @@ package com.crowdpark.fastclick.mvcs.views
 		private function createRandomPoints():void{
 			
 			circle = new Sprite();
-			circle.addChild(createCircleShape(15));
+			circle.addChild(createCircleShape(randomIntegerWithinRange(15,30)));
 			circle.buttonMode = true;
 			circle.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
 			
 			circle.x =randomPoint(0,400, 50, 400).x;
 			circle.y = randomPoint(0,400, 50, 400).y;
 			addChild(circle);
-			TweenMax.from(circle,0.5,{delay:randomIntegerWithinRange(0,0.1),onComplete:createRandomPoints}); 
+			TweenMax.from(circle,randomIntegerWithinRange(0.5,2),{onComplete:createRandomPoints}); 
 		}
 
 		private function handleCircleClickEvent(e:MouseEvent) : void

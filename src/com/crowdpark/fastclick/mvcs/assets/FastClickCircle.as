@@ -22,9 +22,6 @@ package com.crowdpark.fastclick.mvcs.assets
 		{
 			this.circle = _circle;
 			this.circleColor = _circleColor;
-
-			// setRandomColor();
-			// drawCircle(randomIntegerWithinRange(15, 30));
 		}
 
 		public function drawCircle(radius : uint) : void
@@ -77,7 +74,6 @@ package com.crowdpark.fastclick.mvcs.assets
 
 		public function setDirection() : void
 		{
-
 			if (this.colorArray.indexOf(this.circleColor) == 0)
 			{
 				this.point = new Point(this.circle.x, 0);

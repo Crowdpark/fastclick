@@ -2,6 +2,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 {
 	import com.crowdpark.fastclick.mvcs.assets.FastClickCircle;
 	import com.greensock.TweenMax;
+
 	import flash.events.MouseEvent;
 
 	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
@@ -47,9 +48,12 @@ package com.crowdpark.fastclick.mvcs.views.points
 			TweenMax.to(fcCircle, 0.5, {y:0, x:600, onComplete:handleTweenComplete, onCompleteParams:[fcCircle]});
 		}
 
-		private function handleTweenComplete(point:FastClickCircle) : void
+		private function handleTweenComplete(point : FastClickCircle) : void
 		{
-			view.removeChild(point);
+			if (stateMachineModel.state != "finish")
+			{
+				view.removeChild(point);
+			}
 		}
 
 		public function get view() : PointsView

@@ -18,9 +18,12 @@ package com.crowdpark.fastclick.mvcs.views.points
 		public function createRandomSizedPoint() : FastClickCircle
 		{
 			var fastClickCircle : FastClickCircle = new FastClickCircle();
+			
 			fastClickCircle.setRandomColor();
 			fastClickCircle.drawCircle(randomIntegerWithinRange(15, 30));
+			fastClickCircle.setRandomPoint();
 			fastClickCircle.setDirection();
+		
 			return fastClickCircle;
 		}
 	}

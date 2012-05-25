@@ -43,9 +43,8 @@ package com.crowdpark.fastclick.mvcs.views.points
 			var fcCircle : FastClickCircle = FastClickCircle(e.target);
 			fcCircle.removeEventListener(MouseEvent.CLICK, handleCircleClickEvent);
 			dispatch(new PointClickEvent(PointClickEvent.POINT_CLICK));
-			// fcCircle.point.y
-			// fcCircle.point.x
-			TweenMax.to(fcCircle, 0.5, {y:0, x:600, onComplete:handleTweenComplete, onCompleteParams:[fcCircle]});
+						
+			TweenMax.to(fcCircle, 0.5, {y:fcCircle.point.y, x:fcCircle.point.x, onComplete:handleTweenComplete, onCompleteParams:[fcCircle]});			
 		}
 
 		private function handleTweenComplete(point : FastClickCircle) : void

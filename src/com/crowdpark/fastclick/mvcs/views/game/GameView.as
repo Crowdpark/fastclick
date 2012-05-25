@@ -18,11 +18,11 @@ package com.crowdpark.fastclick.mvcs.views.game
 		}
 		private function init():void{
 			
-			hudView = new HudView();
-			addChild(hudView);
-			
 			pointsView = new PointsView();
 			addChild(pointsView);
+			
+			hudView = new HudView();
+			addChild(hudView);
 		}
 	}
 }

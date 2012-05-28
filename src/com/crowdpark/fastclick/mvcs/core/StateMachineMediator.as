@@ -25,22 +25,26 @@ package com.crowdpark.fastclick.mvcs.core
 
 		private function handleRetry() : void
 		{
+			removeContextListener(StateMachineEvents.START, handleStart);
 			stateMachineModel.state = "retry";
 		}
 
 		protected function handleStart(e:Event) : void
 		{
-			playerModel.score = 0;
+			removeContextListener(StateMachineEvents.START, handleStart);
+			playerModel.setScore(0);
 			stateMachineModel.state = "start";
 		}
 
 		protected function handleGame(e:Event) : void
 		{
+			removeContextListener(StateMachineEvents.GAME, handleGame);
 			stateMachineModel.state = "game";
 		}
 
 		protected function handleFinish(e:Event) : void
 		{
+			removeContextListener(StateMachineEvents.FINISH, handleFinish);			
 			stateMachineModel.state = "finish";
 		}
 	}

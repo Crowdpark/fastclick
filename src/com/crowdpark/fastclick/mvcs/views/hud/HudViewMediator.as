@@ -25,12 +25,12 @@ package com.crowdpark.fastclick.mvcs.views.hud
 
 		private function updateTime(e : HudViewEvent) : void
 		{
-			view.time.text = String(playerModel.time);
+			view.time.text = String(playerModel.getTime());
 		}
 
 		private function handlePointClickEvent(event : PointClickEvent) : void
 		{
-			view.score.text = String(playerModel.score);
+			view.score.text = String(playerModel.getScore());
 		}
 
 		override protected function handleFinish(e : Event) : void

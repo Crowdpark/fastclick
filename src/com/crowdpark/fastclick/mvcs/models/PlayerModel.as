@@ -16,29 +16,37 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _score : uint = 0;
 		private var _timer : Timer;
 		private var _time : uint;
+		private var _playerName : String;
+		private var _scoreArray : Array;
 
 		public function PlayerModel()
 		{
 		}
 
-		public function get score() : uint
+		public function getScore() : uint
 		{
+			if(!this._score)
+			{
+				this._score = 0;
+			}
 			return _score;
 		}
 
-		public function set score(score : uint) : void
+		public function setScore(score : uint) : PlayerModel
 		{
 			this._score = score;
+			return this;
 		}
 
-		public function get time() : uint
+		public function getTime() : uint
 		{
 			return _time;
 		}
 
-		public function set time(time : uint) : void
+		public function setTime(time : uint) : PlayerModel
 		{
 			_time = time;
+			return this;
 		}
 
 		public function  updateTimer() : void
@@ -55,13 +63,48 @@ package com.crowdpark.fastclick.mvcs.models
 
 		private function handleTimer(e : TimerEvent) : void
 		{
-			this.time = 10 - _timer.currentCount;
+			setTime(10 - _timer.currentCount);
 			dispatch(new HudViewEvent(HudViewEvent.UPDATE));
 
-			if (this.time == 0)
+			if (getTime() == 0)
 			{
+				_timer.stop();
 				dispatch(new StateMachineEvents(StateMachineEvents.FINISH));
 			}
+		}
+
+		public function getPlayerName() : String
+		{
+			return _playerName;
+		}
+
+		public function setPlayerName(playerName : String) : PlayerModel
+		{
+			this._playerName = playerName;
+			return this;
+		}
+
+		public function addNewScore() : void
+		{
+			//getScoreArray().push(getScore());
+			_scoreArray.push(_score);
+		
+			
+		}
+
+		public function getScoreArray() : Array
+		{
+			if (!_scoreArray)
+			{
+				_scoreArray = new Array();
+			}
+			return _scoreArray;
+		}
+
+		public function setScoreArray(scoreArray : Array) : PlayerModel
+		{
+			this._scoreArray = scoreArray;
+			return this;
 		}
 	}
 }

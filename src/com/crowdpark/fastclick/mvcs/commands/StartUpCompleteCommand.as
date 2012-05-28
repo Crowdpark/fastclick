@@ -1,6 +1,7 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
 	import com.crowdpark.fastclick.mvcs.views.start.StartView;
+
 	import org.robotlegs.mvcs.Command;
 
 
@@ -12,7 +13,7 @@ package com.crowdpark.fastclick.mvcs.commands
 		override public function execute() : void
 		{
 			var startView : StartView = new StartView();
-			contextView.addChild(startView);
+			contextView.addChild(startView); 
 		}
 	}
 }

@@ -11,7 +11,7 @@ package com.crowdpark.fastclick.mvcs.views.result
 	{
 		override public function onRegister() : void
 		{
-			view.result.text = (String(playerModel.score));
+			view.result.text = (String(playerModel.getScore()));
 			view.resultText.x = (contextView.stage.stageWidth-view.resultText.textWidth)/2;
 			view.resultText.y =50;
 			

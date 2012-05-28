@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.start
 {
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import flash.events.Event;
 
 	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
@@ -20,7 +21,10 @@ package com.crowdpark.fastclick.mvcs.views.start
 			view.startButtonSprite.y = 200;
 			view.startButtonSprite.x = (contextView.stage.stageWidth - view.startButtonSprite.width) / 2;
 			view.startButtonSprite.buttonMode = true;
-
+			
+			view.playerNameSprite.x = (contextView.stage.stageWidth - view.playerNameSprite.width)/2;
+			view.playerNameSprite.y = view.startButtonSprite.y-view.playerNameSprite.height;
+			
 			eventMap.mapListener(view.startButtonSprite, MouseEvent.CLICK, handleStartClickEvent);
 		}
 
@@ -32,6 +36,8 @@ package com.crowdpark.fastclick.mvcs.views.start
 		private function handleStartClickEvent(e : MouseEvent) : void
 		{
 			dispatch(new StateMachineEvents(StateMachineEvents.START));
+			dispatch(new LeaderboardEvent(LeaderboardEvent.SET_NAME, view.playerNameField.text));
+			
 		}
 
 		override protected function handleStart(e : Event) : void

@@ -1,6 +1,7 @@
 package com.crowdpark.fastclick.mvcs.views.points
 {
 	import flash.geom.Point;
+
 	import utils.color.randomColor;
 	import utils.number.randomIntegerWithinRange;
 	import utils.number.randomWithinRange;
@@ -29,7 +30,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 			for (var i : int = 0; i < 100; i++)
 			{
 				var pointView : BaseBall = new BaseBall()
-					.setEndPoint(new Point(60,contextView.stage.stageHeight-35))
+					.setEndPoint(new Point(60, contextView.stage.stageHeight - 35))
 					.setColor(randomColor())
 					.setScore(randomWithinRange(50, 1000));
 
@@ -46,7 +47,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 			var fastClickCircle : InterfaceBall = createRandomSizedPoint();
 			view.addChild((fastClickCircle as DisplayObject));
 
-			TweenMax.from(fastClickCircle, Math.random(), {onComplete:checkState});
+			TweenMax.from(fastClickCircle, Math.random() / 10, {onComplete:checkState});
 		}
 
 		private function createRandomSizedPoint() : InterfaceBall
@@ -69,7 +70,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 
 			dispatch(new PointClickEvent(PointClickEvent.POINT_CLICK, fcCircle));
 
-			TweenMax.to(fcCircle, 0.3, {width:30, height:30,y:fcCircle.getEndPoint().y, x:fcCircle.getEndPoint().x, onComplete:handleTweenComplete, onCompleteParams:[fcCircle], ease:Linear.easeOut});
+			TweenMax.to(fcCircle, 0.3, {width:30, height:30, y:fcCircle.getEndPoint().y, x:fcCircle.getEndPoint().x, onComplete:handleTweenComplete, onCompleteParams:[fcCircle], ease:Linear.easeOut});
 		}
 
 		private function handleTweenComplete(point : InterfaceBall) : void

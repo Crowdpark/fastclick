@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import flash.net.SharedObject;
+
 	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.views.hud.HudViewEvent;
 
@@ -18,6 +20,7 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _time : uint;
 		private var _playerName : String;
 		private var _scoreArray : Array;
+		private var _flashCookie : SharedObject;
 
 		public function PlayerModel()
 		{
@@ -25,7 +28,7 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function getScore() : uint
 		{
-			if(!this._score)
+			if (!this._score)
 			{
 				this._score = 0;
 			}
@@ -86,10 +89,8 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function addNewScore() : void
 		{
-			//getScoreArray().push(getScore());
+			// getScoreArray().push(getScore());
 			_scoreArray.push(_score);
-		
-			
 		}
 
 		public function getScoreArray() : Array
@@ -98,12 +99,33 @@ package com.crowdpark.fastclick.mvcs.models
 			{
 				_scoreArray = new Array();
 			}
+			_scoreArray.sort(Array.DESCENDING);
+			_scoreArray.sort(Array.NUMERIC);
+			_scoreArray.reverse();
+			
 			return _scoreArray;
 		}
 
 		public function setScoreArray(scoreArray : Array) : PlayerModel
 		{
 			this._scoreArray = scoreArray;
+			return this;
+		}
+
+		public function getFlashCookie() : SharedObject
+		{
+			if (!_flashCookie)
+			{
+				_flashCookie = SharedObject.getLocal("MyFlashCookie");
+				_flashCookie.flush();
+			}
+			return _flashCookie;
+		}
+
+		public function setFlashCookie(flashCookie : SharedObject) : PlayerModel
+		{
+			this._flashCookie = flashCookie;
+			this._flashCookie.flush();
 			return this;
 		}
 	}

@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.views.footer
 {
+	import flash.display.DisplayObject;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseBall;
 
 	import flash.display.Shape;
@@ -20,7 +22,7 @@ package com.crowdpark.fastclick.mvcs.views.footer
 		override public function onRegister() : void
 		{
 			super.onRegister();
-			var footerBackground : Shape = createRectangleShape(contextView.stage.stageWidth, 60);
+			var footerBackground : Shape = createRectangleShape(contextView.stage.stageWidth, 60, 0xb3b3b3);
 			footerBackground.y = contextView.stage.stageHeight - 60;
 			view.addChild(footerBackground);
 
@@ -30,27 +32,26 @@ package com.crowdpark.fastclick.mvcs.views.footer
 
 		private function handlePoinClick(event : PointClickEvent) : void
 		{
-			var ball : BaseBall = event.ball as BaseBall;
+			var ball : InterfaceBall = event.ball as InterfaceBall;
 			ballArray.push(ball);
 			updateDisplay();
-			view.addChild(ball);
+			view.addChild(ball as DisplayObject);
 		}
 
-		private function updateDisplay() : FooterView
+		private function updateDisplay() : void
 		{
-			
-			for(var i:uint=0; i<ballArray.length;i++)
+			for (var i : uint = 0; i < ballArray.length;i++)
 			{
-				BaseBall(ballArray[i]).x += BaseBall(ballArray[i]).width+20;
+				DisplayObject(ballArray[i]).x += DisplayObject(ballArray[i]).width + 20;
 			}
-			return view;
 		}
 
 		private function handlePointTween(event : PointClickEvent) : void
 		{
-			(event.ball as BaseBall).width = 30;
-			(event.ball as BaseBall).height = 30;
-			(event.ball as BaseBall).setStartPoint((event.ball as BaseBall).getEndPoint());
+			var ball : BaseBall = BaseBall(event.ball);
+			ball.width = 30;
+			ball.height = 30;
+			ball.setStartPoint(ball.getEndPoint());
 		}
 
 		private function get view() : FooterView

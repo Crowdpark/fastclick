@@ -15,7 +15,7 @@ package com.crowdpark.fastclick.mvcs.views.leaderboard
 		{
 			super.onRegister();
 
-			view.leaderboardPanel.y = view.playerName.y+view.playerName.textHeight+20;
+			// view.leaderboardPanel.y = view.playerName.y+view.playerName.textHeight+20;
 			addContextListener(LeaderboardEvent.SORT, handleLeaderBoard);
 		}
 
@@ -26,6 +26,7 @@ package com.crowdpark.fastclick.mvcs.views.leaderboard
 			vbox.y = 5;
 
 			var scoreArray : Array = playerModel.getScoreArray();
+			trace(scoreArray);
 			for (var i : uint; i < scoreArray.length;i++)
 			{
 				vbox.addChild(createField(scoreArray[i]));

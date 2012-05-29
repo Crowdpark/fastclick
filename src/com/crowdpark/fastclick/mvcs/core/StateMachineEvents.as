@@ -12,7 +12,7 @@ package com.crowdpark.fastclick.mvcs.core
 		public static const FINISH : String = "finishGame";
 		public static const RETRY: String = "retryGame";
 
-		public function StateMachineEvents(type : String, bubbles : Boolean = false, cancelable : Boolean = false)
+		public function StateMachineEvents(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{
 			super(type,bubbles,cancelable);
 		}

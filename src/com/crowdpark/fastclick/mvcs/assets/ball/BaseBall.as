@@ -1,11 +1,12 @@
 package com.crowdpark.fastclick.mvcs.assets.ball
 {
-	import utils.number.randomWithinRange;
 	import utils.draw.createCircleShape;
 	import utils.geom.randomPoint;
+	import utils.number.randomWithinRange;
 
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
 
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -19,6 +20,7 @@ package com.crowdpark.fastclick.mvcs.assets.ball
 		private var _direction : Point;
 		private var _score : uint;
 		private var _startPoint : Point;
+		private var _rawShape : Shape;
 
 		public function BaseBall()
 		{
@@ -27,13 +29,26 @@ package com.crowdpark.fastclick.mvcs.assets.ball
 
 		private function onAddedToStage(event : Event) : void
 		{
-			var circleSprite : Sprite = new Sprite();
-			circleSprite.addChild(createCircleShape(randomWithinRange(10, 40), this.getColor()));
-
 			this.x = this.getStartPoint().x;
 			this.y = this.getStartPoint().y;
+			
+			addChild(getShape());
+		}
 
-			addChild(circleSprite);
+		public function getShape() : Shape
+		{
+			if (!_rawShape)
+			{
+				_rawShape = createCircleShape(randomWithinRange(10, 40), this.getColor());
+			}
+
+			return _rawShape;
+		}
+
+		public function setShape(shape : Shape) : BaseBall
+		{
+			_rawShape = shape;
+			return this;
 		}
 
 		public function getColor() : uint

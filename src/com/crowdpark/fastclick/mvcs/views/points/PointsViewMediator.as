@@ -33,9 +33,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 					.setEndPoint(new Point(60, contextView.stage.stageHeight - 35))
 					.setColor(randomColor())
 					.setScore(randomWithinRange(50, 1000));
-
 				pointView.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
-
 				_listOfBalls.push(pointView);
 			}
 

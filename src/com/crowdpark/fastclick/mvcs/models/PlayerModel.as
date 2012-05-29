@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import flash.net.SharedObject;
 
 	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
@@ -73,6 +74,8 @@ package com.crowdpark.fastclick.mvcs.models
 			{
 				_timer.stop();
 				dispatch(new StateMachineEvents(StateMachineEvents.FINISH));
+				dispatch(new LeaderboardEvent(LeaderboardEvent.SORT, getPlayerName()));
+				
 			}
 		}
 
@@ -89,8 +92,7 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function addNewScore() : void
 		{
-			// getScoreArray().push(getScore());
-			_scoreArray.push(_score);
+			getScoreArray().push(getScore());
 		}
 
 		public function getScoreArray() : Array

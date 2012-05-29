@@ -1,9 +1,8 @@
 package com.crowdpark.fastclick.mvcs.views.hud
 {
+	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
-
-	import flash.events.Event;
 
 	/**
 	 * @author fatmatekin
@@ -33,7 +32,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			view.score.text = String(playerModel.getScore());
 		}
 
-		override protected function handleFinish(e : Event) : void
+		override protected function handleFinish(e : StateMachineEvents) : void
 		{
 			super.handleFinish(e);
 		}

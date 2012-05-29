@@ -48,7 +48,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 			dispatch(new LeaderboardEvent(LeaderboardEvent.SET_NAME, view.playerNameField.text));
 		}
 
-		override protected function handleStart(e : Event) : void
+		override protected function handleStart(e : StateMachineEvents) : void
 		{
 			super.handleStart(e);
 		}

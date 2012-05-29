@@ -1,7 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.game
 {
 	import com.crowdpark.fastclick.mvcs.views.footer.FooterView;
-	import com.crowdpark.fastclick.mvcs.views.leaderboard.LeaderboardView;
 	import com.crowdpark.fastclick.mvcs.views.hud.HudView;
 	import com.crowdpark.fastclick.mvcs.views.points.PointsView;
 
@@ -14,7 +13,6 @@ package com.crowdpark.fastclick.mvcs.views.game
 	{
 		public var hudView : HudView;
 		public var pointsView : PointsView;
-		public var leaderboardView : LeaderboardView;
 		public var footerView : FooterView;
 
 		public function GameView()
@@ -30,11 +28,7 @@ package com.crowdpark.fastclick.mvcs.views.game
 			hudView = new HudView();
 			addChild(hudView);
 
-			leaderboardView = new LeaderboardView();
-			addChild(leaderboardView);
-
 			footerView = new FooterView();
-			footerView.name = "footerView";
 			addChild(footerView);
 		}
 	}

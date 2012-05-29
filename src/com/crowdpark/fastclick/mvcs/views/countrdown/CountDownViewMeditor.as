@@ -1,8 +1,5 @@
 package com.crowdpark.fastclick.mvcs.views.countrdown
 {
-	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
-	import flash.events.Event;
-
 	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
 
@@ -37,12 +34,10 @@ package com.crowdpark.fastclick.mvcs.views.countrdown
 			else
 			{
 				dispatch(new StateMachineEvents(StateMachineEvents.GAME));
-				dispatch(new LeaderboardEvent(LeaderboardEvent.SORT, playerModel.getPlayerName()));
-				
 			}
 		}
 
-		override protected function handleGame(e : Event) : void
+		override protected function handleGame(e : StateMachineEvents) : void
 		{
 			super.handleGame(e);
 		}

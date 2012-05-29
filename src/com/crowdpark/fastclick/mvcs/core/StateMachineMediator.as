@@ -1,7 +1,6 @@
 package com.crowdpark.fastclick.mvcs.core
 {
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
-	import flash.events.Event;
 	import org.robotlegs.mvcs.Mediator;
 
 	/**
@@ -23,26 +22,26 @@ package com.crowdpark.fastclick.mvcs.core
 			addContextListener(StateMachineEvents.RETRY, handleRetry);
 		}
 
-		private function handleRetry() : void
+		protected function handleRetry(e:StateMachineEvents) : void
 		{
-			removeContextListener(StateMachineEvents.START, handleStart);
+			removeContextListener(StateMachineEvents.START, handleRetry);
 			stateMachineModel.state = "retry";
 		}
 
-		protected function handleStart(e:Event) : void
+		protected function handleStart(e:StateMachineEvents) : void
 		{
 			removeContextListener(StateMachineEvents.START, handleStart);
 			playerModel.setScore(0);
 			stateMachineModel.state = "start";
 		}
 
-		protected function handleGame(e:Event) : void
+		protected function handleGame(e:StateMachineEvents) : void
 		{
 			removeContextListener(StateMachineEvents.GAME, handleGame);
 			stateMachineModel.state = "game";
 		}
 
-		protected function handleFinish(e:Event) : void
+		protected function handleFinish(e:StateMachineEvents) : void
 		{
 			removeContextListener(StateMachineEvents.FINISH, handleFinish);			
 			stateMachineModel.state = "finish";

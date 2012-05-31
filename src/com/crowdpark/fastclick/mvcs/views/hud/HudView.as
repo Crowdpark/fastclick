@@ -1,7 +1,9 @@
 package com.crowdpark.fastclick.mvcs.views.hud
 {
 	import flash.text.TextField;
+
 	import utils.textField.createField;
+
 	import flash.display.Sprite;
 
 	/**
@@ -11,15 +13,14 @@ package com.crowdpark.fastclick.mvcs.views.hud
 	{
 		public var scoreTitle : TextField;
 		public var score : TextField;
-		public var timeTitle : TextField;
+		public var timeSprite : Sprite;
 		public var time : TextField;
 
 		public function HudView()
 		{
-			init();
 		}
 
-		private function init() : void
+		public function init() : void
 		{
 			createScoreView();
 			createTimeView();
@@ -27,19 +28,20 @@ package com.crowdpark.fastclick.mvcs.views.hud
 
 		private function createTimeView() : void
 		{
-			timeTitle = createField("Time:", 0, 0, 200, 20, false, "Verdana", 15, 0);
-			addChild(timeTitle);
+			timeSprite = new Sprite();
 
-			time = createField("", 0, 0, 200, 20, false, "Verdana", 15, 0);
-			addChild(time);
+			time = createField("", 0, 0, 200, 20, false, "Verdana", 25, 0xffffff);
+
+			timeSprite.addChild(time);
+			addChild(timeSprite);
 		}
 
 		private function createScoreView() : void
 		{
-			scoreTitle = createField("Score:", 0, 0, 200, 20, false, "Verdana", 15, 0);
+			scoreTitle = createField("score", 0, 0, 200, 20, false, "Verdana", 15, 0);
 			addChild(scoreTitle);
 
-			score = createField("0", 0, 0, 200, 20, false, "Verdana", 15, 0);
+			score = createField("0", 0, 0, 200, 20, false, "Verdana", 20, 0);
 			addChild(score);
 		}
 	}

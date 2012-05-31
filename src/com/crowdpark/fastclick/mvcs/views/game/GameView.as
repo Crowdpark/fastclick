@@ -26,6 +26,7 @@ package com.crowdpark.fastclick.mvcs.views.game
 			addChild(pointsView);
 
 			hudView = new HudView();
+			hudView.name = "hudView";
 			addChild(hudView);
 
 			footerView = new FooterView();

@@ -1,7 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
-
+	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import org.robotlegs.mvcs.Command;
 
 	/**
@@ -10,11 +9,11 @@ package com.crowdpark.fastclick.mvcs.commands
 	public class UpdateTimeCommand extends Command
 	{
 		[Inject]
-		public var playerModel : PlayerModel;
+		public var configModel : ConfigModel;
 
 		override public function execute() : void
 		{
-			playerModel.updateTimer();
+			configModel.updateTimer();
 		}
 	}
 }

@@ -12,14 +12,17 @@ package com.crowdpark.fastclick.mvcs.views.result
 	{
 		override public function onRegister() : void
 		{
-			view.result.text = (String(playerModel.getScore()));
+			view.result.text = (String(playerModel.getCurrentPlayer().getCurrentScore().value));
 			view.resultText.x = (contextView.stage.stageWidth - view.resultText.textWidth) / 2;
 			view.resultText.y = 50;
 
 			view.result.x = (contextView.stage.stageWidth - view.result.textWidth) / 2;
-			view.result.y = 100;
-
-			view.leaderboardView.y = view.result.y + view.result.height;
+			view.result.y = 80;
+			
+			view.leaderboardTitle.y =view.result.y + view.result.height+40;
+			view.leaderboardTitle.x =(contextView.stage.stageWidth - view.leaderboardTitle.width) / 2;
+			
+			view.leaderboardView.y = view.leaderboardTitle.y + 30;
 			view.leaderboardView.x = (contextView.stage.stageWidth - view.leaderboardView.width) / 2;
 
 			view.retryButton.x = (contextView.stage.stageWidth - view.retryButton.width) / 2;

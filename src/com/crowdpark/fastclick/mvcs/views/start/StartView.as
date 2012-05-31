@@ -48,7 +48,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 			var title : TextField = new TextField();
 			title.defaultTextFormat = tfm;
-			title.text = "Fast Cick";
+			title.text = "Fast Click";
 			title.x = (titleBackground.width - title.width) / 2;
 
 			gameTitleSprite.addChild(titleBackground);
@@ -81,8 +81,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 			playerNameField.width = 100;
 			playerNameField.height = 30;
 			
-			var title:TextField = createField("Your Name");
-			title.textColor = 0xff0000;
+			var title:TextField = createField("Your Name",0,0,200,20,false,"Verdana",15,0xff0000);
 			
 			playerNameSprite.addChild(title);
 			playerNameSprite.addChild(playerNameField);

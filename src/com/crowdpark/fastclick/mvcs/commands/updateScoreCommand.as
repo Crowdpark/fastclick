@@ -17,9 +17,8 @@ package com.crowdpark.fastclick.mvcs.commands
 
 		override public function execute() : void
 		{
-			var score : uint = playerModel.getScore() + pointClickEvent.ball.getScore();
-			
-			playerModel.setScore(score);
+			var score : uint = uint(playerModel.getCurrentPlayer().getCurrentScore().value) + pointClickEvent.ball.getScore();			
+			playerModel.getCurrentPlayer().setCurrentScore(score);
 		}
 	}
 }

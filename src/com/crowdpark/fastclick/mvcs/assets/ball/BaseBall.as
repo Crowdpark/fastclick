@@ -21,13 +21,14 @@ package com.crowdpark.fastclick.mvcs.assets.ball
 		private var _score : uint;
 		private var _startPoint : Point;
 		private var _rawShape : Shape;
-
+		
 		public function BaseBall()
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			
 		}
 
-		private function onAddedToStage(event : Event) : void
+		public function onAddedToStage(event : Event) : void
 		{
 			this.x = this.getStartPoint().x;
 			this.y = this.getStartPoint().y;
@@ -97,6 +98,8 @@ package com.crowdpark.fastclick.mvcs.assets.ball
 		public function setStartPoint(startPoint : Point) : BaseBall
 		{
 			_startPoint = startPoint;
+			this.x = _startPoint.x;
+			this.y = _startPoint.y;
 			return this;
 		}
 	}

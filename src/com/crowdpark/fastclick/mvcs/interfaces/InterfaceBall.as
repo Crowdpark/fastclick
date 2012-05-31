@@ -11,9 +11,10 @@ package com.crowdpark.fastclick.mvcs.interfaces
 		function getColor() : uint;
 
 		function getEndPoint() : Point;
-		
+
 		function getStartPoint() : Point;
 
 		function getScore() : uint;
+
 	}
 }

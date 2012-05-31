@@ -6,7 +6,7 @@ package com.crowdpark.fastclick.mvcs.assets.ball
 	 * @author fatmatekin
 	 */
 	public class RedBall extends BaseBall
-	{
+	{		
 		override public function getColor() : uint
 		{
 			return 0xff0000;

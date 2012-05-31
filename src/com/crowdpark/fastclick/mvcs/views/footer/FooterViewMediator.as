@@ -1,9 +1,11 @@
 package com.crowdpark.fastclick.mvcs.views.footer
 {
+	import com.greensock.easing.Linear;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
+	import com.greensock.TweenMax;
 	import com.bit101.components.HBox;
 
 	import flash.display.Sprite;
-	import flash.display.DisplayObject;
 
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseBall;
 
@@ -30,35 +32,34 @@ package com.crowdpark.fastclick.mvcs.views.footer
 			view.addChild(footerBackground);
 			view.addChild(hbox);
 
-			addContextListener(PointClickEvent.POINT_TWEEN, handlePointTween);
 			addContextListener(PointClickEvent.POINT_CLICK, handlePoinClick);
 		}
 
 		private function handlePoinClick(event : PointClickEvent) : void
 		{
-			view.addChild(event.ball as DisplayObject);
+			var ball : BaseBall = BaseBall(event.ball);
+			view.addChild(ball);
+			TweenMax.to(ball, 0.3, {width:30, height:30, y:ball.getEndPoint().y, x:ball.getEndPoint().x, onComplete:handleTweenComplete, onCompleteParams:[ball, event.scoreBox], ease:Linear.easeOut});
 		}
 
-		private function handlePointTween(event : PointClickEvent) : void
+		private function handleTweenComplete(point : InterfaceBall, scoreBox : InterfaceBall) : void
 		{
-			if (view.contains(event.ball as DisplayObject))
+			if (stateMachineModel.state != "finish")
 			{
-				view.removeChild(event.ball as DisplayObject);
+				var ball : BaseBall = BaseBall(point);
+				var shape : Shape = ball.getShape();
+				ball.setShape(null);
+
+				shape.x = ball.x;
+				shape.y = ball.y;
+				shape.width = 30;
+				shape.height = 30;
+
+				var shapeSprite : Sprite = new Sprite();
+				shapeSprite.addChild(shape);
+
+				hbox.addChild(shapeSprite);
 			}
-
-			var ball : BaseBall = BaseBall(event.ball);
-			var shape : Shape = ball.getShape();
-			ball.setShape(null);
-
-			shape.x = ball.x;
-			shape.y = ball.y;
-			shape.width = 30;
-			shape.height = 30;
-
-			var shapeSprite : Sprite = new Sprite();
-			shapeSprite.addChild(shape);
-
-			hbox.addChild(shapeSprite);
 		}
 
 		private function get view() : FooterView

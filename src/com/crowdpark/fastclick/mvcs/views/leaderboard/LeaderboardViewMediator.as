@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.views.leaderboard
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
+
 	import utils.textField.createField;
 
 	import com.bit101.components.VBox;
@@ -15,7 +17,6 @@ package com.crowdpark.fastclick.mvcs.views.leaderboard
 		{
 			super.onRegister();
 
-			// view.leaderboardPanel.y = view.playerName.y+view.playerName.textHeight+20;
 			addContextListener(LeaderboardEvent.SORT, handleLeaderBoard);
 		}
 
@@ -25,14 +26,14 @@ package com.crowdpark.fastclick.mvcs.views.leaderboard
 			vbox.spacing = 5;
 			vbox.y = 5;
 
-			var scoreArray : Array = playerModel.getScoreArray();
-			trace(scoreArray);
-			for (var i : uint; i < scoreArray.length;i++)
+			var playerArray : Array = playerModel.getPlayerArray();
+			for (var i : uint; i < playerArray.length;i++)
 			{
-				vbox.addChild(createField(scoreArray[i]));
+				var currentPlayer : PlayerVo = playerArray[i];
+
+				vbox.addChild(createField(String(currentPlayer.playerName.value) + "-" + String(currentPlayer.getCurrentScore().value), 5, 0, 200, 20, false, "Verdana", 15));
 			}
 
-			view.playerName.text = event.playerName;
 			view.leaderboardPanel.addChild(vbox);
 		}
 

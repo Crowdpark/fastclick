@@ -1,7 +1,5 @@
 package com.crowdpark.fastclick.mvcs.views.leaderboard
 {
-	import utils.textField.createField;
-
 	import flash.text.TextField;
 
 	import com.bit101.components.ScrollPane;
@@ -19,12 +17,12 @@ package com.crowdpark.fastclick.mvcs.views.leaderboard
 		public function LeaderboardView()
 		{
 			leaderboardPanel = new ScrollPane();
-			playerName = createField("", 0, 0, 200, 20, false, "Verdana", 15, 0);
+			// playerName = createField("", 0, 0, 200, 20, false, "Verdana", 20, 0);
 
-			leaderboardPanel.setSize(100, 100);
+			leaderboardPanel.setSize(150, 100);
 			leaderboardPanel.autoHideScrollBar = true;
 
-			addChild(playerName);
+			// addChild(playerName);
 			addChild(leaderboardPanel);
 		}
 	}

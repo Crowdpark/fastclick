@@ -2,16 +2,18 @@ package com.crowdpark.fastclick.mvcs
 {
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
 	import com.crowdpark.fastclick.mvcs.commands.FinishGameCommand;
-	import com.crowdpark.fastclick.mvcs.commands.LeaderboardCommand;
 	import com.crowdpark.fastclick.mvcs.commands.RetryGameCommand;
+	import com.crowdpark.fastclick.mvcs.commands.SetPlayerCommand;
 	import com.crowdpark.fastclick.mvcs.commands.StartGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.StartUpCompleteCommand;
 	import com.crowdpark.fastclick.mvcs.commands.UpdateScoreCommand;
 	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.StateMachineModel;
-	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
+	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
+	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
+	import com.crowdpark.fastclick.mvcs.services.ConfigService;
 	import com.crowdpark.fastclick.mvcs.views.countrdown.CountDownView;
 	import com.crowdpark.fastclick.mvcs.views.countrdown.CountDownViewMeditor;
 	import com.crowdpark.fastclick.mvcs.views.footer.FooterView;
@@ -46,15 +48,19 @@ package com.crowdpark.fastclick.mvcs
 		override public function startup() : void
 		{
 			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, StartUpCompleteCommand,ContextEvent);
-			commandMap.mapEvent(StateMachineEvents.START, CountDownCommand,StateMachineEvents);						
+			commandMap.mapEvent(StateMachineEvents.START, CountDownCommand,StateMachineEvents);
+			commandMap.mapEvent(GameEvents.SET_PLAYER, SetPlayerCommand,GameEvents);
+									
 			commandMap.mapEvent(StateMachineEvents.GAME,StartGameCommand,StateMachineEvents);		
 			commandMap.mapEvent(StateMachineEvents.FINISH, FinishGameCommand,StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.RETRY, RetryGameCommand,StateMachineEvents);
 			commandMap.mapEvent(PointClickEvent.POINT_CLICK, UpdateScoreCommand,PointClickEvent);
-			commandMap.mapEvent(LeaderboardEvent.SET_NAME, LeaderboardCommand,LeaderboardEvent);
+			
 						
 			injector.mapSingleton(PlayerModel);
 			injector.mapSingleton(StateMachineModel);
+			injector.mapSingleton(ConfigModel);
+			injector.mapSingleton(ConfigService);
 			
 			mediatorMap.mapView(StartView, StartViewMediator);
 			mediatorMap.mapView(CountDownView,CountDownViewMeditor);

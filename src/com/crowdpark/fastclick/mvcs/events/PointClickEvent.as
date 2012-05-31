@@ -10,17 +10,20 @@ package com.crowdpark.fastclick.mvcs.events
 	{
 		public static const POINT_CLICK : String = "POINT_CLICK";
 		public static const POINT_TWEEN:String ="POINT_TWEEN";
+		
 		public var ball : InterfaceBall;
-
-		public function PointClickEvent(type : String, ball : InterfaceBall)
+		public var scoreBox: InterfaceBall;
+		
+		public function PointClickEvent(type : String, ball : InterfaceBall, scoreBox: InterfaceBall)
 		{
 			this.ball = ball;
+			this.scoreBox = scoreBox;
 			super(type, bubbles, cancelable);
 		}
 
 		override public function clone() : Event
 		{
-			return new PointClickEvent(type, ball);
+			return new PointClickEvent(type, ball,scoreBox);
 		}
 	}
 }

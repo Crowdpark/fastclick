@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.core
 {
+	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import org.robotlegs.mvcs.Mediator;
 
@@ -13,6 +14,9 @@ package com.crowdpark.fastclick.mvcs.core
 		
 		[Inject]
 		public var playerModel:PlayerModel;
+		
+		[Inject]
+		public var configModel:ConfigModel;
 		
 		override public function onRegister() : void
 		{
@@ -31,7 +35,6 @@ package com.crowdpark.fastclick.mvcs.core
 		protected function handleStart(e:StateMachineEvents) : void
 		{
 			removeContextListener(StateMachineEvents.START, handleStart);
-			playerModel.setScore(0);
 			stateMachineModel.state = "start";
 		}
 

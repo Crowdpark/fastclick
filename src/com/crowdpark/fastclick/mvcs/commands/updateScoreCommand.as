@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.assets.ball.BaseBall;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 
@@ -17,8 +18,9 @@ package com.crowdpark.fastclick.mvcs.commands
 
 		override public function execute() : void
 		{
-			var score : uint = uint(playerModel.getCurrentPlayer().getCurrentScore().value) + pointClickEvent.ball.getScore();			
-			playerModel.getCurrentPlayer().setCurrentScore(score);
+			var ballScore : uint = BaseBall(pointClickEvent.getDataprovider().getValueByKey('fcBall')).getScore();
+			var score : uint = ballScore + uint(playerModel.getCurrentPlayer().getValueByKey('currentScore'));
+			playerModel.getCurrentPlayer().setValueByKey('currentScore', score);
 		}
 	}
 }

@@ -1,17 +1,18 @@
 package com.crowdpark.fastclick.mvcs.views.hud
 {
+	import com.crowdpark.fastclick.mvcs.assets.ball.BaseBall;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
+	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
 	import com.greensock.TweenMax;
-
 	import flash.display.DisplayObject;
-
+	import flash.display.Shape;
 	import utils.draw.createRectangleShape;
 
-	import flash.display.Shape;
 
-	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
-	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
-	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
+
+
 
 	/**
 	 * @author fatmatekin
@@ -44,12 +45,14 @@ package com.crowdpark.fastclick.mvcs.views.hud
 
 		private function handlePointClickEvent(event : PointClickEvent) : void
 		{
-			view.score.text = String(playerModel.getCurrentPlayer().getCurrentScore().value);
-			var scoreBox:DisplayObject = DisplayObject(event.scoreBox);
+			
+			view.score.text = String(playerModel.getCurrentPlayer().getValueByKey('currentScore'));
+
+			var scoreBox:BaseBall = BaseBall(event.getDataprovider().getValueByKey('scoreBox'));
 			scoreBox.alpha = 0;
 			view.addChild(scoreBox);
 			
-			TweenMax.to(event.scoreBox, 0.3, {alpha:1,x:event.scoreBox.getEndPoint().x, y:event.scoreBox.getEndPoint().y, onComplete:handleTweenComplete, onCompleteParams:[event.scoreBox]});
+			TweenMax.to(scoreBox, 0.3, {alpha:1,x:scoreBox.getEndPoint().x, y:scoreBox.getEndPoint().y, onComplete:handleTweenComplete, onCompleteParams:[scoreBox]});
 		}
 
 		private function handleTweenComplete(scoreBox : InterfaceBall) : void

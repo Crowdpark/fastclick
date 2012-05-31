@@ -1,26 +1,18 @@
 package com.crowdpark.fastclick.mvcs.events
 {
-	import flash.events.Event;
+	import com.crowdpark.fastclick.mvcs.core.base.BaseEvent;
 
 	/**
 	 * @author fatmatekin
 	 */
-	public class LeaderboardEvent extends Event
+	public class LeaderboardEvent extends BaseEvent
 	{
 		public static const SORT : String = "SORT";
 		public static const SET_NAME : String = "SET_NAME";
-		public var playerName:String;
-	
-		public function LeaderboardEvent(type : String, playerName : String)
-		{
-			this.playerName = playerName;
-			super(type,false,false);
-		}
 
-		override public function clone() : Event
+		public function LeaderboardEvent(type : String, bubbles : Boolean = false, cancellable : Boolean = true)
 		{
-			return new LeaderboardEvent(type, playerName);
+			super(type, bubbles, cancellable);
 		}
-
 	}
 }

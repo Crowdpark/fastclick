@@ -1,9 +1,9 @@
 package com.crowdpark.fastclick.mvcs.views.result
 {
-	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
-	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
-
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import flash.events.MouseEvent;
+
 
 	/**
 	 * @author fatmatekin
@@ -12,7 +12,7 @@ package com.crowdpark.fastclick.mvcs.views.result
 	{
 		override public function onRegister() : void
 		{
-			view.result.text = (String(playerModel.getCurrentPlayer().getCurrentScore().value));
+			view.result.text = (String(playerModel.getCurrentPlayer().getValueByKey('currentScore')));
 			view.resultText.x = (contextView.stage.stageWidth - view.resultText.textWidth) / 2;
 			view.resultText.y = 50;
 

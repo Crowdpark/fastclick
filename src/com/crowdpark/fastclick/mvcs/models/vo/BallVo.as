@@ -1,44 +1,42 @@
 package com.crowdpark.fastclick.mvcs.models.vo
 {
+	import flash.geom.Point;
+
 	/**
 	 * @author fatmatekin
 	 */
-	public class BallVo
+	public class BallVo extends BaseVo
 	{
-		private var _endPoint : BaseVo;
-		private var _color : BaseVo;
-		private var _score : BaseVo;
-
-		public function getEndPoint() : BaseVo
+		public function getEndPoint() : Point
 		{
-			return _endPoint;
+			return Point(this.getValueByKey('endPoint'));
 		}
 
-		public function setEndPoint(endPoint : BaseVo) : BallVo
+		public function setEndPoint(endPoint : Point) : BallVo
 		{
-			this._endPoint = endPoint;
+			this.setValueByKey('endPoint', endPoint);
 			return this;
 		}
 
-		public function getColor() : BaseVo
+		public function getColor() : uint
 		{
-			return _color;
+			return uint(this.getValueByKey('color'));
 		}
 
-		public function setColor(color : BaseVo) : BallVo
+		public function setColor(color : uint) : BallVo
 		{
-			this._color = color;
+			this.setValueByKey('color', color);
 			return this;
 		}
 
-		public function getScore() : BaseVo
+		public function getScore() : uint
 		{
-			return _score;
+			return uint(this.getValueByKey('score'));
 		}
 
-		public function setScore(score : BaseVo) : BallVo
+		public function setScore(score : uint) : BallVo
 		{
-			this._score = score;
+			this.setValueByKey('score', score);
 			return this;
 		}
 	}

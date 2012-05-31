@@ -1,4 +1,4 @@
-package com.crowdpark.fastclick.mvcs.core
+package com.crowdpark.fastclick.mvcs.core.statemachine
 {
 	/**
 	 * @author fatmatekin

@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs
 {
+	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
 	import com.crowdpark.fastclick.mvcs.commands.FinishGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.RetryGameCommand;
@@ -7,8 +8,8 @@ package com.crowdpark.fastclick.mvcs
 	import com.crowdpark.fastclick.mvcs.commands.StartGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.StartUpCompleteCommand;
 	import com.crowdpark.fastclick.mvcs.commands.UpdateScoreCommand;
-	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
-	import com.crowdpark.fastclick.mvcs.core.StateMachineModel;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
@@ -60,6 +61,7 @@ package com.crowdpark.fastclick.mvcs
 			injector.mapSingleton(PlayerModel);
 			injector.mapSingleton(StateMachineModel);
 			injector.mapSingleton(ConfigModel);
+			injector.mapSingleton(HighestScoreModel);
 			injector.mapSingleton(ConfigService);
 			
 			mediatorMap.mapView(StartView, StartViewMediator);

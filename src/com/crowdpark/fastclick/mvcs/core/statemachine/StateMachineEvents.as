@@ -1,11 +1,11 @@
-package com.crowdpark.fastclick.mvcs.core
+package com.crowdpark.fastclick.mvcs.core.statemachine
 {
-	import flash.events.Event;
-
+	import com.crowdpark.fastclick.mvcs.core.base.BaseEvent;
+	
 	/**
 	 * @author fatmatekin
 	 */
-	public class StateMachineEvents extends Event
+	public class StateMachineEvents extends BaseEvent
 	{
 		public static const START:String = "startGame";
 		public static const GAME:String = "playGame";

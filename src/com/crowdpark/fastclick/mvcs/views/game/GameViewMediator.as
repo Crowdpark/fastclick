@@ -1,6 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.game
 {
-	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 
 	/**
 	 * @author fatmatekin

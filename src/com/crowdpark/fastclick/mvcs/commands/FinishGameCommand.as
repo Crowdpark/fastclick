@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.views.result.ResultView;
 
@@ -11,14 +12,17 @@ package com.crowdpark.fastclick.mvcs.commands
 	public class FinishGameCommand extends Command
 	{
 		[Inject]
-		public var playerModel : PlayerModel;
-
+		public var playerModel: PlayerModel;
+		
+		[Inject]
+		public var highestScoreModel: HighestScoreModel;
+		
 		override public function execute() : void
 		{
-			playerModel.getCurrentPlayer().addNewScore();
-			
 			contextView.removeChildAt(0);
 			contextView.addChild(new ResultView());
+			
+			highestScoreModel.setHighscoreList(playerModel.getPlayerArray());
 		}
 	}
 }

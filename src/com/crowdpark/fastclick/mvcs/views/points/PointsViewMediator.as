@@ -1,22 +1,21 @@
 package com.crowdpark.fastclick.mvcs.views.points
 {
-	import utils.geom.randomPoint;
-	import utils.display.addChild;
-
-	import com.crowdpark.fastclick.mvcs.models.vo.BallVo;
-	import com.crowdpark.fastclick.mvcs.assets.ball.BaseBall;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
+	import com.crowdpark.fastclick.mvcs.models.vo.BaseVo;
 	import com.crowdpark.fastclick.mvcs.assets.ScoreBox;
-
-	import flash.geom.Point;
-
-	import utils.number.randomIntegerWithinRange;
-
-	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
+	import com.crowdpark.fastclick.mvcs.assets.ball.BaseBall;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
+	import com.crowdpark.fastclick.mvcs.models.vo.BallVo;
 	import com.greensock.TweenMax;
 
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
+
+	import utils.display.addChild;
+	import utils.geom.randomPoint;
+	import utils.number.randomIntegerWithinRange;
 
 	/**
 	 * @author fatmatekin
@@ -28,15 +27,15 @@ package com.crowdpark.fastclick.mvcs.views.points
 		override public function onRegister() : void
 		{
 			super.onRegister();
-			var pointArray : Array = configModel.getBallArray();
+			var pointArray : Vector.<BallVo> = configModel.getBallArray();
 			for (var i : int = 0; i < pointArray.length; i++)
 			{
 				var ballVo : BallVo = pointArray[i];
 
 				var ball : BaseBall = new BaseBall();
-				ball.setEndPoint(Point(ballVo.getEndPoint().value));
-				ball.setColor(uint(ballVo.getColor().value));
-				ball.setScore(uint(ballVo.getScore().value));
+				ball.setEndPoint(Point(ballVo.getValueByKey('endPoint')));
+				ball.setColor(uint(ballVo.getValueByKey('color')));
+				ball.setScore(uint(ballVo.getValueByKey('score')));
 
 				ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
 				_listOfBalls.push(ball);
@@ -51,6 +50,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 			fastClickCircle.setStartPoint(randomPoint(0, 400, 50, 400));
 			addChild(fastClickCircle, view);
 
+			
 			TweenMax.from(fastClickCircle, Math.random() / 2, {onComplete:checkState});
 		}
 
@@ -76,7 +76,11 @@ package com.crowdpark.fastclick.mvcs.views.points
 				.setEndPoint(new Point(70, 5))
 				.setScore(fcCircle.getScore()));
 
-			dispatch(new PointClickEvent(PointClickEvent.POINT_CLICK, fcCircle, scoreBox));
+			var baseVo:InterfaceVO = new BaseVo();
+			baseVo.setValueByKey('fcBall', fcCircle);
+			baseVo.setValueByKey('scoreBox', scoreBox);
+
+			dispatch(new PointClickEvent(PointClickEvent.POINT_CLICK).setDataprovider(baseVo));
 		}
 
 		public function get view() : PointsView

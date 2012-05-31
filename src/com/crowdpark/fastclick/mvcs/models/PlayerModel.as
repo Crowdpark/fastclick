@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 
 	import flash.net.SharedObject;
@@ -11,50 +12,13 @@ package com.crowdpark.fastclick.mvcs.models
 	 */
 	public class PlayerModel extends Actor
 	{
-		private var _score : uint = 0;
-		private var _playerName : String;
-		private var _scoreArray : Array;
 		private var _flashCookie : SharedObject;
-		private var _currentPlayer : PlayerVo;
-		private var _playerArray : Array;
-
-		public function PlayerModel()
-		{
-		}
+		private var _currentPlayer : InterfaceVO;
+		private var _playerArray : Vector.<PlayerVo>;
 
 		public function addPlayer(player : PlayerVo) : PlayerModel
 		{
 			getPlayerArray().push(player);
-			return this;
-		}
-
-		public function getPlayerName() : String
-		{
-			return _playerName;
-		}
-
-		public function setPlayerName(playerName : String) : PlayerModel
-		{
-			this._playerName = playerName;
-			return this;
-		}
-
-		public function getScoreArray() : Array
-		{
-			if (!_scoreArray)
-			{
-				_scoreArray = new Array();
-			}
-			_scoreArray.sort(Array.DESCENDING);
-			_scoreArray.sort(Array.NUMERIC);
-			_scoreArray.reverse();
-
-			return _scoreArray;
-		}
-
-		public function setScoreArray(scoreArray : Array) : PlayerModel
-		{
-			this._scoreArray = scoreArray;
 			return this;
 		}
 
@@ -75,27 +39,27 @@ package com.crowdpark.fastclick.mvcs.models
 			return this;
 		}
 
-		public function getCurrentPlayer() : PlayerVo
+		public function getCurrentPlayer() : InterfaceVO
 		{
 			return _currentPlayer;
 		}
 
-		public function setCurrentPlayer(player : PlayerVo) : PlayerModel
+		public function setCurrentPlayer(player : InterfaceVO) : PlayerModel
 		{
 			this._currentPlayer = player;
 			return this;
 		}
 
-		public function getPlayerArray() : Array
+		public function getPlayerArray() : Vector.<PlayerVo>
 		{
 			if (!_playerArray)
 			{
-				_playerArray = new Array();
+				_playerArray = new Vector.<PlayerVo>();
 			}
 			return _playerArray;
 		}
 
-		public function setPlayerArray(playerArray : Array) : PlayerModel
+		public function setPlayerArray(playerArray : Vector.<PlayerVo>) : PlayerModel
 		{
 			this._playerArray = playerArray;
 			return this;

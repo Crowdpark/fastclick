@@ -7,14 +7,14 @@ package com.crowdpark.fastclick.mvcs.services
 	import flash.net.URLRequest;
 	import flash.net.URLLoader;
 
-	import com.crowdpark.fastclick.mvcs.interfaces.IConfigService;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceConfigService;
 
 	import org.robotlegs.mvcs.Actor;
 
 	/**
 	 * @author fatmatekin
 	 */
-	public class ConfigService extends Actor implements IConfigService
+	public class ConfigService extends Actor implements InterfaceConfigService
 	{
 		private var urlLoader : URLLoader;
 		[Inject]

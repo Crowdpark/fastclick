@@ -1,24 +1,16 @@
 package com.crowdpark.fastclick.mvcs.events
 {
-	import flash.events.Event;
-
+	import com.crowdpark.fastclick.mvcs.core.base.BaseEvent;
 	/**
 	 * @author fatmatekin
 	 */
-	public class GameEvents extends Event
+	public class GameEvents extends BaseEvent
 	{
 		public static const SET_PLAYER : String = "SET_PLAYER";
-		public var playerName : String;
 
-		public function GameEvents(type : String, player : String) : void
+		public function GameEvents(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{
-			this.playerName = player;
-			super(type, false, false);
-		}
-
-		override public function clone() : Event
-		{
-			return new GameEvents(type, playerName);
+			super(type, bubbles, cancelable);
 		}
 	}
 }

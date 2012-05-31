@@ -3,56 +3,38 @@ package com.crowdpark.fastclick.mvcs.models.vo
 	/**
 	 * @author fatmatekin
 	 */
-	public class PlayerVo
+	public class PlayerVo extends BaseVo
 	{
-		private var _playerName : BaseVo;
-		private var _currentScore : BaseVo;
-		private var _scoreArray : Array;
-
-		public function PlayerVo(playerName : BaseVo)
+		public function getPlayerName() : String
 		{
-			this.playerName = playerName;
+			return String(getValueByKey('playerName'));
 		}
 
-		public function get playerName() : BaseVo
+		public function setPlayerName(playerName : String) : PlayerVo
 		{
-			return _playerName;
+			this.setValueByKey('playerName', playerName);
+			return this;
 		}
 
-		public function set playerName(playerName : BaseVo) : void
+		public function getCurrentScore() : uint
 		{
-			this._playerName = playerName;
-		}
-
-		public function getCurrentScore() : BaseVo
-		{
-			if (!_currentScore)
-			{
-				var currentBaseVo:BaseVo = new BaseVo("currentScore", 0);
-				_currentScore = currentBaseVo;
-			}
-			return _currentScore;
+			return uint(getValueByKey('currentScore'));
 		}
 
 		public function setCurrentScore(score : uint) : PlayerVo
 		{
-			var scoreBaseVo : BaseVo = new BaseVo("currentScore", score);
-			this._currentScore = scoreBaseVo;
+			this.setValueByKey('currentScore', score);
 			return this;
 		}
 
 		public function getScoreArray() : Array
 		{
-			if (!_scoreArray)
-			{
-				_scoreArray = new Array();
-			}
-			return _scoreArray;
+			return (this.getValueByKey('scoreArray') as Array);
 		}
 
 		public function setScoreArray(scoreArray : Array) : PlayerVo
 		{
-			this._scoreArray = scoreArray;
+			this.setValueByKey('scoreArray', scoreArray);
 			return this;
 		}
 

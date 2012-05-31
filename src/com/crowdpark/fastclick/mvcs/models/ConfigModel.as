@@ -1,17 +1,15 @@
 package com.crowdpark.fastclick.mvcs.models
 {
-	import flash.geom.Point;
-
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.crowdpark.fastclick.mvcs.models.vo.BallVo;
 	import com.crowdpark.fastclick.mvcs.models.vo.BaseVo;
-
-	import flash.utils.Timer;
-
-	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
-	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.views.hud.HudViewEvent;
 
 	import flash.events.TimerEvent;
+	import flash.geom.Point;
+	import flash.utils.Timer;
 
 	import org.robotlegs.mvcs.Actor;
 
@@ -20,28 +18,28 @@ package com.crowdpark.fastclick.mvcs.models
 	 */
 	public class ConfigModel extends Actor
 	{
-		private var _ballArray : Array;
+		private var _ballArray : Vector.<BallVo>;
 		private var _time : uint;
 		private var _timer : Timer;
-		private var _gameDuration : BaseVo;
+		private var _gameDuration : uint;
 		[Inject]
 		public var playerModel : PlayerModel;
 
-		public function addBall(ball : BallVo) : void
+		public function addBall(ball : InterfaceVO) : void
 		{
 			getBallArray().push(ball);
 		}
 
-		public function getBallArray() : Array
+		public function getBallArray() : Vector.<BallVo>
 		{
 			if (!_ballArray)
 			{
-				_ballArray = new Array();
+				_ballArray = new Vector.<BallVo>();
 			}
 			return _ballArray;
 		}
 
-		public function setBallArray(ballArray : Array) : ConfigModel
+		public function setBallArray(ballArray : Vector.<BallVo>) : ConfigModel
 		{
 			this._ballArray = ballArray;
 			return this;
@@ -72,23 +70,26 @@ package com.crowdpark.fastclick.mvcs.models
 
 		private function handleTimer(e : TimerEvent) : void
 		{
-			setTime(uint(getGameDuration().value) - _timer.currentCount);
+			setTime(getGameDuration() - _timer.currentCount);
 			dispatch(new HudViewEvent(HudViewEvent.UPDATE));
 
 			if (getTime() == 0)
 			{
 				_timer.stop();
 				dispatch(new StateMachineEvents(StateMachineEvents.FINISH));
-				dispatch(new LeaderboardEvent(LeaderboardEvent.SORT, playerModel.getPlayerName()));
+
+				var bvo : InterfaceVO = new BaseVo();
+				bvo.setValueByKey('playerName', String(playerModel.getCurrentPlayer().getValueByKey('playerName')));
+				dispatch(new LeaderboardEvent(LeaderboardEvent.SORT).setDataprovider(bvo));
 			}
 		}
 
-		public function getGameDuration() : BaseVo
+		public function getGameDuration() : uint
 		{
 			return _gameDuration;
 		}
 
-		public function setGameDuration(gameDuration : BaseVo) : ConfigModel
+		public function setGameDuration(gameDuration : uint) : ConfigModel
 		{
 			this._gameDuration = gameDuration;
 			return this;
@@ -98,16 +99,14 @@ package com.crowdpark.fastclick.mvcs.models
 		{
 			var resultArray : Array = data.getValue().points;
 
-			var baseVo : BaseVo = new BaseVo("gameDuration", data.getValue().gameDuration);
-
-			setGameDuration(baseVo);
+			setGameDuration(data.getValue().gameDuration);
 
 			for each (var point:Object in resultArray)
 			{
 				var ballVO : BallVo = new BallVo();
-				ballVO.setEndPoint(new BaseVo("endPoint", new Point(60, 370)));
-				ballVO.setColor(new BaseVo("color", point.color));
-				ballVO.setScore(new BaseVo("score", point.score));
+				ballVO.setValueByKey('endPoint', new Point(60, 370));
+				ballVO.setValueByKey('color', point.color);
+				ballVO.setValueByKey('score', point.score);
 				addBall(ballVO);
 			}
 		}

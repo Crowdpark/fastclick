@@ -1,13 +1,13 @@
 package com.crowdpark.fastclick.mvcs.views.start
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.BaseVo;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 
-	import flash.net.SharedObject;
-
-	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
-	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
-
 	import flash.events.MouseEvent;
+	import flash.net.SharedObject;
 
 	/**
 	 * @author fatmatekin
@@ -46,7 +46,10 @@ package com.crowdpark.fastclick.mvcs.views.start
 		private function handleStartClickEvent(e : MouseEvent) : void
 		{
 			dispatch(new StateMachineEvents(StateMachineEvents.START));
-			dispatch(new GameEvents(GameEvents.SET_PLAYER, view.playerNameField.text));
+
+			var bvo : InterfaceVO = new BaseVo();
+			bvo.setValueByKey('playerName', view.playerNameField.text);
+			dispatch(new GameEvents(GameEvents.SET_PLAYER).setDataprovider(bvo));
 		}
 
 		override protected function handleStart(e : StateMachineEvents) : void

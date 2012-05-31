@@ -1,29 +1,17 @@
 package com.crowdpark.fastclick.mvcs.events
 {
-	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
-	import flash.events.Event;
-
+	import com.crowdpark.fastclick.mvcs.core.base.BaseEvent;
+	
 	/**
 	 * @author fatmatekin
 	 */
-	public class PointClickEvent extends Event
+	public class PointClickEvent extends BaseEvent
 	{
 		public static const POINT_CLICK : String = "POINT_CLICK";
 		public static const POINT_TWEEN:String ="POINT_TWEEN";
-		
-		public var ball : InterfaceBall;
-		public var scoreBox: InterfaceBall;
-		
-		public function PointClickEvent(type : String, ball : InterfaceBall, scoreBox: InterfaceBall)
+		public function PointClickEvent(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{
-			this.ball = ball;
-			this.scoreBox = scoreBox;
 			super(type, bubbles, cancelable);
-		}
-
-		override public function clone() : Event
-		{
-			return new PointClickEvent(type, ball,scoreBox);
 		}
 	}
 }

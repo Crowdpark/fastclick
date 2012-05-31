@@ -1,11 +1,11 @@
 package com.crowdpark.fastclick.mvcs.views.countrdown
 {
-	import com.crowdpark.fastclick.mvcs.core.StateMachineEvents;
-	import com.crowdpark.fastclick.mvcs.core.StateMachineMediator;
-
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
+	import com.greensock.TweenMax;
 	import flash.display.Sprite;
 
-	import com.greensock.TweenMax;
+
 
 	/**
 	 * @author fatmatekin

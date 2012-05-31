@@ -1,5 +1,6 @@
-package com.crowdpark.fastclick.mvcs.core
+package com.crowdpark.fastclick.mvcs.core.statemachine
 {
+	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import org.robotlegs.mvcs.Mediator;
@@ -17,6 +18,9 @@ package com.crowdpark.fastclick.mvcs.core
 		
 		[Inject]
 		public var configModel:ConfigModel;
+		
+		[Inject]
+		public var highestScoreModel: HighestScoreModel;
 		
 		override public function onRegister() : void
 		{

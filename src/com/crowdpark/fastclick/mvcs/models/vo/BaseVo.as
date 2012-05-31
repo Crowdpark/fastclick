@@ -1,37 +1,27 @@
 package com.crowdpark.fastclick.mvcs.models.vo
 {
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	/**
 	 * @author fatmatekin
 	 */
-	public class BaseVo
+	public class BaseVo implements InterfaceVO
 	{
-		private var _value : Object;
-		private var _key : Object;
+		private var _rawData : Object = new Object();
 
-		public function BaseVo(key : Object, value : Object)
+		public function getValueByKey(key : String) : Object
 		{
-			this.value = value;
-			this.key = key;
+			return _rawData[key];
 		}
 
-		public function get value() : Object
+		public function getValues() : Object
 		{
-			return _value;
+			return _rawData;
 		}
 
-		public function set value(value : Object) : void
+		public function setValueByKey(key : String, value : Object) : Object
 		{
-			this._value = value;
-		}
-
-		public function get key() : Object
-		{
-			return _key;
-		}
-
-		public function set key(key : Object) : void
-		{
-			this._key = key;
+			_rawData[key] = value;
+			return _rawData[key];
 		}
 	}
 }

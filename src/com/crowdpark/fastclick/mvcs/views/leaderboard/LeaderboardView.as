@@ -14,16 +14,19 @@ package com.crowdpark.fastclick.mvcs.views.leaderboard
 		public var leaderboardPanel : ScrollPane;
 		public var playerName : TextField;
 
-		public function LeaderboardView()
+		public function init(): LeaderboardView
 		{
 			leaderboardPanel = new ScrollPane();
-			// playerName = createField("", 0, 0, 200, 20, false, "Verdana", 20, 0);
+			leaderboardPanel.color = 0xffffff;
+			leaderboardPanel.shadow = false;
+			leaderboardPanel.showGrid = false;
+			leaderboardPanel.gridColor = 0xffffff;
 
-			leaderboardPanel.setSize(150, 100);
+			leaderboardPanel.setSize(150, 120);
 			leaderboardPanel.autoHideScrollBar = true;
-
-			// addChild(playerName);
 			addChild(leaderboardPanel);
+			
+			return this;
 		}
 	}
 }

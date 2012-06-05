@@ -16,7 +16,7 @@ package com.crowdpark.fastclick.mvcs.commands
 		
 		override public function execute() : void
 		{
-			var startView : StartView = new StartView();
+			var startView : StartView = new StartView().init();
 			contextView.addChild(startView);
 			
 			configService.fetchData("data/Config.json"); 

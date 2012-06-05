@@ -15,12 +15,7 @@ package com.crowdpark.fastclick.mvcs.views.game
 		public var pointsView : PointsView;
 		public var footerView : FooterView;
 
-		public function GameView()
-		{
-			init();
-		}
-
-		private function init() : void
+		public function init() : GameView
 		{
 			pointsView = new PointsView();
 			addChild(pointsView);
@@ -31,6 +26,7 @@ package com.crowdpark.fastclick.mvcs.views.game
 
 			footerView = new FooterView();
 			addChild(footerView);
+			return this;
 		}
 	}
 }

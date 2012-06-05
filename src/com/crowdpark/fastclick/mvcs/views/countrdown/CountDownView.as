@@ -10,10 +10,6 @@ package com.crowdpark.fastclick.mvcs.views.countrdown
 	 */
 	public class CountDownView extends Sprite
 	{
-		public function CountDownView()
-		{
-		}
-
 		public function createNumber(number : uint) : Sprite
 		{
 			var countDownSprite : Sprite = new Sprite();

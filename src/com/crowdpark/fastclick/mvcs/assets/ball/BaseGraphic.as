@@ -1,12 +1,7 @@
 package com.crowdpark.fastclick.mvcs.assets.ball
 {
-	import utils.draw.createCircleShape;
-	import utils.geom.randomPoint;
-	import utils.number.randomWithinRange;
-
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
 
-	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -14,42 +9,22 @@ package com.crowdpark.fastclick.mvcs.assets.ball
 	/**
 	 * @author fatmatekin
 	 */
-	public class BaseBall extends Sprite implements InterfaceBall
+	public class BaseGraphic extends Sprite implements InterfaceBall
 	{
 		private var _color : uint;
 		private var _direction : Point;
 		private var _score : uint;
 		private var _startPoint : Point;
-		private var _rawShape : Shape;
-		
-		public function BaseBall()
+
+		public function BaseGraphic()
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			
 		}
 
 		public function onAddedToStage(event : Event) : void
 		{
 			this.x = this.getStartPoint().x;
 			this.y = this.getStartPoint().y;
-			
-			addChild(getShape());
-		}
-
-		public function getShape() : Shape
-		{
-			if (!_rawShape)
-			{
-				_rawShape = createCircleShape(randomWithinRange(10, 40), this.getColor());
-			}
-
-			return _rawShape;
-		}
-
-		public function setShape(shape : Shape) : BaseBall
-		{
-			_rawShape = shape;
-			return this;
 		}
 
 		public function getColor() : uint
@@ -57,7 +32,7 @@ package com.crowdpark.fastclick.mvcs.assets.ball
 			return _color;
 		}
 
-		public function setColor(color : uint) : BaseBall
+		public function setColor(color : uint) : BaseGraphic
 		{
 			_color = color;
 			return this;
@@ -68,7 +43,7 @@ package com.crowdpark.fastclick.mvcs.assets.ball
 			return _direction;
 		}
 
-		public function setEndPoint(direction : Point) : BaseBall
+		public function setEndPoint(direction : Point) : BaseGraphic
 		{
 			_direction = direction;
 			return this;
@@ -79,7 +54,7 @@ package com.crowdpark.fastclick.mvcs.assets.ball
 			return _score;
 		}
 
-		public function setScore(score : uint) : BaseBall
+		public function setScore(score : uint) : BaseGraphic
 		{
 			_score = score;
 			return this;
@@ -87,19 +62,15 @@ package com.crowdpark.fastclick.mvcs.assets.ball
 
 		public function getStartPoint() : Point
 		{
-			if (!_startPoint)
-			{
-				_startPoint = randomPoint(0, 400, 50, 400);
-			}
-
 			return _startPoint;
 		}
 
-		public function setStartPoint(startPoint : Point) : BaseBall
+		public function setStartPoint(startPoint : Point) : BaseGraphic
 		{
 			_startPoint = startPoint;
 			this.x = _startPoint.x;
 			this.y = _startPoint.y;
+
 			return this;
 		}
 	}

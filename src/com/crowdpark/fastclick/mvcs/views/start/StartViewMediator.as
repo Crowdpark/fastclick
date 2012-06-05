@@ -17,14 +17,14 @@ package com.crowdpark.fastclick.mvcs.views.start
 		override public function onRegister() : void
 		{
 			super.onRegister();
-
+			view.y = 50;
 			view.gameTitleSprite.x = (contextView.stage.stageWidth - view.gameTitleSprite.width) / 2;
 			view.gameTitleSprite.y = 30;
 
 			view.playerNameSprite.x = (contextView.stage.stageWidth - view.playerNameSprite.width) / 2;
-			view.playerNameSprite.y = view.gameTitleSprite.y + view.gameTitleSprite.height + 20;
+			view.playerNameSprite.y = view.gameTitleSprite.y + view.gameTitleSprite.height + 60;
 
-			view.startButtonSprite.y = 300;
+			view.startButtonSprite.y = 230;
 			view.startButtonSprite.x = (contextView.stage.stageWidth - view.startButtonSprite.width) / 2;
 			view.startButtonSprite.buttonMode = true;
 

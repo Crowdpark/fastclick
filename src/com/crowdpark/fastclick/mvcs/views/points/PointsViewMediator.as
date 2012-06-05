@@ -1,9 +1,10 @@
 package com.crowdpark.fastclick.mvcs.views.points
 {
+	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.crowdpark.fastclick.mvcs.models.vo.BaseVo;
 	import com.crowdpark.fastclick.mvcs.assets.ScoreBox;
-	import com.crowdpark.fastclick.mvcs.assets.ball.BaseBall;
+	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
@@ -32,7 +33,9 @@ package com.crowdpark.fastclick.mvcs.views.points
 			{
 				var ballVo : BallVo = pointArray[i];
 
-				var ball : BaseBall = new BaseBall();
+				var ball : FastClickBall = new FastClickBall();
+				ball.mouseChildren = false;
+
 				ball.setEndPoint(Point(ballVo.getValueByKey('endPoint')));
 				ball.setColor(uint(ballVo.getValueByKey('color')));
 				ball.setScore(uint(ballVo.getValueByKey('score')));
@@ -46,15 +49,18 @@ package com.crowdpark.fastclick.mvcs.views.points
 
 		private function createRandomPoints() : void
 		{
-			var fastClickCircle : BaseBall = BaseBall(createRandomSizedPoint());
-			fastClickCircle.setStartPoint(randomPoint(0, 400, 50, 400));
-			addChild(fastClickCircle, view);
+			var fastClickCircle : BaseGraphic = BaseGraphic(createRandomSizedPoint());
+			fastClickCircle.setStartPoint(randomPoint(0, contextView.stage.stageWidth, 60, contextView.stage.stageHeight-60));
 
-			
+			if (view.getObjectsUnderPoint(fastClickCircle.getStartPoint()).length == 0)
+			{
+				addChild(fastClickCircle, view);
+			}
+
 			TweenMax.from(fastClickCircle, Math.random() / 2, {onComplete:checkState});
 		}
 
-		private function createRandomSizedPoint() : BaseBall
+		private function createRandomSizedPoint() : BaseGraphic
 		{
 			return _listOfBalls[randomIntegerWithinRange(0, _listOfBalls.length - 1)];
 		}
@@ -76,7 +82,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 				.setEndPoint(new Point(70, 5))
 				.setScore(fcCircle.getScore()));
 
-			var baseVo:InterfaceVO = new BaseVo();
+			var baseVo : InterfaceVO = new BaseVo();
 			baseVo.setValueByKey('fcBall', fcCircle);
 			baseVo.setValueByKey('scoreBox', scoreBox);
 

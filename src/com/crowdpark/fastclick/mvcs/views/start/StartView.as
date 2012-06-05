@@ -1,8 +1,11 @@
 package com.crowdpark.fastclick.mvcs.views.start
 {
+	import flash.text.TextFieldType;
+	import flash.display.Shape;
+
+	import utils.draw.createRectangleShape;
 	import utils.textField.createField;
-	import com.bit101.components.InputText;
-	import flash.text.TextFieldAutoSize;
+
 	import flash.text.TextFormat;
 	import flash.display.Sprite;
 	import flash.text.TextField;
@@ -15,17 +18,12 @@ package com.crowdpark.fastclick.mvcs.views.start
 		public var gameTitleSprite : Sprite;
 		public var startButtonSprite : Sprite;
 		public var playerNameSprite : Sprite;
-		public var playerNameField : InputText;
+		public var playerNameField : TextField;
 		private var tfm : TextFormat;
 
-		public function StartView()
+		public function init() : StartView
 		{
 			tfm = new TextFormat("Arial", 20, 0xffffff, true);
-			init();
-		}
-
-		private function init() : void
-		{
 			gameTitleSprite = new Sprite();
 			startButtonSprite = new Sprite();
 			playerNameSprite = new Sprite();
@@ -37,18 +35,14 @@ package com.crowdpark.fastclick.mvcs.views.start
 			createGameTitle();
 			createStartButton();
 			createPlayerNameField();
+			
+			return this;
 		}
 
 		private function createGameTitle() : void
 		{
-			var titleBackground : Sprite = new Sprite();
-			titleBackground.graphics.beginFill(0xff);
-			titleBackground.graphics.drawRect(0, 0, 300, 50);
-			titleBackground.graphics.endFill();
-
-			var title : TextField = new TextField();
-			title.defaultTextFormat = tfm;
-			title.text = "Fast Click";
+			var titleBackground : Shape = createRectangleShape(200, 30, 0x00e0e6);
+			var title : TextField = createField('FAST CLICK!', 0, 0, 200, 20, false, 'Verdana', 20, 0xffffff);
 			title.x = (titleBackground.width - title.width) / 2;
 
 			gameTitleSprite.addChild(titleBackground);
@@ -57,32 +51,35 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 		private function createStartButton() : void
 		{
-			var startButtonBackground : Sprite = new Sprite();
-			startButtonBackground.graphics.beginFill(0xff);
-			startButtonBackground.graphics.drawRect(0, 0, 100, 30);
-			startButtonBackground.graphics.endFill();
+			var startButtonBackground : Shape = createRectangleShape(100, 30, 0x00e0e6);
 
-			var startButtonTitle : TextField = new TextField();
-			startButtonTitle.mouseEnabled = false;
-			startButtonTitle.defaultTextFormat = tfm;
-			startButtonTitle.text = "Start";
-			startButtonTitle.autoSize = TextFieldAutoSize.LEFT;
+			var startButtonTitle : TextField = createField('PLAY!', 0, 0, 200, 20, false, 'Verdana', 20, 0xffffff);
 			startButtonTitle.x = (startButtonBackground.width - startButtonTitle.width) / 2;
+
+			startButtonSprite.mouseChildren = false;
 
 			startButtonSprite.addChild(startButtonBackground);
 			startButtonSprite.addChild(startButtonTitle);
 		}
 
 		private function createPlayerNameField() : void
-		{			
-			playerNameField = new InputText();
-			playerNameField.name = "playerName";
-			playerNameField.y = 20;
-			playerNameField.width = 100;
+		{
+			var tf : TextFormat = new TextFormat();
+			tf.font = "Verdana";
+			tf.size = 20;
+			tf.align = "center";
+
+			playerNameField = new TextField();
+			playerNameField.type = TextFieldType.INPUT;
+			playerNameField.y = 40;
+			playerNameField.width = 130;
 			playerNameField.height = 30;
-			
-			var title:TextField = createField("Your Name",0,0,200,20,false,"Verdana",15,0xff0000);
-			
+			playerNameField.text = "Enter your name here";
+			playerNameField.border = true;
+			playerNameField.defaultTextFormat = tf;
+
+			var title : TextField = createField("Enter your name", 0, 0, 200, 20, false, "Verdana", 15, 0);
+
 			playerNameSprite.addChild(title);
 			playerNameSprite.addChild(playerNameField);
 		}

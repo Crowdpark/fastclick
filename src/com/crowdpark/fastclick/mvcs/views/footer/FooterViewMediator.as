@@ -1,7 +1,8 @@
 package com.crowdpark.fastclick.mvcs.views.footer
 {
+	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
 	import com.bit101.components.HBox;
-	import com.crowdpark.fastclick.mvcs.assets.ball.BaseBall;
+	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
@@ -10,8 +11,6 @@ package com.crowdpark.fastclick.mvcs.views.footer
 
 	import flash.display.Shape;
 	import flash.display.Sprite;
-
-	import utils.draw.createRectangleShape;
 
 	/**
 	 * @author fatmatekin
@@ -23,17 +22,22 @@ package com.crowdpark.fastclick.mvcs.views.footer
 		override public function onRegister() : void
 		{
 			super.onRegister();
-			var footerBackground : Shape = createRectangleShape(contextView.stage.stageWidth, 60, 0xb3b3b3);
-			footerBackground.y = contextView.stage.stageHeight - 60;
-			view.addChild(footerBackground);
-			view.addChild(hbox);
+
+			view.addBallPane();
+			view.ballPanel.move(0, contextView.stage.stageHeight - 60);
+
+			hbox.x = 30;
+			hbox.y = 30;
+			hbox.spacing = 20;
+
+			view.ballPanel.addChild(hbox);
 
 			addContextListener(PointClickEvent.POINT_CLICK, handlePoinClick);
 		}
 
 		private function handlePoinClick(event : PointClickEvent) : void
 		{
-			var ball : BaseBall = BaseBall(event.getDataprovider().getValueByKey('fcBall'));
+			var ball : BaseGraphic = BaseGraphic(event.getDataprovider().getValueByKey('fcBall'));
 			view.addChild(ball);
 			TweenMax.to(ball, 0.3, {width:30, height:30, y:ball.getEndPoint().y, x:ball.getEndPoint().x, onComplete:handleTweenComplete, onCompleteParams:[ball], ease:Linear.easeOut});
 		}
@@ -42,19 +46,21 @@ package com.crowdpark.fastclick.mvcs.views.footer
 		{
 			if (stateMachineModel.state != "finish")
 			{
-				var ball : BaseBall = BaseBall(point);
+				var ball : FastClickBall = FastClickBall(point);
 				var shape : Shape = ball.getShape();
-				ball.setShape(null);
 
-				shape.x = ball.x;
-				shape.y = ball.y;
+				shape.x = 0;
+				shape.y = 0;
 				shape.width = 30;
 				shape.height = 30;
+
+				ball.setShape(null);
 
 				var shapeSprite : Sprite = new Sprite();
 				shapeSprite.addChild(shape);
 
 				hbox.addChild(shapeSprite);
+				view.ballPanel.update();
 			}
 		}
 

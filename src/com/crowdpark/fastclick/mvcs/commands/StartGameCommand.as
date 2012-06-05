@@ -16,7 +16,7 @@ package com.crowdpark.fastclick.mvcs.commands
 		override public function execute() : void
 		{
 			contextView.removeChildAt(0);
-			contextView.addChild(new GameView());
+			contextView.addChild(new GameView().init());
 
 			configModel.startTimer();
 		}

@@ -18,30 +18,33 @@ package com.crowdpark.fastclick.mvcs.views.result
 		public var retryButton : Sprite;
 		public var leaderboardView : LeaderboardView;
 		public var leaderboardTitle:TextField;
-		
-		public function ResultView()
+	
+		public function  init() : ResultView
 		{
-			resultText = createField("Your Score is", 0, 0, 200, 20, false, "Verdana", 15);
-			result = createField("", 0, 0, 200, 20, false, "Verdana", 20);
-			resultText = createField("Your Score is", 0, 0, 200, 20, false, "Verdana", 15);
-			leaderboardTitle = createField("Highest Scores",0, 0, 200, 20, false, "Verdana", 15);
+			resultText = createField("Your Score", 0, 0, 200, 20, false, "Verdana", 13);
+			result = createField("", 0, 0, 200, 20, false, "Verdana", 22);
+			leaderboardTitle = createField("HIGHEST SCORES",0, 0, 200, 20, false, "Verdana", 15);
 			
 			addChild(result);
 			addChild(resultText);
 			addChild(leaderboardTitle);
 			
 			retryButton = new Sprite;
-			retryButton.addChild(createRectangleShape(80, 30));
+			retryButton.addChild(createRectangleShape(80, 30,0x00e0e6));
 
-			var title : TextField = createField("Retry", 0, 0, 200, 20, false, "Verdana", 15, 0xffffff);
-			title.x = (retryButton.width - title.textWidth) / 2;
+			var title : TextField = createField("RETRY", 0, 0, 200, 20, false, "Verdana", 15, 0xffffff);
+			title.x = (retryButton.width - title.width) / 2;
+			title.y = (retryButton.height - title.height)/2;
 
 			retryButton.addChild(title);
 
 			addChild(retryButton);
 
-			leaderboardView = new LeaderboardView();
+			leaderboardView = new LeaderboardView().init();
 			addChild(leaderboardView);
+			
+			return this;
 		}
+		
 	}
 }

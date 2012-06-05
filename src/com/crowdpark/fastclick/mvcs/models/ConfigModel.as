@@ -63,7 +63,7 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function startTimer() : void
 		{
-			_timer = new Timer(500, 0);
+			_timer = new Timer(1000, 0);
 			_timer.addEventListener(TimerEvent.TIMER, handleTimer);
 			_timer.start();
 		}

@@ -17,7 +17,6 @@ package com.crowdpark.fastclick.mvcs.commands
 		public var playerModel : PlayerModel;
 		[Inject]
 		public var gameEvents : GameEvents;
-		
 
 		override public function execute() : void
 		{
@@ -27,11 +26,10 @@ package com.crowdpark.fastclick.mvcs.commands
 			playerModel.setFlashCookie(flashCookie);
 
 			var player : PlayerVo = new PlayerVo().setPlayerName(String(gameEvents.getDataprovider().getValueByKey('playerName')))
-												.setCurrentScore(0);
-			
+				.setCurrentScore(0);
+
 			playerModel.addPlayer(player);
 			playerModel.setCurrentPlayer(player);
-			
 		}
 	}
 }

@@ -1,5 +1,5 @@
 {
-	"gameDuration": "30",
+	"gameDuration": "10",
 	"points":
 			[
 				{"color":"0x0080ff","score":"100"},

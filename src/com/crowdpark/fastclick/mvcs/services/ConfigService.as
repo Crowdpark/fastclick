@@ -1,5 +1,8 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
+	import com.crowdpark.net.rpc.json.JsonRpcClientEvent;
+	import com.crowdpark.net.rpc.json.JsonRpcClient;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.adobe.serialization.json.JSONDecoder;
 
@@ -20,13 +23,9 @@ package com.crowdpark.fastclick.mvcs.services
 		[Inject]
 		public var configModel : ConfigModel;
 
-		public function ConfigService()
-		{
-			urlLoader = new URLLoader();
-		}
-
 		public function fetchData(url : String) : void
 		{
+			urlLoader = new URLLoader();
 			var urlRequest : URLRequest = new URLRequest(url);
 			urlLoader.load(urlRequest);
 			urlLoader.addEventListener(Event.COMPLETE, handleComplete);

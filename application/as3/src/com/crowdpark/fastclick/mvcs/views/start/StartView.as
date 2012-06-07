@@ -1,5 +1,9 @@
 package com.crowdpark.fastclick.mvcs.views.start
 {
+	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
+
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.text.TextFieldType;
 	import flash.display.Shape;
 
@@ -13,20 +17,33 @@ package com.crowdpark.fastclick.mvcs.views.start
 	/**
 	 * @author fatmatekin
 	 */
-	public class StartView extends Sprite
+	public class StartView extends BaseView
 	{
-		public var gameTitleSprite : Sprite;
-		public var startButtonSprite : Sprite;
-		public var playerNameSprite : Sprite;
-		public var playerNameField : TextField;
+		public var gameTitleSprite : Sprite = new Sprite();
+		public var startButtonSprite : Sprite = new Sprite();
+		public var playerNameSprite : Sprite = new Sprite();
+		private var _playerNameField : TextField;
 		private var tfm : TextFormat;
+		public static const START_GAME : String = "START_GAME";
 
-		public function init() : StartView
+		override public function onAddedToStageListener(e : Event) : void
+		{
+			gameTitleSprite.x = (stage.stageWidth - gameTitleSprite.width) / 2;
+			gameTitleSprite.y = 30;
+
+			playerNameSprite.x = (stage.stageWidth - playerNameSprite.width) / 2;
+			playerNameSprite.y = gameTitleSprite.y + gameTitleSprite.height + 60;
+
+			startButtonSprite.y = 230;
+			startButtonSprite.x = (stage.stageWidth - startButtonSprite.width) / 2;
+			startButtonSprite.buttonMode = true;
+
+			startButtonSprite.addEventListener(MouseEvent.CLICK, handleStartClickEvent);
+		}
+
+		override public function init() : void
 		{
 			tfm = new TextFormat("Arial", 20, 0xffffff, true);
-			gameTitleSprite = new Sprite();
-			startButtonSprite = new Sprite();
-			playerNameSprite = new Sprite();
 
 			addChild(gameTitleSprite);
 			addChild(startButtonSprite);
@@ -36,7 +53,15 @@ package com.crowdpark.fastclick.mvcs.views.start
 			createStartButton();
 			createPlayerNameField();
 			
-			return this;
+			//updatePlayerNameField();
+		}
+
+		private function handleStartClickEvent(e : MouseEvent) : void
+		{
+			var playerName : String = _playerNameField.text;
+			this.getDataProvider().setValueByKey('playerName', playerName);
+
+			dispatchEvent(new Event(StartView.START_GAME));
 		}
 
 		private function createGameTitle() : void
@@ -69,19 +94,38 @@ package com.crowdpark.fastclick.mvcs.views.start
 			tf.size = 20;
 			tf.align = "center";
 
-			playerNameField = new TextField();
-			playerNameField.type = TextFieldType.INPUT;
-			playerNameField.y = 40;
-			playerNameField.width = 130;
-			playerNameField.height = 30;
-			playerNameField.text = "Enter your name here";
-			playerNameField.border = true;
-			playerNameField.defaultTextFormat = tf;
+			_playerNameField = new TextField();
+			_playerNameField.type = TextFieldType.INPUT;
+			_playerNameField.y = 40;
+			_playerNameField.width = 130;
+			_playerNameField.height = 30;
+			_playerNameField.text = "";
+			_playerNameField.border = true;
+			_playerNameField.defaultTextFormat = tf;
 
 			var title : TextField = createField("Enter your name", 0, 0, 200, 20, false, "Verdana", 15, 0);
 
 			playerNameSprite.addChild(title);
-			playerNameSprite.addChild(playerNameField);
+			playerNameSprite.addChild(_playerNameField);
+		}
+
+		public function updatePlayerNameField() : StartView
+		{
+			var playerName : String = String(this.getDataProvider().getValueByKey('playerName'));
+			this.getPlayerNameField().text = playerName;
+
+			return this;
+		}
+
+		public function getPlayerNameField() : TextField
+		{
+			return _playerNameField;
+		}
+
+		public function setPlayerNameField(playerNameField : TextField) : StartView
+		{
+			_playerNameField = playerNameField;
+			return this;
 		}
 	}
 }

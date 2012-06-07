@@ -1,4 +1,4 @@
-package com.crowdpark.fastclick.mvcs.models.vo
+package com.crowdpark.fastclick.mvcs.core.base
 {
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	/**

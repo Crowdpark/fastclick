@@ -1,22 +1,22 @@
 package com.crowdpark.fastclick.mvcs.views.points
 {
 	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
-	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
-	import com.crowdpark.fastclick.mvcs.models.vo.BaseVo;
 	import com.crowdpark.fastclick.mvcs.assets.ScoreBox;
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
+	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.crowdpark.fastclick.mvcs.models.vo.BallVo;
 	import com.greensock.TweenMax;
-
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-
 	import utils.display.addChild;
 	import utils.geom.randomPoint;
 	import utils.number.randomIntegerWithinRange;
+
+
 
 	/**
 	 * @author fatmatekin

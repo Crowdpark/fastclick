@@ -18,6 +18,10 @@ package com.crowdpark.fastclick.mvcs.core.base
 
 		public function getDataprovider() : InterfaceVO
 		{
+			if(!_dataprovider)
+			{
+				_dataprovider = new BaseVo();
+			}
 			return _dataprovider;
 		}
 

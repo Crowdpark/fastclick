@@ -20,7 +20,9 @@ package com.crowdpark.fastclick.mvcs.commands
 		override public function execute() : void
 		{
 			contextView.removeChildAt(0);
-			contextView.addChild(new ResultView().init());
+			var resultView:ResultView = new ResultView();
+			resultView.init();
+			contextView.addChild(resultView);
 			
 			highestScoreModel.setHighscoreList(playerModel.getPlayerArray());
 		}

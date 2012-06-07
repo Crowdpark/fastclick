@@ -1,11 +1,11 @@
 package com.crowdpark.fastclick.mvcs.views.points
 {
-	import flash.display.Sprite;
-
+	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
+	
 	/**
 	 * @author fatmatekin
 	 */
-	public class PointsView extends Sprite
+	public class PointsView extends BaseView
 	{
 	}
 }

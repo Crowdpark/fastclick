@@ -1,17 +1,17 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.crowdpark.fastclick.mvcs.models.vo.BallVo;
-	import com.crowdpark.fastclick.mvcs.models.vo.BaseVo;
 	import com.crowdpark.fastclick.mvcs.views.hud.HudViewEvent;
-
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.utils.Timer;
-
 	import org.robotlegs.mvcs.Actor;
+
+
 
 	/**
 	 * @author fatmatekin

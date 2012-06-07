@@ -51,7 +51,6 @@ package com.crowdpark.fastclick.mvcs
 			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, StartUpCompleteCommand,ContextEvent);
 			commandMap.mapEvent(StateMachineEvents.START, CountDownCommand,StateMachineEvents);
 			commandMap.mapEvent(GameEvents.SET_PLAYER, SetPlayerCommand,GameEvents);
-									
 			commandMap.mapEvent(StateMachineEvents.GAME,StartGameCommand,StateMachineEvents);		
 			commandMap.mapEvent(StateMachineEvents.FINISH, FinishGameCommand,StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.RETRY, RetryGameCommand,StateMachineEvents);

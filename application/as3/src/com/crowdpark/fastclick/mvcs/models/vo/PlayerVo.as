@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.models.vo
 {
+	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 	/**
 	 * @author fatmatekin
 	 */
@@ -27,20 +28,5 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			return this;
 		}
 
-		public function getScoreArray() : Array
-		{
-			return (this.getValueByKey('scoreArray') as Array);
-		}
-
-		public function setScoreArray(scoreArray : Array) : PlayerVo
-		{
-			this.setValueByKey('scoreArray', scoreArray);
-			return this;
-		}
-
-		public function addNewScore() : void
-		{
-			getScoreArray().push(getCurrentScore());
-		}
 	}
 }

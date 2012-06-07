@@ -1,20 +1,21 @@
 package com.crowdpark.fastclick.mvcs.views.leaderboard
 {
+	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
 	import flash.text.TextField;
 
 	import com.bit101.components.ScrollPane;
 
-	import flash.display.Sprite;
-
+	
 	/**
 	 * @author fatmatekin
 	 */
-	public class LeaderboardView extends Sprite
+	public class LeaderboardView extends BaseView
 	{
 		public var leaderboardPanel : ScrollPane;
 		public var playerName : TextField;
 
-		public function init(): LeaderboardView
+		override public function init() :void
+		
 		{
 			leaderboardPanel = new ScrollPane();
 			leaderboardPanel.color = 0xffffff;
@@ -26,7 +27,7 @@ package com.crowdpark.fastclick.mvcs.views.leaderboard
 			leaderboardPanel.autoHideScrollBar = true;
 			addChild(leaderboardPanel);
 			
-			return this;
+			
 		}
 	}
 }

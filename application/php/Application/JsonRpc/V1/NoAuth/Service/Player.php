@@ -13,6 +13,15 @@ class Player extends \Processus\Abstracts\JsonRpc\AbstractJsonRpcService
     public function saveGame(array $params)
     {
         $manager = new \Application\Manager\Player\PlayerManager();
+
+        $params["user_id"] = $params["id"];
+
+        unset($params["id"]);
+        unset($params["playerName"]);
+        unset($params["playerLastName"]);
+        echo "parameters";
+        print_r($params);
+
         return $manager->saveGame($params);
     }
 

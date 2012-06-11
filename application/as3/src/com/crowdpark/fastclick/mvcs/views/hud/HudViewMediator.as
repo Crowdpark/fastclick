@@ -18,6 +18,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 		{
 			super.onRegister();
 			view.getDataProvider().setValueByKey('playerName', playerModel.getCurrentPlayer().getValueByKey('playerName'));
+			view.getDataProvider().setValueByKey('playerLastName', playerModel.getCurrentPlayer().getValueByKey('playerLastName'));
 			view.getDataProvider().setValueByKey('gameDuration', configModel.getGameDuration());
 			
 			addContextListener(HudViewEvent.UPDATE, updateTime);

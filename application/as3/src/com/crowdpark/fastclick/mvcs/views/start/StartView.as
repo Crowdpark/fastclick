@@ -29,16 +29,17 @@ package com.crowdpark.fastclick.mvcs.views.start
 		override public function onAddedToStageListener(e : Event) : void
 		{
 			gameTitleSprite.x = (stage.stageWidth - gameTitleSprite.width) / 2;
-			gameTitleSprite.y = 30;
+			gameTitleSprite.y = 10;
 
 			playerNameSprite.x = (stage.stageWidth - playerNameSprite.width) / 2;
-			playerNameSprite.y = gameTitleSprite.y + gameTitleSprite.height + 60;
+			playerNameSprite.y = gameTitleSprite.y + gameTitleSprite.height + 40;
 
-			startButtonSprite.y = 230;
+			startButtonSprite.y = 200;
 			startButtonSprite.x = (stage.stageWidth - startButtonSprite.width) / 2;
 			startButtonSprite.buttonMode = true;
 
 			startButtonSprite.addEventListener(MouseEvent.CLICK, handleStartClickEvent);
+			
 		}
 
 		override public function init() : void
@@ -52,8 +53,6 @@ package com.crowdpark.fastclick.mvcs.views.start
 			createGameTitle();
 			createStartButton();
 			createPlayerNameField();
-			
-			//updatePlayerNameField();
 		}
 
 		private function handleStartClickEvent(e : MouseEvent) : void
@@ -109,10 +108,19 @@ package com.crowdpark.fastclick.mvcs.views.start
 			playerNameSprite.addChild(_playerNameField);
 		}
 
-		public function updatePlayerNameField() : StartView
+		public function updatePlayerNameField(name:String,lastName:String) : StartView
 		{
-			var playerName : String = String(this.getDataProvider().getValueByKey('playerName'));
-			this.getPlayerNameField().text = playerName;
+			getDataProvider().setValueByKey('playerName', name);
+			getDataProvider().setValueByKey('playerLastName', lastName)
+			
+			if (name=='' && lastName=='')
+			{				
+				this.getPlayerNameField().text = 'Your Name';
+			}
+			else
+			{
+				this.getPlayerNameField().text = name + ' ' +lastName;
+			}
 
 			return this;
 		}

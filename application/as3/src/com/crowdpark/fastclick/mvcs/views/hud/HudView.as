@@ -44,8 +44,8 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			var hudViewBackground : Shape = createRectangleShape(stage.stageWidth, 60, 0x000000);
 			addChildAt(hudViewBackground,0);
 			
-			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 120, 0, 10, stage.stageWidth - 10, this.height);
-			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 120, 0, 10, stage.stageWidth - 10, this.height);
+			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 140, 0, 10, stage.stageWidth - 10, this.height);
+			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 140, 0, 10, stage.stageWidth - 10, this.height);
 			timeBar.mask = barMask;
 
 			TweenMax.to(barMask, uint(this.getDataProvider().getValueByKey('gameDuration')), {y:stage.stageHeight - 60, ease:Linear.easeNone});
@@ -60,7 +60,10 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			timeSprite.x = stage.stageWidth - timeSprite.width - 20;
 			playerNameSprite.x = timeSprite.x - 70;
 
-			playerNameField.text = String(this.getDataProvider().getValueByKey('playerName'));
+			var playerName:String =String(this.getDataProvider().getValueByKey('playerName'));
+			var playerLastName:String =String(this.getDataProvider().getValueByKey('playerLastName'));
+			
+			playerNameField.text = playerName + ' ' +playerLastName;
 
 			playerNameSprite.getChildAt(0).width = playerNameField.width + 6;
 			playerNameSprite.getChildAt(0).height = playerNameField.height + 6;

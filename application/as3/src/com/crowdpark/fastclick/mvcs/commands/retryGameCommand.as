@@ -1,7 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import flash.net.SharedObject;
-
+	import flash.display.Sprite;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.views.start.StartView;
 
@@ -17,20 +16,14 @@ package com.crowdpark.fastclick.mvcs.commands
 
 		override public function execute() : void
 		{
-			contextView.removeChildAt(0);
-
+			var mainSprite : Sprite = Sprite(contextView.getChildByName('mainSprite'));
+			mainSprite.removeChildAt(0);
+			
+			
 			var startView : StartView = new StartView();
 			startView.init();
 
-			var flashCookie : SharedObject = SharedObject(playerModel.getFlashCookie());
-
-			if (flashCookie.data.playername)
-			{
-				startView.getDataProvider().setValueByKey('playerName', flashCookie.data.playername);
-				startView.updatePlayerNameField();
-			}
-
-			contextView.addChild(startView);
+			mainSprite.addChild(startView);
 		}
 	}
 }

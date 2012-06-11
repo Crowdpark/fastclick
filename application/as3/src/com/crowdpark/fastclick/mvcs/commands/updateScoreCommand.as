@@ -15,15 +15,15 @@ package com.crowdpark.fastclick.mvcs.commands
 		public var playerModel : PlayerModel;
 		[Inject]
 		public var pointClickEvent : PointClickEvent;
-		
+
 		override public function execute() : void
 		{
 			var ballScore : uint = BaseGraphic(pointClickEvent.getDataprovider().getValueByKey('fcBall')).getScore();
-			var score : uint = ballScore + uint(playerModel.getCurrentPlayer().getValueByKey('currentScore'));
-			var ballAmount:uint = uint( playerModel.getCurrentPlayer().getValueByKey('clickedBallAmount'))+1;
-			
-			playerModel.getCurrentPlayer().setValueByKey('currentScore', score);
-			playerModel.getCurrentPlayer().setValueByKey('clickedBallAmount', ballAmount);	
+			var score : uint = ballScore + playerModel.getCurrentPlayer().getCurrentScore();
+			var ballAmount : uint = playerModel.getCurrentPlayer().getClickedBallAmount() + 1;
+
+			playerModel.getCurrentPlayer().setCurrentScore(score);
+			playerModel.getCurrentPlayer().setClickedBallAmount(ballAmount);
 		}
 	}
 }

@@ -21,6 +21,7 @@ package com.crowdpark.fastclick.mvcs.views.footer
 		{
 			super.init();
 
+			
 			addBallPane();
 			ballPanel.addChild(hbox);
 		}
@@ -29,18 +30,18 @@ package com.crowdpark.fastclick.mvcs.views.footer
 		{
 			super.onAddedToStageListener(e);
 
+			this.y = stage.stageHeight-140;
+			
 			hbox.x = 30;
 			hbox.y = 30;
 			hbox.spacing = 20;
 
-			ballPanel.move(0, stage.stageHeight - 60);
+			ballPanel.move(0, 0);
 			ballPanel.setSize(stage.stageWidth, 60);
 		}
 
 		public function addBallPane() : void
 		{
-			trace('onfooter');
-
 			ballPanel.color = 0xffffff;
 			ballPanel.shadow = false;
 			ballPanel.showGrid = false;

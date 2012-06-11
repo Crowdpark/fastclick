@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.start
 {
+	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 
 	import flash.events.Event;
@@ -16,20 +17,19 @@ package com.crowdpark.fastclick.mvcs.views.start
 		{
 			super.onRegister();
 			view.y = 50;
-			
-			view.updatePlayerNameField();
-			
+
 			addViewListener(StartView.START_GAME, onStartGameListener);
+			addContextListener(GameEvents.SET_PLAYER_COOKIE, setPlayerListener);
+		}
+
+		private function setPlayerListener(event : GameEvents) : void
+		{
+			view.updatePlayerNameField(String(event.getDataprovider().getValueByKey('playerName')), String(event.getDataprovider().getValueByKey('playerLastName')));
 		}
 
 		private function onStartGameListener(e : Event) : void
 		{
-			trace('onstartgame');
-			view.updatePlayerNameField();
-			
 			dispatch(new StateMachineEvents(StateMachineEvents.START));
-			
-			dispatch(new GameEvents(GameEvents.SET_PLAYER).setDataprovider(view.getDataProvider()));
 		}
 
 		protected function get view() : StartView

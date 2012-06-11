@@ -11,7 +11,7 @@ package com.crowdpark.fastclick.mvcs.commands
 	/**
 	 * @author fatmatekin
 	 */
-	public class SetPlayerCommand extends Command
+	public class SetPlayerCookieCommand extends Command
 	{
 		[Inject]
 		public var playerModel : PlayerModel;
@@ -22,14 +22,9 @@ package com.crowdpark.fastclick.mvcs.commands
 		{
 			var flashCookie : SharedObject = SharedObject.getLocal("MyFlashCookie");
 			flashCookie.data.playername = gameEvents.getDataprovider().getValueByKey('playerName');
-
+			flashCookie.data.playername = gameEvents.getDataprovider().getValueByKey('playerLastName');
+			
 			playerModel.setFlashCookie(flashCookie);
-
-			var player : PlayerVo = new PlayerVo().setPlayerName(String(gameEvents.getDataprovider().getValueByKey('playerName')))
-				.setCurrentScore(0);
-
-			playerModel.addPlayer(player);
-			playerModel.setCurrentPlayer(player);
 		}
 	}
 }

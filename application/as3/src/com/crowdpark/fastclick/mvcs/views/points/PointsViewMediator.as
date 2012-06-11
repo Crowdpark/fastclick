@@ -10,13 +10,13 @@ package com.crowdpark.fastclick.mvcs.views.points
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.crowdpark.fastclick.mvcs.models.vo.BallVo;
 	import com.greensock.TweenMax;
+
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+
 	import utils.display.addChild;
 	import utils.geom.randomPoint;
 	import utils.number.randomIntegerWithinRange;
-
-
 
 	/**
 	 * @author fatmatekin
@@ -35,8 +35,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 
 				var ball : FastClickBall = new FastClickBall();
 				ball.mouseChildren = false;
-
-				ball.setEndPoint(Point(ballVo.getValueByKey('endPoint')));
+				ball.setEndPoint(new Point(60, contextView.stage.stageHeight - 140));
 				ball.setColor(uint(ballVo.getValueByKey('color')));
 				ball.setScore(uint(ballVo.getValueByKey('score')));
 
@@ -50,7 +49,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 		private function createRandomPoints() : void
 		{
 			var fastClickCircle : BaseGraphic = BaseGraphic(createRandomSizedPoint());
-			fastClickCircle.setStartPoint(randomPoint(0, contextView.stage.stageWidth, 60, contextView.stage.stageHeight-60));
+			fastClickCircle.setStartPoint(randomPoint(0, contextView.stage.stageWidth, 60, contextView.stage.stageHeight - 140));
 
 			if (view.getObjectsUnderPoint(fastClickCircle.getStartPoint()).length == 0)
 			{

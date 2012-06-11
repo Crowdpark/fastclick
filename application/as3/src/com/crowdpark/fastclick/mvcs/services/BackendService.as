@@ -11,18 +11,20 @@ package com.crowdpark.fastclick.mvcs.services
 	 */
 	public class BackendService extends Actor
 	{
-		public function storePoints(point : PlayerVo) : void
+		public function storePlayer(player : PlayerVo) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
-			jsonClient.params = [point.getValues()];
-			jsonClient.method = 'App.';
-			jsonClient.url = '';
+			jsonClient.params = [player.getValues()];
+			jsonClient.method = 'NoAuth.Player.saveGame';
+			jsonClient.url = 'http://local.fastclick/api/v1/notauth/';
 
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStorePointResult);
+			jsonClient.send();
+			
 		}
-
 		private function onStorePointResult(event : JsonRpcClientEvent) : void
 		{
+			trace('datasend');
 		}
 	}
 }

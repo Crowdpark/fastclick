@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.views.hud
 {
+	import flash.events.MouseEvent;
+
 	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
@@ -20,6 +22,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 	 */
 	public class HudView extends BaseView
 	{
+		private static const LOGOUT : String = "LOGOUT";
 		public var scoreTitle : TextField = new TextField();
 		public var score : TextField = new TextField();
 		public var timeSprite : Sprite = new Sprite();
@@ -28,65 +31,70 @@ package com.crowdpark.fastclick.mvcs.views.hud
 		public var playerNameField : TextField = new TextField();
 		public var playerNameSprite : Sprite = new Sprite();
 
-		
 		override public function init() : void
 		{
-		
 			createScoreView();
 			createTimeView();
 			createTimeBar();
-			createPlayerName();
-			
-			
 		}
+
 		override public function onAddedToStageListener(e : Event) : void
 		{
 			var hudViewBackground : Shape = createRectangleShape(stage.stageWidth, 60, 0x000000);
-			addChildAt(hudViewBackground,0);
-			
-			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 200, 0, 10, stage.stageWidth - 10, this.height);
-			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 200, 0, 10, stage.stageWidth - 10, this.height);
+
+			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 200, 0, 10, stage.stageWidth - 10, hudViewBackground.height);
+			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 200, 0, 10, stage.stageWidth - 10, hudViewBackground.height);
 			timeBar.mask = barMask;
 
 			TweenMax.to(barMask, uint(this.getDataProvider().getValueByKey('gameDuration')), {y:stage.stageHeight - 140, ease:Linear.easeNone});
 
-			addChild(timeBar);
-			addChild(barMask);
-			
-		
 			scoreTitle.y = 20;
 			scoreTitle.x = 5;
 			score.x = 5;
 			timeSprite.x = stage.stageWidth - timeSprite.width - 20;
-			playerNameSprite.x = timeSprite.x - 70;
 
-			var playerName:String =String(this.getDataProvider().getValueByKey('playerName'));
-			var playerLastName:String =String(this.getDataProvider().getValueByKey('playerLastName'));
-			
-			playerNameField.text = playerName + ' ' +playerLastName;
+			var playerName : String = String(this.getDataProvider().getValueByKey('playerName'));
+			var playerLastName : String = String(this.getDataProvider().getValueByKey('playerLastName'));
 
-			playerNameSprite.getChildAt(0).width = playerNameField.width + 6;
-			playerNameSprite.getChildAt(0).height = playerNameField.height + 6;
-			
-			playerNameField.x = (playerNameSprite.width - playerNameField.width) / 2;
-			playerNameField.y = (playerNameSprite.height - playerNameField.height) / 2;
+			playerNameField = createField("", 0, 0, 100, 20, false, "Verdana", 12, 0xffffff);
+			playerNameField.text = playerName + ' ' + playerLastName;
+			playerNameField.background = true;
+			playerNameField.backgroundColor = 0xcacaca;
+			playerNameField.x = stage.stageWidth - playerNameField.width;
 
 			time.text = String(this.getDataProvider().getValueByKey('gameDuration'));
-			timeSprite.x = stage.stageWidth - timeSprite.width - 20;
-			
-			playerNameSprite.x = timeSprite.x - playerNameSprite.width-10;
+			timeSprite.x = (stage.stageWidth - timeSprite.width) / 2;
+
+			var logoutSprite : Sprite = createButtonWithTitle('Logout');
+			logoutSprite.addEventListener(MouseEvent.CLICK, onLogoutListener);
+			logoutSprite.x = stage.stageWidth - 50;
+			logoutSprite.y = 60 - logoutSprite.height;
+
+			addChildAt(hudViewBackground, 0);
+			addChild(timeBar);
+			addChild(barMask);
+			// addChild(logoutSprite);
+			addChild(playerNameField);
 		}
 
-		private function createPlayerName() : void
+		private function onLogoutListener(e : MouseEvent) : void
 		{
-			var playerNameBackground : Shape = createRectangleShape(100, 30, 0xcacaca);
-			playerNameField = createField("", 0, 0, 100, 20, false, "Verdana", 12, 0xffffff);
-			playerNameSprite = new Sprite();
+			dispatchEvent(new Event(HudView.LOGOUT));
+		}
 
-			playerNameSprite.addChild(playerNameBackground);
-			playerNameSprite.addChild(playerNameField);
+		private function createButtonWithTitle(title : String) : Sprite
+		{
+			var buttonTitle : TextField = createField(title, 0, 0, 100, 20, false, "Verdana", 12, 0xffffff);
+			buttonTitle.background = true;
+			buttonTitle.backgroundColor = 0xcacaca;
+			buttonTitle.name = 'buttonTitle';
 
-			addChild(playerNameSprite);
+			var buttonSprite : Sprite = new Sprite();
+			buttonSprite.addChild(buttonTitle);
+			buttonSprite.mouseChildren = false;
+			buttonSprite.buttonMode = true;
+
+			return buttonSprite;
 		}
 
 		private function createTimeBar() : void
@@ -116,8 +124,6 @@ package com.crowdpark.fastclick.mvcs.views.hud
 		public function updateTime() : void
 		{
 			time.text = String(this.getDataProvider().getValueByKey('time'));
-			timeSprite.x = stage.stageWidth - timeSprite.width - 20;
-			playerNameSprite.x = timeSprite.x - playerNameSprite.width-10;
 		}
 	}
 }

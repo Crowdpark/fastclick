@@ -25,9 +25,10 @@ package com.crowdpark.fastclick.mvcs.views.footer
 
 		private function handlePointClick(event : PointClickEvent) : void
 		{
-			var ball : BaseGraphic = BaseGraphic(event.getDataprovider().getValueByKey('fcBall'));
+			var ball : BaseGraphic = BaseGraphic(event.getDataprovider().getValueByKey('fcCircle'));
 			view.addChild(ball);
-			TweenMax.to(ball, 0.5, {width:30, height:30, y:ball.getEndPoint().y, x:ball.getEndPoint().x, onComplete:handleTweenComplete, onCompleteParams:[ball], ease:Linear.easeOut});
+
+			TweenMax.to(ball, 0.3, {width:30, height:30, y:ball.getEndPoint().y, x:ball.getEndPoint().x, onComplete:handleTweenComplete, onCompleteParams:[ball], ease:Linear.easeOut});
 		}
 
 		private function handleTweenComplete(point : InterfaceBall) : void

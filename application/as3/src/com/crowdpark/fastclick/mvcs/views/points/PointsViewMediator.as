@@ -75,17 +75,17 @@ package com.crowdpark.fastclick.mvcs.views.points
 		private function handleCircleClickEvent(e : MouseEvent) : void
 		{
 			var fcCircle : InterfaceBall = InterfaceBall(e.currentTarget);
-
+			
 			var scoreBox : ScoreBox = ScoreBox(new ScoreBox().setColor(fcCircle.getColor())
 				.setStartPoint(fcCircle.getStartPoint())
 				.setEndPoint(new Point(70, 5))
 				.setScore(fcCircle.getScore()));
 
-			var baseVo : InterfaceVO = new BaseVo();
-			baseVo.setValueByKey('fcBall', fcCircle);
-			baseVo.setValueByKey('scoreBox', scoreBox);
+			var pointClickEvent : PointClickEvent = new PointClickEvent(PointClickEvent.POINT_CLICK);
+			pointClickEvent.getDataprovider().setValueByKey('fcCircle', fcCircle);
+			pointClickEvent.getDataprovider().setValueByKey('scoreBox', scoreBox);
 
-			dispatch(new PointClickEvent(PointClickEvent.POINT_CLICK).setDataprovider(baseVo));
+			dispatch(pointClickEvent);
 		}
 
 		public function get view() : PointsView

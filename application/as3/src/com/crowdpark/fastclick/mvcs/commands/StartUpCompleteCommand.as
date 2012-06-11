@@ -1,7 +1,9 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
 	import flash.display.Sprite;
+
 	import com.crowdpark.fastclick.mvcs.views.friends.FriendsView;
+
 	import utils.js.callJSFunction;
 
 	import flash.external.ExternalInterface;
@@ -28,24 +30,24 @@ package com.crowdpark.fastclick.mvcs.commands
 		override public function execute() : void
 		{
 			facebookService.init();
-			var mainSprite: Sprite = new Sprite();
-			mainSprite.name ='mainSprite';
-			var friendsSprite:Sprite = new Sprite();
-			friendsSprite.name ='friendsSprite';
-			
-			contextView.addChild(mainSprite);
-			contextView.addChild(friendsSprite);
-			
+
+			var mainSprite : Sprite = new Sprite();
+			mainSprite.name = 'mainSprite';
+			var friendsSprite : Sprite = new Sprite();
+			friendsSprite.name = 'friendsSprite';
+
 			var startView : StartView = new StartView();
 			startView.init();
-			
-			mainSprite.addChild(startView);
-			
-			
-			var friends:FriendsView = new FriendsView();
+
+			var friends : FriendsView = new FriendsView();
 			friends.init();
+
 			friendsSprite.addChild(friends);
-						
+			mainSprite.addChild(startView);
+
+			contextView.addChild(mainSprite);
+			contextView.addChild(friendsSprite);
+
 			configService.fetchData("data/Config.json");
 		}
 	}

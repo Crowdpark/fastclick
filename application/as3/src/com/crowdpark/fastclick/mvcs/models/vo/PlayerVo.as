@@ -108,5 +108,16 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			return DisplayObject(this.getValueByKey('playerPicture'));
 			
 		}
+
+		public function setFriendsList(success : Object) : PlayerVo
+		{
+			this.setValueByKey('friendsList', success);
+			return this;
+		}
+
+		public function getFriendsList(success : Object) : Object
+		{
+			return this.getValueByKey('friendsList');
+		}
 	}
 }

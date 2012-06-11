@@ -18,7 +18,7 @@ package com.crowdpark.fastclick.mvcs.commands
 
 		override public function execute() : void
 		{
-			var ballScore : uint = BaseGraphic(pointClickEvent.getDataprovider().getValueByKey('fcBall')).getScore();
+			var ballScore : uint = BaseGraphic(pointClickEvent.getDataprovider().getValueByKey('fcCircle')).getScore();
 			var score : uint = ballScore + playerModel.getCurrentPlayer().getCurrentScore();
 			var ballAmount : uint = playerModel.getCurrentPlayer().getClickedBallAmount() + 1;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\JsonRpc\V1\App
+namespace Application\JsonRpc\V1\NoAuth
 {
     class Gateway extends \Processus\Abstracts\JsonRpc\AbstractJsonRpcGateway
     {
@@ -9,7 +9,7 @@ namespace Application\JsonRpc\V1\App
             'enabled'      => TRUE,
             'namespace'    => __NAMESPACE__,
             'validDomains' => array(
-                'App'
+                'NoAuth'
             )
         );
 

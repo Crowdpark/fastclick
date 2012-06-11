@@ -6,7 +6,20 @@
  * Time: 9:27 AM
  * To change this template use File | Settings | File Templates.
  */
-class Game
+namespace Application\JsonRpc\V1\NoAuth\Service;
+class Game extends \Processus\Abstracts\JsonRpc\AbstractJsonRpcService
 {
+
+    public function getCircleConfig()
+    {
+        $manager = new \Application\Manager\Game\GameManager();
+        return $manager->getCircleConfig();
+    }
+
+    public function getGameDuration()
+    {
+        $manager = new \Application\Manager\Game\GameManager();
+        return $manager->getGameDuration();
+    }
 
 }

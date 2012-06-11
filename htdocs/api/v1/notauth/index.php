@@ -10,7 +10,7 @@ require_once($applicationPath . 'ApplicationBootstrap.php');
 
 $bootstrap = \Application\ApplicationBootstrap::getInstance();
 $bootstrap->init();
-$gtw = new Application\JsonRpc\V1\App\Gateway();
+$gtw = new Application\JsonRpc\V1\NoAuth\Gateway();
 $bootstrap->setGateway($gtw);
 $gtw->run();
 

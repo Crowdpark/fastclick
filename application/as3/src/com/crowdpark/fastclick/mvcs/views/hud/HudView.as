@@ -44,11 +44,11 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			var hudViewBackground : Shape = createRectangleShape(stage.stageWidth, 60, 0x000000);
 			addChildAt(hudViewBackground,0);
 			
-			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 140, 0, 10, stage.stageWidth - 10, this.height);
-			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 140, 0, 10, stage.stageWidth - 10, this.height);
+			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 200, 0, 10, stage.stageWidth - 10, this.height);
+			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 200, 0, 10, stage.stageWidth - 10, this.height);
 			timeBar.mask = barMask;
 
-			TweenMax.to(barMask, uint(this.getDataProvider().getValueByKey('gameDuration')), {y:stage.stageHeight - 60, ease:Linear.easeNone});
+			TweenMax.to(barMask, uint(this.getDataProvider().getValueByKey('gameDuration')), {y:stage.stageHeight - 140, ease:Linear.easeNone});
 
 			addChild(timeBar);
 			addChild(barMask);
@@ -73,7 +73,8 @@ package com.crowdpark.fastclick.mvcs.views.hud
 
 			time.text = String(this.getDataProvider().getValueByKey('gameDuration'));
 			timeSprite.x = stage.stageWidth - timeSprite.width - 20;
-			playerNameSprite.x = timeSprite.x - 70;
+			
+			playerNameSprite.x = timeSprite.x - playerNameSprite.width-10;
 		}
 
 		private function createPlayerName() : void
@@ -116,7 +117,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 		{
 			time.text = String(this.getDataProvider().getValueByKey('time'));
 			timeSprite.x = stage.stageWidth - timeSprite.width - 20;
-			playerNameSprite.x = timeSprite.x - 70;
+			playerNameSprite.x = timeSprite.x - playerNameSprite.width-10;
 		}
 	}
 }

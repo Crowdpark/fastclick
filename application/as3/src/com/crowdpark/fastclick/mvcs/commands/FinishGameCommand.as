@@ -31,6 +31,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			resultView.init();
 			
 			mainSprite.addChild(resultView);
+			
 			highestScoreModel.setHighscoreList(playerModel.getPlayerArray());
 		}
 	}

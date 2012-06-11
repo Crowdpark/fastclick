@@ -24,6 +24,8 @@ package com.crowdpark.fastclick.mvcs.services
 	{
 		[Inject]
 		public var playerModel : PlayerModel;
+		[Inject]
+		public var backendService : BackendService;
 		private var friendIndex : uint = 0;
 		private var loader : Loader;
 
@@ -55,7 +57,9 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onFetchFriends(success : Object, error : Object) : void
 		{
-			playerModel.setFriendsList(success);
+			playerModel.getCurrentPlayer().setFriendsList(success);
+
+			backendService.storePlayer(playerModel.getCurrentPlayer());
 		}
 
 		public function handleLogin(response : Object, fail : Object) : void

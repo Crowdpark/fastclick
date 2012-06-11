@@ -13,6 +13,10 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function getHighscoreList() : Vector.<PlayerVo>
 		{
+			if(!_highscoreList)
+			{
+				_highscoreList = new Vector.<PlayerVo>();
+			}
 			return _highscoreList;
 		}
 

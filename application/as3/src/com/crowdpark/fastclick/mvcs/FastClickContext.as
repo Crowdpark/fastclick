@@ -62,6 +62,7 @@ package com.crowdpark.fastclick.mvcs
 			commandMap.mapEvent(StateMachineEvents.FINISH, FinishGameCommand,StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.RETRY, RetryGameCommand,StateMachineEvents);
 			commandMap.mapEvent(PointClickEvent.POINT_CLICK, UpdateScoreCommand,PointClickEvent);
+			commandMap.mapEvent(FacebookServiceEvent.LOG_OUT, LogoutCommand);
 			
 						
 			injector.mapSingleton(PlayerModel);

@@ -24,9 +24,6 @@ package com.crowdpark.fastclick.mvcs.services
 	{
 		[Inject]
 		public var playerModel : PlayerModel;
-		
-		
-		
 		private var friendIndex : uint = 0;
 		private var loader : Loader;
 
@@ -35,7 +32,7 @@ package com.crowdpark.fastclick.mvcs.services
 			Security.loadPolicyFile("http://profile.ak.fbcdn.net/crossdomain.xml");
 
 			registerJSCallbacks();
-			Facebook.init('300602210033160', handleLogin);
+			Facebook.init('300602210033160');
 			ExternalInterface.call("login");
 		}
 

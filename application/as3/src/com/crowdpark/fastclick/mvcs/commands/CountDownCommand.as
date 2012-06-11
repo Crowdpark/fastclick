@@ -13,11 +13,9 @@ package com.crowdpark.fastclick.mvcs.commands
 		override public function execute() : void
 		{
 			var mainSprite : Sprite = Sprite(contextView.getChildByName('mainSprite'));
-			mainSprite.removeChildAt(0)
-			mainSprite.addChild(new CountDownView())
+			mainSprite.removeChildAt(0);
+			mainSprite.addChild(new CountDownView());
 			
-			//contextView.removeChildAt(0);
-			//contextView.addChild(new CountDownView());
 		}
 	}
 }

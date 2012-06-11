@@ -30,13 +30,11 @@ package com.crowdpark.fastclick.mvcs.views.footer
 		{
 			super.onAddedToStageListener(e);
 
-			this.y = stage.stageHeight-140;
-			
 			hbox.x = 30;
 			hbox.y = 30;
 			hbox.spacing = 20;
 
-			ballPanel.move(0, 0);
+			ballPanel.move(0, stage.stageHeight-140);
 			ballPanel.setSize(stage.stageWidth, 60);
 		}
 

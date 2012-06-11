@@ -20,8 +20,8 @@ package com.crowdpark.fastclick.mvcs.services
 
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStorePointResult);
 			jsonClient.send();
-			
 		}
+
 		private function onStorePointResult(event : JsonRpcClientEvent) : void
 		{
 			trace('datasend');

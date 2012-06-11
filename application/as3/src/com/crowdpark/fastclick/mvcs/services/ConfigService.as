@@ -1,8 +1,5 @@
 package com.crowdpark.fastclick.mvcs.services
 {
-	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
-	import com.crowdpark.net.rpc.json.JsonRpcClientEvent;
-	import com.crowdpark.net.rpc.json.JsonRpcClient;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.adobe.serialization.json.JSONDecoder;
 

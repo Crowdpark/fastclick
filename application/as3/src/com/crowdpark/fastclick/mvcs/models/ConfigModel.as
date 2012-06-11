@@ -1,10 +1,10 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.crowdpark.fastclick.mvcs.models.vo.BallVo;
-	import com.crowdpark.fastclick.mvcs.models.vo.BaseVo;
 	import com.crowdpark.fastclick.mvcs.views.hud.HudViewEvent;
 
 	import flash.events.TimerEvent;
@@ -104,7 +104,7 @@ package com.crowdpark.fastclick.mvcs.models
 			for each (var point:Object in resultArray)
 			{
 				var ballVO : BallVo = new BallVo();
-				ballVO.setValueByKey('endPoint', new Point(60, 370));
+				//ballVO.setValueByKey('endPoint', new Point(60, 40));
 				ballVO.setValueByKey('color', point.color);
 				ballVO.setValueByKey('score', point.score);
 				addBall(ballVO);

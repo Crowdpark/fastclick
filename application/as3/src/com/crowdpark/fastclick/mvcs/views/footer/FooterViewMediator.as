@@ -1,7 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.footer
 {
 	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
-	import com.bit101.components.HBox;
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
@@ -17,29 +16,18 @@ package com.crowdpark.fastclick.mvcs.views.footer
 	 */
 	public class FooterViewMediator extends StateMachineMediator
 	{
-		private var hbox : HBox = new HBox();
-
 		override public function onRegister() : void
 		{
 			super.onRegister();
 
-			view.addBallPane();
-			view.ballPanel.move(0, contextView.stage.stageHeight - 60);
-
-			hbox.x = 30;
-			hbox.y = 30;
-			hbox.spacing = 20;
-
-			view.ballPanel.addChild(hbox);
-
-			addContextListener(PointClickEvent.POINT_CLICK, handlePoinClick);
+			addContextListener(PointClickEvent.POINT_CLICK, handlePointClick);
 		}
 
-		private function handlePoinClick(event : PointClickEvent) : void
+		private function handlePointClick(event : PointClickEvent) : void
 		{
 			var ball : BaseGraphic = BaseGraphic(event.getDataprovider().getValueByKey('fcBall'));
 			view.addChild(ball);
-			TweenMax.to(ball, 0.3, {width:30, height:30, y:ball.getEndPoint().y, x:ball.getEndPoint().x, onComplete:handleTweenComplete, onCompleteParams:[ball], ease:Linear.easeOut});
+			TweenMax.to(ball, 0.5, {width:30, height:30, y:ball.getEndPoint().y, x:ball.getEndPoint().x, onComplete:handleTweenComplete, onCompleteParams:[ball], ease:Linear.easeOut});
 		}
 
 		private function handleTweenComplete(point : InterfaceBall) : void
@@ -59,8 +47,7 @@ package com.crowdpark.fastclick.mvcs.views.footer
 				var shapeSprite : Sprite = new Sprite();
 				shapeSprite.addChild(shape);
 
-				hbox.addChild(shapeSprite);
-				view.ballPanel.update();
+				view.addBallToHbox(shapeSprite);
 			}
 		}
 

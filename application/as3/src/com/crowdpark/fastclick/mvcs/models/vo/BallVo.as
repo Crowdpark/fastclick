@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.models.vo
 {
+	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 	import flash.geom.Point;
 
 	/**

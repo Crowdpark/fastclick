@@ -1,6 +1,6 @@
 package com.crowdpark.net.rpc.json
 {
-	import com.crowdpark.base.BaseVO;
+	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
@@ -75,19 +75,18 @@ package com.crowdpark.net.rpc.json
 			}
 
 			var newEvent : JsonRpcClientEvent = new JsonRpcClientEvent(eventType);
-			var eventData : BaseVO = new BaseVO();
-			eventData.rawData = eventDataProvider;
-			newEvent.dataProvider = eventData;
-
+			var eventData : BaseVo = new BaseVo();
+			eventData.setValues(eventDataProvider);
+			newEvent.setDataprovider(eventData);
 			dispatchEvent(newEvent);
 		}
 
 		protected function _onFault(event : FaultEvent) : void
 		{
 			var newEvent : JsonRpcClientEvent = new JsonRpcClientEvent(JsonRpcClientEvent.FAULT);
-			var eventData : BaseVO = new BaseVO();
-			eventData.rawData = event.fault;
-			newEvent.dataProvider = eventData;
+			var eventData : BaseVo = new BaseVo();
+			eventData.setValues(event.fault);
+			newEvent.setDataprovider(eventData);
 			dispatchEvent(newEvent);
 		}
 

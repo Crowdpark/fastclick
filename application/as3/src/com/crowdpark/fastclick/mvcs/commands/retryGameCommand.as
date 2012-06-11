@@ -1,6 +1,9 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import flash.display.Sprite;
+	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.views.start.StartView;
+
 	import org.robotlegs.mvcs.Command;
 
 	/**
@@ -8,10 +11,19 @@ package com.crowdpark.fastclick.mvcs.commands
 	 */
 	public class RetryGameCommand extends Command
 	{
-		override public function execute():void
+		[Inject]
+		public var playerModel : PlayerModel;
+
+		override public function execute() : void
 		{
-			contextView.removeChildAt(0);
-			contextView.addChild(new StartView().init());
+			var mainSprite : Sprite = Sprite(contextView.getChildByName('mainSprite'));
+			mainSprite.removeChildAt(0);
+			
+			
+			var startView : StartView = new StartView();
+			startView.init();
+
+			mainSprite.addChild(startView);
 		}
 	}
 }

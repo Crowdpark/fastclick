@@ -1,32 +1,32 @@
 package com.crowdpark.fastclick.mvcs.views.game
 {
+	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
 	import com.crowdpark.fastclick.mvcs.views.footer.FooterView;
 	import com.crowdpark.fastclick.mvcs.views.hud.HudView;
 	import com.crowdpark.fastclick.mvcs.views.points.PointsView;
 
-	import flash.display.Sprite;
-
-	/**
+		/**
 	 * @author fatmatekin
 	 */
-	public class GameView extends Sprite
+	public class GameView extends BaseView
 	{
 		public var hudView : HudView;
 		public var pointsView : PointsView;
 		public var footerView : FooterView;
 
-		public function init() : GameView
+		override public function init() : void
 		{
 			pointsView = new PointsView();
 			addChild(pointsView);
 
 			hudView = new HudView();
-			hudView.name = "hudView";
+			hudView.init();
 			addChild(hudView);
 
 			footerView = new FooterView();
+			footerView.init();
 			addChild(footerView);
-			return this;
+			
 		}
 	}
 }

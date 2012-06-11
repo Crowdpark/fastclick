@@ -7,6 +7,9 @@ package com.crowdpark.fastclick.mvcs.interfaces
 	{
 		function getValueByKey(key : String) : Object;
 		function getValues() : Object;
-		function setValueByKey(key : String, value : Object) : Object
+		function setValues(value:Object) : void;
+		function setValueByKey(key : String, value : Object) : Object;
+	//	function toString():String;
+		function clone():InterfaceVO
 	}
 }

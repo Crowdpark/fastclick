@@ -3,9 +3,8 @@ package com.crowdpark.fastclick.mvcs.views.countrdown
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.greensock.TweenMax;
+
 	import flash.display.Sprite;
-
-
 
 	/**
 	 * @author fatmatekin
@@ -35,11 +34,6 @@ package com.crowdpark.fastclick.mvcs.views.countrdown
 			{
 				dispatch(new StateMachineEvents(StateMachineEvents.GAME));
 			}
-		}
-
-		override protected function handleGame(e : StateMachineEvents) : void
-		{
-			super.handleGame(e);
 		}
 
 		private function continueCount(numberSprite : Sprite) : void

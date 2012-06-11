@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.countrdown
 {
+	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
 	import utils.textField.createField;
 	import utils.draw.createCircleShape;
 
@@ -8,7 +9,7 @@ package com.crowdpark.fastclick.mvcs.views.countrdown
 	/**
 	 * @author fatmatekin
 	 */
-	public class CountDownView extends Sprite
+	public class CountDownView extends BaseView
 	{
 		public function createNumber(number : uint) : Sprite
 		{

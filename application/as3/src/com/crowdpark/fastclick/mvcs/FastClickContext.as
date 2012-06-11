@@ -1,24 +1,30 @@
 package com.crowdpark.fastclick.mvcs
 {
-	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
+	import com.crowdpark.fastclick.mvcs.services.BackendService;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
+	import com.crowdpark.fastclick.mvcs.commands.FetchFriendsImagesCommand;
 	import com.crowdpark.fastclick.mvcs.commands.FinishGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.RetryGameCommand;
-	import com.crowdpark.fastclick.mvcs.commands.SetPlayerCommand;
+	import com.crowdpark.fastclick.mvcs.commands.SetPlayerCookieCommand;
 	import com.crowdpark.fastclick.mvcs.commands.StartGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.StartUpCompleteCommand;
 	import com.crowdpark.fastclick.mvcs.commands.UpdateScoreCommand;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
+	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
+	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.services.ConfigService;
+	import com.crowdpark.fastclick.mvcs.services.FacebookService;
 	import com.crowdpark.fastclick.mvcs.views.countrdown.CountDownView;
 	import com.crowdpark.fastclick.mvcs.views.countrdown.CountDownViewMeditor;
 	import com.crowdpark.fastclick.mvcs.views.footer.FooterView;
 	import com.crowdpark.fastclick.mvcs.views.footer.FooterViewMediator;
+	import com.crowdpark.fastclick.mvcs.views.friends.FriendsView;
+	import com.crowdpark.fastclick.mvcs.views.friends.FriendsViewMediator;
 	import com.crowdpark.fastclick.mvcs.views.game.GameView;
 	import com.crowdpark.fastclick.mvcs.views.game.GameViewMediator;
 	import com.crowdpark.fastclick.mvcs.views.hud.HudView;
@@ -50,8 +56,8 @@ package com.crowdpark.fastclick.mvcs
 		{
 			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, StartUpCompleteCommand,ContextEvent);
 			commandMap.mapEvent(StateMachineEvents.START, CountDownCommand,StateMachineEvents);
-			commandMap.mapEvent(GameEvents.SET_PLAYER, SetPlayerCommand,GameEvents);
-									
+			commandMap.mapEvent(FacebookServiceEvent.FETCH_FRIENDS_IMAGES, FetchFriendsImagesCommand,FacebookServiceEvent);
+			commandMap.mapEvent(GameEvents.SET_PLAYER_COOKIE, SetPlayerCookieCommand,GameEvents);
 			commandMap.mapEvent(StateMachineEvents.GAME,StartGameCommand,StateMachineEvents);		
 			commandMap.mapEvent(StateMachineEvents.FINISH, FinishGameCommand,StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.RETRY, RetryGameCommand,StateMachineEvents);
@@ -63,6 +69,8 @@ package com.crowdpark.fastclick.mvcs
 			injector.mapSingleton(ConfigModel);
 			injector.mapSingleton(HighestScoreModel);
 			injector.mapSingleton(ConfigService);
+			injector.mapSingleton(FacebookService);
+			injector.mapSingleton(BackendService);
 			
 			mediatorMap.mapView(StartView, StartViewMediator);
 			mediatorMap.mapView(CountDownView,CountDownViewMeditor);
@@ -72,6 +80,7 @@ package com.crowdpark.fastclick.mvcs
 			mediatorMap.mapView(ResultView, ResultViewMediator);
 			mediatorMap.mapView(LeaderboardView, LeaderboardViewMediator);
 			mediatorMap.mapView(FooterView, FooterViewMediator);
+			mediatorMap.mapView(FriendsView, FriendsViewMediator);
 			
 			super.startup();
 		}

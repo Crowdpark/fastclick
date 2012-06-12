@@ -12,14 +12,14 @@ class TestHTTPJsonRpc extends \Processus\Abstracts\AbstractTask
 
     public function run()
     {
-        //$this->_dumpRequestData("NoAuth.Testing.getAllData");
-        //$this->_dumpRequestData("NoAuth.Testing.testDb", array(array("value" => "[" . time() . "]" . "Rockstar!")));
-        //$this->_dumpRequestData("NoAuth.Testing.getCircleConfig");
-        //$this->_dumpRequestData("NoAuth.Player.updateExperience", array(array("experience" => "12122")));
-        //$this->_dumpRequestData("NoAuth.Game.getCircleConfig");
-        //$this->_dumpRequestData("NoAuth.Player.saveGame", array(array("user_id" => 7777777,"score" => 20000)));
-//        $this->_dumpRequestData("NoAuth.Player.getExperience");
-        $this->_dumpRequestData("NoAuth.Game.getGame");
+//        $this->_dumpData("NoAuth.Testing.getAllData");
+//        $this->_dumpData("NoAuth.Testing.testDb", array(array("value" => "[" . time() . "]" . "Rockstar!")));
+//        $this->_dumpData("NoAuth.Testing.getCircleConfig");
+//        $this->_dumpData("NoAuth.Player.updateExperience", array(array("experience" => "12122")));
+        $this->_dumpData("NoAuth.Game.getCircleConfig");
+//        $this->_dumpData("NoAuth.Player.saveGame", array(array("user_id" => 7777777,"score" => 20000)));
+//        $this->_dumpData("NoAuth.Player.getExperience");
+//        $this->_dumpData("NoAuth.Game.getGame");
 
     }
 
@@ -28,10 +28,10 @@ class TestHTTPJsonRpc extends \Processus\Abstracts\AbstractTask
      * @param array $params
      */
 
-    private function _dumpRequestData(\string $serviceNamespace, array $params = array())
+    private function _dumpData(\string $serviceNamespace, array $params = array())
     {
         $client = new \Processus\Lib\JsonRpc\Client();
-        $client->setGateway("http://local.fastclick/api/v1/notauth/");
+        $client->setGateway("http://local.fastclick.com/api/v1/notauth/");
         $request = new \Processus\Lib\JsonRpc\JsonRpcDataVo();
         $request->setParams($params)
             ->setMethod($serviceNamespace);

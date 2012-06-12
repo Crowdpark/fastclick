@@ -19,8 +19,10 @@ class Player extends \Processus\Abstracts\JsonRpc\AbstractJsonRpcService
         unset($params["id"]);
         unset($params["playerName"]);
         unset($params["playerLastName"]);
-        echo "parameters";
-        print_r($params);
+////        print_r($params);
+//        print_r($this->getApplicationContext()
+//            ->getFacebookClient()
+//            ->getOpenGraphClient()->getUserDataById($params["user_id"]));
 
         return $manager->saveGame($params);
     }

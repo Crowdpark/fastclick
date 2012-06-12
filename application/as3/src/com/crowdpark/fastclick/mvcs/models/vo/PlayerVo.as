@@ -106,7 +106,6 @@ package com.crowdpark.fastclick.mvcs.models.vo
 		public function getPlayerPicture() : DisplayObject
 		{
 			return DisplayObject(this.getValueByKey('playerPicture'));
-			
 		}
 
 		public function setFriendsList(success : Object) : PlayerVo
@@ -115,9 +114,20 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			return this;
 		}
 
-		public function getFriendsList(success : Object) : Object
+		public function getFriendsList() : Object
 		{
 			return this.getValueByKey('friendsList');
+		}
+
+		public function getCurrentLevel() : uint
+		{
+			return uint(this.getValueByKey('currentLevel'));
+		}
+
+		public function setCurrentLevel(level : uint) : PlayerVo
+		{
+			this.setValueByKey('currentLevel', level);
+			return this;
 		}
 	}
 }

@@ -4,7 +4,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
-	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceCircle;
 	import com.greensock.TweenMax;
 
 	import flash.display.DisplayObject;
@@ -42,7 +42,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			TweenMax.to(scoreBox, 0.3, {alpha:1, x:scoreBox.getEndPoint().x, y:scoreBox.getEndPoint().y, onComplete:handleTweenComplete, onCompleteParams:[scoreBox]});
 		}
 
-		private function handleTweenComplete(scoreBox : InterfaceBall) : void
+		private function handleTweenComplete(scoreBox : InterfaceCircle) : void
 		{
 			if (view)
 			{

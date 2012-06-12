@@ -21,14 +21,14 @@ package com.crowdpark.fastclick.mvcs.services
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
 			jsonClient.params = [player.getValues()];
 			jsonClient.method = 'NoAuth.Player.saveGame';
-			jsonClient.url = 'http://local.fastclick/api/v1/notauth/';
+			jsonClient.url = 'http://local.fastclick.com/api/v1/notauth/';
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStorePointResult);
 			jsonClient.send();
 		}
 
 		private function onStorePointResult(event : JsonRpcClientEvent) : void
 		{
-			//var jsonDecoder : JSONDecoder = new JSONDecoder(String(event.getDataprovider()), true);
+			// var jsonDecoder : JSONDecoder = new JSONDecoder(String(event.getDataprovider()), true);
 		}
 	}
 }

@@ -1,21 +1,15 @@
 package com.crowdpark.fastclick.mvcs.services
 {
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
-
-	import flash.events.Event;
-
-	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
-
-	import flash.system.Security;
-	import flash.net.URLRequest;
-	import flash.display.Loader;
-
-	import com.facebook.graph.Facebook;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 
 	import org.robotlegs.mvcs.Actor;
 
+	import flash.display.Loader;
+	import flash.events.Event;
 	import flash.external.ExternalInterface;
+	import flash.net.URLRequest;
 
 	/**
 	 * @author fatmatekin
@@ -31,34 +25,18 @@ package com.crowdpark.fastclick.mvcs.services
 
 		public function init() : void
 		{
-			Security.loadPolicyFile("http://profile.ak.fbcdn.net/crossdomain.xml");
-
-			registerJSCallbacks();
-			Facebook.init('300602210033160');
-			ExternalInterface.call("login");
+			ExternalInterface.addCallback("onMe", onMe);
+			ExternalInterface.addCallback("onFetchFriends", onFetchFriends);
 		}
 
-		public function registerJSCallbacks() : void
+		private function onMe(params : Object) : void
 		{
-			ExternalInterface.addCallback("loginFinished", onLoginFinished);
+			playerModel.createPlayer(String(params.first_name), String(params.last_name), uint(params.id));
 		}
 
-		private function onLoginFinished(params : Object) : void
+		private function onFetchFriends(params : Object) : void
 		{
-			Facebook.api("/me", onMe);
-		}
-
-		private function onMe(success : Object, error : Object) : void
-		{
-			playerModel.createPlayer(String(success.first_name), String(success.last_name), uint(success.id));
-
-			Facebook.api('/me/friends', onFetchFriends);
-		}
-
-		private function onFetchFriends(success : Object, error : Object) : void
-		{
-			playerModel.getCurrentPlayer().setFriendsList(success);
-
+			playerModel.getCurrentPlayer().setFriendsList(params.data);
 			backendService.storePlayer(playerModel.getCurrentPlayer());
 		}
 

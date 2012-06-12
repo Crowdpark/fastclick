@@ -4,7 +4,7 @@ package com.crowdpark.fastclick.mvcs.views.footer
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
-	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceCircle;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
 
@@ -31,7 +31,7 @@ package com.crowdpark.fastclick.mvcs.views.footer
 			TweenMax.to(ball, 0.3, {width:30, height:30, y:ball.getEndPoint().y, x:ball.getEndPoint().x, onComplete:handleTweenComplete, onCompleteParams:[ball], ease:Linear.easeOut});
 		}
 
-		private function handleTweenComplete(point : InterfaceBall) : void
+		private function handleTweenComplete(point : InterfaceCircle) : void
 		{
 			if (stateMachineModel.state != "finish")
 			{

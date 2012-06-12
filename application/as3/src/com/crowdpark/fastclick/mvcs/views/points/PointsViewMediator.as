@@ -6,7 +6,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
-	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceCircle;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.crowdpark.fastclick.mvcs.models.vo.BallVo;
 	import com.greensock.TweenMax;
@@ -74,8 +74,8 @@ package com.crowdpark.fastclick.mvcs.views.points
 
 		private function handleCircleClickEvent(e : MouseEvent) : void
 		{
-			var fcCircle : InterfaceBall = InterfaceBall(e.currentTarget);
-			
+			var fcCircle : InterfaceCircle = InterfaceCircle(e.currentTarget);
+				
 			var scoreBox : ScoreBox = ScoreBox(new ScoreBox().setColor(fcCircle.getColor())
 				.setStartPoint(fcCircle.getStartPoint())
 				.setEndPoint(new Point(70, 5))

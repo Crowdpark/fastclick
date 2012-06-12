@@ -1,6 +1,6 @@
 package com.crowdpark.fastclick.mvcs.assets.ball
 {
-	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceBall;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceCircle;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -9,7 +9,7 @@ package com.crowdpark.fastclick.mvcs.assets.ball
 	/**
 	 * @author fatmatekin
 	 */
-	public class BaseGraphic extends Sprite implements InterfaceBall
+	public class BaseGraphic extends Sprite implements InterfaceCircle
 	{
 		private var _color : uint;
 		private var _direction : Point;

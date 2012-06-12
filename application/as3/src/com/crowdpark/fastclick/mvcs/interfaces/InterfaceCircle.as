@@ -6,7 +6,7 @@ package com.crowdpark.fastclick.mvcs.interfaces
 	/**
 	 * @author fatmatekin
 	 */
-	public interface InterfaceBall extends IEventDispatcher
+	public interface InterfaceCircle extends IEventDispatcher
 	{
 		function getColor() : uint;
 

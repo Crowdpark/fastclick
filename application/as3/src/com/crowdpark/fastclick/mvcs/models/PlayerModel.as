@@ -96,7 +96,7 @@ package com.crowdpark.fastclick.mvcs.models
 			currentPlayer.setPlayerLastName(playerLastName);
 			currentPlayer.setPlayerId(id);
 			currentPlayer.setCurrentScore(0);
-
+			currentPlayer.setCurrentLevel(1);
 			this.setCurrentPlayer(currentPlayer);
 
 			var event : GameEvents = new GameEvents(GameEvents.SET_PLAYER_COOKIE);

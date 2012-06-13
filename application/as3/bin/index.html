@@ -88,6 +88,26 @@ object:focus {
 			// parse XFBML
 			});
 			
+			FB.getLoginStatus(function(response){
+				console.dir(response);
+				if(response.status == "unknown")
+				{
+					FB.login(function(response) {
+		        		  console.dir(response);
+		  				if (response.authResponse) {
+		  					FB.api("/me", function(response){
+				            	window.swfobject.getObjectById('Testing').onMe(response);
+				            });
+				            FB.api("/me/friends", function(response){
+				            	window.swfobject.getObjectById('Testing').onFetchFriends(response);
+				            });
+		  				} else {
+		  					console.log('User cancelled login or did not fully authorize.');
+		  				}
+		  			}, {scope:'email,user_about_me,publish_stream'});
+				}
+			});
+			
 			FB.Event.subscribe('auth.statusChange', function(response) {
 				console.log('auth.statusChange');
 				console.dir(response);
@@ -101,27 +121,13 @@ object:focus {
 		            	console.dir(response);
 		            	window.swfobject.getObjectById('Testing').onFetchFriends(response);
 		            });
-		          } else {
-		            // user has not auth'd your app, or is not logged into Facebook
-		            console.log('not logged in');
-		            FB.login(function(response) {
-		        		  console.dir(response);
-		  				if (response.authResponse) {
-		  					FB.api("/me", function(response){
-				            	window.swfobject.getObjectById('Testing').onMe(response);
-				            });
-				            FB.api("/me/friends", function(response){
-				            	window.swfobject.getObjectById('Testing').onFetchFriends(response);
-				            });
-		  				} else {
-		  					console.log('User cancelled login or did not fully authorize.');
-		  				}
-		  			}, {scope:'email,user_about_me,publish_stream'});          
-		          }
+		          } 
 		        });
 
 			// Load the SDK Asynchronously    
 		};
+		
+		
 		/*function getUserName(){
 		  alert('getUserName');
 		}

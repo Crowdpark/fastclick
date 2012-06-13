@@ -1,5 +1,8 @@
 package com.crowdpark.fastclick.mvcs.models.vo
 {
+	import flash.display.Sprite;
+	import flash.display.Bitmap;
+	import flash.text.TextField;
 	import flash.display.DisplayObject;
 
 	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
@@ -53,17 +56,6 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			return this;
 		}
 
-		public function getPictureUrl() : String
-		{
-			return String(this.getValueByKey('pictureUrl'));
-		}
-
-		public function setPictureUrl(url : String) : PlayerVo
-		{
-			this.setValueByKey('pictureUrl', url);
-			return this;
-		}
-
 		public function setPlayerId(id : uint) : PlayerVo
 		{
 			this.setValueByKey('id', id);
@@ -77,13 +69,13 @@ package com.crowdpark.fastclick.mvcs.models.vo
 
 		public function setPlayerFullName(fullName : String) : PlayerVo
 		{
-			this.setValueByKey('fullName', fullName);
+			this.setValueByKey('playerFullName', fullName);
 			return this;
 		}
 
 		public function getPlayerFullName() : String
 		{
-			return String(this.getValueByKey('fullName'));
+			return String(this.getValueByKey('playerFullName'));
 		}
 
 		public function setPlayerPictureUrl(pictureUrl : String) : PlayerVo
@@ -97,15 +89,20 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			return String(this.getValueByKey('pictureUrl'));
 		}
 
-		public function setPlayerPicture(content : DisplayObject) : PlayerVo
+		public function setPlayerPicture(content : Bitmap) : PlayerVo
 		{
-			this.setValueByKey('playerPicture', content);
+			this.setValueByKey('playerPictureBitmap', content);
 			return this;
 		}
 
-		public function getPlayerPicture() : DisplayObject
+		public function getPlayerPicture() : Bitmap
 		{
-			return DisplayObject(this.getValueByKey('playerPicture'));
+			var playerPictureBitmap : Bitmap = Bitmap(this.getValueByKey('playerPictureBitmap'));
+
+			var duplication : Bitmap = new Bitmap(playerPictureBitmap.bitmapData);
+			duplication.smoothing = true;
+
+			return duplication;
 		}
 
 		public function setFriendsList(success : Object) : PlayerVo
@@ -128,6 +125,17 @@ package com.crowdpark.fastclick.mvcs.models.vo
 		{
 			this.setValueByKey('currentLevel', level);
 			return this;
+		}
+
+		public function setLeaderboardPlace(index : uint) : PlayerVo
+		{
+			this.setValueByKey('leaderboardPlace', index);
+			return this;
+		}
+
+		public function getLeaderboardPlace() : uint
+		{
+			return uint(this.getValueByKey('leaderboardPlace'));
 		}
 	}
 }

@@ -29,8 +29,6 @@ package com.crowdpark.fastclick.mvcs
 	import com.crowdpark.fastclick.mvcs.views.game.GameViewMediator;
 	import com.crowdpark.fastclick.mvcs.views.hud.HudView;
 	import com.crowdpark.fastclick.mvcs.views.hud.HudViewMediator;
-	import com.crowdpark.fastclick.mvcs.views.leaderboard.LeaderboardView;
-	import com.crowdpark.fastclick.mvcs.views.leaderboard.LeaderboardViewMediator;
 	import com.crowdpark.fastclick.mvcs.views.points.PointsView;
 	import com.crowdpark.fastclick.mvcs.views.points.PointsViewMediator;
 	import com.crowdpark.fastclick.mvcs.views.result.ResultView;
@@ -63,6 +61,7 @@ package com.crowdpark.fastclick.mvcs
 			commandMap.mapEvent(StateMachineEvents.RETRY, RetryGameCommand,StateMachineEvents);
 			commandMap.mapEvent(PointClickEvent.POINT_CLICK, UpdateScoreCommand,PointClickEvent);
 			commandMap.mapEvent(FacebookServiceEvent.LOG_OUT, LogoutCommand);
+			commandMap.mapEvent(FacebookServiceEvent.INVITE_FRIEND, InviteFriendCommand);
 			
 						
 			injector.mapSingleton(PlayerModel);
@@ -79,7 +78,6 @@ package com.crowdpark.fastclick.mvcs
 			mediatorMap.mapView(HudView, HudViewMediator);
 			mediatorMap.mapView(PointsView, PointsViewMediator);
 			mediatorMap.mapView(ResultView, ResultViewMediator);
-			mediatorMap.mapView(LeaderboardView, LeaderboardViewMediator);
 			mediatorMap.mapView(FooterView, FooterViewMediator);
 			mediatorMap.mapView(FriendsView, FriendsViewMediator);
 			

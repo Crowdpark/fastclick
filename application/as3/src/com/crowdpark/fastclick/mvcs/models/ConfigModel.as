@@ -22,6 +22,7 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _time : uint;
 		private var _timer : Timer;
 		private var _gameDuration : uint;
+		private var _colorArray: Array;
 		[Inject]
 		public var playerModel : PlayerModel;
 

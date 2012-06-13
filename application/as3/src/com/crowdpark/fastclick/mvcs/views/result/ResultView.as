@@ -1,7 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.result
 {
 	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
-	import com.crowdpark.fastclick.mvcs.views.leaderboard.LeaderboardView;
 
 	import utils.draw.createRectangleShape;
 	import utils.textField.createField;
@@ -17,7 +16,6 @@ package com.crowdpark.fastclick.mvcs.views.result
 		public var resultText : TextField;
 		public var result : TextField;
 		public var retryButton : Sprite;
-		public var leaderboardView : LeaderboardView;
 		public var leaderboardTitle : TextField;
 
 		override public function  init() : void
@@ -41,9 +39,6 @@ package com.crowdpark.fastclick.mvcs.views.result
 
 			addChild(retryButton);
 
-			leaderboardView = new LeaderboardView();
-			leaderboardView.init();
-			addChild(leaderboardView);
 		}
 	}
 }

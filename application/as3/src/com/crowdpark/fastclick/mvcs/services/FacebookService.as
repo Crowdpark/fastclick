@@ -1,5 +1,11 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import flash.display.Bitmap;
+	import flash.display.Sprite;
+	import flash.display.DisplayObject;
+	import flash.system.Security;
+
+	import com.facebook.graph.Facebook;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
@@ -25,6 +31,16 @@ package com.crowdpark.fastclick.mvcs.services
 
 		public function init() : void
 		{
+			Security.allowDomain('http://profile.ak.fbcdn.net');
+			Security.allowInsecureDomain('http://profile.ak.fbcdn.net');
+			
+			Security.loadPolicyFile("http://graph.facebook.com/crossdomain.xml");
+			Security.loadPolicyFile("http://profile.ak.fbcdn.net/crossdomain.xml");
+			Security.loadPolicyFile("https://graph.facebook.com/crossdomain.xml");
+			Security.loadPolicyFile("https://profile.ak.fbcdn.net/crossdomain.xml");
+			Security.allowDomain("*");
+			Security.allowInsecureDomain("*");
+
 			ExternalInterface.addCallback("onMe", onMe);
 			ExternalInterface.addCallback("onFetchFriends", onFetchFriends);
 		}
@@ -36,6 +52,8 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onFetchFriends(params : Object) : void
 		{
+			playerModel.setFriendsList(params.data); //Test all friends
+
 			playerModel.getCurrentPlayer().setFriendsList(params.data);
 			backendService.storePlayer(playerModel.getCurrentPlayer());
 		}
@@ -47,7 +65,28 @@ package com.crowdpark.fastclick.mvcs.services
 
 		public function fetchFriendImages() : void
 		{
-			loadPictures();
+			loadPictures(); //Test all friends
+			// loadTestPlayers(); 
+		}
+
+		private function loadTestPlayers() : void
+		{
+			if (friendIndex < 4)
+			{
+				showFriend();
+			}
+		}
+
+		private function showFriend() : void
+		{
+			var playerF : Vector.<PlayerVo> = playerModel.getPlayerFriends();
+
+			var gameEvent : GameEvents = new GameEvents(GameEvents.SHOW_FRIEND);
+			gameEvent.getDataprovider().setValueByKey('currentFriend', playerF[friendIndex]);
+			dispatch(gameEvent);
+
+			friendIndex++;
+			loadTestPlayers();
 		}
 
 		private function loadPictures() : void
@@ -63,7 +102,7 @@ package com.crowdpark.fastclick.mvcs.services
 		private function onLoadPicturesListener(event : Event) : void
 		{
 			var playerF : Vector.<PlayerVo> = playerModel.getPlayerFriends();
-			playerF[friendIndex].setPlayerPicture(loader.content);
+			playerF[friendIndex].setPlayerPicture(Bitmap(loader.content));
 
 			var gameEvent : GameEvents = new GameEvents(GameEvents.SHOW_FRIEND);
 			gameEvent.getDataprovider().setValueByKey('currentFriend', playerF[friendIndex]);
@@ -71,6 +110,21 @@ package com.crowdpark.fastclick.mvcs.services
 
 			friendIndex++;
 			loadPictures();
+		}
+
+		public function inviteFriend() : void
+		{
+			var dat : Object = new Object();
+			dat.message = 'invite';
+			dat.title = 'fastclick';
+			dat.filters = ['app_non_users'];
+			// You can use these two options for diasplaying friends invitation window 'iframe' 'popup'
+			Facebook.ui('apprequests', dat, onUICallback, 'iframe');
+		}
+
+		private function onUICallback(result : Object) : void
+		{
+			trace(result.to);
 		}
 	}
 }

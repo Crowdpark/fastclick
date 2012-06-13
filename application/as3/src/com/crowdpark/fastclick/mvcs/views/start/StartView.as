@@ -111,7 +111,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 		public function updatePlayerNameField(name:String,lastName:String) : StartView
 		{
 			getDataProvider().setValueByKey('playerName', name);
-			getDataProvider().setValueByKey('playerLastName', lastName)
+			getDataProvider().setValueByKey('playerLastName', lastName);
 			
 			if (name=='' && lastName=='')
 			{				

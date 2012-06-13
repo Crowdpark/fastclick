@@ -128,7 +128,7 @@ package com.crowdpark.fastclick.mvcs.models
 		public function setFriendsList(success : Object) : void // Test all friends
 		{
 			var friendsArray : Vector.<PlayerVo> = new Vector.<PlayerVo>();
-			for (var i : uint = 0;i < 15;i++)
+			for (var i : uint = 0;i < success.length;i++)
 			{
 				var playerVo : PlayerVo = new PlayerVo();
 				playerVo.setPlayerId(success[i].id);

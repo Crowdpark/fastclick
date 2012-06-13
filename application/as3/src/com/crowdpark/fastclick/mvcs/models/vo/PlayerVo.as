@@ -98,10 +98,14 @@ package com.crowdpark.fastclick.mvcs.models.vo
 		public function getPlayerPicture() : Bitmap
 		{
 			var playerPictureBitmap : Bitmap = Bitmap(this.getValueByKey('playerPictureBitmap'));
-			
-			var duplication : Bitmap = new Bitmap(playerPictureBitmap.bitmapData);
-			
-			duplication.smoothing = true;
+
+			var duplication:Bitmap;
+			duplication = new Bitmap();			
+			if (playerPictureBitmap)
+			{
+				duplication = new Bitmap(playerPictureBitmap.bitmapData);
+				duplication.smoothing = true;
+			}
 
 			return duplication;
 		}

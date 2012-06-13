@@ -127,8 +127,8 @@ return array(
     // ++++++++++++++ fb: osapi ++++++++++++++++++++++++++++++++++++++
 
     'Facebook'       => array(
-        "appId"  => "", //"APIKEY",
-        "secret" => "" //"APISECRET",
+        "appId"  => "300602210033160", //"APIKEY",
+        "secret" => "7efa8fe6ab18861b953208ed7980fd94" //"APISECRET",
     ),
 
     // ++++++++++++++ fb: osapi ++++++++++++++++++++++++++++++++++++++

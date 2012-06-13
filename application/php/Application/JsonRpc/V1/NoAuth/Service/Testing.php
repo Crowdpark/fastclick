@@ -11,6 +11,11 @@ class Testing extends \Processus\Abstracts\JsonRpc\AbstractJsonRpcService
 {
     public function testApi()
     {
+        //var_dump($this->getProcessusContext()->getUserBo()->getFacebookUserId());
+//        $friends = $this->getProcessusContext()->getUserBo()->getAppFriends();
+//        var_dump($friends);
+echo "hola";
+        var_dump($this->getApplicationContext()->getUserBo()->getAppFriends());
         return "Hello World";
     }
 

@@ -9,6 +9,11 @@
 namespace Application\Manager;
 class TestDb extends \Processus\Abstracts\Manager\AbstractManager
 {
+
+    public function storeInCB(array $params)
+    {
+
+    }
     /**
      * @param $values
      * @return string

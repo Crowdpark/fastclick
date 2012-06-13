@@ -7,24 +7,36 @@
  * To change this template use File | Settings | File Templates.
  */
 namespace Application\JsonRpc\V1\NoAuth\Service;
-class Player extends \Processus\Abstracts\JsonRpc\AbstractJsonRpcService
+class Player extends \Application\Core\Abstracts\AbstractService
 {
 
+    /**
+     * @return mixed
+     */
+    public function getAppFriends()
+    {
+
+        $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
+        var_dump($friends);
+        return $friends;
+    }
+    /**
+     * @param array $params
+     * @return string
+     */
     public function saveGame(array $params)
     {
         $manager = new \Application\Manager\Player\PlayerManager();
+        $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
+        var_dump($friends);
+//        var_dump($this->getApplicationContext()->getUserBo()->getFacebookUserId());
 
-        $params["user_id"] = $params["id"];
+//$manager->setFriendsList($this->getProcessusContext()->getFacebookClient()->getFriendsIdList());
+//        var_dump($manager->getFriendsList());
 
-        unset($params["id"]);
-        unset($params["playerName"]);
-        unset($params["playerLastName"]);
-////        print_r($params);
-//        print_r($this->getApplicationContext()
-//            ->getFacebookClient()
-//            ->getOpenGraphClient()->getUserDataById($params["user_id"]));
 
-        return $manager->saveGame($params);
+        return true;
+//        return $manager->saveGame($params);
     }
 
     public function updateExperience(array $experience)

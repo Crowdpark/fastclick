@@ -13,13 +13,30 @@ class Player extends \Application\Core\Abstracts\AbstractService
     /**
      * @return mixed
      */
-    public function getAppFriends()
+    public function getAppFriends(array $params)
+    {
+        $manager = new \Application\Manager\Player\PlayerManager();
+        $manager->setFriendsList($this->getProcessusContext()->getFacebookClient()->getFriendsIdList());
+        $mvo = $this->getProcessusContext()->getUserBo()->getFacebookUserMvo();
+        ($mvo->getValueByKey("high_score") < $params["currentScore"]) ? $mvo->setValueByKey("high_score", $params["currentScore"]) : false;
+        $mvo->setValueByKey("level", $params["currentLevel"]);
+        $mvo->saveInMem();
+        $friendArray = array();
+        $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
+
+        foreach ($friends as $friendMvo) {
+            $friendArray[] = $friendMvo->getData();
+        }
+        return $friendArray;
+    }
+
+    public function setFriendsList(array $params)
     {
 
-        $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
-        var_dump($friends);
-        return $friends;
+
+
     }
+
     /**
      * @param array $params
      * @return string
@@ -27,16 +44,12 @@ class Player extends \Application\Core\Abstracts\AbstractService
     public function saveGame(array $params)
     {
         $manager = new \Application\Manager\Player\PlayerManager();
-        $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
-        var_dump($friends);
-//        var_dump($this->getApplicationContext()->getUserBo()->getFacebookUserId());
-
-//$manager->setFriendsList($this->getProcessusContext()->getFacebookClient()->getFriendsIdList());
-//        var_dump($manager->getFriendsList());
+        var_dump($this->getApplicationContext()->getUserBo()->getFacebookHighScore());
+//        var_dump($params["currentScore"]);
+        $manager->setFriendsList($this->getProcessusContext()->getFacebookClient()->getFriendsIdList());
 
 
         return true;
-//        return $manager->saveGame($params);
     }
 
     public function updateExperience(array $experience)

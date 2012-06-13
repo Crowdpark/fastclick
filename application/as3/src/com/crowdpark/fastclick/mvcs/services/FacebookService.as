@@ -96,7 +96,8 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function loadPictures() : void
 		{
-			if (friendIndex < playerModel.getPlayerFriends().length)
+			//playerModel.getPlayerFriends().length
+			if (friendIndex < 10)
 			{
 				loader = new Loader();
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadPicturesListener);

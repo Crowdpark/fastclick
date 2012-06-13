@@ -44,23 +44,21 @@ package com.crowdpark.fastclick.mvcs.views.footer {
 
 				// picture.x = shape.x = 0;
 				// picture.y = shape.y = 0;
-				picture.width = shape.width = 30;
-				picture.height = shape.height = 30;
-
-				var shapeSprite : Sprite = new Sprite();
-				// shapeSprite.addChild(shape);
-				shapeSprite.addChild(picture);
+				picture.width = 30;
+				picture.height = 30;
 
 				ball.setShape(null);
-				// ball.setPicture(null);
+				 ball.setPicture(null);
 
-				shapeSprite.x = 0;
-				shapeSprite.y = 0;
+				picture.x = 0;
+				picture.y = 0;
 
-				view.addBallToHbox(shapeSprite);
+				var sp : Sprite = new Sprite();
+				sp.addChild(picture);
+				view.addBallToHbox(sp);
 
-				ball.width = ball.getOwnWidth();
-				ball.height = ball.getOwnHeight();
+				// ball.width = ball.getOwnWidth();
+				// ball.height = ball.getOwnHeight();
 			}
 		}
 

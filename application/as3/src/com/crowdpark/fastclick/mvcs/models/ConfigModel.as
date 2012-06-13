@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import utils.number.randomIntegerWithinRange;
 	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
@@ -98,18 +99,42 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function saveData(data : Object) : void
 		{
-			var resultArray : Array = data.getValue().points;
+			
+			var circleAmount:uint = playerModel.getPlayerFriends().length;
+			
 
 			setGameDuration(data.getValue().gameDuration);
-
-			for each (var point:Object in resultArray)
+			setColorArray(data.getValue().points);
+			var colorAmount:uint = getColorArray().length;
+			
+			for (var i=0; i<colorAmount; i++)
+			{
+				var ballVo: BallVo = new BallVo();
+				ballVo.setColor(getColorArray()[randomIntegerWithinRange(0, _colorArray.length - 1)].color);
+				ballVo.setScore(10);
+				addBall(ballVo);	
+			}
+			
+				
+			/* var resultArray : Array = data.getValue().points;
+			  
+			 for each (var point:Object in resultArray)
 			{
 				var ballVO : BallVo = new BallVo();
 				//ballVO.setValueByKey('endPoint', new Point(60, 40));
 				ballVO.setValueByKey('color', point.color);
 				ballVO.setValueByKey('score', point.score);
 				addBall(ballVO);
-			}
+			}*/
+			
+		}
+
+		public function setColorArray(colors : *) : void {
+			_colorArray = colors;
+		}
+		public function getColorArray() : Array {
+			return _colorArray;
+			
 		}
 	}
 }

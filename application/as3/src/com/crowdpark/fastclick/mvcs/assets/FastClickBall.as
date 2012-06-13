@@ -54,11 +54,6 @@ package com.crowdpark.fastclick.mvcs.assets {
 		}
 
 		public function getMaskedPicture() : DisplayObject {
-			
-			if(!_picture)
-			{
-				_picture = new Sprite();
-			}
 			var backgroundShape : Shape = this.getShape();
 			var pictureMaskedSprite : Sprite = new Sprite();
 
@@ -98,7 +93,7 @@ package com.crowdpark.fastclick.mvcs.assets {
 			var duplication : Bitmap = new Bitmap(bitmapData);
 			duplication.smoothing = true;
 
-			return duplication;
+			return duplication as DisplayObject;
 		}
 
 		public function getOwnHeight() : uint {

@@ -26,6 +26,10 @@ package com.crowdpark.fastclick.mvcs.services
 		public var playerModel : PlayerModel;
 		[Inject]
 		public var backendService : BackendService;
+		
+		[Inject]
+		public var configService : ConfigService;
+		
 		private var friendIndex : uint = 0;
 		private var loader : Loader;
 
@@ -52,7 +56,8 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onFetchFriends(params : Object) : void
 		{
-			playerModel.setFriendsList(params.data); //Test all friends
+			playerModel.setFriendsList(params.data); //Test all friends	
+			configService.fetchData("data/Config.json");
 
 			playerModel.getCurrentPlayer().setFriendsList(params.data);
 			backendService.storePlayer(playerModel.getCurrentPlayer());
@@ -91,7 +96,7 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function loadPictures() : void
 		{
-			if (friendIndex < 15)
+			if (friendIndex < playerModel.getPlayerFriends().length)
 			{
 				loader = new Loader();
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadPicturesListener);

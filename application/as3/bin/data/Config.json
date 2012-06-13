@@ -2,14 +2,14 @@
 	"gameDuration": "10",
 	"points":
 			[
-				{"color":"0x0080ff","score":"100"},
-				{"color":"0xff0000","score":"200"},
-				{"color":"0x66ff66","score":"300"},
-				{"color":"0xffff00","score":"400"},
-				{"color":"0xff00ff","score":"500"},
-				{"color":"0x00ffff","score":"600"},
-				{"color":"0xdfffc0","score":"500"},
-				{"color":"0xa724ff","score":"600"},
-				{"color":"0x0","score":"700"}
+				{"color":"0x0080ff"},
+				{"color":"0xff0000"},
+				{"color":"0x66ff66"},
+				{"color":"0xffff00"},
+				{"color":"0xff00ff"},
+				{"color":"0x00ffff"},
+				{"color":"0xdfffc0"},
+				{"color":"0xa724ff"},
+				{"color":"0x0"}
 			]
 }

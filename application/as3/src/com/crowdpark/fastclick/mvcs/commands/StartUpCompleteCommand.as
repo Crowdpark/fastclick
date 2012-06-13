@@ -16,8 +16,6 @@ package com.crowdpark.fastclick.mvcs.commands
 	public class StartUpCompleteCommand extends Command
 	{
 		[Inject]
-		public var configService : ConfigService;
-		[Inject]
 		public var playerModel : PlayerModel;
 		[Inject]
 		public var facebookService : FacebookService;
@@ -43,7 +41,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			contextView.addChild(mainSprite);
 			contextView.addChild(friendsSprite);
 
-			configService.fetchData("data/Config.json");
+			
 		}
 	}
 }

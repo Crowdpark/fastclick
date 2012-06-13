@@ -13,12 +13,30 @@ class Player extends \Application\Core\Abstracts\AbstractService
     /**
      * @return mixed
      */
-    public function getAppFriends()
+    public function getAppFriends(array $params)
+    {
+        $manager = new \Application\Manager\Player\PlayerManager();
+        $manager->setFriendsList($this->getProcessusContext()->getFacebookClient()->getFriendsIdList());
+        $mvo = $this->getProcessusContext()->getUserBo()->getFacebookUserMvo();
+        ($mvo->getValueByKey("high_score") < $params["currentScore"]) ? $mvo->setValueByKey("high_score", $params["currentScore"]) : false;
+        $mvo->setValueByKey("level", $params["currentLevel"]);
+        $mvo->saveInMem();
+        $friendArray = array();
+        $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
+
+        foreach ($friends as $friendMvo) {
+            $friendArray[] = $friendMvo->getData();
+        }
+        return $friendArray;
+    }
+
+    public function setFriendsList(array $params)
     {
 
-        $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
-        return $friends;
+
+
     }
+
     /**
      * @param array $params
      * @return string

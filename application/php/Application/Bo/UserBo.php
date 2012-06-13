@@ -31,6 +31,7 @@ class UserBo extends \Processus\Lib\Bo\UserBo
 
             $mvoFriendsList[] = $mvo;
         }
+
         return $mvoFriendsList;
     }
     /**

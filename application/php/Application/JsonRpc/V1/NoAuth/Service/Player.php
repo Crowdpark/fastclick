@@ -17,10 +17,14 @@ class Player extends \Application\Core\Abstracts\AbstractService
     {
         $manager = new \Application\Manager\Player\PlayerManager();
         $manager->setFriendsList($this->getProcessusContext()->getFacebookClient()->getFriendsIdList());
-        $mvo = $this->getProcessusContext()->getUserBo()->getFacebookUserMvo();
-        ($mvo->getValueByKey("high_score") < $params["currentScore"]) ? $mvo->setValueByKey("high_score", $params["currentScore"]) : false;
-        $mvo->setValueByKey("level", $params["currentLevel"]);
-        $mvo->saveInMem();
+        $mvo = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo();
+        if (!is_null($params["currentLevel"])) {
+            $mvo->setLevel($params["currentLevel"]);
+            if ($mvo->getHighScore() < $params["currentScore"] OR is_null($mvo->getHighScore())) {
+                $mvo->setHighScore($params["currentScore"]);
+            }
+            $mvo->saveInMem();
+        }
         $friendArray = array();
         $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
 
@@ -32,7 +36,6 @@ class Player extends \Application\Core\Abstracts\AbstractService
 
     public function setFriendsList(array $params)
     {
-
 
 
     }

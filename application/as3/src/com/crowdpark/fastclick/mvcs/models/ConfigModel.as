@@ -98,11 +98,23 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function saveData(data : Object) : void
 		{
-			var resultArray : Array = data.getValue().points;
+			
+			/*var circleAmount:uint = playerModel.getPlayerFriends().length;
 
 			setGameDuration(data.getValue().gameDuration);
-
-			for each (var point:Object in resultArray)
+			setColorArray(data.getValue().colors);
+			
+			for (var i=0; i<circleAmount; i++)
+			{
+				var ballVo: BallVo = new BallVo();
+				ballVo.setColor(color)	
+			}*/
+			
+			
+			
+			  var resultArray : Array = data.getValue().points;
+			  
+			 for each (var point:Object in resultArray)
 			{
 				var ballVO : BallVo = new BallVo();
 				//ballVO.setValueByKey('endPoint', new Point(60, 40));
@@ -110,6 +122,10 @@ package com.crowdpark.fastclick.mvcs.models
 				ballVO.setValueByKey('score', point.score);
 				addBall(ballVO);
 			}
+		}
+
+		private function setColorArray(colors : *) : void {
+			this._colorArray = colors;
 		}
 	}
 }

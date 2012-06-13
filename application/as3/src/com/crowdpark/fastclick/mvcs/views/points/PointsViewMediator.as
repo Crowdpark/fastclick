@@ -27,6 +27,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 		{
 			super.onRegister();
 			var pointArray : Vector.<BallVo> = configModel.getBallArray();
+			
 			for (var i : int = 0; i < pointArray.length; i++)
 			{
 				var ballVo : BallVo = pointArray[i];

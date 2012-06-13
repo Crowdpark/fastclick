@@ -9,6 +9,27 @@
 namespace Application\Bo;
 class UserBo extends \Processus\Lib\Bo\UserBo
 {
+
+
+    /**
+     * @var \Application\Mvo\FacebookUserMvo
+     */
+    private $_userMvo;
+
+    /**
+     * @return \Application\Mvo\FacebookUserMvo
+     */
+    public function getFacebookUserMvo()
+    {
+        if (!$this->_userMvo) {
+            $this->_userMvo = new \Application\Mvo\FacebookUserMvo();
+            $this->_userMvo->setMemId($this->getFacebookUserId());
+            $this->_userMvo->getFromMem();
+        }
+
+        return $this->_userMvo;
+    }
+
     /**
      * @return array
      */
@@ -51,9 +72,10 @@ class UserBo extends \Processus\Lib\Bo\UserBo
             $fbClient          = $this->getProcessusContext()->getFacebookClient();
             $fbData            = $fbClient->getUserDataById($fbUserId);
             $fbData['created'] = convertUnixTimeToIso(time());
+            $fbData['high_score'] = $mvo->getHighScore();
+            $fbData['level'] = $mvo->getLevel();
 
             $resultCode = $mvo->setData($fbData)->saveInMem();
-
             return TRUE;
         }
         else

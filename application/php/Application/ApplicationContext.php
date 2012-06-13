@@ -25,6 +25,10 @@ namespace Application
          * @var \Application\Mvo\AppUserMvo
          */
         private $_userAppMvo;
+        /**
+         * @var
+         */
+        private $_userBo;
 
         /**
          * @static
@@ -64,5 +68,28 @@ namespace Application
 
             return $this->_userAppMvo;
         }
+
+
+        /**
+         * @return \Application\Bo\UserBo
+         */
+        public function getUserBo()
+        {
+            if (!$this->_userBo) {
+                $this->setUserBo(new \Application\Bo\UserBo());
+            }
+            return $this->_userBo;
+        }
+
+        /**
+         * @param UserBo $userBo
+         * @return \Processus\ProcessusContext|void
+         */
+
+        public function setUserBo($userBo)
+        {
+            $this->_userBo = $userBo;
+        }
+
     }
 }

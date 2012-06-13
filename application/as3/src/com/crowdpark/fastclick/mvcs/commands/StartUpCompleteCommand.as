@@ -3,11 +3,6 @@ package com.crowdpark.fastclick.mvcs.commands
 	import flash.display.Sprite;
 
 	import com.crowdpark.fastclick.mvcs.views.friends.FriendsView;
-
-	import utils.js.callJSFunction;
-
-	import flash.external.ExternalInterface;
-
 	import com.crowdpark.fastclick.mvcs.services.FacebookService;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.services.ConfigService;

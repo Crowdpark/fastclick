@@ -3,11 +3,9 @@ package com.crowdpark.fastclick.mvcs.views.points
 	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
 	import com.crowdpark.fastclick.mvcs.assets.ScoreBox;
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
-	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceCircle;
-	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.crowdpark.fastclick.mvcs.models.vo.BallVo;
 	import com.greensock.TweenMax;
 
@@ -35,9 +33,10 @@ package com.crowdpark.fastclick.mvcs.views.points
 
 				var ball : FastClickBall = new FastClickBall();
 				ball.mouseChildren = false;
-				ball.setEndPoint(new Point(60, contextView.stage.stageHeight - 140));
+				ball.setEndPoint(new Point(30, contextView.stage.stageHeight - 160));
 				ball.setColor(uint(ballVo.getValueByKey('color')));
 				ball.setScore(uint(ballVo.getValueByKey('score')));
+				ball.setPicture((playerModel.getPlayerFriends()[i].getPlayerPicture()));
 
 				ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
 				_listOfBalls.push(ball);
@@ -48,7 +47,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 
 		private function createRandomPoints() : void
 		{
-			var fastClickCircle : BaseGraphic = BaseGraphic(createRandomSizedPoint());
+			var fastClickCircle : FastClickBall = FastClickBall(createRandomSizedPoint());
 			fastClickCircle.setStartPoint(randomPoint(0, contextView.stage.stageWidth, 60, contextView.stage.stageHeight - 140));
 
 			if (view.getObjectsUnderPoint(fastClickCircle.getStartPoint()).length == 0)
@@ -61,7 +60,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 
 		private function createRandomSizedPoint() : BaseGraphic
 		{
-			return _listOfBalls[randomIntegerWithinRange(0, _listOfBalls.length - 1)];
+			 return _listOfBalls[randomIntegerWithinRange(0, _listOfBalls.length - 1)];
 		}
 
 		private function checkState() : void
@@ -75,7 +74,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 		private function handleCircleClickEvent(e : MouseEvent) : void
 		{
 			var fcCircle : InterfaceCircle = InterfaceCircle(e.currentTarget);
-				
+
 			var scoreBox : ScoreBox = ScoreBox(new ScoreBox().setColor(fcCircle.getColor())
 				.setStartPoint(fcCircle.getStartPoint())
 				.setEndPoint(new Point(70, 5))

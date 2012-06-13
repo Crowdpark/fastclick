@@ -10,6 +10,7 @@ package com.crowdpark.fastclick.mvcs.events
 		public static const SET_USER : String = "SET_USER";
 		public static const FETCH_FRIENDS_IMAGES : String = "FETCH_FRIENDS_IMAGES";
 		public static const LOG_OUT : String = "LOG_OUT";
+		public static const INVITE_FRIEND : String = "INVITE_FRIEND";
 
 		public function FacebookServiceEvent(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{

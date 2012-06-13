@@ -1,8 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
 	import flash.net.SharedObject;
-
-	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 

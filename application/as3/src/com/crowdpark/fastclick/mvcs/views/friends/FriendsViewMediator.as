@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.views.friends
 {
+	import flash.events.Event;
+	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 
@@ -11,7 +13,12 @@ package com.crowdpark.fastclick.mvcs.views.friends
 		override public function onRegister() : void
 		{
 			super.onRegister();
+			addViewListener(FriendsView.INVITE_BUTTON_CLICKED, onInviteListener);
 			addContextListener(GameEvents.SHOW_FRIEND, onShowFriendListener);
+		}
+		private function onInviteListener(event : Event) : void
+		{
+			dispatch(new FacebookServiceEvent(FacebookServiceEvent.INVITE_FRIEND));
 		}
 
 		private function onShowFriendListener(event : GameEvents) : void

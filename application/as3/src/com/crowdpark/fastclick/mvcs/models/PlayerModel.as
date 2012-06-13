@@ -1,6 +1,7 @@
 package com.crowdpark.fastclick.mvcs.models
 {
-	import com.crowdpark.fastclick.mvcs.services.BackendService;
+	import utils.draw.createRectangleShape;
+
 	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
@@ -18,9 +19,9 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _currentPlayer : PlayerVo;
 		private var _playerArray : Vector.<PlayerVo>;
 		private var _playerFriends : Vector.<PlayerVo>;
-		[Inject]
-		public var backendService : BackendService;
 
+		// [Inject]
+		// public var backendService : BackendService;
 		public function addPlayer(player : PlayerVo) : PlayerModel
 		{
 			getPlayerArray().push(player);
@@ -97,6 +98,7 @@ package com.crowdpark.fastclick.mvcs.models
 			currentPlayer.setPlayerId(id);
 			currentPlayer.setCurrentScore(0);
 			currentPlayer.setCurrentLevel(1);
+			currentPlayer.setPlayerPictureUrl('https://graph.facebook.com/' + id + '/picture');
 			this.setCurrentPlayer(currentPlayer);
 
 			var event : GameEvents = new GameEvents(GameEvents.SET_PLAYER_COOKIE);
@@ -104,7 +106,26 @@ package com.crowdpark.fastclick.mvcs.models
 			dispatch(event);
 		}
 
-		public function setFriendsList(success : Object) : void
+		/*public function setFriendsList() : void
+		{
+		var friendsArray : Vector.<PlayerVo> = new Vector.<PlayerVo>();
+		for (var i : uint = 0; i < 4;i++)
+		{
+		var playerVo : PlayerVo = new PlayerVo();
+		playerVo.setPlayerId(1);
+		playerVo.setPlayerName('Test-Name');
+		playerVo.setPlayerLastName('Test_LastName');
+		playerVo.setPlayerPicture(createRectangleShape(60, 40, 0xff0000));
+		playerVo.setCurrentLevel(1);
+		playerVo.setCurrentScore(19);
+		playerVo.setLeaderboardPlace(1);
+		friendsArray.push(playerVo);
+		}
+		setPlayerFriends(friendsArray);
+
+		dispatch(new FacebookServiceEvent(FacebookServiceEvent.FETCH_FRIENDS_IMAGES));
+		}*/
+		public function setFriendsList(success : Object) : void // Test all friends
 		{
 			var friendsArray : Vector.<PlayerVo> = new Vector.<PlayerVo>();
 			for (var i : uint = 0;i < 15;i++)
@@ -113,6 +134,9 @@ package com.crowdpark.fastclick.mvcs.models
 				playerVo.setPlayerId(success[i].id);
 				playerVo.setPlayerFullName(success[i].name);
 				playerVo.setPlayerPictureUrl('http://graph.facebook.com/' + success[i].id + '/picture');
+				playerVo.setCurrentLevel(1);
+				playerVo.setCurrentScore(19);
+				playerVo.setLeaderboardPlace(1);
 				friendsArray.push(playerVo);
 			}
 			setPlayerFriends(friendsArray);

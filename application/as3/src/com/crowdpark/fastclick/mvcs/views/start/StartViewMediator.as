@@ -1,6 +1,5 @@
 package com.crowdpark.fastclick.mvcs.views.start
 {
-	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 
 	import flash.events.Event;
@@ -17,12 +16,12 @@ package com.crowdpark.fastclick.mvcs.views.start
 		{
 			super.onRegister();
 			view.y = 50;
-			
-			if(playerModel.getCurrentPlayer())
+
+			if (playerModel.getCurrentPlayer())
 			{
-				view.updatePlayerNameField(playerModel.getCurrentPlayer().getPlayerName(), playerModel.getCurrentPlayer().getPlayerLastName())
+				view.updatePlayerNameField(playerModel.getCurrentPlayer().getPlayerName(), playerModel.getCurrentPlayer().getPlayerLastName());
 			}
-			
+
 			addViewListener(StartView.START_GAME, onStartGameListener);
 			addContextListener(GameEvents.SET_PLAYER_COOKIE, setPlayerListener);
 		}

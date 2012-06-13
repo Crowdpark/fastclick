@@ -27,7 +27,7 @@ package com.crowdpark.fastclick.mvcs.assets
 			addChild(createScoreField(String(getScore())));
 		}
 
-		public function getShape() : Shape
+		override public function getShape() : Shape
 		{
 			if (!_rawShape)
 			{
@@ -39,12 +39,6 @@ package com.crowdpark.fastclick.mvcs.assets
 		private function createScoreField(str : String) : TextField
 		{
 			return createField(str, 0, 0, 200, 20, true, "Verdana", 17, 0xffffff);
-		}
-
-		public function setShape(shape : Shape) : ScoreBox
-		{
-			_rawShape = shape;
-			return this;
 		}
 	}
 }

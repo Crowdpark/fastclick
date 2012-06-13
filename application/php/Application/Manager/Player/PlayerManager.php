@@ -66,10 +66,12 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
      */
     public function saveGame(array $params)
     {
-        return $this->insert($this->ccFactory()
-                ->setSqlTableName("games")
-                ->setSqlParams($params)
-        )->getAdapter()->lastInsertId();
+        $key = "";
+//        $this->getProcessusContext()->getDefaultCache()->insert($friendsListKey, $friendsList, 120);
+//        return $this->insert($this->ccFactory()
+//                ->setSqlTableName("games")
+//                ->setSqlParams($params)
+//        )->getAdapter()->lastInsertId();
     }
     /**
      * @param array $experience

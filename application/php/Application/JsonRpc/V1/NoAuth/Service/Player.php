@@ -17,7 +17,6 @@ class Player extends \Application\Core\Abstracts\AbstractService
     {
 
         $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
-        var_dump($friends);
         return $friends;
     }
     /**
@@ -27,16 +26,12 @@ class Player extends \Application\Core\Abstracts\AbstractService
     public function saveGame(array $params)
     {
         $manager = new \Application\Manager\Player\PlayerManager();
-        $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
-        var_dump($friends);
-//        var_dump($this->getApplicationContext()->getUserBo()->getFacebookUserId());
-
-//$manager->setFriendsList($this->getProcessusContext()->getFacebookClient()->getFriendsIdList());
-//        var_dump($manager->getFriendsList());
+        var_dump($this->getApplicationContext()->getUserBo()->getFacebookHighScore());
+//        var_dump($params["currentScore"]);
+        $manager->setFriendsList($this->getProcessusContext()->getFacebookClient()->getFriendsIdList());
 
 
         return true;
-//        return $manager->saveGame($params);
     }
 
     public function updateExperience(array $experience)

@@ -24,7 +24,6 @@ class UserBo extends \Processus\Lib\Bo\UserBo
         $friendsKeys = $this->array_prefixing("FacebookUserMvo_", $friendsIdList);
         $appUsers = array_filter($connector->getMultipleByKey($friendsKeys));
 
-        // get friends from membase || or add them
         foreach ($appUsers as $item)
         {
             $mvo = new \Processus\Lib\Mvo\FacebookUserMvo();
@@ -39,12 +38,6 @@ class UserBo extends \Processus\Lib\Bo\UserBo
      */
     public function isAuthorized()
     {
-//        $isInMySql = $this->_isInMySqlTable();
-//
-//        if (count($isInMySql) == 1)
-//        {
-//            return TRUE;
-//        }
 
         $fbUserId = $this->getFacebookUserId();
 
@@ -59,7 +52,6 @@ class UserBo extends \Processus\Lib\Bo\UserBo
             $fbData['created'] = convertUnixTimeToIso(time());
 
             $resultCode = $mvo->setData($fbData)->saveInMem();
-//            $this->getUserManager()->insertNewUser($mvo);
 
             return TRUE;
         }
@@ -77,5 +69,11 @@ class UserBo extends \Processus\Lib\Bo\UserBo
             $prefixList[] = $prefix . $idItem;
         }
         return $prefixList;
+    }
+
+    public function getFacebookHighScore()
+    {
+        var_dump($this->getProcessusContext()->getFacebookClient()->getOpenGraphClient()->setUserScore(222));
+        return parent::getFacebookHighScore();
     }
 }

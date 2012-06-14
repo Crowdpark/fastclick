@@ -30,15 +30,20 @@ package com.crowdpark.fastclick.mvcs.services
 
 			// playerModel.setFriendsList();
 		}
-		public function storeResults(player:PlayerVo) : void
+
+		public function storeResults(player : PlayerVo) : void
 		{
-			/*var jsonClient : JsonRpcClient = new JsonRpcClient();
+			var jsonClient : JsonRpcClient = new JsonRpcClient();
 			jsonClient.params = [player.getValues()];
-			jsonClient.method = 'NoAuth.Player.getAppFriends';
+			jsonClient.method = 'NoAuth.Player.updateUser';
 			jsonClient.url = 'http://local.fastclick.com/api/v1/notauth/';
-			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStorePointResult);
+			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStoreResults);
 			jsonClient.send();
-			*/
+		}
+
+		private function onStoreResults(event : JsonRpcClientEvent) : void
+		{
+			
 		}
 
 		private function onStorePointResult(event : JsonRpcClientEvent) : void

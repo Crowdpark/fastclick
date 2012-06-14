@@ -13,7 +13,7 @@ package com.crowdpark.fastclick.mvcs.views.levels
 		override public function onRegister() : void
 		{
 			super.onRegister();
-			
+
 			if (stateMachineModel.state == StateMachineState.RETRY)
 			{
 				onShowLevelsListener(null);

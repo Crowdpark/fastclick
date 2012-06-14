@@ -51,6 +51,7 @@ package com.crowdpark.fastclick.mvcs.services
 		private function onFetchFriends(params : Object) : void
 		{
 			playerModel.getCurrentPlayer().setFriendsList(params.data);
+			
 			backendService.storePlayer(playerModel.getCurrentPlayer());
 		}
 

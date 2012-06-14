@@ -20,6 +20,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 			if (playerModel.getCurrentPlayer())
 			{
 				view.updatePlayerNameField(playerModel.getCurrentPlayer().getPlayerName(), playerModel.getCurrentPlayer().getPlayerLastName());
+
 			}
 
 			addViewListener(StartView.START_GAME, onStartGameListener);

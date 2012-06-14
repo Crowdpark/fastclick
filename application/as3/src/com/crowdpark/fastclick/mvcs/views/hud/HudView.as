@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.hud
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.LevelVo;
 	import flash.events.MouseEvent;
 
 	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
@@ -25,6 +26,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 		private static const LOGOUT : String = "LOGOUT";
 		public var scoreTitle : TextField = new TextField();
 		public var score : TextField = new TextField();
+		public var level : TextField = new TextField();
 		public var timeSprite : Sprite = new Sprite();
 		public var time : TextField = new TextField();
 		public var timeBarSprite : Sprite = new Sprite();
@@ -36,6 +38,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			createScoreView();
 			createTimeView();
 			createTimeBar();
+			createLevel();
 		}
 
 		override public function onAddedToStageListener(e : Event) : void
@@ -61,7 +64,10 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			playerNameField.background = true;
 			playerNameField.backgroundColor = 0xcacaca;
 			playerNameField.x = stage.stageWidth - playerNameField.width;
-
+			
+			level.x = stage.stageWidth - level.width;
+			level.y = 60-level.height;
+			
 			time.text = String(this.getDataProvider().getValueByKey('gameDuration'));
 			timeSprite.x = (stage.stageWidth - timeSprite.width) / 2;
 
@@ -121,9 +127,23 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			addChild(score);
 		}
 
+		private function createLevel() : void
+		{
+			level = createField("0", 0, 0, 200, 20, false, "Verdana", 20, 0xffffff);
+			level.background = true;
+			level.backgroundColor = 0xcacaca;
+			addChild(level);
+		}
+
 		public function updateTime() : void
 		{
 			time.text = String(this.getDataProvider().getValueByKey('time'));
+		}
+
+		public function updateLevel(currentLevel:uint) : void
+		{
+			level.text = String(currentLevel);
+			level.x = stage.stageWidth - level.width;
 		}
 	}
 }

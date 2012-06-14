@@ -28,8 +28,9 @@ package com.crowdpark.fastclick.mvcs.views.points
 		{
 			super.onRegister();
 			var pointArray : Vector.<BallVo> = configModel.getBallArray();
+			var playerArray : Vector.<PlayerVo> = playerModel.getPlayerAppFriends();
 
-			for (var i : int = 0; i < pointArray.length; i++)
+			for (var i : int = 0; i < playerArray.length; i++)
 			{
 				var ballVo : BallVo = pointArray[i];
 
@@ -38,7 +39,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 				ball.setEndPoint(new Point(30, contextView.stage.stageHeight - 160));
 				ball.setColor(ballVo.getColor());
 				ball.setScore(ballVo.getScore());
-				ball.setPicture((playerModel.getPlayerFriends()[i].getPlayerPicture()));
+				ball.setPicture(playerArray[i].getPlayerPicture());
 
 				ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
 				_listOfBalls.push(ball);

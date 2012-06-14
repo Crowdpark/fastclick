@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.adobe.serialization.json.JSONDecoder;
 
 	import utils.draw.createRectangleShape;
@@ -102,7 +103,7 @@ package com.crowdpark.fastclick.mvcs.models
 			currentPlayer.setCurrentScore(0);
 			currentPlayer.setCurrentLevel(1);
 			currentPlayer.setPlayerPictureUrl('https://graph.facebook.com/' + id + '/picture');
-			
+
 			setCurrentPlayer(currentPlayer);
 
 			var event : GameEvents = new GameEvents(GameEvents.SET_PLAYER_COOKIE);
@@ -146,26 +147,29 @@ package com.crowdpark.fastclick.mvcs.models
 			dispatch(new FacebookServiceEvent(FacebookServiceEvent.FETCH_FRIENDS_IMAGES));
 		}
 
-		public function setApplicationFriends(data : Object) : void
+		public function setApplicationFriends(appFriends : Object) : void
 		{
-			var data = data.getValueByKey('0');
-			var jsonDecoder : JSONDecoder = new JSONDecoder(String(data), true);
-			trace(jsonDecoder.getValue().id + 'decoder');
-			var success = jsonDecoder.getValue();
+			trace(appFriends.length);
 
-			var playerVo : PlayerVo = new PlayerVo();
-			playerVo.setPlayerId(success.id);
-			playerVo.setPlayerFullName(success.name);
-			playerVo.setPlayerPictureUrl('http://graph.facebook.com/' + success.id + '/picture');
-			playerVo.setCurrentLevel(1);
-			playerVo.setCurrentScore(19);
-			playerVo.setLeaderboardPlace(1);
-			getPlayerApplicationFriends().push(playerVo);
-			
+			for (var i : uint = 0;i < appFriends.length;i++)
+			{
+				var jsonDecoder : JSONDecoder = new JSONDecoder(String(appFriends[i]), true);
+				var appfriend = jsonDecoder.getValue();
+				trace(jsonDecoder.getValue().id + 'decoder');
+
+				var playerVo : PlayerVo = new PlayerVo();
+				playerVo.setPlayerId(appfriend.id);
+				playerVo.setPlayerFullName(appfriend.name);
+				playerVo.setPlayerPictureUrl('http://graph.facebook.com/' + appfriend.id + '/picture');
+				playerVo.setCurrentLevel(appfriend.level);
+				playerVo.setCurrentScore(appfriend.high_score);
+				playerVo.setLeaderboardPlace(i);
+				getPlayerAppFriends().push(playerVo);
+			}
 			dispatch(new FacebookServiceEvent(FacebookServiceEvent.FETCH_APP_FRIENDS_IMAGES));
 		}
 
-		public function getPlayerApplicationFriends() : Vector.<PlayerVo>
+		public function getPlayerAppFriends() : Vector.<PlayerVo>
 		{
 			if (!_playerApplicationFriends)
 			{
@@ -177,6 +181,17 @@ package com.crowdpark.fastclick.mvcs.models
 		public function setPlayerApplicationFriends(playerApplicationFriends : Vector.<PlayerVo>) : void
 		{
 			_playerApplicationFriends = playerApplicationFriends;
+		}
+
+		public function setCurrentLevel(user : Object) : void
+		{
+			trace(user.level + ' user currentlevel');
+
+			getCurrentPlayer().setCurrentLevel(user.level);
+		}
+		public function setSelectedLevel(level:uint)
+		{
+			getCurrentPlayer().setSelectedLevel(level);
 		}
 	}
 }

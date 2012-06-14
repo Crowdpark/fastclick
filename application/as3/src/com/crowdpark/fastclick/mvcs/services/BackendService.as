@@ -30,13 +30,26 @@ package com.crowdpark.fastclick.mvcs.services
 
 			// playerModel.setFriendsList();
 		}
+		public function storeResults(player:PlayerVo) : void
+		{
+			/*var jsonClient : JsonRpcClient = new JsonRpcClient();
+			jsonClient.params = [player.getValues()];
+			jsonClient.method = 'NoAuth.Player.getAppFriends';
+			jsonClient.url = 'http://local.fastclick.com/api/v1/notauth/';
+			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStorePointResult);
+			jsonClient.send();
+			*/
+		}
 
 		private function onStorePointResult(event : JsonRpcClientEvent) : void
 		{
-			var data:InterfaceVO = event.getDataprovider();
-			
-			playerModel.setApplicationFriends(data);
-			
+			var data : InterfaceVO = event.getDataprovider();
+
+			var appFriends = event.getDataprovider().getValueByKey('appfriends');
+			var user = event.getDataprovider().getValueByKey('user');
+
+			playerModel.setCurrentLevel(user);
+			playerModel.setApplicationFriends(appFriends);
 		}
 	}
 }

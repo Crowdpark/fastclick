@@ -99,8 +99,8 @@ package com.crowdpark.fastclick.mvcs.models.vo
 		{
 			var playerPictureBitmap : Bitmap = Bitmap(this.getValueByKey('playerPictureBitmap'));
 
-			var duplication:Bitmap;
-			duplication = new Bitmap();			
+			var duplication : Bitmap;
+			duplication = new Bitmap();
 			if (playerPictureBitmap)
 			{
 				duplication = new Bitmap(playerPictureBitmap.bitmapData);
@@ -142,5 +142,17 @@ package com.crowdpark.fastclick.mvcs.models.vo
 		{
 			return uint(this.getValueByKey('leaderboardPlace'));
 		}
+
+		public function setSelectedLevel(level : uint) : PlayerVo
+		{
+			this.setValueByKey('selectedLevel',level);
+			return this;		
+		}
+		public function getSelectedLevel() : uint
+		{
+			return uint(this.getValueByKey('selectedLevel'));
+
+		}
+		
 	}
 }

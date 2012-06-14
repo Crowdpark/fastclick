@@ -9,6 +9,9 @@ package com.crowdpark.fastclick.mvcs.events
 		public static const SHOW_FRIENDS : String = "SHOW_FRIENDS";
 		public static const SHOW_FRIEND : String = "SHOW_FRIEND";
 		public static const SET_PLAYER_COOKIE : String = "SET_PLAYER_COOKIE";
+		public static const SHOW_LEVELS : String = "SHOW_LEVELS";
+		public static const LEVEL_SELECT : String = "LEVEL_SELECT";
+		public static const APP_FRIENDS_LOADED : String = "APP_FRIENDS_LOADED";
 		
 		public function GameEvents(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{

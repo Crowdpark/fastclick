@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.display.DisplayObject;
@@ -65,17 +66,23 @@ package com.crowdpark.fastclick.mvcs.services
 
 		public function fetchAppFriendImages() : void
 		{
-			loadPictures(playerModel.getPlayerApplicationFriends());
+			var friendArray : Vector.<PlayerVo> = playerModel.getPlayerAppFriends();
+			if (friendArray.length > 0)
+			{
+				loadPictures(friendArray);
+			}
 		}
 
 		private function loadPictures(friendArray : Vector.<PlayerVo>) : void
 		{
-			if (friendIndex < 10)
+			if (friendIndex < friendArray.length)
 			{
-				
+				bitmapService.fetchBitMap(friendArray[friendIndex].getPlayerPictureUrl());
 			}
-
-			bitmapService.fetchBitMap(friendArray[friendIndex].getPlayerPictureUrl());
+			else
+			{
+				dispatch(new GameEvents(GameEvents.APP_FRIENDS_LOADED));
+			}
 
 			/*if (friendIndex < 1)
 			{
@@ -87,8 +94,8 @@ package com.crowdpark.fastclick.mvcs.services
 
 		public function addLoadedBitmap(bitmap : Bitmap) : void
 		{
-			var playerF : Vector.<PlayerVo> = playerModel.getPlayerFriends();
-			playerF[friendIndex].setPlayerPicture(Bitmap(loader.content));
+			var playerF : Vector.<PlayerVo> = playerModel.getPlayerAppFriends();
+			playerF[friendIndex].setPlayerPicture(bitmap);
 
 			var gameEvent : GameEvents = new GameEvents(GameEvents.SHOW_FRIEND);
 			gameEvent.getDataprovider().setValueByKey('currentFriend', playerF[friendIndex]);
@@ -100,7 +107,7 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onLoadPicturesListener(event : Event) : void
 		{
-			var playerF : Vector.<PlayerVo> = playerModel.getPlayerApplicationFriends();
+			var playerF : Vector.<PlayerVo> = playerModel.getPlayerAppFriends();
 			playerF[friendIndex].setPlayerPicture(Bitmap(loader.content));
 
 			var gameEvent : GameEvents = new GameEvents(GameEvents.SHOW_FRIEND);

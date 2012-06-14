@@ -9,6 +9,7 @@ package com.crowdpark.fastclick.mvcs.events
 	{
 		public static const SORT : String = "SORT";
 		public static const SET_NAME : String = "SET_NAME";
+		public static const SHOW_HIGHEST_SCORE : String = "SHOW_HIGHEST_SCORE";
 
 		public function LeaderboardEvent(type : String, bubbles : Boolean = false, cancellable : Boolean = true)
 		{

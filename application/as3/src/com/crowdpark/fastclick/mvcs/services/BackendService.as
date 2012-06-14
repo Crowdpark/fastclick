@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.adobe.serialization.json.JSONDecoder;
@@ -26,7 +27,6 @@ package com.crowdpark.fastclick.mvcs.services
 			jsonClient.url = 'http://local.fastclick.com/api/v1/notauth/';
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStorePointResult);
 			jsonClient.send();
-
 		}
 
 		public function storeResults(player : PlayerVo) : void
@@ -41,22 +41,22 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onStoreResults(event : JsonRpcClientEvent) : void
 		{
+			var data = event.getDataprovider().getValueByKey('highestScore');
 			
+			var leaderboardEvent :LeaderboardEvent = new LeaderboardEvent(LeaderboardEvent.SHOW_HIGHEST_SCORE);
+			leaderboardEvent.getDataprovider().setValueByKey('highestScore', data); 
 		}
 
 		private function onStorePointResult(event : JsonRpcClientEvent) : void
 		{
-			var data : InterfaceVO = event.getDataprovider();
-
-			var appFriends = event.getDataprovider().getValueByKey('appfriends');
+		
+			var allFriends = event.getDataprovider().getValueByKey('friends');
 			var user = event.getDataprovider().getValueByKey('user');
-			
-			var backendServiceEvent:BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.FETCH_ALL_FRIENDS);
-			backendServiceEvent.getDataprovider().setValueByKey('allFriends', appFriends);
+
+			var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.FETCH_ALL_FRIENDS);
+			backendServiceEvent.getDataprovider().setValueByKey('allFriends', allFriends);
 			backendServiceEvent.getDataprovider().setValueByKey('user', user);
 			dispatch(backendServiceEvent);
-			
-			
 		}
 	}
 }

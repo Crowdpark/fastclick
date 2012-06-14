@@ -153,6 +153,19 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			return uint(this.getValueByKey('selectedLevel'));
 
 		}
+
+		public function setPlayerType(type : String) : PlayerVo
+		{
+			this.setValueByKey('type',type);
+			return this;
+		}
+		
+		public function getPlayerType() : String
+		{
+			return String(this.getValueByKey('type'));
+
+		}
+		
 		
 	}
 }

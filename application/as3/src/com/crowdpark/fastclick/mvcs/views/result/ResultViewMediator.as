@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.views.result
 {
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
+	import flash.events.Event;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 
@@ -25,6 +27,13 @@ package com.crowdpark.fastclick.mvcs.views.result
 			view.retryButton.x = (contextView.stage.stageWidth - view.retryButton.width) / 2;
 
 			view.retryButton.addEventListener(MouseEvent.CLICK, handleRetryButton);
+			
+			addContextListener(LeaderboardEvent.SHOW_HIGHEST_SCORE, onLeaderboardEvent)
+		}
+
+		private function onLeaderboardEvent(e:Event) : void
+		{
+			
 		}
 
 		private function handleRetryButton(event : MouseEvent) : void

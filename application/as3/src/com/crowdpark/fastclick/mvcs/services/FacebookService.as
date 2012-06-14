@@ -28,7 +28,6 @@ package com.crowdpark.fastclick.mvcs.services
 	{
 		[Inject]
 		public var playerModel : PlayerModel;
-		
 		private var friendIndex : uint = 0;
 		private var loader : Loader;
 
@@ -51,11 +50,7 @@ package com.crowdpark.fastclick.mvcs.services
 		private function onFetchFriends(params : Object) : void
 		{
 			playerModel.getCurrentPlayer().setFriendsList(params.data);
-			playerModel.createFriends();
-
 			dispatch(new BackendServiceEvents(BackendServiceEvents.STORE_PLAYER));
-
-			// backendService.storePlayer(playerModel.getCurrentPlayer());
 		}
 
 		public function handleLogin(response : Object, fail : Object) : void
@@ -63,26 +58,16 @@ package com.crowdpark.fastclick.mvcs.services
 			trace('response');
 		}
 
-		public function fetchAppFriendImages() : void
-		{
-			var friendArray : Vector.<PlayerVo> = playerModel.getPlayerAppFriends();
-			if (friendArray.length > 0)
-			{
-				loadPictures(friendArray);
-			}
-		}
-
 		public function fetchFriendImages() : void
 		{
 			loadPictures(playerModel.getPlayerFriends());
-			
 		}
 
 		private function loadPictures(friendArray : Vector.<PlayerVo>) : void
 		{
 			if (friendIndex < friendArray.length)
 			{
-				var bitmapService:BitmapLoaderServiceEvent = new BitmapLoaderServiceEvent(BitmapLoaderServiceEvent.LOAD_BITMAP);
+				var bitmapService : BitmapLoaderServiceEvent = new BitmapLoaderServiceEvent(BitmapLoaderServiceEvent.LOAD_BITMAP);
 				bitmapService.getDataprovider().setValueByKey('friendIndex', friendIndex);
 				dispatch(bitmapService);
 			}

@@ -150,28 +150,25 @@ package com.crowdpark.fastclick.mvcs.models
 		{
 			trace(appFriends.length);
 			
-			var friends:Vector.<PlayerVo> = getPlayerFriends();
-			for(var i:uint=0;i<friends.length;i++)
+	
+			for (var i : uint = 0;i < 10;i++)
 			{
-				
-			}
-			
-			for (var i : uint = 0;i < appFriends.length;i++)
-			{
-				var jsonDecoder : JSONDecoder = new JSONDecoder(String(appFriends[i]), true);
-				var appfriend = jsonDecoder.getValue();
-				trace(jsonDecoder.getValue().id + 'decoder');
-
+				//var jsonDecoder : JSONDecoder = new JSONDecoder(String(appFriends[i]), true);
+				//var appfriend = jsonDecoder.getValue();
+				//trace(jsonDecoder.getValue().id + 'decoder');
+				var appfriend = appFriends[i];
+				trace(appFriends[i]);
 				var playerVo : PlayerVo = new PlayerVo();
 				playerVo.setPlayerId(appfriend.id);
 				playerVo.setPlayerFullName(appfriend.name);
+				playerVo.setPlayerType(appfriend.type);
 				playerVo.setPlayerPictureUrl('http://graph.facebook.com/' + appfriend.id + '/picture');
-				playerVo.setCurrentLevel(appfriend.level);
-				playerVo.setCurrentScore(appfriend.high_score);
+				//playerVo.setCurrentLevel(appfriend.level);
+				//playerVo.setCurrentScore(appfriend.high_score);
 				playerVo.setLeaderboardPlace(i);
-				getPlayerAppFriends().push(playerVo);
+				getPlayerFriends().push(playerVo);
 			}
-			dispatch(new FacebookServiceEvent(FacebookServiceEvent.FETCH_APP_FRIENDS_IMAGES));
+			dispatch(new FacebookServiceEvent(FacebookServiceEvent.FETCH_ALL_FRIENDS_PICTURES));
 		}
 
 		public function getPlayerAppFriends() : Vector.<PlayerVo>

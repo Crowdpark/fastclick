@@ -1,15 +1,16 @@
 package com.crowdpark.fastclick.mvcs
 {
-	import com.crowdpark.fastclick.mvcs.commands.SaveConfigDataCommand;
 	import com.crowdpark.fastclick.mvcs.commands.BitmapLoadedCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
-	import com.crowdpark.fastclick.mvcs.commands.FetchAppFriendsPicturesCommand;
+	import com.crowdpark.fastclick.mvcs.commands.FetchAllFriendsPicturesCommand;
 	import com.crowdpark.fastclick.mvcs.commands.FetchFriendsPicturesCommand;
 	import com.crowdpark.fastclick.mvcs.commands.FinishGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.InviteFriendCommand;
 	import com.crowdpark.fastclick.mvcs.commands.LoadBitmapCommand;
 	import com.crowdpark.fastclick.mvcs.commands.LogoutCommand;
 	import com.crowdpark.fastclick.mvcs.commands.RetryGameCommand;
+	import com.crowdpark.fastclick.mvcs.commands.SaveConfigDataCommand;
+	import com.crowdpark.fastclick.mvcs.commands.SetAllFriendsCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SetPlayerCookieCommand;
 	import com.crowdpark.fastclick.mvcs.commands.StartGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.StartUpCompleteCommand;
@@ -71,7 +72,8 @@ package com.crowdpark.fastclick.mvcs
 			commandMap.mapEvent(BackendServiceEvents.FETCH_ALL_FRIENDS, SetAllFriendsCommand);
 			
 			commandMap.mapEvent(FacebookServiceEvent.FETCH_FRIENDS_PICTURES, FetchFriendsPicturesCommand, FacebookServiceEvent);
-			commandMap.mapEvent(FacebookServiceEvent.FETCH_APP_FRIENDS_IMAGES, FetchAppFriendsPicturesCommand, FacebookServiceEvent);
+			commandMap.mapEvent(FacebookServiceEvent.FETCH_ALL_FRIENDS_PICTURES, FetchAllFriendsPicturesCommand, FacebookServiceEvent);
+			
 			commandMap.mapEvent(BitmapLoaderServiceEvent.LOAD_BITMAP, LoadBitmapCommand);
 			commandMap.mapEvent(BitmapLoaderServiceEvent.BITMAP_LOADED, BitmapLoadedCommand);
 			commandMap.mapEvent(BackendServiceEvents.STORE_PLAYER, StorePlayerCommand);

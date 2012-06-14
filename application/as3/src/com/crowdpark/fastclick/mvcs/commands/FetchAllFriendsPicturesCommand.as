@@ -6,14 +6,14 @@ package com.crowdpark.fastclick.mvcs.commands
 	/**
 	 * @author fatmatekin
 	 */
-	public class FetchAppFriendsPicturesCommand extends Command
+	public class FetchAllFriendsPicturesCommand extends Command
 	{
 		[Inject]
 		public var facebookService:FacebookService;
 		
 		override public function execute() : void
 		{
-			facebookService.fetchAppFriendImages();
+			facebookService.fetchFriendImages();
 		}
 	}
 }

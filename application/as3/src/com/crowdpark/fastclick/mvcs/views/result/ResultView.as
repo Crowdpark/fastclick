@@ -22,7 +22,7 @@ package com.crowdpark.fastclick.mvcs.views.result
 		{
 			resultText = createField("Your Score", 0, 0, 200, 20, false, "Verdana", 13);
 			result = createField("", 0, 0, 200, 20, false, "Verdana", 22);
-			leaderboardTitle = createField("HIGHEST SCORES", 0, 0, 200, 20, false, "Verdana", 15);
+			leaderboardTitle = createField("HIGHEST SCORE", 0, 0, 200, 20, false, "Verdana", 15);
 
 			addChild(result);
 			addChild(resultText);
@@ -34,7 +34,8 @@ package com.crowdpark.fastclick.mvcs.views.result
 			var title : TextField = createField("RETRY", 0, 0, 200, 20, false, "Verdana", 15, 0xffffff);
 			title.x = (retryButton.width - title.width) / 2;
 			title.y = (retryButton.height - title.height) / 2;
-
+			
+			retryButton.y = 300;
 			retryButton.addChild(title);
 
 			addChild(retryButton);

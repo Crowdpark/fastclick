@@ -91,5 +91,14 @@ namespace Application
             $this->_userBo = $userBo;
         }
 
+        private $_facebookClient;
+
+        public function getFacebookClient()
+        {
+            if (!$this->_facebookClient) {
+                $this->_facebookClient = new \Application\Lib\Facebook\FacebookClient();
+            }
+            return $this->_facebookClient;
+        }
     }
 }

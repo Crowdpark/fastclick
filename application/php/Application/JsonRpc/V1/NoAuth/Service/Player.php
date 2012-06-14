@@ -10,15 +10,21 @@ namespace Application\JsonRpc\V1\NoAuth\Service;
 class Player extends \Application\Core\Abstracts\AbstractService
 {
 
+    private function getFriendId($element)
+    {
+        return $element["id"];
+    }
+
     /**
      * @return mixed
      */
     public function getAppFriends(array $params)
     {
+
+
         $manager = new \Application\Manager\Player\PlayerManager();
 
-        $friendsIdList = $this->getApplicationContext()->getFacebookClient()->getFriendsIdList();
-        $manager->setFriendsList($friendsIdList);
+        $paramsIdList = array_map(array($this, "getFriendId"), $params["friendsList"]);
         $mvo = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo();
 
         if (is_null($params["currentLevel"])) {
@@ -37,13 +43,13 @@ class Player extends \Application\Core\Abstracts\AbstractService
         $friendArray = array();
         $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
 
-        $playerData["high_score"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getHighScore();
-        $playerData["level"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getLevel();
+        $friendArray['user']["high_score"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getHighScore();
+        $friendArray['user']["level"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getLevel();
 
         foreach ($friends as $friendMvo) {
             $friendArray['appfriends'][] = $friendMvo->getData();
         }
-        $friendArray['user'][] = $playerData;
+
         return $friendArray;
     }
 

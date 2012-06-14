@@ -57,8 +57,25 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
      */
     public function getAppFriends()
     {
+        $return = array();
+        $return['user']["high_score"] = $this->
+            getApplicationContext()->
+            getUserBo()->
+            getFacebookUserMvo()->
+            getHighScore();
+
+        $return['user']["level"] = $this->
+            getApplicationContext()->
+            getUserBo()->
+            getFacebookUserMvo()->
+            getLevel();
+
         $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
-        return $friends;
+
+        foreach ($friends as $friendMvo) {
+            $return['appfriends'][] = $friendMvo->getData();
+        }
+        return $return;
     }
 
 }

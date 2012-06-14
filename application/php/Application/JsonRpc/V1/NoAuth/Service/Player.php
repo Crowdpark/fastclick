@@ -10,80 +10,42 @@ namespace Application\JsonRpc\V1\NoAuth\Service;
 class Player extends \Application\Core\Abstracts\AbstractService
 {
 
-    private function getFriendId($element)
-    {
-        return $element["id"];
-    }
-
     /**
-     * @return mixed
+     * @param array $params
+     * @return array
      */
     public function getAppFriends(array $params)
     {
-
-
         $manager = new \Application\Manager\Player\PlayerManager();
+//        $paramsIdList = array_map(array($this, "_getFriendId"), $params["friendsList"]);
 
-        $paramsIdList = array_map(array($this, "getFriendId"), $params["friendsList"]);
-        $mvo = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo();
-
-        if (is_null($params["currentLevel"])) {
-            $level = $mvo->getLevel();
-            $score = $mvo->getHighScore();
-        } else {
-            $level = $params["currentLevel"];
-            $score = $params["currentScore"];
-        }
-        $mvo->setLevel($level);
-
-        if ($mvo->getHighScore() < $score OR is_null($mvo->getHighScore())) {
-            $mvo->setHighScore($score);
-        }
-        $mvo->saveInMem();
-        $friendArray = array();
-        $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
-
-        $friendArray['user']["high_score"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getHighScore();
-        $friendArray['user']["level"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getLevel();
-
-        foreach ($friends as $friendMvo) {
-            $friendArray['appfriends'][] = $friendMvo->getData();
-        }
-
-        return $friendArray;
-    }
-
-    public function setFriendsList(array $params)
-    {
-
+        return $manager->getAppFriends($params["friendsList"]);
 
     }
 
     /**
      * @param array $params
-     * @return string
+     * @return int
      */
-    public function saveGame(array $params)
+    public function updateUser(array $params)
     {
+
         $manager = new \Application\Manager\Player\PlayerManager();
-        $manager->setFriendsList($this->getProcessusContext()->getFacebookClient()->getFriendsIdList());
 
+//        $paramsIdList = array_map(array($this, "_getFriendId"), $params["friendsList"]);
 
-        return true;
-    }
-
-    public function updateExperience(array $experience)
-    {
-        $manager = new \Application\Manager\Player\PlayerManager();
-        return $manager->updateExperience($experience);
+        $manager->setLevel($params["currentLevel"]);
+        return $manager->setScore($params["currentScore"])->saveInMem();
 
     }
 
-    public function getExperience()
+    /**
+     * @param $element
+     * @return mixed
+     */
+    private function _getFriendId($element)
     {
-        $manager = new \Application\Manager\Player\PlayerManager();
-        return $manager->getExperience();
+        return $element["id"];
     }
-
 
 }

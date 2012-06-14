@@ -21,80 +21,72 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     }
 
     /**
-     * @desc Get user friends list from cache
-     *
-     * @return \array
+     * @param $score
+     * @return \Application\Mvo\FacebookUserMvo|\Processus\Lib\Mvo\FacebookUserMvo
      */
-    public function getFriendsList()
+    public function setScore($score)
     {
-        $fb_id = $this->getProcessusContext()->getUserBo()->getFacebookUserId();
-        $friendsListKey = "user_".$fb_id."_friends_list";
-        $friendsListValue = $this->getProcessusContext()->getDefaultCache()->fetch($friendsListKey);
+        $mvo = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo();
 
-        return $friendsListValue;
+        if (is_null($score))
+            $score = $mvo->getHighScore();
+
+        if ($mvo->getHighScore() < $score || is_null($mvo->getHighScore())) {
+            $mvo->setHighScore($score);
+        }
+        return $mvo;
     }
 
     /**
-     * @desc Set user friends list cache
-     *
-     * @param $friendsList
-     *
-     * @return UserCacheManager
+     * @param $level
+     * @return \Application\Mvo\FacebookUserMvo|\Processus\Lib\Mvo\FacebookUserMvo
      */
-    public function setFriendsList($friendsList)
+    public function setLevel($level)
     {
-        $fb_id = $this->getApplicationContext()->getUserBo()->getFacebookUserId();
-        $friendsListKey = "user_".$fb_id."_friends_list";
-        $this->getProcessusContext()->getDefaultCache()->insert($friendsListKey, ($friendsList), 120);
-        return $this;
+        $mvo = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo();
+
+        if (is_null($level))
+            $level = $mvo->getLevel();
+
+        $mvo->setLevel($level);
+        return $mvo;
     }
 
     /**
      * @return array
      */
-    public function getAppFriends()
+    public function getAppFriends(array $friendsList)
     {
+        $return = array();
+        $return['user']["high_score"] = $this->
+            getApplicationContext()->
+            getUserBo()->
+            getFacebookUserMvo()->
+            getHighScore();
+
+        $return['user']["level"] = $this->
+            getApplicationContext()->
+            getUserBo()->
+            getFacebookUserMvo()->
+            getLevel();
+
         $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
-        return $friends;
-    }
 
-    /**
-     * @param array $params
-     * @return string
-     */
-    public function saveGame(array $params)
-    {
-        $key = "";
-//        $this->getProcessusContext()->getDefaultCache()->insert($friendsListKey, $friendsList, 120);
-//        return $this->insert($this->ccFactory()
-//                ->setSqlTableName("games")
-//                ->setSqlParams($params)
-//        )->getAdapter()->lastInsertId();
-    }
-    /**
-     * @param array $experience
-     * @return \Zend\Db\Statement\Pdo
-     */
+        foreach ($friends as $friendMvo) {
+            $return['appfriends'][] = $friendMvo->getData();
+        }
+        foreach($friends as $friendMvo) {
+            $key = json_decode($friendMvo->getData())->id;
 
-    public function updateExperience(array $experience)
-    {
-        //$facebookId = $this->getApplicationContext()->getUserBo()->getFacebookUserId();
-        return $this->update($this->ccFactory()
-            ->setSqlTableName("users")
-            ->setSqlParams($experience)
-            ->setSqlUpdateConditions(array("fb_id" => 777)));
-    }
+            for($i = 0; $i < sizeof($friendsList); $i++) {
+                if ($key == $friendsList[$i]["id"])
+                    $friendsList[$i]["type"] = "appfriend";
+                else
+                    $friendsList[$i]["type"] = "friend";
+            }
+        }
 
-    /**
-     * @return mixed|null
-     */
-
-    public function getExperience()
-    {
-        //TODO: Get facebook user from context.
-        return $this->fetchOne($this->
-            ccFactory()->
-            setSqlStmt("SELECT experience FROM users"));
+        return $friendsList;
     }
 
 }

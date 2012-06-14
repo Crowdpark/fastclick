@@ -76,11 +76,15 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
 //            $return['appfriends'][] = $friendMvo->getData();
 //        }
         foreach($friends as $friendMvo) {
-            $key = json_decode($friendMvo->getData())->id;
+            $friendObject = json_decode($friendMvo->getData());
+            $key = $friendObject->id;
 
             for($i = 0; $i < sizeof($friendsList); $i++) {
-                if ($key == $friendsList[$i]["id"])
+                if ($key == $friendsList[$i]["id"]){
                     $friendsList[$i]["type"] = "appfriend";
+                    $friendsList[$i]["high_score"] = $friendObject->high_score;
+                    $friendsList[$i]["level"] = $friendObject->level;
+                }
                 else
                     $friendsList[$i]["type"] = "friend";
             }

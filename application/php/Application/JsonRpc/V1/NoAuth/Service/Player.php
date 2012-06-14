@@ -35,8 +35,9 @@ class Player extends \Application\Core\Abstracts\AbstractService
 //        $paramsIdList = array_map(array($this, "_getFriendId"), $params["friendsList"]);
 
         $manager->setLevel($params["currentLevel"]);
-        return $manager->setScore($params["currentScore"])->saveInMem();
-
+        $mvo = $manager->setScore($params["currentScore"]);
+        $mvo->saveInMem();
+        return $mvo->getHighScore();
     }
 
     /**

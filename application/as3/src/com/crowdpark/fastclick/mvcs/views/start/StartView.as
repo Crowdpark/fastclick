@@ -23,6 +23,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 		public var startButtonSprite : Sprite = new Sprite();
 		public var playerNameSprite : Sprite = new Sprite();
 		private var _playerNameField : TextField;
+		
 		private var tfm : TextFormat;
 		public static const START_GAME : String = "START_GAME";
 
@@ -32,7 +33,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 			gameTitleSprite.y = 10;
 
 			playerNameSprite.x = (stage.stageWidth - playerNameSprite.width) / 2;
-			playerNameSprite.y = gameTitleSprite.y + gameTitleSprite.height + 40;
+			playerNameSprite.y = gameTitleSprite.y + gameTitleSprite.height + 20;
 
 			startButtonSprite.y = 200;
 			startButtonSprite.x = (stage.stageWidth - startButtonSprite.width) / 2;
@@ -93,16 +94,9 @@ package com.crowdpark.fastclick.mvcs.views.start
 			tf.size = 20;
 			tf.align = "center";
 
-			_playerNameField = new TextField();
-			_playerNameField.type = TextFieldType.INPUT;
-			_playerNameField.y = 40;
-			_playerNameField.width = 130;
-			_playerNameField.height = 30;
-			_playerNameField.text = "";
-			_playerNameField.border = true;
-			_playerNameField.defaultTextFormat = tf;
 
-			var title : TextField = createField("Enter your name", 0, 0, 200, 20, false, "Verdana", 15, 0);
+			var title : TextField = createField("Welcome", 0, 0, 200, 20, false, "Verdana", 15, 0);
+			 _playerNameField = createField("", 0, title.height+5, 200, 20, false, "Verdana", 20, 0);
 
 			playerNameSprite.addChild(title);
 			playerNameSprite.addChild(_playerNameField);

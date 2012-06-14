@@ -26,22 +26,15 @@ package com.crowdpark.fastclick.mvcs.services
 		public var playerModel : PlayerModel;
 		[Inject]
 		public var backendService : BackendService;
-		
 		[Inject]
-		public var configService : ConfigService;
-		
+		public var bitmapService : BitmapLoaderService;
 		private var friendIndex : uint = 0;
 		private var loader : Loader;
 
 		public function init() : void
 		{
-			Security.allowDomain('http://profile.ak.fbcdn.net');
-			Security.allowInsecureDomain('http://profile.ak.fbcdn.net');
-			
 			Security.loadPolicyFile("http://graph.facebook.com/crossdomain.xml");
 			Security.loadPolicyFile("http://profile.ak.fbcdn.net/crossdomain.xml");
-			Security.loadPolicyFile("https://graph.facebook.com/crossdomain.xml");
-			Security.loadPolicyFile("https://profile.ak.fbcdn.net/crossdomain.xml");
 			Security.allowDomain("*");
 			Security.allowInsecureDomain("*");
 
@@ -56,9 +49,6 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onFetchFriends(params : Object) : void
 		{
-			playerModel.setFriendsList(params.data); //Test all friends	
-			configService.fetchData("data/Config.json");
-
 			playerModel.getCurrentPlayer().setFriendsList(params.data);
 			backendService.storePlayer(playerModel.getCurrentPlayer());
 		}
@@ -70,42 +60,32 @@ package com.crowdpark.fastclick.mvcs.services
 
 		public function fetchFriendImages() : void
 		{
-			loadPictures(); //Test all friends
-			// loadTestPlayers(); 
+			loadPictures(playerModel.getPlayerFriends());
 		}
 
-		private function loadTestPlayers() : void
+		public function fetchAppFriendImages() : void
 		{
-			if (friendIndex < 4)
-			{
-				showFriend();
-			}
+			loadPictures(playerModel.getPlayerApplicationFriends());
 		}
 
-		private function showFriend() : void
+		private function loadPictures(friendArray : Vector.<PlayerVo>) : void
 		{
-			var playerF : Vector.<PlayerVo> = playerModel.getPlayerFriends();
-
-			var gameEvent : GameEvents = new GameEvents(GameEvents.SHOW_FRIEND);
-			gameEvent.getDataprovider().setValueByKey('currentFriend', playerF[friendIndex]);
-			dispatch(gameEvent);
-
-			friendIndex++;
-			loadTestPlayers();
-		}
-
-		private function loadPictures() : void
-		{
-			//playerModel.getPlayerFriends().length
 			if (friendIndex < 10)
 			{
-				loader = new Loader();
-				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadPicturesListener);
-				loader.load(new URLRequest(playerModel.getPlayerFriends()[friendIndex].getPlayerPictureUrl()));
+				
 			}
+
+			bitmapService.fetchBitMap(friendArray[friendIndex].getPlayerPictureUrl());
+
+			/*if (friendIndex < 1)
+			{
+			loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadPicturesListener);
+			loader.load(new URLRequest(friendArray[friendIndex].getPlayerPictureUrl()));
+			}*/
 		}
 
-		private function onLoadPicturesListener(event : Event) : void
+		public function addLoadedBitmap(bitmap : Bitmap) : void
 		{
 			var playerF : Vector.<PlayerVo> = playerModel.getPlayerFriends();
 			playerF[friendIndex].setPlayerPicture(Bitmap(loader.content));
@@ -115,7 +95,20 @@ package com.crowdpark.fastclick.mvcs.services
 			dispatch(gameEvent);
 
 			friendIndex++;
-			loadPictures();
+			loadPictures(playerF);
+		}
+
+		private function onLoadPicturesListener(event : Event) : void
+		{
+			var playerF : Vector.<PlayerVo> = playerModel.getPlayerApplicationFriends();
+			playerF[friendIndex].setPlayerPicture(Bitmap(loader.content));
+
+			var gameEvent : GameEvents = new GameEvents(GameEvents.SHOW_FRIEND);
+			gameEvent.getDataprovider().setValueByKey('currentFriend', playerF[friendIndex]);
+			dispatch(gameEvent);
+
+			friendIndex++;
+			// loadPictures();
 		}
 
 		public function inviteFriend() : void
@@ -124,7 +117,7 @@ package com.crowdpark.fastclick.mvcs.services
 			dat.message = 'invite';
 			dat.title = 'fastclick';
 			dat.filters = ['app_non_users'];
-			// You can use these two options for diasplaying friends invitation window 'iframe' 'popup'
+
 			Facebook.ui('apprequests', dat, onUICallback, 'iframe');
 		}
 

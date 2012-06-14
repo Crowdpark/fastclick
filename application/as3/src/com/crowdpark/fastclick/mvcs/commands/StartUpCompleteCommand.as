@@ -19,10 +19,14 @@ package com.crowdpark.fastclick.mvcs.commands
 		public var playerModel : PlayerModel;
 		[Inject]
 		public var facebookService : FacebookService;
+		[Inject]
+		public var configService : ConfigService;
+		
 
 		override public function execute() : void
 		{
 			facebookService.init();
+			configService.fetchData("data/Config.json");
 
 			var mainSprite : Sprite = new Sprite();
 			mainSprite.name = 'mainSprite';

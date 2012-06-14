@@ -22,7 +22,7 @@ package com.crowdpark.fastclick.mvcs.commands
 
 		override public function execute() : void
 		{
-			backendService.storePlayer(playerModel.getCurrentPlayer());
+			backendService.storeResults(playerModel.getCurrentPlayer());
 			
 			var mainSprite : Sprite = Sprite(contextView.getChildByName('mainSprite'));
 			mainSprite.removeChildAt(0);
@@ -32,7 +32,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			
 			mainSprite.addChild(resultView);
 			
-			highestScoreModel.setHighscoreList(playerModel.getPlayerArray());
+			//highestScoreModel.setHighscoreList(playerModel.getPlayerArray());
 		}
 	}
 }

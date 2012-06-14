@@ -6,5 +6,6 @@ package com.crowdpark.fastclick.mvcs.core.statemachine
 	public class StateMachineState
 	{
 		public static const START : String = "START";
+		public static const RETRY : String = "RETRY";
 	}
 }

@@ -17,6 +17,7 @@ package com.crowdpark.fastclick.mvcs.core.base
 		public function BaseView()
 		{
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStageListener);
+			
 		}
 
 		public function onAddedToStageListener(e : Event) : void

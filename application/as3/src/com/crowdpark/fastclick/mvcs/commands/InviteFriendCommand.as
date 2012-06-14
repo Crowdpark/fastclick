@@ -1,4 +1,4 @@
-package com.crowdpark.fastclick.mvcs
+package com.crowdpark.fastclick.mvcs.commands
 {
 	import com.crowdpark.fastclick.mvcs.services.FacebookService;
 	import org.robotlegs.mvcs.Command;

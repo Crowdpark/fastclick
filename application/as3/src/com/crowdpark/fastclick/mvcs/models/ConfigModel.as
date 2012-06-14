@@ -1,6 +1,10 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import com.crowdpark.fastclick.mvcs.events.GameEvents;
+	import com.crowdpark.fastclick.mvcs.models.vo.LevelVo;
+
 	import utils.number.randomIntegerWithinRange;
+
 	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
@@ -23,7 +27,8 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _time : uint;
 		private var _timer : Timer;
 		private var _gameDuration : uint;
-		private var _colorArray: Array;
+		private var _colorArray : Array;
+		private var _levelArray : Vector.<LevelVo>;
 		[Inject]
 		public var playerModel : PlayerModel;
 
@@ -99,42 +104,71 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function saveData(data : Object) : void
 		{
-			
-			var circleAmount:uint = playerModel.getPlayerFriends().length;
+			setColorArray(data.getValue().colors);
+			setGamelLevels(data.getValue().levels);
 			
 
-			setGameDuration(data.getValue().gameDuration);
-			setColorArray(data.getValue().points);
-			var colorAmount:uint = getColorArray().length;
-			
-			for (var i=0; i<colorAmount; i++)
+			var circleAmount : uint = playerModel.getPlayerFriends().length;
+			var colorAmount : uint = getColorArray().length;
+
+			for (var i : uint = 0; i < colorAmount; i++)
 			{
-				var ballVo: BallVo = new BallVo();
+				var ballVo : BallVo = new BallVo();
 				ballVo.setColor(getColorArray()[randomIntegerWithinRange(0, _colorArray.length - 1)].color);
 				ballVo.setScore(10);
-				addBall(ballVo);	
+				addBall(ballVo);
 			}
-			
-				
+
 			/* var resultArray : Array = data.getValue().points;
 			  
-			 for each (var point:Object in resultArray)
+			for each (var point:Object in resultArray)
 			{
-				var ballVO : BallVo = new BallVo();
-				//ballVO.setValueByKey('endPoint', new Point(60, 40));
-				ballVO.setValueByKey('color', point.color);
-				ballVO.setValueByKey('score', point.score);
-				addBall(ballVO);
+			var ballVO : BallVo = new BallVo();
+			// ballVO.setValueByKey('endPoint', new Point(60, 40));
+			ballVO.setValueByKey('color', point.color);
+			ballVO.setValueByKey('score', point.score);
+			addBall(ballVO);
 			}*/
-			
 		}
 
-		public function setColorArray(colors : *) : void {
+		private function setGamelLevels(levels : Object) : void
+		{
+			var levelAmount : uint = levels.length;
+
+			for (var i : uint = 0;i < levelAmount;i++)
+			{
+				var levelVo : LevelVo = new LevelVo();
+				levelVo.setGameDuration(levels[i].gameDuration);
+				levelVo.setScoreLimit(levels[i].scoreLimit);
+				levelVo.setLevelIndex(levels[i].levelIndex);
+				getLevelArray().push(levelVo);
+			}
+			dispatch(new GameEvents(GameEvents.SHOW_LEVELS));
+		}
+
+		public function setColorArray(colors : *) : void
+		{
 			_colorArray = colors;
 		}
-		public function getColorArray() : Array {
+
+		public function getColorArray() : Array
+		{
 			return _colorArray;
-			
+		}
+
+		public function getLevelArray() : Vector.<LevelVo>
+		{
+			if (!_levelArray)
+			{
+				_levelArray = new Vector.<LevelVo>();
+			}
+			return _levelArray;
+		}
+
+		public function setLevelArray(levelArray : Vector.<LevelVo>) : ConfigModel
+		{
+			this._levelArray = levelArray;
+			return this;
 		}
 	}
 }

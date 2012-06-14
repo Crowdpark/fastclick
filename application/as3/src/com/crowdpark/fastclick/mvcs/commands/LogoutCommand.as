@@ -1,4 +1,4 @@
-package com.crowdpark.fastclick.mvcs
+package com.crowdpark.fastclick.mvcs.commands
 {
 	import org.robotlegs.mvcs.Command;
 

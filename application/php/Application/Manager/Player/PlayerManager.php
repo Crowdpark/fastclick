@@ -71,10 +71,10 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
             getLevel();
 
         $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
-
-        foreach ($friends as $friendMvo) {
-            $return['appfriends'][] = $friendMvo->getData();
-        }
+//
+//        foreach ($friends as $friendMvo) {
+//            $return['appfriends'][] = $friendMvo->getData();
+//        }
         foreach($friends as $friendMvo) {
             $key = json_decode($friendMvo->getData())->id;
 
@@ -85,8 +85,8 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
                     $friendsList[$i]["type"] = "friend";
             }
         }
-
-        return $friendsList;
+        $return["friends"] = $friendsList;
+        return $return;
     }
 
 }

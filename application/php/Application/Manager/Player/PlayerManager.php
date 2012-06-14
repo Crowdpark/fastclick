@@ -55,7 +55,7 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     /**
      * @return array
      */
-    public function getAppFriends()
+    public function getAppFriends(array $friendsList)
     {
         $return = array();
         $return['user']["high_score"] = $this->
@@ -75,7 +75,18 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
         foreach ($friends as $friendMvo) {
             $return['appfriends'][] = $friendMvo->getData();
         }
-        return $return;
+        foreach($friends as $friendMvo) {
+            $key = json_decode($friendMvo->getData())->id;
+
+            for($i = 0; $i < sizeof($friendsList); $i++) {
+                if ($key == $friendsList[$i]["id"])
+                    $friendsList[$i]["type"] = "appfriend";
+                else
+                    $friendsList[$i]["type"] = "friend";
+            }
+        }
+
+        return $friendsList;
     }
 
 }

@@ -10,7 +10,6 @@ namespace Application\Bo;
 class UserBo extends \Processus\Lib\Bo\UserBo
 {
 
-
     /**
      * @var \Application\Mvo\FacebookUserMvo
      */
@@ -46,8 +45,7 @@ class UserBo extends \Processus\Lib\Bo\UserBo
         $friendsKeys = $this->_array_prefixing("FacebookUserMvo_", $friendsIdList);
         $appUsers = array_filter($connector->getMultipleByKey($friendsKeys));
 
-        foreach ($appUsers as $item)
-        {
+        foreach ($appUsers as $item) {
             $mvo = new \Processus\Lib\Mvo\FacebookUserMvo();
             $mvo->setData($item);
 
@@ -64,8 +62,7 @@ class UserBo extends \Processus\Lib\Bo\UserBo
 
         $fbUserId = $this->getFacebookUserId();
 
-        if ($fbUserId > 0)
-        {
+        if ($fbUserId > 0) {
 
             $mvo      = $this->getFacebookUserMvo();
             $userData = $mvo->getData();
@@ -95,8 +92,7 @@ class UserBo extends \Processus\Lib\Bo\UserBo
 
             return TRUE;
         }
-        else
-        {
+        else {
             return FALSE;
         }
     }
@@ -124,8 +120,7 @@ class UserBo extends \Processus\Lib\Bo\UserBo
     private function _array_prefixing(string $prefix, array $idList)
     {
         $prefixList = array();
-        foreach ($idList as $idItem)
-        {
+        foreach ($idList as $idItem) {
             $prefixList[] = $prefix . $idItem;
         }
         return $prefixList;

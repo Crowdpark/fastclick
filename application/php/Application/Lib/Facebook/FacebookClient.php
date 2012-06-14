@@ -15,6 +15,7 @@ class FacebookClient extends \Processus\Lib\Facebook\FacebookClient
      * @param array|null $friendsArray
      * @return mixed
      */
+
     public function getUserFriends($userFbId = null)
     {
         $defaultCache    = $this->getProcessusContext()->getDefaultCache();
@@ -22,13 +23,14 @@ class FacebookClient extends \Processus\Lib\Facebook\FacebookClient
 
         $memKey          = "FacebookClient_getUserFriends_" . $fbNum;
         $facebookFriends = $defaultCache->fetch($memKey);
-        if (!$facebookFriends && is_null($userFbId)) {
 
+        if (!$facebookFriends && is_null($userFbId)) {
             $rawData         = $this->getFacebookSdk()->api("/me/friends");
             $facebookFriends = $rawData['data'];
 
             $defaultCache->insert($memKey, $facebookFriends, 60 * 60 * 3);
         }
+
         return $facebookFriends;
     }
 }

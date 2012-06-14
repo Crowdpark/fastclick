@@ -19,7 +19,7 @@ class Player extends \Application\Core\Abstracts\AbstractService
         $manager = new \Application\Manager\Player\PlayerManager();
 //        $paramsIdList = array_map(array($this, "_getFriendId"), $params["friendsList"]);
 
-        return $manager->getAppFriends();
+        return $manager->getAppFriends($params["friendsList"]);
 
     }
 

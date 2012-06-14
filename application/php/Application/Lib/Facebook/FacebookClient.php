@@ -9,9 +9,10 @@
 namespace Application\Lib\Facebook;
 class FacebookClient extends \Processus\Lib\Facebook\FacebookClient
 {
+
     /**
      * @param null $userFbId
-     *
+     * @param array|null $friendsArray
      * @return mixed
      */
     public function getUserFriends($userFbId = null)
@@ -21,14 +22,13 @@ class FacebookClient extends \Processus\Lib\Facebook\FacebookClient
 
         $memKey          = "FacebookClient_getUserFriends_" . $fbNum;
         $facebookFriends = $defaultCache->fetch($memKey);
-//var_dump($facebookFriends);
         if (!$facebookFriends && is_null($userFbId)) {
+
             $rawData         = $this->getFacebookSdk()->api("/me/friends");
             $facebookFriends = $rawData['data'];
-//var_dump($facebookFriends);
+
             $defaultCache->insert($memKey, $facebookFriends, 60 * 60 * 3);
         }
-
         return $facebookFriends;
     }
 }

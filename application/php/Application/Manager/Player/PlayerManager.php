@@ -45,7 +45,7 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     {
         $fb_id = $this->getApplicationContext()->getUserBo()->getFacebookUserId();
         $friendsListKey = "user_".$fb_id."_friends_list";
-        $this->getProcessusContext()->getDefaultCache()->insert($friendsListKey, json_encode($friendsList), 120);
+        $this->getProcessusContext()->getDefaultCache()->insert($friendsListKey, ($friendsList), 120);
         return $this;
     }
 

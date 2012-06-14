@@ -35,11 +35,12 @@ class UserBo extends \Processus\Lib\Bo\UserBo
      */
     public function getAppFriends()
     {
-        $friendsIdList = $this->getProcessusContext()->getFacebookClient()->getFriendsIdList();
+        $connector = $this->getProcessusContext()->getDefaultCache();
+        $friendsIdList = $this->getApplicationContext()->getFacebookClient()->getFriendsIdList();
+
         if (count($friendsIdList) <= 0) {
             return FALSE;
         }
-        $connector = $this->getProcessusContext()->getDefaultCache();
 
         $mvoFriendsList = array();
         $friendsKeys = $this->array_prefixing("FacebookUserMvo_", $friendsIdList);
@@ -101,11 +102,5 @@ class UserBo extends \Processus\Lib\Bo\UserBo
             $prefixList[] = $prefix . $idItem;
         }
         return $prefixList;
-    }
-
-    public function getFacebookHighScore()
-    {
-        var_dump($this->getProcessusContext()->getFacebookClient()->getOpenGraphClient()->setUserScore(222));
-        return parent::getFacebookHighScore();
     }
 }

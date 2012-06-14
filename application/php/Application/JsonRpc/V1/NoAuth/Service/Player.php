@@ -16,17 +16,20 @@ class Player extends \Application\Core\Abstracts\AbstractService
     public function getAppFriends(array $params)
     {
         $manager = new \Application\Manager\Player\PlayerManager();
-        $manager->setFriendsList($this->getProcessusContext()->getFacebookClient()->getFriendsIdList());
+
+        $friendsIdList = $this->getApplicationContext()->getFacebookClient()->getFriendsIdList();
+        $manager->setFriendsList($friendsIdList);
         $mvo = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo();
+
         if (is_null($params["currentLevel"])) {
-            $level = 1;
-            $score = 0;
+            $level = $mvo->getLevel();
+            $score = $mvo->getHighScore();
         } else {
             $level = $params["currentLevel"];
             $score = $params["currentScore"];
         }
-
         $mvo->setLevel($level);
+
         if ($mvo->getHighScore() < $score OR is_null($mvo->getHighScore())) {
             $mvo->setHighScore($score);
         }
@@ -37,11 +40,10 @@ class Player extends \Application\Core\Abstracts\AbstractService
         $playerData["high_score"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getHighScore();
         $playerData["level"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getLevel();
 
-
         foreach ($friends as $friendMvo) {
-            $friendArray[] = $friendMvo->getData();
+            $friendArray['appfriends'][] = $friendMvo->getData();
         }
-        $friendArray[] = $playerData;
+        $friendArray['user'][] = $playerData;
         return $friendArray;
     }
 
@@ -58,8 +60,6 @@ class Player extends \Application\Core\Abstracts\AbstractService
     public function saveGame(array $params)
     {
         $manager = new \Application\Manager\Player\PlayerManager();
-        var_dump($this->getApplicationContext()->getUserBo()->getFacebookHighScore());
-//        var_dump($params["currentScore"]);
         $manager->setFriendsList($this->getProcessusContext()->getFacebookClient()->getFriendsIdList());
 
 
@@ -78,5 +78,6 @@ class Player extends \Application\Core\Abstracts\AbstractService
         $manager = new \Application\Manager\Player\PlayerManager();
         return $manager->getExperience();
     }
+
 
 }

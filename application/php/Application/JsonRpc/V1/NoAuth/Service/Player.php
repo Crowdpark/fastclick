@@ -18,19 +18,30 @@ class Player extends \Application\Core\Abstracts\AbstractService
         $manager = new \Application\Manager\Player\PlayerManager();
         $manager->setFriendsList($this->getProcessusContext()->getFacebookClient()->getFriendsIdList());
         $mvo = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo();
-        if (!is_null($params["currentLevel"])) {
-            $mvo->setLevel($params["currentLevel"]);
-            if ($mvo->getHighScore() < $params["currentScore"] OR is_null($mvo->getHighScore())) {
-                $mvo->setHighScore($params["currentScore"]);
-            }
-            $mvo->saveInMem();
+        if (is_null($params["currentLevel"])) {
+            $level = 1;
+            $score = 0;
+        } else {
+            $level = $params["currentLevel"];
+            $score = $params["currentScore"];
         }
+
+        $mvo->setLevel($level);
+        if ($mvo->getHighScore() < $score OR is_null($mvo->getHighScore())) {
+            $mvo->setHighScore($score);
+        }
+        $mvo->saveInMem();
         $friendArray = array();
         $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
+
+        $playerData["high_score"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getHighScore();
+        $playerData["level"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getLevel();
+
 
         foreach ($friends as $friendMvo) {
             $friendArray[] = $friendMvo->getData();
         }
+        $friendArray[] = $playerData;
         return $friendArray;
     }
 

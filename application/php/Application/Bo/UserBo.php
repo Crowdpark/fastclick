@@ -68,14 +68,23 @@ class UserBo extends \Processus\Lib\Bo\UserBo
 
             $mvo      = $this->getFacebookUserMvo();
             $userData = $mvo->getData();
-
             $fbClient          = $this->getProcessusContext()->getFacebookClient();
             $fbData            = $fbClient->getUserDataById($fbUserId);
+
+            if (is_null($userData)) {
+                $score = 0;
+                $level = 1;
+            } else {
+                $score = $mvo->getHighScore();
+                $level = $mvo->getLevel();
+            }
+
             $fbData['created'] = convertUnixTimeToIso(time());
-            $fbData['high_score'] = $mvo->getHighScore();
-            $fbData['level'] = $mvo->getLevel();
+            $fbData['high_score'] = $score;
+            $fbData['level'] = $level;
 
             $resultCode = $mvo->setData($fbData)->saveInMem();
+
             return TRUE;
         }
         else

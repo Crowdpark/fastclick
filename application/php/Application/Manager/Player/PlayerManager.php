@@ -29,7 +29,6 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     {
         $fb_id = $this->getProcessusContext()->getUserBo()->getFacebookUserId();
         $friendsListKey = "user_".$fb_id."_friends_list";
-        echo $friendsListKey;
         $friendsListValue = $this->getProcessusContext()->getDefaultCache()->fetch($friendsListKey);
 
         return $friendsListValue;
@@ -44,7 +43,7 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
      */
     public function setFriendsList($friendsList)
     {
-        $fb_id = $this->getProcessusContext()->getUserBo()->getFacebookUserId();
+        $fb_id = $this->getApplicationContext()->getUserBo()->getFacebookUserId();
         $friendsListKey = "user_".$fb_id."_friends_list";
         $this->getProcessusContext()->getDefaultCache()->insert($friendsListKey, $friendsList, 120);
         return $this;
@@ -56,7 +55,6 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     public function getAppFriends()
     {
         $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
-        var_dump($friends);
         return $friends;
     }
 

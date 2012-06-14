@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.adobe.serialization.json.JSONDecoder;
 
@@ -17,9 +18,7 @@ package com.crowdpark.fastclick.mvcs.services
 	public class ConfigService extends Actor implements InterfaceConfigService
 	{
 		private var urlLoader : URLLoader;
-		[Inject]
-		public var configModel : ConfigModel;
-
+		
 		public function fetchData(url : String) : void
 		{
 			urlLoader = new URLLoader();
@@ -36,7 +35,10 @@ package com.crowdpark.fastclick.mvcs.services
 		public function parseResult(result : Object) : void
 		{
 			var jsonDecoder : JSONDecoder = new JSONDecoder(String(result), true);
-			configModel.saveData(jsonDecoder);
+
+			var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.SAVE_CONFIG_DATA);
+			backendServiceEvent.getDataprovider().setValueByKey('jsonData', jsonDecoder);
+			dispatch(backendServiceEvent);			
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.adobe.serialization.json.JSONDecoder;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
@@ -14,8 +15,6 @@ package com.crowdpark.fastclick.mvcs.services
 	 */
 	public class BackendService extends Actor
 	{
-		// [Inject]
-		// public var highestScoreModel : HighestScoreModel;
 		[Inject]
 		public var playerModel : PlayerModel;
 
@@ -28,7 +27,6 @@ package com.crowdpark.fastclick.mvcs.services
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStorePointResult);
 			jsonClient.send();
 
-			// playerModel.setFriendsList();
 		}
 
 		public function storeResults(player : PlayerVo) : void
@@ -52,9 +50,13 @@ package com.crowdpark.fastclick.mvcs.services
 
 			var appFriends = event.getDataprovider().getValueByKey('appfriends');
 			var user = event.getDataprovider().getValueByKey('user');
-
-			playerModel.setCurrentLevel(user);
-			playerModel.setApplicationFriends(appFriends);
+			
+			var backendServiceEvent:BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.FETCH_ALL_FRIENDS);
+			backendServiceEvent.getDataprovider().setValueByKey('allFriends', appFriends);
+			backendServiceEvent.getDataprovider().setValueByKey('user', user);
+			dispatch(backendServiceEvent);
+			
+			
 		}
 	}
 }

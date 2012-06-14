@@ -28,17 +28,17 @@ package com.crowdpark.fastclick.mvcs.views.points
 		{
 			super.onRegister();
 			var pointArray : Vector.<BallVo> = configModel.getBallArray();
-			var playerArray : Vector.<PlayerVo> = playerModel.getPlayerAppFriends();
+			var playerArray : Vector.<PlayerVo> = playerModel.getPlayerFriends();
 
 			for (var i : int = 0; i < playerArray.length; i++)
 			{
-				var ballVo : BallVo = pointArray[i];
+				// var ballVo : BallVo = pointArray[i];
 
 				var ball : FastClickBall = new FastClickBall();
 				ball.mouseChildren = false;
 				ball.setEndPoint(new Point(30, contextView.stage.stageHeight - 160));
-				ball.setColor(ballVo.getColor());
-				ball.setScore(ballVo.getScore());
+				// ball.setColor(ballVo.getColor());
+				ball.setScore(10);
 				ball.setPicture(playerArray[i].getPlayerPicture());
 
 				ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
@@ -48,36 +48,14 @@ package com.crowdpark.fastclick.mvcs.views.points
 			createRandomPoints();
 		}
 
-		/*private function createRandomPoints() : void
-		{
-			
-		var _colorArray:Array  = configModel.getColorArray();
-		var _playerFriends:Vector.<PlayerVo> = playerModel.getPlayerFriends();
-			
-		var fastClickCircle : FastClickBall = new FastClickBall();
-		fastClickCircle.setEndPoint(new Point(30, contextView.stage.stageHeight - 160));
-		fastClickCircle.setStartPoint(randomPoint(0, contextView.stage.stageWidth, 60, contextView.stage.stageHeight - 140));
-		fastClickCircle.setColor(_colorArray[randomIntegerWithinRange(0, _colorArray.length - 1)]);
-		fastClickCircle.setPicture(_playerFriends[randomIntegerWithinRange(0, _playerFriends.length - 1)].getPlayerPicture());
-			
-		if (view.getObjectsUnderPoint(fastClickCircle.getStartPoint()).length == 0)
-		{
-		addChild(fastClickCircle, view);
-		}
-
-		TweenMax.from(fastClickCircle, Math.random() / 2, {onComplete:checkState});
-		}*/
 		private function createRandomPoints() : void
 		{
 			var fastClickCircle : FastClickBall = FastClickBall(createRandomSizedPoint());
 			fastClickCircle.setStartPoint(randomPoint(0, contextView.stage.stageWidth, 60, contextView.stage.stageHeight - 140));
 
-			if (view.getObjectsUnderPoint(fastClickCircle.getStartPoint()).length == 0)
-			{
-				addChild(fastClickCircle, view);
-			}
+			addChild(fastClickCircle, view);
 
-			TweenMax.from(fastClickCircle, Math.random() / 2, {onComplete:checkState});
+			TweenMax.from(fastClickCircle, Math.random(), {onComplete:checkState});
 		}
 
 		private function createRandomSizedPoint() : BaseGraphic

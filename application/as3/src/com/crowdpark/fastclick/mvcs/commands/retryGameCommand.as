@@ -26,7 +26,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			
 			stateMachineModel.state = StateMachineState.RETRY;	
 			
-			
+			playerModel.getCurrentPlayer().setCurrentScore(0);
 			var startView : StartView = new StartView();
 			startView.init();
 

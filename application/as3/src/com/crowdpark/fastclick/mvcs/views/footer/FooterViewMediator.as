@@ -48,7 +48,7 @@ package com.crowdpark.fastclick.mvcs.views.footer {
 				picture.height = 30;
 
 				ball.setShape(null);
-				 ball.setPicture(null);
+				//ball.setPicture(null);
 
 				picture.x = 0;
 				picture.y = 0;

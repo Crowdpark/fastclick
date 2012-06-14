@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.services.BitmapLoaderService;
 	import com.crowdpark.fastclick.mvcs.services.FacebookService;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import org.robotlegs.mvcs.Command;
@@ -15,8 +16,12 @@ package com.crowdpark.fastclick.mvcs.commands
 		[Inject]
 		public var facebookService:FacebookService;
 		
+		[Inject]
+		public var bitmapLoaderService:BitmapLoaderService;
+		
 		override public function execute() : void
 		{
+			
 			facebookService.fetchFriendImages();
 			
 		}

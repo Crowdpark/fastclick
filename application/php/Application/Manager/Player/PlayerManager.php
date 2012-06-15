@@ -10,16 +10,6 @@ namespace Application\Manager\Player;
 
 class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
 {
-
-    public function __call($method, $args)
-    {
-        if (method_exists($this, $method)) {
-            return $this->$method($args);
-        } else {
-            throw new \Exception("PlayerManager doesn't have a function called $method");
-        }
-    }
-
     /**
      * @param $score
      * @return \Application\Mvo\FacebookUserMvo|\Processus\Lib\Mvo\FacebookUserMvo
@@ -53,43 +43,35 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     }
 
     /**
+     * @param array $friendsRawList
      * @return array
      */
-    public function getAppFriends(array $friendsList)
+    public function getAppFriends(array $friendsRawList)
     {
         $return = array();
-        $return['user']["high_score"] = $this->
-            getApplicationContext()->
-            getUserBo()->
-            getFacebookUserMvo()->
-            getHighScore();
-
-        $return['user']["level"] = $this->
-            getApplicationContext()->
-            getUserBo()->
-            getFacebookUserMvo()->
-            getLevel();
+        $return['user']["high_score"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getHighScore();
+        $return['user']["level"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getLevel();
 
         $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
-//
-//        foreach ($friends as $friendMvo) {
-//            $return['appfriends'][] = $friendMvo->getData();
-//        }
+
+        $friendsListSize = sizeof($friendsRawList);
+
         foreach($friends as $friendMvo) {
             $friendObject = json_decode($friendMvo->getData());
             $key = $friendObject->id;
 
-            for($i = 0; $i < sizeof($friendsList); $i++) {
-                if ($key == $friendsList[$i]["id"]){
-                    $friendsList[$i]["type"] = "appfriend";
-                    $friendsList[$i]["high_score"] = $friendObject->high_score;
-                    $friendsList[$i]["level"] = $friendObject->level;
+            for($i = 0; $i < $friendsListSize; $i++) {
+                if ($key == $friendsRawList[$i]["id"]){
+                    $friendsRawList[$i]["type"] = "appfriend";
+                    $friendsRawList[$i]["high_score"] = $friendObject->high_score;
+                    $friendsRawList[$i]["level"] = $friendObject->level;
                 }
                 else
-                    $friendsList[$i]["type"] = "friend";
+                    $friendsRawList[$i]["type"] = "friend";
             }
         }
-        $return["friends"] = $friendsList;
+
+        $return["friends"] = $friendsRawList;
         return $return;
     }
 

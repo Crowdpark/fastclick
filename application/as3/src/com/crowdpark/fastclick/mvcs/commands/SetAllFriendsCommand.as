@@ -13,7 +13,7 @@ package com.crowdpark.fastclick.mvcs.commands
 		[Inject]
 		public var playerModel : PlayerModel;
 		[Inject]
-		public var backendServiceEvent : BackendServiceEvents
+		public var backendServiceEvent : BackendServiceEvents;
 
 		override public function execute() : void
 		{

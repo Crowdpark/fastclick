@@ -1,6 +1,7 @@
 package com.crowdpark.fastclick.mvcs.views.hud
 {
 	import flash.events.MouseEvent;
+
 	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
@@ -139,7 +140,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 
 		public function updateLevel(currentLevel : uint) : void
 		{
-			level.text = String(currentLevel);
+			level.text = 'LEVEL ' + String(currentLevel);
 			level.x = stage.stageWidth - level.width;
 		}
 	}

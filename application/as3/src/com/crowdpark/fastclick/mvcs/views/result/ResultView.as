@@ -1,15 +1,16 @@
 package com.crowdpark.fastclick.mvcs.views.result
 {
-	import flash.events.MouseEvent;
-	import flash.events.Event;
-
-	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
-
 	import utils.draw.createRectangleShape;
 	import utils.textField.createField;
 
-	import flash.text.TextField;
+	import com.bit101.components.ScrollPane;
+	import com.bit101.components.VBox;
+	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
+
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.text.TextField;
 
 	/**
 	 * @author fatmatekin
@@ -22,6 +23,9 @@ package com.crowdpark.fastclick.mvcs.views.result
 		public var retryButton : Sprite;
 		public var leaderboardTitle : TextField;
 		public var leaderboardResult : TextField;
+		public var leaderboardPane : ScrollPane = new ScrollPane();
+		public var vbox : VBox = new VBox();
+		public var scoreArray : Array = new Array;
 
 		override public function  init() : void
 		{
@@ -31,25 +35,44 @@ package com.crowdpark.fastclick.mvcs.views.result
 			leaderboardTitle = createField("Your Highest Score", 0, 0, 200, 20, false, "Verdana", 15);
 			leaderboardResult = createField("", 0, 0, 200, 20, false, "Verdana", 20);
 
+			leaderboardPane.color = 0xffffff;
+			leaderboardPane.shadow = false;
+			leaderboardPane.showGrid = false;
+			leaderboardPane.autoHideScrollBar = true;
+			leaderboardPane.addChild(vbox);
+			vbox.spacing = 10;
+
 			addChild(result);
 			addChild(resultText);
 			addChild(leaderboardTitle);
 			addChild(leaderboardResult);
+			addChild(leaderboardPane);
 
 			retryButton = new Sprite;
-			retryButton.buttonMode = true;
+
 			retryButton.addChild(createRectangleShape(80, 30, 0x00e0e6));
 
 			var title : TextField = createField("RETRY", 0, 0, 200, 20, false, "Verdana", 20, 0xffffff);
 			title.x = (retryButton.width - title.width) / 2;
 			title.y = (retryButton.height - title.height) / 2;
 
-			retryButton.addEventListener(MouseEvent.CLICK, onHandleRetryButton);
-
-			retryButton.y = 300;
 			retryButton.addChild(title);
 
 			addChild(retryButton);
+		}
+
+		public function enableRetry() : void
+		{
+			retryButton.mouseEnabled = true;
+			retryButton.buttonMode = true;
+			retryButton.addEventListener(MouseEvent.CLICK, onHandleRetryButton);
+		}
+
+		public function disableRetry() : void
+		{
+			retryButton.mouseEnabled = false;
+			retryButton.buttonMode = false;
+			retryButton.removeEventListener(MouseEvent.CLICK, onHandleRetryButton);
 		}
 
 		private function onHandleRetryButton(event : MouseEvent) : void
@@ -69,8 +92,13 @@ package com.crowdpark.fastclick.mvcs.views.result
 			leaderboardTitle.x = (stage.stageWidth - leaderboardTitle.width) / 2;
 
 			leaderboardResult.y = leaderboardTitle.y + leaderboardTitle.height + 20;
+			leaderboardPane.y = leaderboardResult.y + 50;
 
 			retryButton.x = (stage.stageWidth - retryButton.width) / 2;
+			retryButton.y = 400;
+
+			leaderboardPane.setSize(280, 150);
+			leaderboardPane.x = (stage.stageWidth - leaderboardPane.width) / 2;
 		}
 
 		public function setResultText() : void
@@ -80,8 +108,29 @@ package com.crowdpark.fastclick.mvcs.views.result
 
 		public function showHighestScore() : void
 		{
-			leaderboardResult.text = String(this.getDataProvider().getValueByKey('highestScore'));
+			var obj = this.getDataProvider().getValueByKey('highestScore');
+
+			for (var key:String in obj)
+			{
+				scoreArray.push({score:obj[key], time:key});
+			}
+
+			scoreArray.sortOn('score', Array.DESCENDING | Array.NUMERIC);
+			addToPane();
 			leaderboardResult.x = (stage.stageWidth - leaderboardResult.width) / 2;
+		}
+
+		private function addToPane() : void
+		{
+			for (var i : uint = 0;i < scoreArray.length;i++)
+			{
+				var scoreVo = (scoreArray[i]);
+				var currDate : Date = new Date(Number(scoreVo['time']) * 1000);
+				var _date : String = currDate.getDate() + '-' + currDate.getMonth() + '-' + currDate.getFullYear();
+
+				vbox.addChild(createField('Score=' + scoreVo['score'] + '        ' + 'Date=' + _date, 10, 10, 200, 20, false, 'Verdana', 15, 0x000000));
+				leaderboardPane.update();
+			}
 		}
 	}
 }

@@ -1,18 +1,16 @@
 package com.crowdpark.fastclick.mvcs.views.start
 {
-	import com.crowdpark.fastclick.mvcs.views.levels.LevelsView;
-	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
-
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.display.Shape;
-
 	import utils.draw.createRectangleShape;
 	import utils.textField.createField;
 
-	import flash.text.TextFormat;
+	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
+	import com.crowdpark.fastclick.mvcs.views.levels.LevelsView;
+
+	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.text.TextField;
+	import flash.text.TextFormat;
 
 	/**
 	 * @author fatmatekin
@@ -64,14 +62,6 @@ package com.crowdpark.fastclick.mvcs.views.start
 			createGameTitle();
 			createStartButton();
 			createPlayerNameField();
-		}
-
-		private function handleStartClickEvent(e : MouseEvent) : void
-		{
-			var playerName : String = playerNameField.text;
-			this.getDataProvider().setValueByKey('playerName', playerName);
-
-			dispatchEvent(new Event(StartView.START_GAME));
 		}
 
 		private function createGameTitle() : void

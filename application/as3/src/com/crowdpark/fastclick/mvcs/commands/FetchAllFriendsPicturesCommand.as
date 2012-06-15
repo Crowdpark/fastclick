@@ -1,6 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.services.BitmapLoaderService;
+	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.services.FacebookService;
 
@@ -16,7 +16,7 @@ package com.crowdpark.fastclick.mvcs.commands
 		[Inject]
 		public var playerModel : PlayerModel;
 		[Inject]
-		public var bitmapService : BitmapLoaderService;
+		public var bitmapService : BitmapFetcherService;
 		public var friendIndex : uint = 0;
 
 		override public function execute() : void

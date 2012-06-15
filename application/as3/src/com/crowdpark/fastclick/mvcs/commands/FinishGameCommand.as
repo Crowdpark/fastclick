@@ -1,14 +1,14 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
-	import com.crowdpark.fastclick.mvcs.services.BackendService;
-	import flash.display.Sprite;
 	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
+	import com.crowdpark.fastclick.mvcs.services.BackendService;
 	import com.crowdpark.fastclick.mvcs.views.result.ResultView;
 
 	import org.robotlegs.mvcs.Command;
+
+	import flash.display.Sprite;
 
 	/**
 	 * @author fatmatekin

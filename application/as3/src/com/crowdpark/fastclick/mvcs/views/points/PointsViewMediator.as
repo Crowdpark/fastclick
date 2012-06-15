@@ -1,7 +1,9 @@
 package com.crowdpark.fastclick.mvcs.views.points
 {
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
+
 	import flash.display.DisplayObject;
+
 	import com.crowdpark.fastclick.mvcs.events.FastClickBallEvent;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
@@ -32,22 +34,6 @@ package com.crowdpark.fastclick.mvcs.views.points
 			var pointArray : Vector.<BallVo> = configModel.getBallArray();
 			var playerArray : Vector.<PlayerVo> = playerModel.getPlayerFriends();
 
-			/*	for (var i : int = 0; i < playerArray.length; i++)
-			{
-			// var ballVo : BallVo = pointArray[i];
-
-			var ball : FastClickBall = new FastClickBall();
-			ball.mouseChildren = false;
-			ball.setEndPoint(new Point(30, contextView.stage.stageHeight - 160));
-			// ball.setColor(ballVo.getColor());
-			ball.setScore(10);
-			ball.setPicture(playerArray[i].getPlayerPicture());
-
-			ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
-			_listOfBalls.push(ball);
-			}
-
-			createRandomPoints();*/
 			randomizeCircles();
 		}
 
@@ -67,10 +53,12 @@ package com.crowdpark.fastclick.mvcs.views.points
 			var ball : FastClickBall = new FastClickBall();
 			ball.mouseChildren = false;
 			ball.setEndPoint(new Point(30, contextView.stage.stageHeight - 160));
-			ball.setScore(10);
+			var point = Math.ceil(1000 / ball.getShape().width);
+
+			ball.setScore(point);
 			ball.setLifeTime(Math.ceil(ball.getShape().width / 10));
 			ball.addEventListener(FastClickBallEvent.REMOVE_CIRCLE, onRemoveCircleListener);
-			ball.setStartPoint(randomPoint(ball.getShape().width/2, contextView.stage.stageWidth - ball.getShape().width, 60, contextView.stage.stageHeight - 140 - ball.getShape().height));
+			ball.setStartPoint(randomPoint(ball.getShape().width / 2, contextView.stage.stageWidth - ball.getShape().width, 60, contextView.stage.stageHeight - 140 - ball.getShape().height));
 			ball.setPicture(playerFriends[randomIntegerWithinRange(0, playerFriends.length - 1)].getPlayerPicture());
 			ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
 			return ball;
@@ -81,25 +69,10 @@ package com.crowdpark.fastclick.mvcs.views.points
 			view.removeChild(DisplayObject(event.currentTarget));
 		}
 
-		/*private function createRandomPoints() : void
-		{
-		var fastClickCircle : FastClickBall = FastClickBall(createRandomSizedPoint());
-		fastClickCircle.setStartPoint(randomPoint(0, contextView.stage.stageWidth, 60, contextView.stage.stageHeight - 140));
-
-		addChild(fastClickCircle, view);
-
-		TweenMax.from(fastClickCircle, Math.random(), {onComplete:checkState});
-		}
-
-		private function createRandomSizedPoint() : BaseGraphic
-		{
-		return _listOfBalls[randomIntegerWithinRange(0, _listOfBalls.length - 1)];
-		}*/
 		private function checkState() : void
 		{
 			if (stateMachineModel.state != StateMachineState.FINISH)
 			{
-				// createRandomPoints();
 				randomizeCircles();
 			}
 		}

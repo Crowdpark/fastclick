@@ -1,25 +1,18 @@
 package com.crowdpark.fastclick.mvcs.views.levels
 {
-	import com.crowdpark.fastclick.mvcs.events.GameEvents;
-
-	import flash.events.MouseEvent;
-	import flash.display.Sprite;
-
+	import utils.draw.createRectangleShape;
 	import utils.textField.createField;
 
-	import flash.text.TextField;
-	import flash.display.Shape;
-
-	import utils.draw.createRectangleShape;
-
-	import flash.display.DisplayObject;
-
 	import com.bit101.components.HBox;
+	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
+	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.models.vo.LevelVo;
 
+	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.events.Event;
-
-	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
+	import flash.events.MouseEvent;
+	import flash.text.TextField;
 
 	/**
 	 * @author fatmatekin

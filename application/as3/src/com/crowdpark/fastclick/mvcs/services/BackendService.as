@@ -1,14 +1,11 @@
 package com.crowdpark.fastclick.mvcs.services
 {
-	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
-	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
-	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
-	import com.adobe.serialization.json.JSONDecoder;
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
-	import com.crowdpark.net.rpc.json.JsonRpcClientEvent;
-	import com.crowdpark.net.rpc.json.JsonRpcClient;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
+	import com.crowdpark.net.rpc.json.JsonRpcClient;
+	import com.crowdpark.net.rpc.json.JsonRpcClientEvent;
 
 	import org.robotlegs.mvcs.Actor;
 
@@ -43,15 +40,14 @@ package com.crowdpark.fastclick.mvcs.services
 		private function onStoreResults(event : JsonRpcClientEvent) : void
 		{
 			var data = event.getDataprovider();
-			
-			var leaderboardEvent :LeaderboardEvent = new LeaderboardEvent(LeaderboardEvent.SHOW_HIGHEST_SCORE);
-			leaderboardEvent.getDataprovider().setValueByKey('result', String(data.getValues()));
-			dispatch(leaderboardEvent); 
+
+			var leaderboardEvent : LeaderboardEvent = new LeaderboardEvent(LeaderboardEvent.SHOW_HIGHEST_SCORE);
+			leaderboardEvent.getDataprovider().setValueByKey('result', data.getValues());
+			dispatch(leaderboardEvent);
 		}
 
 		private function onStorePointResult(event : JsonRpcClientEvent) : void
 		{
-		
 			var allFriends = event.getDataprovider().getValueByKey('friends');
 			var user = event.getDataprovider().getValueByKey('user');
 

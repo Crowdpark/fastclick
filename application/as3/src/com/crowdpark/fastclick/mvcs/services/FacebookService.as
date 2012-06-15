@@ -1,26 +1,20 @@
 package com.crowdpark.fastclick.mvcs.services
 {
-	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
-	import com.crowdpark.fastclick.mvcs.events.BitmapLoaderServiceEvent;
-	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
-
-	import flash.display.Bitmap;
-	import flash.display.Sprite;
-	import flash.display.DisplayObject;
-	import flash.system.Security;
-
-	import com.facebook.graph.Facebook;
+	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
+	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
+	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
+	import com.facebook.graph.Facebook;
 
 	import org.robotlegs.mvcs.Actor;
 
+	import flash.display.Bitmap;
 	import flash.display.Loader;
-	import flash.events.Event;
 	import flash.external.ExternalInterface;
-	import flash.net.URLRequest;
+	import flash.system.Security;
 
 	/**
 	 * @author fatmatekin
@@ -73,14 +67,14 @@ package com.crowdpark.fastclick.mvcs.services
 		public function fetchFriendImages() : void
 		{
 			loadPictures(playerModel.getPlayerFriends());
-			//loadPictures(friendArray);
+			
 		}
 
 		private function loadPictures(friendArray : Vector.<PlayerVo>) : void
 		{
 			if (friendIndex < friendArray.length)
 			{
-				var bitmapServiceEvent : BitmapLoaderServiceEvent = new BitmapLoaderServiceEvent(BitmapLoaderServiceEvent.LOAD_BITMAP);
+				var bitmapServiceEvent : BitmapFetcherServiceEvent = new BitmapFetcherServiceEvent(BitmapFetcherServiceEvent.LOAD_BITMAP);
 				bitmapServiceEvent.getDataprovider().setValueByKey('friendIndex', friendIndex);
 				dispatch(bitmapServiceEvent);
 			}

@@ -5,11 +5,11 @@ package com.crowdpark.fastclick.mvcs.events
 	/**
 	 * @author fatmatekin
 	 */
-	public class BitmapLoaderServiceEvent extends BaseEvent
+	public class BitmapFetcherServiceEvent extends BaseEvent
 	{
 		public static const BITMAP_LOADED : String = "BITMAP_LOADED";
 		public static const LOAD_BITMAP : String = "LOAD_BITMAP";
-		public function BitmapLoaderServiceEvent(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
+		public function BitmapFetcherServiceEvent(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{
 			super(type, bubbles, cancelable);
 		}

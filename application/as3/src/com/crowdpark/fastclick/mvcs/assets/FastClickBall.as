@@ -1,21 +1,17 @@
 package com.crowdpark.fastclick.mvcs.assets
 {
-	import com.crowdpark.fastclick.mvcs.events.FastClickBallEvent;
-
-	import flash.events.TimerEvent;
-	import flash.utils.Timer;
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.Sprite;
-	import flash.display.DisplayObject;
-	import flash.events.Event;
-
-	import utils.number.randomIntegerWithinRange;
 	import utils.draw.createCircleShape;
-
-	import flash.display.Shape;
+	import utils.number.randomIntegerWithinRange;
 
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
+
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
+	import flash.display.Shape;
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.utils.Timer;
 
 	/**
 	 * @author fatmatekin

@@ -34,7 +34,9 @@ class Player extends \Application\Core\Abstracts\AbstractService
         $mvo = $manager->setScore($params["currentScore"]);
         $mvo->saveInMem();
 
-        return $mvo->getHighScore();
+        $scoreHistory = get_object_vars(($mvo->getScores()));
+        arsort($scoreHistory, SORT_NUMERIC);
+        return $scoreHistory;
     }
 
 }

@@ -52,4 +52,22 @@ class FacebookUserMvo extends \Processus\Lib\Mvo\FacebookUserMvo
         return $this->getValueByKey('level');
     }
 
+    /**
+     * @param array $scores
+     * @return FacebookUserMvo
+     */
+    public function setScores(array $scores)
+    {
+        $this->setValueByKey("scores", $scores);
+        return $this;
+    }
+
+    /**
+     * @return array|mixed
+     */
+    public function getScores()
+    {
+        return $this->getValueByKey('scores');
+    }
+
 }

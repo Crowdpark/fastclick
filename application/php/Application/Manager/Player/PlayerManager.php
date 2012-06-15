@@ -21,9 +21,16 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
         if (is_null($score))
             $score = $mvo->getHighScore();
 
+        $scores = $mvo->getScores();
+
+        $timestamp = time();
+        $scores->$timestamp = $score;
+        $mvo->setScores($scores);
+
         if ($mvo->getHighScore() < $score || is_null($mvo->getHighScore())) {
             $mvo->setHighScore($score);
         }
+
         return $mvo;
     }
 

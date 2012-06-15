@@ -1,4 +1,9 @@
-package com.crowdpark.fastclick.mvcs.assets {
+package com.crowdpark.fastclick.mvcs.assets
+{
+	import com.crowdpark.fastclick.mvcs.events.FastClickBallEvent;
+
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
@@ -15,13 +20,17 @@ package com.crowdpark.fastclick.mvcs.assets {
 	/**
 	 * @author fatmatekin
 	 */
-	public class FastClickBall extends BaseGraphic {
+	public class FastClickBall extends BaseGraphic
+	{
 		private var _rawShape : Shape;
 		private var _picture : DisplayObject;
 		private var _ownWidth : uint;
 		private var _ownHeight : uint;
+		private var _lifeTime : uint;
+		private var _timer : Timer;
 
-		override public function onAddedToStage(event : Event) : void {
+		override public function onAddedToStage(event : Event) : void
+		{
 			super.onAddedToStage(event);
 
 			var backgroundShape : Shape = this.getShape();
@@ -30,8 +39,10 @@ package com.crowdpark.fastclick.mvcs.assets {
 			addChild(picture);
 		}
 
-		override public function getShape() : Shape {
-			if (!_rawShape) {
+		override public function getShape() : Shape
+		{
+			if (!_rawShape)
+			{
 				_rawShape = createCircleShape(randomIntegerWithinRange(10, 40), this.getColor());
 				this.setOwnWidth(_rawShape.width);
 				this.setOwnHeight(_rawShape.height);
@@ -40,20 +51,24 @@ package com.crowdpark.fastclick.mvcs.assets {
 			return _rawShape;
 		}
 
-		public function setPicture(picture : DisplayObject) : FastClickBall {
+		public function setPicture(picture : DisplayObject) : FastClickBall
+		{
 			_picture = picture;
 			return this;
 		}
 
-		public function getPicture() : DisplayObject {
-			if (!_picture) {
+		public function getPicture() : DisplayObject
+		{
+			if (!_picture)
+			{
 				_picture = new Sprite();
 			}
 
 			return _picture;
 		}
 
-		public function getMaskedPicture() : DisplayObject {
+		public function getMaskedPicture() : DisplayObject
+		{
 			var backgroundShape : Shape = this.getShape();
 			var pictureMaskedSprite : Sprite = new Sprite();
 
@@ -71,7 +86,8 @@ package com.crowdpark.fastclick.mvcs.assets {
 			return pictureMaskedSprite;
 		}
 
-		public function getDuplicateShape() : DisplayObject {
+		public function getDuplicateShape() : DisplayObject
+		{
 			var picture : DisplayObject = this.getShape();
 
 			var bitmapData : BitmapData = new BitmapData(picture.width, picture.height);
@@ -83,7 +99,8 @@ package com.crowdpark.fastclick.mvcs.assets {
 			return duplication;
 		}
 
-		public function getDuplicatePicture() : DisplayObject {
+		public function getDuplicatePicture() : DisplayObject
+		{
 			var picture : DisplayObject = this.getPicture();
 
 			var bitmapData : BitmapData = new BitmapData(picture.width, picture.height);
@@ -96,21 +113,36 @@ package com.crowdpark.fastclick.mvcs.assets {
 			return duplication as DisplayObject;
 		}
 
-		public function getOwnHeight() : uint {
+		public function getOwnHeight() : uint
+		{
 			return _ownHeight;
 		}
 
-		public function setOwnHeight(ownHeight : uint) : FastClickBall {
+		public function setOwnHeight(ownHeight : uint) : FastClickBall
+		{
 			this._ownHeight = ownHeight;
 			return this;
 		}
 
-		public function getOwnWidth() : uint {
+		public function getOwnWidth() : uint
+		{
 			return _ownWidth;
 		}
 
-		public function setOwnWidth(ownWidth : uint) : FastClickBall {
+		public function setOwnWidth(ownWidth : uint) : FastClickBall
+		{
 			this._ownWidth = ownWidth;
+			return this;
+		}
+
+		public function getLifeTime() : uint
+		{
+			return _lifeTime;
+		}
+
+		public function setLifeTime(lifeTime : uint) : FastClickBall
+		{
+			this._lifeTime = lifeTime;
 			return this;
 		}
 	}

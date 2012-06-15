@@ -1,10 +1,6 @@
 package com.crowdpark.fastclick.mvcs.models.vo
 {
-	import flash.display.Sprite;
 	import flash.display.Bitmap;
-	import flash.text.TextField;
-	import flash.display.DisplayObject;
-
 	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 
 	/**
@@ -145,27 +141,24 @@ package com.crowdpark.fastclick.mvcs.models.vo
 
 		public function setSelectedLevel(level : uint) : PlayerVo
 		{
-			this.setValueByKey('selectedLevel',level);
-			return this;		
+			this.setValueByKey('selectedLevel', level);
+			return this;
 		}
+
 		public function getSelectedLevel() : uint
 		{
 			return uint(this.getValueByKey('selectedLevel'));
-
 		}
 
 		public function setPlayerType(type : String) : PlayerVo
 		{
-			this.setValueByKey('type',type);
+			this.setValueByKey('type', type);
 			return this;
 		}
-		
+
 		public function getPlayerType() : String
 		{
 			return String(this.getValueByKey('type'));
-
 		}
-		
-		
 	}
 }

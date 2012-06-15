@@ -23,7 +23,7 @@ package com.crowdpark.fastclick.mvcs.commands
 		
 		override public function execute() : void
 		{
-			
+						
 			facebookService.addLoadedBitmap(Bitmap(blsEvent.getDataprovider().getValueByKey('bitmap')));
 		}
 	}

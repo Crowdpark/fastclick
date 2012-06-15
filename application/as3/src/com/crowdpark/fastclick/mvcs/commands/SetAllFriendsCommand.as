@@ -21,7 +21,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			var user = backendServiceEvent.getDataprovider().getValueByKey('user');
 
 			playerModel.setCurrentLevel(user);
-			playerModel.setApplicationFriends(allFriends);
+			playerModel.setAllFriends(allFriends);
 		}
 	}
 }

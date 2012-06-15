@@ -10,8 +10,8 @@ package com.crowdpark.fastclick.mvcs.events
 		public static const SET_PLAYER_COOKIE : String = "SET_PLAYER_COOKIE";
 		public static const SHOW_LEVELS : String = "SHOW_LEVELS";
 		public static const LEVEL_SELECT : String = "LEVEL_SELECT";
-		public static const APP_FRIENDS_LOADED : String = "APP_FRIENDS_LOADED";
 		public static const FRIENDS_LOADED : String = "FRIENDS_LOADED";
+		public static const READY_TO_PLAY : String = "READY_TO_PLAY";
 		
 		public function GameEvents(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{

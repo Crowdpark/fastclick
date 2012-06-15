@@ -23,6 +23,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			flashCookie.data.playername = gameEvents.getDataprovider().getValueByKey('playerLastName');
 			
 			playerModel.setFlashCookie(flashCookie);
+			
 		}
 	}
 }

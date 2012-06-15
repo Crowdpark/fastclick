@@ -30,6 +30,7 @@ package com.crowdpark.fastclick.mvcs.views.friends
 		private var friendPane : ScrollPane = new ScrollPane();
 		private var hbox : HBox = new HBox();
 		private	var inviteSprite : Sprite = new Sprite();
+		private var appFriendsCanvasList : Array = new Array();
 
 		override public function init() : void
 		{
@@ -53,7 +54,7 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			inviteSprite.buttonMode = true;
 
 			var inviteButton : Shape = createRectangleShape(60, 100, 0x00ffff);
-			var inviteText : TextField = createField('INVITE FRIEND AND GET BONUS', 0, 0, 60, 20, true, 'Verdana', 10, 0x000000);
+			var inviteText : TextField = createField('INVITE FRIEND AND GET A BONUS', 0, 0, 60, 20, true, 'Verdana', 14, 0x000000);
 			inviteText.wordWrap = true;
 
 			inviteSprite.addChild(inviteButton);
@@ -90,7 +91,18 @@ package com.crowdpark.fastclick.mvcs.views.friends
 				playerCanvas.setNameField(friend.getPlayerFullName());
 				playerCanvas.setLevelField(String(friend.getCurrentLevel()));
 				playerCanvas.setPointsField(String(friend.getCurrentScore()));
-				playerCanvas.setLeaderboardPlace(String(friend.getLeaderboardPlace()));
+				appFriendsCanvasList.push(playerCanvas);
+			}
+			appFriendsCanvasList.sortOn(friend.getCurrentScore(), Array.NUMERIC);
+		}
+
+		public function showAppFriends() : void
+		{
+			for (var i : uint = 0;i < appFriendsCanvasList.length;i++)
+			{
+				var playerCanvas = appFriendsCanvasList[i];
+				playerCanvas.setLeaderboardPlace(String(i));
+
 				hbox.addChild(playerCanvas);
 				friendPane.update();
 			}

@@ -11,6 +11,7 @@ package com.crowdpark.fastclick.mvcs.core.statemachine
 		public static const GAME : String = "playGame";
 		public static const FINISH : String = "finishGame";
 		public static const RETRY : String = "retryGame";
+		public static const READY_TO_PLAY : String = "READY_TO_PLAY";
 
 		public function StateMachineEvents(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{

@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
@@ -41,10 +42,11 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onStoreResults(event : JsonRpcClientEvent) : void
 		{
-			var data = event.getDataprovider().getValueByKey('highestScore');
+			var data = event.getDataprovider();
 			
 			var leaderboardEvent :LeaderboardEvent = new LeaderboardEvent(LeaderboardEvent.SHOW_HIGHEST_SCORE);
-			leaderboardEvent.getDataprovider().setValueByKey('highestScore', data); 
+			leaderboardEvent.getDataprovider().setValueByKey('result', String(data.getValues()));
+			dispatch(leaderboardEvent); 
 		}
 
 		private function onStorePointResult(event : JsonRpcClientEvent) : void

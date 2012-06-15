@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 	import flash.display.Sprite;
 
 	import com.crowdpark.fastclick.mvcs.views.friends.FriendsView;
@@ -22,12 +24,17 @@ package com.crowdpark.fastclick.mvcs.commands
 		[Inject]
 		public var configService : ConfigService;
 		
+		[Inject]
+		public var stateMachineModel:StateMachineModel;
+		
 
 		override public function execute() : void
 		{
 			facebookService.init();
 			configService.fetchData("data/Config.json");
-
+			
+			stateMachineModel.state = StateMachineState.LOADING;
+			
 			var mainSprite : Sprite = new Sprite();
 			mainSprite.name = 'mainSprite';
 			var friendsSprite : Sprite = new Sprite();

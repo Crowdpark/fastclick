@@ -1,7 +1,5 @@
 package com.crowdpark.fastclick.mvcs.views.hud
 {
-	import com.crowdpark.fastclick.mvcs.models.vo.LevelVo;
-	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
@@ -22,14 +20,13 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			view.getDataProvider().setValueByKey('playerName', playerModel.getCurrentPlayer().getValueByKey('playerName'));
 			view.getDataProvider().setValueByKey('playerLastName', playerModel.getCurrentPlayer().getValueByKey('playerLastName'));
 			view.getDataProvider().setValueByKey('gameDuration', configModel.getGameDuration());
-			
+
 			addContextListener(HudViewEvent.UPDATE, updateTime);
 			addContextListener(PointClickEvent.POINT_CLICK, handlePointClickEvent);
 
 			trace(playerModel.getCurrentPlayer().getSelectedLevel());
 			view.updateLevel(uint(playerModel.getCurrentPlayer().getSelectedLevel()));
 		}
-
 
 		private function updateTime(e : HudViewEvent) : void
 		{

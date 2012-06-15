@@ -1,7 +1,13 @@
 package com.crowdpark.fastclick.mvcs.views.footer
 {
+	import flash.geom.Point;
+
+	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
+
 	import utils.draw.createRectangleShape;
+
 	import flash.display.Shape;
+
 	import com.bit101.components.HBox;
 
 	import flash.events.Event;
@@ -18,13 +24,12 @@ package com.crowdpark.fastclick.mvcs.views.footer
 	{
 		public var ballPanel : ScrollPane = new ScrollPane();
 		private var hbox : HBox = new HBox();
+
 		override public function init() : void
 		{
-			super.init();
+			// super.init();
 
 			addBallPane();
-			
-			ballPanel.addChild(hbox);
 		}
 
 		override public function onAddedToStageListener(e : Event) : void
@@ -42,11 +47,18 @@ package com.crowdpark.fastclick.mvcs.views.footer
 			ballPanel.shadow = false;
 			ballPanel.showGrid = false;
 			ballPanel.autoHideScrollBar = true;
+
+			ballPanel.addChild(hbox);
 			addChild(ballPanel);
 		}
 
-		public function addBallToHbox(ballShape : Sprite) : void
+		public function addBallToHbox(ballShape : FastClickBall) : void
 		{
+			ballShape.x = 30;
+			ballShape.y = 30;
+			ballShape.setStartPoint(new Point(0, 0));
+			ballShape.setEndPoint(new Point(0, 0));
+
 			hbox.addChild(ballShape);
 			ballPanel.update();
 		}

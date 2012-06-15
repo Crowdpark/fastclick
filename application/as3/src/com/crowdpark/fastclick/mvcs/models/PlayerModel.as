@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import com.crowdpark.fastclick.mvcs.events.BitmapLoaderServiceEvent;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.adobe.serialization.json.JSONDecoder;
 
@@ -111,51 +112,12 @@ package com.crowdpark.fastclick.mvcs.models
 			dispatch(event);
 		}
 
-		/*public function createFriends() : void
-		{
-			for (var i : uint = 0; i < 4;i++)
-			{
-				var playerVo : PlayerVo = new PlayerVo();
-				playerVo.setPlayerId(1);
-				playerVo.setPlayerName('Test-Name');
-				playerVo.setPlayerLastName('Test_LastName');
-				playerVo.setPlayerPicture(createRectangleShape(60, 40, 0xff0000));
-				playerVo.setCurrentLevel(1);
-				playerVo.setCurrentScore(19);
-				playerVo.setLeaderboardPlace(1);
-				friendsArray.push(playerVo);
-			}
-			setPlayerFriends(friendsArray);
-
-			dispatch(new FacebookServiceEvent(FacebookServiceEvent.FETCH_FRIENDS_IMAGES));
-		}*/
-
-		public function createFriends() : void // Test all friends
-		{
-			var success = getCurrentPlayer().getFriendsList();
-			
-			for (var i : uint = 0;i < 10;i++)
-			{
-				var playerVo : PlayerVo = new PlayerVo();
-				playerVo.setPlayerId(success[i].id);
-				playerVo.setPlayerFullName(success[i].name);
-				playerVo.setPlayerPictureUrl('http://graph.facebook.com/' + success[i].id + '/picture?type=small');
-				getPlayerFriends().push(playerVo);
-			}
-
-			dispatch(new FacebookServiceEvent(FacebookServiceEvent.FETCH_FRIENDS_PICTURES));
-		}
-
-		public function setApplicationFriends(appFriends : Object) : void
+		public function setAllFriends(appFriends : Object) : void
 		{
 			trace(appFriends.length);
-			
-	
-			for (var i : uint = 0;i < 10;i++)
+			var amount = appFriends.length - 10;
+			for (var i : uint = appFriends.length - 1;i > amount;i--)
 			{
-				//var jsonDecoder : JSONDecoder = new JSONDecoder(String(appFriends[i]), true);
-				//var appfriend = jsonDecoder.getValue();
-				//trace(jsonDecoder.getValue().id + 'decoder');
 				var appfriend = appFriends[i];
 				trace(appFriends[i]);
 				var playerVo : PlayerVo = new PlayerVo();
@@ -163,10 +125,14 @@ package com.crowdpark.fastclick.mvcs.models
 				playerVo.setPlayerFullName(appfriend.name);
 				playerVo.setPlayerType(appfriend.type);
 				playerVo.setPlayerPictureUrl('http://graph.facebook.com/' + appfriend.id + '/picture');
-				//playerVo.setCurrentLevel(appfriend.level);
-				//playerVo.setCurrentScore(appfriend.high_score);
-				playerVo.setLeaderboardPlace(i);
+				playerVo.setCurrentLevel(appfriend.level);
+				playerVo.setCurrentScore(appfriend.high_score);
 				getPlayerFriends().push(playerVo);
+				
+				//var bitmapLoaderService:BitmapLoaderServiceEvent = new BitmapLoaderServiceEvent(BitmapLoaderServiceEvent.LOAD_BITMAP);
+				//bitmapLoaderService.getDataprovider().setValueByKey('currentPlayer', playerVo);
+				//dispatch(bitmapLoaderService);
+				
 			}
 			dispatch(new FacebookServiceEvent(FacebookServiceEvent.FETCH_ALL_FRIENDS_PICTURES));
 		}

@@ -22,6 +22,9 @@ package com.crowdpark.fastclick.mvcs.commands
 		{
 			var friendIndex = bitmapServiceEvent.getDataprovider().getValueByKey('friendIndex');
 			bitmapService.fetchBitMap(playerModel.getPlayerFriends()[friendIndex].getPlayerPictureUrl());
+			
+			
+			
 		}
 	}
 }

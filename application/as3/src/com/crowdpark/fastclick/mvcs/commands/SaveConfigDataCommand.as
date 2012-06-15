@@ -2,6 +2,7 @@ package com.crowdpark.fastclick.mvcs.commands
 {
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
+
 	import org.robotlegs.mvcs.Command;
 
 	/**
@@ -11,10 +12,9 @@ package com.crowdpark.fastclick.mvcs.commands
 	{
 		[Inject]
 		public var configModel : ConfigModel;
-		
 		[Inject]
-		public var backendServiceEvent : BackendServiceEvents; 
-		
+		public var backendServiceEvent : BackendServiceEvents;
+
 		override public function execute() : void
 		{
 			var data = backendServiceEvent.getDataprovider().getValueByKey('jsonData');

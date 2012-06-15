@@ -1,8 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.hud
 {
-	import com.crowdpark.fastclick.mvcs.models.vo.LevelVo;
 	import flash.events.MouseEvent;
-
 	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
@@ -45,11 +43,11 @@ package com.crowdpark.fastclick.mvcs.views.hud
 		{
 			var hudViewBackground : Shape = createRectangleShape(stage.stageWidth, 60, 0x000000);
 
-			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 200, 0, 10, stage.stageWidth - 10, hudViewBackground.height);
-			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 200, 0, 10, stage.stageWidth - 10, hudViewBackground.height);
+			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 240, 0, 10, stage.stageWidth - 10, hudViewBackground.height);
+			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 240, 0, 10, stage.stageWidth - 10, hudViewBackground.height);
 			timeBar.mask = barMask;
 
-			TweenMax.to(barMask, uint(this.getDataProvider().getValueByKey('gameDuration')), {y:stage.stageHeight - 140, ease:Linear.easeNone});
+			TweenMax.to(barMask, uint(this.getDataProvider().getValueByKey('gameDuration')), {y:stage.stageHeight - 220, ease:Linear.easeNone});
 
 			scoreTitle.y = 20;
 			scoreTitle.x = 5;
@@ -64,10 +62,10 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			playerNameField.background = true;
 			playerNameField.backgroundColor = 0xcacaca;
 			playerNameField.x = stage.stageWidth - playerNameField.width;
-			
+
 			level.x = stage.stageWidth - level.width;
-			level.y = 60-level.height;
-			
+			level.y = 60 - level.height;
+
 			time.text = String(this.getDataProvider().getValueByKey('gameDuration'));
 			timeSprite.x = (stage.stageWidth - timeSprite.width) / 2;
 
@@ -79,7 +77,6 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			addChildAt(hudViewBackground, 0);
 			addChild(timeBar);
 			addChild(barMask);
-			// addChild(logoutSprite);
 			addChild(playerNameField);
 		}
 
@@ -140,7 +137,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			time.text = String(this.getDataProvider().getValueByKey('time'));
 		}
 
-		public function updateLevel(currentLevel:uint) : void
+		public function updateLevel(currentLevel : uint) : void
 		{
 			level.text = String(currentLevel);
 			level.x = stage.stageWidth - level.width;

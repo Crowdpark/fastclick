@@ -22,7 +22,7 @@ package com.crowdpark.fastclick.mvcs.services
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
 			jsonClient.params = [player.getValues()];
 			jsonClient.method = 'NoAuth.Player.getAppFriends';
-			jsonClient.url = 'http://local.fastclick.com/api/v1/notauth/';
+			jsonClient.url = 'http://dev-fastclick.crowdpark-cloud.com/api/v1/notauth/';
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStorePointResult);
 			jsonClient.send();
 		}
@@ -32,7 +32,7 @@ package com.crowdpark.fastclick.mvcs.services
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
 			jsonClient.params = [player.getValues()];
 			jsonClient.method = 'NoAuth.Player.updateUser';
-			jsonClient.url = 'http://local.fastclick.com/api/v1/notauth/';
+			jsonClient.url = 'http://dev-fastclick.crowdpark-cloud.com/api/v1/notauth/';
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStoreResults);
 			jsonClient.send();
 		}

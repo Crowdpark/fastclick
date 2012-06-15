@@ -87,7 +87,7 @@ package com.crowdpark.fastclick.mvcs.views.friends
 				playerCanvas.setPointsField(String(friend.getCurrentScore()));
 				appFriendsCanvasList.push(playerCanvas);
 			}
-			appFriendsCanvasList.sortOn(friend.getCurrentScore(), Array.NUMERIC);
+			//appFriendsCanvasList.sortOn(friend.getCurrentScore(), Array.NUMERIC);
 		}
 
 		public function showAppFriends() : void

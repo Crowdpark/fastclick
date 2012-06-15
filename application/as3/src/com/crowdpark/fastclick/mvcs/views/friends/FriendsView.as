@@ -1,4 +1,5 @@
-package com.crowdpark.fastclick.mvcs.views.friends {
+package com.crowdpark.fastclick.mvcs.views.friends
+{
 	import flash.text.AntiAliasType;
 	import flash.events.MouseEvent;
 	import flash.display.Sprite;
@@ -23,13 +24,16 @@ package com.crowdpark.fastclick.mvcs.views.friends {
 	/**
 	 * @author fatmatekin
 	 */
-	public class FriendsView extends BaseView {
+	public class FriendsView extends BaseView
+	{
 		public static const  INVITE_BUTTON_CLICKED : String = 'INVITE_BUTTON_CLICKED';
 		private var friendPane : ScrollPane = new ScrollPane();
 		private var hbox : HBox = new HBox();
 		private	var inviteSprite : Sprite = new Sprite();
+		private var appFriendsCanvasList : Array = new Array();
 
-		override public function init() : void {
+		override public function init() : void
+		{
 			super.init();
 
 			addInviteButton();
@@ -44,12 +48,13 @@ package com.crowdpark.fastclick.mvcs.views.friends {
 			addChild(friendPane);
 		}
 
-		private function addInviteButton() : void {
+		private function addInviteButton() : void
+		{
 			inviteSprite.mouseChildren = false;
 			inviteSprite.buttonMode = true;
 
 			var inviteButton : Shape = createRectangleShape(60, 100, 0x00ffff);
-			var inviteText : TextField = createField('INVITE FRIEND AND GET BONUS', 0, 0, 60, 20, true, 'Verdana', 10, 0x000000);
+			var inviteText : TextField = createField('INVITE FRIEND AND GET A BONUS', 0, 0, 60, 20, true, 'Verdana', 14, 0x000000);
 			inviteText.wordWrap = true;
 
 			inviteSprite.addChild(inviteButton);
@@ -59,11 +64,13 @@ package com.crowdpark.fastclick.mvcs.views.friends {
 			addChild(inviteSprite);
 		}
 
-		private function onInviteClickListener(event : MouseEvent) : void {
+		private function onInviteClickListener(event : MouseEvent) : void
+		{
 			dispatchEvent(new Event(FriendsView.INVITE_BUTTON_CLICKED));
 		}
 
-		override public function onAddedToStageListener(e : Event) : void {
+		override public function onAddedToStageListener(e : Event) : void
+		{
 			friendPane.width = stage.stageWidth;
 			friendPane.height = 110;
 			hbox.spacing = 10;
@@ -73,18 +80,32 @@ package com.crowdpark.fastclick.mvcs.views.friends {
 			this.y = stage.stageHeight - friendPane.height - 10;
 		}
 
-		public function createFriend() : void {
+		public function createFriend() : void
+		{
 			var friend : PlayerVo = PlayerVo(this.getDataProvider().getValueByKey('currentFriend'));
 
-			var playerCanvas : PlayerCanvas = new PlayerCanvas();
-			playerCanvas.setPicture(friend.getPlayerPicture());
-			playerCanvas.setNameField(friend.getPlayerFullName());
-			playerCanvas.setLevelField(String(friend.getCurrentLevel()));
-			playerCanvas.setPointsField(String(friend.getCurrentScore()));
-			playerCanvas.setLeaderboardPlace(String(friend.getLeaderboardPlace()));
+			if (friend.getPlayerType() == 'appfriend')
+			{
+				var playerCanvas : PlayerCanvas = new PlayerCanvas();
+				playerCanvas.setPicture(friend.getPlayerPicture());
+				playerCanvas.setNameField(friend.getPlayerFullName());
+				playerCanvas.setLevelField(String(friend.getCurrentLevel()));
+				playerCanvas.setPointsField(String(friend.getCurrentScore()));
+				appFriendsCanvasList.push(playerCanvas);
+			}
+			appFriendsCanvasList.sortOn(friend.getCurrentScore(), Array.NUMERIC);
+		}
 
-			hbox.addChild(playerCanvas);
-			friendPane.update();
+		public function showAppFriends() : void
+		{
+			for (var i : uint = 0;i < appFriendsCanvasList.length;i++)
+			{
+				var playerCanvas = appFriendsCanvasList[i];
+				playerCanvas.setLeaderboardPlace(String(i));
+
+				hbox.addChild(playerCanvas);
+				friendPane.update();
+			}
 		}
 	}
 }

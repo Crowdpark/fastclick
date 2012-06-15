@@ -1,6 +1,10 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
+	import com.crowdpark.fastclick.mvcs.events.BitmapLoaderServiceEvent;
+	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
+
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.display.DisplayObject;
@@ -25,10 +29,7 @@ package com.crowdpark.fastclick.mvcs.services
 	{
 		[Inject]
 		public var playerModel : PlayerModel;
-		[Inject]
-		public var backendService : BackendService;
-		[Inject]
-		public var bitmapService : BitmapLoaderService;
+		
 		private var friendIndex : uint = 0;
 		private var loader : Loader;
 
@@ -45,14 +46,23 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onMe(params : Object) : void
 		{
-			playerModel.createPlayer(String(params.first_name), String(params.last_name), uint(params.id));
+			var facebookServiceEvent:FacebookServiceEvent = new FacebookServiceEvent(FacebookServiceEvent.CREATE_PLAYER);
+			facebookServiceEvent.getDataprovider().setValueByKey('firstName', String(params.first_name));
+			facebookServiceEvent.getDataprovider().setValueByKey('lastName', String(params.last_name));
+			facebookServiceEvent.getDataprovider().setValueByKey('id', String(params.id));
+			dispatch(facebookServiceEvent);
+			
+			//playerModel.createPlayer(String(params.first_name), String(params.last_name), uint(params.id));
 		}
 
 		private function onFetchFriends(params : Object) : void
 		{
-			playerModel.getCurrentPlayer().setFriendsList(params.data);
 			
-			backendService.storePlayer(playerModel.getCurrentPlayer());
+			// playerModel.getCurrentPlayer().setFriendsList(params.data);
+			
+			var backendServiceEvent:BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.STORE_PLAYER);
+			backendServiceEvent.getDataprovider().setValueByKey('data', params.data);
+			dispatch(backendServiceEvent);
 		}
 
 		public function handleLogin(response : Object, fail : Object) : void
@@ -63,39 +73,26 @@ package com.crowdpark.fastclick.mvcs.services
 		public function fetchFriendImages() : void
 		{
 			loadPictures(playerModel.getPlayerFriends());
-		}
-
-		public function fetchAppFriendImages() : void
-		{
-			var friendArray : Vector.<PlayerVo> = playerModel.getPlayerAppFriends();
-			if (friendArray.length > 0)
-			{
-				loadPictures(friendArray);
-			}
+			//loadPictures(friendArray);
 		}
 
 		private function loadPictures(friendArray : Vector.<PlayerVo>) : void
 		{
 			if (friendIndex < friendArray.length)
 			{
-				bitmapService.fetchBitMap(friendArray[friendIndex].getPlayerPictureUrl());
+				var bitmapServiceEvent : BitmapLoaderServiceEvent = new BitmapLoaderServiceEvent(BitmapLoaderServiceEvent.LOAD_BITMAP);
+				bitmapServiceEvent.getDataprovider().setValueByKey('friendIndex', friendIndex);
+				dispatch(bitmapServiceEvent);
 			}
 			else
 			{
-				dispatch(new GameEvents(GameEvents.APP_FRIENDS_LOADED));
+				dispatch(new StateMachineEvents(StateMachineEvents.READY_TO_PLAY));
 			}
-
-			/*if (friendIndex < 1)
-			{
-			loader = new Loader();
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadPicturesListener);
-			loader.load(new URLRequest(friendArray[friendIndex].getPlayerPictureUrl()));
-			}*/
 		}
 
 		public function addLoadedBitmap(bitmap : Bitmap) : void
 		{
-			var playerF : Vector.<PlayerVo> = playerModel.getPlayerAppFriends();
+			var playerF : Vector.<PlayerVo> = playerModel.getPlayerFriends();
 			playerF[friendIndex].setPlayerPicture(bitmap);
 
 			var gameEvent : GameEvents = new GameEvents(GameEvents.SHOW_FRIEND);
@@ -104,19 +101,6 @@ package com.crowdpark.fastclick.mvcs.services
 
 			friendIndex++;
 			loadPictures(playerF);
-		}
-
-		private function onLoadPicturesListener(event : Event) : void
-		{
-			var playerF : Vector.<PlayerVo> = playerModel.getPlayerAppFriends();
-			playerF[friendIndex].setPlayerPicture(Bitmap(loader.content));
-
-			var gameEvent : GameEvents = new GameEvents(GameEvents.SHOW_FRIEND);
-			gameEvent.getDataprovider().setValueByKey('currentFriend', playerF[friendIndex]);
-			dispatch(gameEvent);
-
-			friendIndex++;
-			// loadPictures();
 		}
 
 		public function inviteFriend() : void
@@ -132,6 +116,11 @@ package com.crowdpark.fastclick.mvcs.services
 		private function onUICallback(result : Object) : void
 		{
 			trace(result.to);
+		}
+
+		public function readyToPlay() : void
+		{
+			dispatch(new StateMachineEvents(StateMachineEvents.READY_TO_PLAY));	
 		}
 	}
 }

@@ -1,11 +1,6 @@
-package com.crowdpark.fastclick.mvcs.views.footer {
-	import flash.display.DisplayObject;
-
-	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
-
-	import flash.events.Event;
-
-	import com.crowdpark.fastclick.mvcs.views.friends.FriendsView;
+package com.crowdpark.fastclick.mvcs.views.footer
+{
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
 	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
@@ -14,55 +9,39 @@ package com.crowdpark.fastclick.mvcs.views.footer {
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Linear;
 
-	import flash.display.Shape;
-	import flash.display.Sprite;
-
 	/**
 	 * @author fatmatekin
 	 */
-	public class FooterViewMediator extends StateMachineMediator {
-		override public function onRegister() : void {
+	public class FooterViewMediator extends StateMachineMediator
+	{
+		override public function onRegister() : void
+		{
 			super.onRegister();
 
 			addContextListener(PointClickEvent.POINT_CLICK, handlePointClick);
 		}
 
-		private function handlePointClick(event : PointClickEvent) : void {
+		private function handlePointClick(event : PointClickEvent) : void
+		{
 			var ball : BaseGraphic = BaseGraphic(event.getDataprovider().getValueByKey('fcCircle'));
 			view.addChild(ball);
 
 			TweenMax.to(ball, 0.3, {width:30, height:30, y:ball.getEndPoint().y, x:ball.getEndPoint().x, onComplete:handleTweenComplete, onCompleteParams:[ball], ease:Linear.easeOut});
 		}
 
-		private function handleTweenComplete(point : InterfaceCircle) : void {
-			if (stateMachineModel.state != "finish") {
+		private function handleTweenComplete(point : InterfaceCircle) : void
+		{
+			if (stateMachineModel.state != StateMachineState.FINISH)
+			{
 				var ball : FastClickBall = FastClickBall(point);
-
-				// var shape : Shape = ball.getShape();
-				var shape : DisplayObject = ball.getDuplicateShape();
-				var picture : DisplayObject = DisplayObject(ball.getDuplicatePicture());
-
-				// picture.x = shape.x = 0;
-				// picture.y = shape.y = 0;
-				picture.width = 30;
-				picture.height = 30;
-
-				ball.setShape(null);
-				 ball.setPicture(null);
-
-				picture.x = 0;
-				picture.y = 0;
-
-				var sp : Sprite = new Sprite();
-				sp.addChild(picture);
-				view.addBallToHbox(sp);
-
-				// ball.width = ball.getOwnWidth();
-				// ball.height = ball.getOwnHeight();
+				ball.width = 30;
+				ball.height = 30;
+				view.addBallToHbox(ball);
 			}
 		}
 
-		private function get view() : FooterView {
+		private function get view() : FooterView
+		{
 			return viewComponent as FooterView;
 		}
 	}

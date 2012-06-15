@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 	import com.crowdpark.fastclick.mvcs.services.BackendService;
 	import flash.display.Sprite;
 	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
@@ -20,6 +22,8 @@ package com.crowdpark.fastclick.mvcs.commands
 		[Inject]
 		public var backendService:BackendService;
 
+		[Inject]
+		public var stateMachineModel:StateMachineModel;
 		override public function execute() : void
 		{
 			backendService.storeResults(playerModel.getCurrentPlayer());
@@ -31,8 +35,6 @@ package com.crowdpark.fastclick.mvcs.commands
 			resultView.init();
 			
 			mainSprite.addChild(resultView);
-			
-			//highestScoreModel.setHighscoreList(playerModel.getPlayerArray());
 		}
 	}
 }

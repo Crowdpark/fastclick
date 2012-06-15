@@ -52,12 +52,12 @@ package com.crowdpark.fastclick.mvcs.models
 			return this;
 		}
 
-		public function getTime() : uint
+		public function getTime() : int
 		{
 			return _time;
 		}
 
-		public function setTime(time : uint) : ConfigModel
+		public function setTime(time : int) : ConfigModel
 		{
 			_time = time;
 			return this;
@@ -84,10 +84,6 @@ package com.crowdpark.fastclick.mvcs.models
 			{
 				_timer.stop();
 				dispatch(new StateMachineEvents(StateMachineEvents.FINISH));
-
-				var bvo : InterfaceVO = new BaseVo();
-				bvo.setValueByKey('playerName', String(playerModel.getCurrentPlayer().getValueByKey('playerName')));
-				dispatch(new LeaderboardEvent(LeaderboardEvent.SORT).setDataprovider(bvo));
 			}
 		}
 
@@ -106,7 +102,6 @@ package com.crowdpark.fastclick.mvcs.models
 		{
 			setColorArray(data.getValue().colors);
 			setGamelLevels(data.getValue().levels);
-			
 
 			var circleAmount : uint = playerModel.getPlayerFriends().length;
 			var colorAmount : uint = getColorArray().length;

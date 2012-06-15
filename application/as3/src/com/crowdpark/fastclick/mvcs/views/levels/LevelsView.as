@@ -51,7 +51,9 @@ package com.crowdpark.fastclick.mvcs.views.levels
 				levelSprite.buttonMode = true;
 				levelSprite.addEventListener(MouseEvent.CLICK, onLevelClickListener);
 				hbox.addChild(levelSprite);
+				
 			}
+			this.x = (stage.stageWidth - this.width) / 2;
 		}
 
 		private function onLevelClickListener(event : MouseEvent) : void
@@ -85,12 +87,13 @@ package com.crowdpark.fastclick.mvcs.views.levels
 			levelSprite.addChild(levelTf);
 			levelSprite.mouseChildren = false;
 
-			this.x = (stage.stageWidth - this.width) / 2;
+			
 			return levelSprite;
 		}
 
 		override public function onAddedToStageListener(e : Event) : void
 		{
+			
 		}
 
 		public function enableSelect() : void

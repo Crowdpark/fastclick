@@ -22,10 +22,10 @@ package com.crowdpark.fastclick.mvcs.views.levels
 
 			addContextListener(GameEvents.SHOW_LEVELS, onShowLevelsListener);
 			addViewListener(GameEvents.LEVEL_SELECT, onLevelSelectListener);
-			addContextListener(GameEvents.APP_FRIENDS_LOADED, onAppFriendsLoaded);
+			addContextListener(StateMachineEvents.READY_TO_PLAY, onReadyToPlayListener);
 		}
 
-		private function onAppFriendsLoaded(event : GameEvents) : void
+		private function onReadyToPlayListener(event : StateMachineEvents) : void
 		{
 			view.enableSelect();
 		}

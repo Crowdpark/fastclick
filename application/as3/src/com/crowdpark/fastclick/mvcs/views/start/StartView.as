@@ -5,7 +5,6 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.text.TextFieldType;
 	import flash.display.Shape;
 
 	import utils.draw.createRectangleShape;
@@ -23,9 +22,11 @@ package com.crowdpark.fastclick.mvcs.views.start
 		public var gameTitleSprite : Sprite = new Sprite();
 		public var startButtonSprite : Sprite = new Sprite();
 		public var playerNameSprite : Sprite = new Sprite();
-		private var _playerNameField : TextField;
+		private var playerNameField : TextField;
 		public var levelsView : LevelsView;
 		private var tfm : TextFormat;
+		private var title : TextField;
+		private var loadingTextField : TextField;
 		public static const START_GAME : String = "START_GAME";
 
 		override public function onAddedToStageListener(e : Event) : void
@@ -33,30 +34,32 @@ package com.crowdpark.fastclick.mvcs.views.start
 			gameTitleSprite.x = (stage.stageWidth - gameTitleSprite.width) / 2;
 			gameTitleSprite.y = 10;
 
-			playerNameSprite.x = (stage.stageWidth - playerNameSprite.width) / 2;
-			playerNameSprite.y = gameTitleSprite.y + gameTitleSprite.height + 20;
+			title.x = (stage.stageWidth - title.width) / 2;
+			title.y = gameTitleSprite.y + gameTitleSprite.height + 30;
+
+			playerNameField.x = (stage.stageWidth - playerNameField.width) / 2;
+			playerNameField.y = title.y + title.height + 30;
 
 			levelsView.x = (stage.stageWidth - levelsView.width) / 2;
-			levelsView.y = playerNameSprite.y + playerNameSprite.height + 10;
+			levelsView.y = playerNameField.y + playerNameField.height + 50;
 
-			startButtonSprite.y = 300;
-			startButtonSprite.x = (stage.stageWidth - startButtonSprite.width) / 2;
-			startButtonSprite.buttonMode = true;
-
-			startButtonSprite.addEventListener(MouseEvent.CLICK, handleStartClickEvent);
+			loadingTextField.x = (stage.stageWidth - loadingTextField.width) / 2;
+			loadingTextField.y = levelsView.y + levelsView.height + 200;
 		}
 
 		override public function init() : void
 		{
 			tfm = new TextFormat("Arial", 20, 0xffffff, true);
 
-			levelsView = new LevelsView();	
+			loadingTextField = createField('LOADING...', 0, 0, 0200, 20, false, 'Verdana', 15);
+
+			levelsView = new LevelsView();
 			levelsView.init();
 
 			addChild(gameTitleSprite);
-			//addChild(startButtonSprite);
 			addChild(playerNameSprite);
 			addChild(levelsView);
+			addChild(loadingTextField);
 
 			createGameTitle();
 			createStartButton();
@@ -65,7 +68,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 		private function handleStartClickEvent(e : MouseEvent) : void
 		{
-			var playerName : String = _playerNameField.text;
+			var playerName : String = playerNameField.text;
 			this.getDataProvider().setValueByKey('playerName', playerName);
 
 			dispatchEvent(new Event(StartView.START_GAME));
@@ -101,11 +104,11 @@ package com.crowdpark.fastclick.mvcs.views.start
 			tf.size = 20;
 			tf.align = "center";
 
-			var title : TextField = createField("Welcome", 0, 0, 200, 20, false, "Verdana", 15, 0);
-			_playerNameField = createField("", 0, title.height + 5, 200, 20, false, "Verdana", 20, 0);
+			title = createField("Welcome", 0, 0, 200, 20, false, "Verdana", 15, 0);
+			playerNameField = createField("", 0, title.height + 5, 200, 20, false, "Verdana", 20, 0);
 
-			playerNameSprite.addChild(title);
-			playerNameSprite.addChild(_playerNameField);
+			addChild(title);
+			addChild(playerNameField);
 		}
 
 		public function updatePlayerNameField(name : String, lastName : String) : StartView
@@ -121,19 +124,24 @@ package com.crowdpark.fastclick.mvcs.views.start
 			{
 				this.getPlayerNameField().text = name + ' ' + lastName;
 			}
-
+			playerNameField.x = (stage.stageWidth - playerNameField.width) / 2;
 			return this;
 		}
 
 		public function getPlayerNameField() : TextField
 		{
-			return _playerNameField;
+			return playerNameField;
 		}
 
 		public function setPlayerNameField(playerNameField : TextField) : StartView
 		{
-			_playerNameField = playerNameField;
+			playerNameField = playerNameField;
 			return this;
+		}
+
+		public function removeLoading() : void
+		{
+			removeChild(loadingTextField);
 		}
 	}
 }

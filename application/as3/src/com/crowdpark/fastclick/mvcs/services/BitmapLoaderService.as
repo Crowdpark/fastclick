@@ -15,10 +15,10 @@ package com.crowdpark.fastclick.mvcs.services
 	 */
 	public class BitmapLoaderService extends Actor
 	{
-		private static const BITMAP_LOADED : String = "BITMAP_LOADED";
 		private var _resultBitmap : Bitmap;
 		private var loader : Loader;
 		private var bitmapIndex : uint = 0;
+		private var _currentSet : String;
 
 		public function fetchBitMap(url : String) : void
 		{
@@ -27,24 +27,12 @@ package com.crowdpark.fastclick.mvcs.services
 			loader.load(new URLRequest(url));
 		}
 
-		private function onFetchBitmapListener(event : Event) : void
+		public function onFetchBitmapListener(event : Event) : void
 		{
-			setResultBitmap(Bitmap(loader.content));
-
 			var blsEvent : BitmapLoaderServiceEvent = new BitmapLoaderServiceEvent(BitmapLoaderServiceEvent.BITMAP_LOADED);
 			blsEvent.getDataprovider().setValueByKey('bitmap', loader.content);
 			dispatch(blsEvent);
 		}
 
-		public function getResultBitmap() : Bitmap
-		{
-			return _resultBitmap;
-		}
-
-		public function setResultBitmap(resultBitmap : Bitmap) : BitmapLoaderService
-		{
-			this._resultBitmap = resultBitmap;
-			return this;
-		}
 	}
 }

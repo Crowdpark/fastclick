@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
@@ -16,15 +17,19 @@ package com.crowdpark.fastclick.mvcs.services
 	{
 		[Inject]
 		public var playerModel : PlayerModel;
+		[Inject]
+		public var configModel:ConfigModel;
 
 		public function storePlayer(player : PlayerVo) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
 			jsonClient.params = [player.getValues()];
 			jsonClient.method = 'NoAuth.Player.getAppFriends';
-			jsonClient.url = 'http://dev-fastclick.crowdpark-cloud.com/api/v1/notauth/';
+			jsonClient.url = configModel.getUrl();
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStorePointResult);
 			jsonClient.send();
+			
+			//http://local.fastclick.com/api/v1/notauth/
 		}
 
 		public function storeResults(player : PlayerVo) : void
@@ -32,7 +37,7 @@ package com.crowdpark.fastclick.mvcs.services
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
 			jsonClient.params = [player.getValues()];
 			jsonClient.method = 'NoAuth.Player.updateUser';
-			jsonClient.url = 'http://dev-fastclick.crowdpark-cloud.com/api/v1/notauth/';
+			jsonClient.url = configModel.getUrl();
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStoreResults);
 			jsonClient.send();
 		}

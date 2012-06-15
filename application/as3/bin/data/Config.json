@@ -1,4 +1,5 @@
 {
+	"url":"http://dev-fastclick.crowdpark-cloud.com/api/v1/notauth/",
 	"levels":
 			[
 				{"levelIndex":"1","gameDuration":"15","scoreLimit":"0"},

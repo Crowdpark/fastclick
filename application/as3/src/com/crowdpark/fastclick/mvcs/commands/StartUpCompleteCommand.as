@@ -30,8 +30,9 @@ package com.crowdpark.fastclick.mvcs.commands
 
 		override public function execute() : void
 		{
-			facebookService.init();
 			configService.fetchData("data/Config.json");
+			facebookService.init();
+			
 			
 			stateMachineModel.state = StateMachineState.LOADING;
 			

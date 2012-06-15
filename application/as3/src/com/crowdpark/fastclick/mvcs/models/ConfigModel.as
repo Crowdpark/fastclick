@@ -25,6 +25,7 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _gameDuration : uint;
 		private var _colorArray : Array;
 		private var _levelArray : Vector.<LevelVo>;
+		private var _url:String;
 		[Inject]
 		public var playerModel : PlayerModel;
 
@@ -98,6 +99,7 @@ package com.crowdpark.fastclick.mvcs.models
 		{
 			setColorArray(data.getValue().colors);
 			setGamelLevels(data.getValue().levels);
+			setUrl(data.getValue().url);
 
 			var circleAmount : uint = playerModel.getPlayerFriends().length;
 			var colorAmount : uint = getColorArray().length;
@@ -148,6 +150,17 @@ package com.crowdpark.fastclick.mvcs.models
 		public function setLevelArray(levelArray : Vector.<LevelVo>) : ConfigModel
 		{
 			this._levelArray = levelArray;
+			return this;
+		}
+
+		public function getUrl() : String
+		{
+			return _url;
+		}
+
+		public function setUrl(url : String) : ConfigModel
+		{
+			_url = url;
 			return this;
 		}
 	}

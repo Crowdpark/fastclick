@@ -23,7 +23,6 @@ package com.crowdpark.fastclick.mvcs.services
 	{
 		[Inject]
 		public var playerModel : PlayerModel;
-		
 		private var friendIndex : uint = 0;
 		private var loader : Loader;
 
@@ -40,21 +39,20 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onMe(params : Object) : void
 		{
-			var facebookServiceEvent:FacebookServiceEvent = new FacebookServiceEvent(FacebookServiceEvent.CREATE_PLAYER);
+			var facebookServiceEvent : FacebookServiceEvent = new FacebookServiceEvent(FacebookServiceEvent.CREATE_PLAYER);
 			facebookServiceEvent.getDataprovider().setValueByKey('firstName', String(params.first_name));
 			facebookServiceEvent.getDataprovider().setValueByKey('lastName', String(params.last_name));
 			facebookServiceEvent.getDataprovider().setValueByKey('id', String(params.id));
 			dispatch(facebookServiceEvent);
-			
-			//playerModel.createPlayer(String(params.first_name), String(params.last_name), uint(params.id));
+
+			// playerModel.createPlayer(String(params.first_name), String(params.last_name), uint(params.id));
 		}
 
 		private function onFetchFriends(params : Object) : void
 		{
-			
 			// playerModel.getCurrentPlayer().setFriendsList(params.data);
-			
-			var backendServiceEvent:BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.STORE_PLAYER);
+
+			var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.STORE_PLAYER);
 			backendServiceEvent.getDataprovider().setValueByKey('data', params.data);
 			dispatch(backendServiceEvent);
 		}
@@ -67,7 +65,6 @@ package com.crowdpark.fastclick.mvcs.services
 		public function fetchFriendImages() : void
 		{
 			loadPictures(playerModel.getPlayerFriends());
-			
 		}
 
 		private function loadPictures(friendArray : Vector.<PlayerVo>) : void
@@ -114,7 +111,7 @@ package com.crowdpark.fastclick.mvcs.services
 
 		public function readyToPlay() : void
 		{
-			dispatch(new StateMachineEvents(StateMachineEvents.READY_TO_PLAY));	
+			dispatch(new StateMachineEvents(StateMachineEvents.READY_TO_PLAY));
 		}
 	}
 }

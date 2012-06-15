@@ -1,21 +1,12 @@
 package com.crowdpark.fastclick.mvcs.views.footer
 {
-	import flash.geom.Point;
-
-	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
-
-	import utils.draw.createRectangleShape;
-
-	import flash.display.Shape;
-
 	import com.bit101.components.HBox;
+	import com.bit101.components.ScrollPane;
+	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
+	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
 
 	import flash.events.Event;
-
-	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
-	import com.bit101.components.ScrollPane;
-
-	import flash.display.Sprite;
+	import flash.geom.Point;
 
 	/**
 	 * @author fatmatekin
@@ -27,8 +18,6 @@ package com.crowdpark.fastclick.mvcs.views.footer
 
 		override public function init() : void
 		{
-			// super.init();
-
 			addBallPane();
 		}
 

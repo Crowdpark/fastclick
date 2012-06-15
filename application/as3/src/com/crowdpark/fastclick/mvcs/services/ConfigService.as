@@ -1,16 +1,14 @@
 package com.crowdpark.fastclick.mvcs.services
 {
-	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
-	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.adobe.serialization.json.JSONDecoder;
-
-	import flash.events.Event;
-	import flash.net.URLRequest;
-	import flash.net.URLLoader;
-
+	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceConfigService;
 
 	import org.robotlegs.mvcs.Actor;
+
+	import flash.events.Event;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 
 	/**
 	 * @author fatmatekin

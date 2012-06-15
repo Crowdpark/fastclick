@@ -1,22 +1,18 @@
 package com.crowdpark.fastclick.mvcs.models
 {
-	import com.crowdpark.fastclick.mvcs.events.GameEvents;
-	import com.crowdpark.fastclick.mvcs.models.vo.LevelVo;
-
 	import utils.number.randomIntegerWithinRange;
 
-	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
-	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
+	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
 	import com.crowdpark.fastclick.mvcs.models.vo.BallVo;
+	import com.crowdpark.fastclick.mvcs.models.vo.LevelVo;
 	import com.crowdpark.fastclick.mvcs.views.hud.HudViewEvent;
 
-	import flash.events.TimerEvent;
-	import flash.geom.Point;
-	import flash.utils.Timer;
-
 	import org.robotlegs.mvcs.Actor;
+
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 
 	/**
 	 * @author fatmatekin
@@ -113,17 +109,6 @@ package com.crowdpark.fastclick.mvcs.models
 				ballVo.setScore(10);
 				addBall(ballVo);
 			}
-
-			/* var resultArray : Array = data.getValue().points;
-			  
-			for each (var point:Object in resultArray)
-			{
-			var ballVO : BallVo = new BallVo();
-			// ballVO.setValueByKey('endPoint', new Point(60, 40));
-			ballVO.setValueByKey('color', point.color);
-			ballVO.setValueByKey('score', point.score);
-			addBall(ballVO);
-			}*/
 		}
 
 		private function setGamelLevels(levels : Object) : void

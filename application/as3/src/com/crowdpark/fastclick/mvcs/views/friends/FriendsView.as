@@ -1,25 +1,19 @@
 package com.crowdpark.fastclick.mvcs.views.friends
 {
-	import flash.text.AntiAliasType;
-	import flash.events.MouseEvent;
-	import flash.display.Sprite;
-
+	import utils.draw.createRectangleShape;
 	import utils.textField.createField;
 
-	import flash.text.TextField;
-
-	import utils.draw.createRectangleShape;
-
-	import flash.display.Shape;
-
-	import com.crowdpark.fastclick.mvcs.assets.PlayerCanvas;
-	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.bit101.components.HBox;
 	import com.bit101.components.ScrollPane;
-
-	import flash.events.Event;
-
+	import com.crowdpark.fastclick.mvcs.assets.PlayerCanvas;
 	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
+
+	import flash.display.Shape;
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.text.TextField;
 
 	/**
 	 * @author fatmatekin
@@ -100,7 +94,7 @@ package com.crowdpark.fastclick.mvcs.views.friends
 		{
 			for (var i : uint = 0;i < appFriendsCanvasList.length;i++)
 			{
-				var playerCanvas = appFriendsCanvasList[i];
+				var playerCanvas:PlayerCanvas = appFriendsCanvasList[i];
 				playerCanvas.setLeaderboardPlace(String(i));
 
 				hbox.addChild(playerCanvas);

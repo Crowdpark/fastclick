@@ -1,14 +1,11 @@
 package com.crowdpark.fastclick.mvcs.assets.ball
 {
-	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
-
-	import utils.number.randomIntegerWithinRange;
 	import utils.draw.createCircleShape;
-
-	import flash.display.Shape;
+	import utils.number.randomIntegerWithinRange;
 
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceCircle;
 
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;

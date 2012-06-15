@@ -1,0 +1,6 @@
+.git\*
+example
+config.php
+bin
+logs
+htdocs/bin

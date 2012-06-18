@@ -11,9 +11,12 @@ namespace Application\JsonRpc\V1\NoAuth
             //var_dump($this->getProcessusContext()->getUserBo()->getFacebookUserId());
 //            return TRUE;
 //            return parent::setAuthData($authData);
-            return $this->_isAuth = $this->getApplicationContext()
+            if (!$this->_isAuth) {
+                return $this->_isAuth = $this->getApplicationContext()
                 ->getUserBo()
                 ->isAuthorized();
+            }
+            return true;
         }
 
     }

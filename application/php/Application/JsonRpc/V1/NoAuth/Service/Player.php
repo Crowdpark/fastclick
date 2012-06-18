@@ -18,7 +18,8 @@ class Player extends \Application\Core\Abstracts\AbstractService
     {
         $manager = new \Application\Manager\Player\PlayerManager();
 
-        return $manager->getAppFriends($params["friendsList"]);
+        $return = $manager->getAppFriends($params["friendsList"]);
+        return $return;
 
     }
 

@@ -1,6 +1,7 @@
 package com.crowdpark.fastclick.mvcs.services
 {
 	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
+
 	import flash.net.URLRequest;
 	import flash.events.Event;
 	import flash.display.Loader;
@@ -23,10 +24,9 @@ package com.crowdpark.fastclick.mvcs.services
 
 		public function onFetchBitmapListener(event : Event) : void
 		{
-			var blsEvent : BitmapFetcherServiceEvent = new BitmapFetcherServiceEvent(BitmapFetcherServiceEvent.BITMAP_LOADED);
-			blsEvent.getDataprovider().setValueByKey('bitmap', loader.content);
-			dispatch(blsEvent);
+			var bfsEvent : BitmapFetcherServiceEvent = new BitmapFetcherServiceEvent(BitmapFetcherServiceEvent.BITMAP_FETCHED);
+			bfsEvent.getDataprovider().setValueByKey('bitmap', loader.content);
+			dispatch(bfsEvent);
 		}
-
 	}
 }

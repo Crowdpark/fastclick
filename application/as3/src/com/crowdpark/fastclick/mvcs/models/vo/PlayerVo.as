@@ -1,6 +1,7 @@
 package com.crowdpark.fastclick.mvcs.models.vo
 {
 	import flash.display.Bitmap;
+
 	import com.crowdpark.fastclick.mvcs.core.base.BaseVo;
 
 	/**
@@ -159,6 +160,16 @@ package com.crowdpark.fastclick.mvcs.models.vo
 		public function getPlayerType() : String
 		{
 			return String(this.getValueByKey('type'));
+		}
+
+		public function setFetchIndex(i : uint) : void
+		{
+			this.setValueByKey('fetchIndex', i);
+		}
+
+		public function getFetchIndex() : uint
+		{
+			return uint(this.getValueByKey('fetchIndex'));
 		}
 	}
 }

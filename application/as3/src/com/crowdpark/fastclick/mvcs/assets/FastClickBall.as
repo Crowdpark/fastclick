@@ -11,7 +11,6 @@ package com.crowdpark.fastclick.mvcs.assets
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.utils.Timer;
 
 	/**
 	 * @author fatmatekin
@@ -23,8 +22,7 @@ package com.crowdpark.fastclick.mvcs.assets
 		private var _ownWidth : uint;
 		private var _ownHeight : uint;
 		private var _lifeTime : uint;
-		private var _timer : Timer;
-
+		
 		override public function onAddedToStage(event : Event) : void
 		{
 			super.onAddedToStage(event);

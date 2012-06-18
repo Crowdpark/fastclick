@@ -88,60 +88,36 @@ object:focus {
 			// parse XFBML
 			});
 			
+			
+			function fetchMeFriends(response){
+				FB.api("/me", function(response){
+	            	window.swfobject.getObjectById('Testing').onMe(response);
+	            });
+	            FB.api("/me/friends", function(response){
+	            	window.swfobject.getObjectById('Testing').onFetchFriends(response);
+	            });
+			}
+			
 			FB.getLoginStatus(function(response){
 				console.dir(response);
-				if(response.status == "unknown")
+				if(response.status == "connected")
+				{
+					fetchMeFriends(response);
+				}else
 				{
 					FB.login(function(response) {
-		        		  console.dir(response);
+	        		  console.dir(response);
 		  				if (response.authResponse) {
-		  					FB.api("/me", function(response){
-				            	window.swfobject.getObjectById('Testing').onMe(response);
-				            });
-				            FB.api("/me/friends", function(response){
-				            	window.swfobject.getObjectById('Testing').onFetchFriends(response);
-				            });
+		  					fetchMeFriends(response);
 		  				} else {
 		  					console.log('User cancelled login or did not fully authorize.');
 		  				}
 		  			}, {scope:'email,user_about_me,publish_stream'});
+					
 				}
 			});
-			
-			FB.Event.subscribe('auth.statusChange', function(response) {
-				console.log('auth.statusChange');
-				console.dir(response);
-		          if (response.authResponse) {
-		            // user has auth'd your app and is logged into Facebook
-		            FB.api("/me", function(response){
-		            	console.dir(response);
-		            	window.swfobject.getObjectById('Testing').onMe(response);
-		            });
-		            FB.api("/me/friends", function(response){
-		            	console.dir(response);
-		            	window.swfobject.getObjectById('Testing').onFetchFriends(response);
-		            });
-		          } 
-		        });
-
-			// Load the SDK Asynchronously    
 		};
 		
-		
-		/*function getUserName(){
-		  alert('getUserName');
-		}
-		
-		function getFriends() {
-		  log("getFriends");
-		  FB.api('/me/friends', function(response) {
-		      if(response) {
-		          return response;
-		      } else {
-		          log("getFriends failed");
-		      }
-		  });
-		}*/
 	</script>
 
 </body>

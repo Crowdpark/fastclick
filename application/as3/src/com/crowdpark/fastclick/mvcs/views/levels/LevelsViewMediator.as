@@ -20,8 +20,8 @@ package com.crowdpark.fastclick.mvcs.views.levels
 				view.enableSelect();
 			}
 
-			addContextListener(GameEvents.SHOW_LEVELS, onShowLevelsListener);
 			addViewListener(GameEvents.LEVEL_SELECT, onLevelSelectListener);
+			addContextListener(GameEvents.SHOW_LEVELS, onShowLevelsListener);
 			addContextListener(StateMachineEvents.READY_TO_PLAY, onReadyToPlayListener);
 		}
 

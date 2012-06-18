@@ -1,14 +1,11 @@
 package com.crowdpark.fastclick.mvcs
 {
-	import com.crowdpark.fastclick.mvcs.commands.CreatePlayerCommand;
-	import com.crowdpark.fastclick.mvcs.commands.ReadyToPlayCommand;
 	import com.crowdpark.fastclick.mvcs.commands.BitmapFetchedCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
-	import com.crowdpark.fastclick.mvcs.commands.FetchAllFriendsPicturesCommand;
+	import com.crowdpark.fastclick.mvcs.commands.CreatePlayerCommand;
+	import com.crowdpark.fastclick.mvcs.commands.FetchBitmapCommand;
 	import com.crowdpark.fastclick.mvcs.commands.FinishGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.InviteFriendCommand;
-	import com.crowdpark.fastclick.mvcs.commands.FetchBitmapCommand;
-	import com.crowdpark.fastclick.mvcs.commands.LogoutCommand;
 	import com.crowdpark.fastclick.mvcs.commands.RetryGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SaveConfigDataCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SetAllFriendsCommand;
@@ -49,11 +46,11 @@ package com.crowdpark.fastclick.mvcs
 	import com.crowdpark.fastclick.mvcs.views.result.ResultViewMediator;
 	import com.crowdpark.fastclick.mvcs.views.start.StartView;
 	import com.crowdpark.fastclick.mvcs.views.start.StartViewMediator;
-	import flash.display.DisplayObjectContainer;
+
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Context;
 
-
+	import flash.display.DisplayObjectContainer;
 
 	/**
 	 * @author fatmatekin
@@ -71,24 +68,17 @@ package com.crowdpark.fastclick.mvcs
 			commandMap.mapEvent(StateMachineEvents.START, CountDownCommand, StateMachineEvents);
 			commandMap.mapEvent(BackendServiceEvents.SAVE_CONFIG_DATA, SaveConfigDataCommand);
 			commandMap.mapEvent(FacebookServiceEvent.CREATE_PLAYER, CreatePlayerCommand);
-			
-			commandMap.mapEvent(BackendServiceEvents.FETCH_ALL_FRIENDS, SetAllFriendsCommand);
-			
-			commandMap.mapEvent(FacebookServiceEvent.FETCH_ALL_FRIENDS_PICTURES, FetchAllFriendsPicturesCommand, FacebookServiceEvent);
-			
-			commandMap.mapEvent(BitmapFetcherServiceEvent.LOAD_BITMAP, FetchBitmapCommand);
-			commandMap.mapEvent(BitmapFetcherServiceEvent.BITMAP_LOADED, BitmapFetchedCommand);
-			commandMap.mapEvent(BackendServiceEvents.STORE_PLAYER, StorePlayerCommand);
-			commandMap.mapEvent(GameEvents.READY_TO_PLAY, ReadyToPlayCommand);
-			
-			
 			commandMap.mapEvent(GameEvents.SET_PLAYER_COOKIE, SetPlayerCookieCommand, GameEvents);
+			commandMap.mapEvent(BackendServiceEvents.STORE_PLAYER, StorePlayerCommand);
+			commandMap.mapEvent(BackendServiceEvents.SET_ALL_FRIENDS, SetAllFriendsCommand);
+			commandMap.mapEvent(BitmapFetcherServiceEvent.FETCH_BITMAP, FetchBitmapCommand);
+			commandMap.mapEvent(BitmapFetcherServiceEvent.BITMAP_FETCHED, BitmapFetchedCommand);
+			commandMap.mapEvent(PointClickEvent.POINT_CLICK, UpdateScoreCommand, PointClickEvent);
+			commandMap.mapEvent(FacebookServiceEvent.INVITE_FRIEND, InviteFriendCommand);
+
 			commandMap.mapEvent(StateMachineEvents.GAME, StartGameCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.FINISH, FinishGameCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.RETRY, RetryGameCommand, StateMachineEvents);
-			commandMap.mapEvent(PointClickEvent.POINT_CLICK, UpdateScoreCommand, PointClickEvent);
-			commandMap.mapEvent(FacebookServiceEvent.LOG_OUT, LogoutCommand);
-			commandMap.mapEvent(FacebookServiceEvent.INVITE_FRIEND, InviteFriendCommand);
 
 			injector.mapSingleton(PlayerModel);
 			injector.mapSingleton(StateMachineModel);

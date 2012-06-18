@@ -1,6 +1,7 @@
 package com.crowdpark.fastclick.mvcs.models
 {
-	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
+	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 
@@ -18,7 +19,8 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _playerArray : Vector.<PlayerVo>;
 		private var _playerFriends : Vector.<PlayerVo>;
 		private var _playerApplicationFriends : Vector.< PlayerVo>;
-		private var _currentFetchPicturePlayer : PlayerVo;
+		private var _currentFetchIndex : uint = 0;
+		private var _facebookFriendsList : Object;
 
 		public function addPlayer(player : PlayerVo) : PlayerModel
 		{
@@ -106,26 +108,23 @@ package com.crowdpark.fastclick.mvcs.models
 			dispatch(event);
 		}
 
-		public function setAllFriends(appFriends : Object) : void
+		public function createFriend(index : uint) : void
 		{
-			var amount = appFriends.length - 10;
-			for (var i : uint = appFriends.length - 1;i > amount;i--)
-			{
-				var appfriend = appFriends[i];
-				var playerVo : PlayerVo = new PlayerVo();
-				playerVo.setPlayerId(appfriend.id);
-				playerVo.setPlayerFullName(appfriend.name);
-				playerVo.setPlayerType(appfriend.type);
-				playerVo.setPlayerPictureUrl('http://graph.facebook.com/' + appfriend.id + '/picture');
-				playerVo.setCurrentLevel(appfriend.level);
-				playerVo.setCurrentScore(appfriend.high_score);
-				getPlayerFriends().push(playerVo);
+			var appfriend = getFacebookFriendsList()[index];
+			var playerVo : PlayerVo = new PlayerVo();
+			playerVo.setPlayerId(appfriend.id);
+			playerVo.setPlayerFullName(appfriend.name);
+			playerVo.setPlayerType(appfriend.type);
+			playerVo.setPlayerPictureUrl('http://graph.facebook.com/' + appfriend.id + '/picture');
+			playerVo.setCurrentLevel(appfriend.level);
+			playerVo.setCurrentScore(appfriend.high_score);
 
-				// var bitmapLoaderService : BitmapLoaderServiceEvent = new BitmapLoaderServiceEvent(BitmapLoaderServiceEvent.LOAD_BITMAP);
-				// bitmapLoaderService.getDataprovider().setValueByKey('currentPlayer', playerVo);
-				// dispatch(bitmapLoaderService);
-			}
-			dispatch(new FacebookServiceEvent(FacebookServiceEvent.FETCH_ALL_FRIENDS_PICTURES));
+			playerVo.setFetchIndex(index);
+
+			getPlayerFriends().push(playerVo);
+
+			var bitmapFetcherServiceEvent : BitmapFetcherServiceEvent = new BitmapFetcherServiceEvent(BitmapFetcherServiceEvent.FETCH_BITMAP);
+			dispatch(bitmapFetcherServiceEvent);
 		}
 
 		public function getPlayerAppFriends() : Vector.<PlayerVo>
@@ -154,15 +153,26 @@ package com.crowdpark.fastclick.mvcs.models
 			getCurrentPlayer().setSelectedLevel(level);
 		}
 
-		public function setCurrentFetchPicturePlayer(currentPlayer : PlayerVo) : PlayerModel
+		public function getFacebookFriendsList() : Object
 		{
-			_currentFetchPicturePlayer = currentPlayer;
+			return _facebookFriendsList;
+		}
+
+		public function setFacebookFriendsList(facebookFriendsList : Object) : PlayerModel
+		{
+			_facebookFriendsList = facebookFriendsList;
 			return this;
 		}
 
-		public function getCurrentFetchPicturePlayer() : PlayerVo
+		public function getCurrentFetchIndex() : uint
 		{
-			return _currentFetchPicturePlayer;
+			return _currentFetchIndex;
+		}
+
+		public function setCurrentFetchIndex(currentFetchIndex : uint) : PlayerModel
+		{
+			_currentFetchIndex = currentFetchIndex;
+			return this;
 		}
 	}
 }

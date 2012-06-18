@@ -1,9 +1,8 @@
 package com.crowdpark.fastclick.mvcs.services
 {
-	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
-	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
+	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.net.rpc.json.JsonRpcClient;
 	import com.crowdpark.net.rpc.json.JsonRpcClientEvent;
@@ -16,9 +15,7 @@ package com.crowdpark.fastclick.mvcs.services
 	public class BackendService extends Actor
 	{
 		[Inject]
-		public var playerModel : PlayerModel;
-		[Inject]
-		public var configModel:ConfigModel;
+		public var configModel : ConfigModel;
 
 		public function storePlayer(player : PlayerVo) : void
 		{
@@ -28,8 +25,6 @@ package com.crowdpark.fastclick.mvcs.services
 			jsonClient.url = configModel.getUrl();
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStorePointResult);
 			jsonClient.send();
-			
-			//http://local.fastclick.com/api/v1/notauth/
 		}
 
 		public function storeResults(player : PlayerVo) : void
@@ -56,7 +51,7 @@ package com.crowdpark.fastclick.mvcs.services
 			var allFriends = event.getDataprovider().getValueByKey('friends');
 			var user = event.getDataprovider().getValueByKey('user');
 
-			var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.FETCH_ALL_FRIENDS);
+			var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.SET_ALL_FRIENDS);
 			backendServiceEvent.getDataprovider().setValueByKey('allFriends', allFriends);
 			backendServiceEvent.getDataprovider().setValueByKey('user', user);
 			dispatch(backendServiceEvent);

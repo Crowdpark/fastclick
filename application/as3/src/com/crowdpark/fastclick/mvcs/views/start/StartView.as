@@ -131,7 +131,10 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 		public function removeLoading() : void
 		{
-			removeChild(loadingTextField);
+			if (contains(loadingTextField))
+			{
+				removeChild(loadingTextField);
+			}
 		}
 	}
 }

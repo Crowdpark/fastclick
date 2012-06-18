@@ -1,7 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
-	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.services.BackendService;
 	import com.crowdpark.fastclick.mvcs.views.result.ResultView;
@@ -17,8 +16,7 @@ package com.crowdpark.fastclick.mvcs.commands
 	{
 		[Inject]
 		public var playerModel : PlayerModel;
-		[Inject]
-		public var highestScoreModel : HighestScoreModel;
+		
 		[Inject]
 		public var backendService:BackendService;
 

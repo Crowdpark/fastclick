@@ -59,7 +59,7 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
         $return['user']["high_score"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getHighScore();
         $return['user']["level"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getLevel();
 
-        $friends = $this->getApplicationContext()->getUserBo()->getAppFriends();
+        $friends = $this->getApplicationContext()->getUserBo()->getAppFriends($friendsRawList);
 
         $friendsListSize = sizeof($friendsRawList);
 

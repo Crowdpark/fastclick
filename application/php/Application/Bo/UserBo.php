@@ -10,6 +10,10 @@ namespace Application\Bo;
 class UserBo extends \Processus\Lib\Bo\UserBo
 {
 
+    private function getIdFromItem($item)
+    {
+        return $item["id"];
+    }
     /**
      * @var \Application\Mvo\FacebookUserMvo
      */
@@ -32,11 +36,12 @@ class UserBo extends \Processus\Lib\Bo\UserBo
     /**
      * @return array
      */
-    public function getAppFriends()
+    public function getAppFriends(array $friendsRawList)
     {
         $connector = $this->getProcessusContext()->getDefaultCache();
-        $friendsIdList = $this->getApplicationContext()->getFacebookClient()->getFriendsIdList();
+//        $friendsIdList = $this->getApplicationContext()->getFacebookClient()->getFriendsIdList();
 
+        $friendsIdList = array_map(array($this, "getIdFromItem"), $friendsRawList);
         if (count($friendsIdList) <= 0) {
             return FALSE;
         }

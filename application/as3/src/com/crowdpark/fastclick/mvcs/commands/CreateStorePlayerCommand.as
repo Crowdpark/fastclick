@@ -25,9 +25,8 @@ package com.crowdpark.fastclick.mvcs.commands
 		{
 			var player:PlayerVo = playerModel.createPlayer(String(facebookServiceEvent.getDataprovider().getValueByKey('firstName')), 
 			String(facebookServiceEvent.getDataprovider().getValueByKey('lastName')), 
-			uint(facebookServiceEvent.getDataprovider().getValueByKey('id')));
+			String(facebookServiceEvent.getDataprovider().getValueByKey('id')));
 			
-			//backendService.storePlayer(player);
 		}
 	}
 }

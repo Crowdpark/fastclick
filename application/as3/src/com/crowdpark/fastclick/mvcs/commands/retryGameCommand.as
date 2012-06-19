@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.models.GameModel;
+	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 
@@ -20,14 +22,18 @@ package com.crowdpark.fastclick.mvcs.commands
 		[Inject]
 		public var stateMachineModel : StateMachineModel;
 
+		[Inject]
+		public var gameModel : GameModel;
+		
 		override public function execute() : void
 		{
 			var mainSprite : Sprite = Sprite(contextView.getChildByName('mainSprite'));
 			mainSprite.removeChildAt(0);
 
 			stateMachineModel.state = StateMachineState.RETRY;
-
-			playerModel.getCurrentPlayer().setCurrentScore(0);
+			gameModel.setState(GameModel.REPLAY);	
+	
+			playerModel.getCurrentPlayer().setCurrentScore(new ScoreVo().setScore(0).setDate(new Date().dateUTC));
 			playerModel.getCurrentPlayer().setClickedBallAmount(0);
 
 			var startView : StartView = new StartView();

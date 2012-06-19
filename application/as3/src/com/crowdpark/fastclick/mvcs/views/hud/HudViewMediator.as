@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.hud
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
@@ -35,7 +36,8 @@ package com.crowdpark.fastclick.mvcs.views.hud
 
 		private function handlePointClickEvent(event : PointClickEvent) : void
 		{
-			view.score.text = String(playerModel.getCurrentPlayer().getValueByKey('currentScore'));
+			var currentScore : ScoreVo = ScoreVo(playerModel.getCurrentPlayer().getValueByKey('currentScore'))
+			view.score.text = String(currentScore.getScore());
 
 			var scoreBox : BaseGraphic = BaseGraphic(event.getDataprovider().getValueByKey('scoreBox'));
 			scoreBox.alpha = 0;

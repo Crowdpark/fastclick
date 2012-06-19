@@ -1,7 +1,7 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
-	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 
 	import org.robotlegs.mvcs.Actor;
 
@@ -18,6 +18,7 @@ package com.crowdpark.fastclick.mvcs.models
 			{
 				_highscoreList = new Vector.<ScoreVo>();
 			}
+			
 			return _highscoreList;
 		}
 
@@ -30,6 +31,7 @@ package com.crowdpark.fastclick.mvcs.models
 		public function addScore(score : ScoreVo) : void
 		{
 			getHighscoreList().push(score);
+			dispatch(new LeaderboardEvent(LeaderboardEvent.SHOW_HIGHEST_SCORE));					
 		}
 	}
 }

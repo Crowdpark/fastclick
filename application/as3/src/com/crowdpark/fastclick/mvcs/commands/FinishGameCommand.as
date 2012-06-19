@@ -1,5 +1,9 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
+	import com.crowdpark.fastclick.mvcs.models.GameModel;
+	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.services.BackendService;
@@ -20,11 +24,13 @@ package com.crowdpark.fastclick.mvcs.commands
 		public var backendService : BackendService;
 		[Inject]
 		public var stateMachineModel : StateMachineModel;
+		[Inject]
+		public var highestScoreModel : HighestScoreModel;
+		[Inject]
+		public var gameModel : GameModel;
 
 		override public function execute() : void
 		{
-			backendService.storeResults(playerModel.getCurrentPlayer());
-
 			var mainSprite : Sprite = Sprite(contextView.getChildByName('mainSprite'));
 			mainSprite.removeChildAt(0);
 
@@ -32,6 +38,15 @@ package com.crowdpark.fastclick.mvcs.commands
 			resultView.init();
 
 			mainSprite.addChild(resultView);
+
+			if (gameModel.getState() == GameModel.REPLAY)
+			{
+				highestScoreModel.addScore(playerModel.getCurrentPlayer().getCurrentScore());
+			}
+			else
+			{
+				backendService.getHighestScores(playerModel.getCurrentPlayer());
+			}
 		}
 	}
 }

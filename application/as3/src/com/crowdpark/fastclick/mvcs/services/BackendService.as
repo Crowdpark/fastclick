@@ -20,7 +20,6 @@ package com.crowdpark.fastclick.mvcs.services
 		public function storePlayer(player : PlayerVo) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
-			// jsonClient.params = [player.getValues()];
 			jsonClient.params = [{'id':player.getPlayerId(), 'friendsList':player.getFriendsList()}];
 			jsonClient.method = 'NoAuth.Player.getAppFriends';
 			jsonClient.url = configModel.getUrl();
@@ -28,11 +27,29 @@ package com.crowdpark.fastclick.mvcs.services
 			jsonClient.send();
 		}
 
-		public function storeResults(player : PlayerVo) : void
+		public function getHighestScores(player : PlayerVo) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
-			// jsonClient.params = [player.getValues()];
-			jsonClient.params = [{'id':player.getPlayerId(), 'curretScore':player.getCurrentScore(), 'currentLevel':player.getCurrentLevel()}];
+			jsonClient.params = [{'id':player.getPlayerId()}];
+			jsonClient.method = 'NoAuth.Player.getScores';
+			jsonClient.url = configModel.getUrl();
+			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onHighestScores);
+			jsonClient.send();
+		}
+
+		private function onHighestScores(event : JsonRpcClientEvent) : void
+		{
+			var data = event.getDataprovider();
+
+			var leaderboardEvent : LeaderboardEvent = new LeaderboardEvent(LeaderboardEvent.CREATE_HIGHEST_SCORES);
+			leaderboardEvent.getDataprovider().setValueByKey('result', data.getValues());
+			dispatch(leaderboardEvent);
+		}
+
+		public function storeResult(player : PlayerVo) : void
+		{
+			var jsonClient : JsonRpcClient = new JsonRpcClient();
+			jsonClient.params = [{'id':player.getPlayerId(), 'currentScore':player.getCurrentScore(), 'currentLevel':player.getCurrentLevel()}];
 			jsonClient.method = 'NoAuth.Player.updateUser';
 			jsonClient.url = configModel.getUrl();
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStoreResults);
@@ -41,11 +58,6 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onStoreResults(event : JsonRpcClientEvent) : void
 		{
-			var data = event.getDataprovider();
-
-			var leaderboardEvent : LeaderboardEvent = new LeaderboardEvent(LeaderboardEvent.SHOW_HIGHEST_SCORE);
-			leaderboardEvent.getDataprovider().setValueByKey('result', data.getValues());
-			dispatch(leaderboardEvent);
 		}
 
 		private function onGetAppFriends(event : JsonRpcClientEvent) : void

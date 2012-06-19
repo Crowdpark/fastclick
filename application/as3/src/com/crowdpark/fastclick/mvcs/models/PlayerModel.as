@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
@@ -88,13 +89,18 @@ package com.crowdpark.fastclick.mvcs.models
 			return this;
 		}
 
-		public function createPlayer(playerName : String, playerLastName : String, id : uint) : PlayerVo
+		public function createPlayer(playerName : String, playerLastName : String, id : String) : PlayerVo
 		{
 			var currentPlayer : PlayerVo = getCurrentPlayer();
 			currentPlayer.setPlayerName(playerName);
 			currentPlayer.setPlayerLastName(playerLastName);
 			currentPlayer.setPlayerId(id);
-			currentPlayer.setCurrentScore(0);
+
+			var score : ScoreVo = new ScoreVo();
+			score.setScore(0);
+			score.setDate(new Date().dayUTC);
+
+			currentPlayer.setCurrentScore(score);
 			currentPlayer.setCurrentLevel(1);
 			currentPlayer.setClickedBallAmount(0);
 			currentPlayer.setPlayerPictureUrl('https://graph.facebook.com/' + id + '/picture');
@@ -117,7 +123,10 @@ package com.crowdpark.fastclick.mvcs.models
 			playerVo.setPlayerType('friend');
 			playerVo.setPlayerPictureUrl('http://graph.facebook.com/' + appfriend.id + '/picture');
 			playerVo.setCurrentLevel(0);
-			playerVo.setCurrentScore(0);
+
+			var score : ScoreVo = new ScoreVo().setScore(appfriend.high_score);
+
+			playerVo.setCurrentScore(score);
 			playerVo.setFetchIndex(index);
 
 			getPlayerFriends().push(playerVo);
@@ -161,9 +170,12 @@ package com.crowdpark.fastclick.mvcs.models
 			{
 				for (var j : uint = 0; j < allFriends.length;j++)
 				{
-					if (appFriends[i].id == allFriends[j].getPlayerId())
+					if (String(appFriends[i].id) == String(allFriends[j].getPlayerId()))
 					{
 						allFriends[j].setPlayerType('appfriend');
+						var score : ScoreVo = new ScoreVo();
+						score.setScore(appFriends[i].high_score);
+						allFriends[j].setCurrentScore(score);
 
 						var gameEvent : GameEvents = new GameEvents(GameEvents.CREATE_APP_FRIEND);
 						gameEvent.getDataprovider().setValueByKey('currentFriend', allFriends[j]);

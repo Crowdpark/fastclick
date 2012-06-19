@@ -20,8 +20,8 @@ package com.crowdpark.fastclick.mvcs.services
 		public function storePlayer(player : PlayerVo) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
-			//jsonClient.params = [player.getValues()];
-			jsonClient.params = [{'id':player.getPlayerId(),'friendsList':player.getFriendsList()}];
+			// jsonClient.params = [player.getValues()];
+			jsonClient.params = [{'id':player.getPlayerId(), 'friendsList':player.getFriendsList()}];
 			jsonClient.method = 'NoAuth.Player.getAppFriends';
 			jsonClient.url = configModel.getUrl();
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onGetAppFriends);
@@ -31,8 +31,8 @@ package com.crowdpark.fastclick.mvcs.services
 		public function storeResults(player : PlayerVo) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
-			//jsonClient.params = [player.getValues()];
-			jsonClient.params = [{'id':player.getPlayerId(),'curretScore':player.getCurrentScore(),'currentLevel':player.getCurrentLevel()}]; 
+			// jsonClient.params = [player.getValues()];
+			jsonClient.params = [{'id':player.getPlayerId(), 'curretScore':player.getCurrentScore(), 'currentLevel':player.getCurrentLevel()}];
 			jsonClient.method = 'NoAuth.Player.updateUser';
 			jsonClient.url = configModel.getUrl();
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStoreResults);

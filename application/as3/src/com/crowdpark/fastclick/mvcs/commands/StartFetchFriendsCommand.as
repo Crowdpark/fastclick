@@ -21,6 +21,8 @@ package com.crowdpark.fastclick.mvcs.commands
 		override public function execute() : void
 		{
 			playerModel.getCurrentPlayer().setFriendsList(backendServiceEvent.getDataprovider().getValueByKey('data'));
+			backendService.storePlayer(playerModel.getCurrentPlayer());
+
 			playerModel.createFriend(playerModel._currentFetchIndex);
 		}
 	}

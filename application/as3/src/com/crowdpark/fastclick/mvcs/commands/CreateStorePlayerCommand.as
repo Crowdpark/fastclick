@@ -27,7 +27,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			String(facebookServiceEvent.getDataprovider().getValueByKey('lastName')), 
 			uint(facebookServiceEvent.getDataprovider().getValueByKey('id')));
 			
-			backendService.storePlayer(player);
+			//backendService.storePlayer(player);
 		}
 	}
 }

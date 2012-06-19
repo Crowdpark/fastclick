@@ -10,7 +10,7 @@ namespace Application\Bo;
 class UserBo extends \Processus\Lib\Bo\UserBo
 {
 
-    private function getIdFromItem($item)
+    private function _getIdFromItem($item)
     {
         return $item["id"];
     }
@@ -39,9 +39,8 @@ class UserBo extends \Processus\Lib\Bo\UserBo
     public function getAppFriends(array $friendsRawList)
     {
         $connector = $this->getProcessusContext()->getDefaultCache();
-//        $friendsIdList = $this->getApplicationContext()->getFacebookClient()->getFriendsIdList();
 
-        $friendsIdList = array_map(array($this, "getIdFromItem"), $friendsRawList);
+        $friendsIdList = array_map(array($this, "_getIdFromItem"), $friendsRawList);
         if (count($friendsIdList) <= 0) {
             return FALSE;
         }
@@ -59,6 +58,9 @@ class UserBo extends \Processus\Lib\Bo\UserBo
 
         return $mvoFriendsList;
     }
+
+
+
     /**
      * @return bool|string
      */
@@ -70,30 +72,33 @@ class UserBo extends \Processus\Lib\Bo\UserBo
         if ($fbUserId > 0) {
 
             $mvo      = $this->getFacebookUserMvo();
-            $userData = $mvo->getData();
-            $fbClient          = $this->getProcessusContext()->getFacebookClient();
-            $fbData            = $fbClient->getUserDataById($fbUserId);
 
-            if (is_null($userData)) {
+            if ($mvo->isFirstTime()) {
+                $mvo->setFirstTime(FALSE);
                 $score = 0;
                 $level = 1;
-            } else {
-                $score = $mvo->getHighScore();
-                $level = $mvo->getLevel();
+                $data = $this->_getFbData($fbUserId, $score, $level, $mvo->isFirstTime());
+                $mvo->setData($data)->saveInMem();
             }
 
-            $fbData['created'] = convertUnixTimeToIso(time());
-            $fbData['high_score'] = $score;
-            $fbData['level'] = $level;
+            else {
+                $userData = $mvo->getData();
+                $score = $mvo->getHighScore();
+                $level = $mvo->getLevel();
+                $data = get_object_vars($userData);
+                $data['created'] = convertUnixTimeToIso(time());
+                $data['high_score'] = $score;
+                $data['level'] = $level;
 
-            $updated = $mvo->getValueByKey("updated");
+                $updated = $mvo->getValueByKey("updated");
 
-            $updated = (is_null($updated)) ? strtotime($mvo->getCreated()) : $updated;
+                $updated = (is_null($updated)) ? strtotime($mvo->getCreated()) : $updated;
 
-            if (!$updated)
-                $resultCode = $mvo->setData($fbData)->saveInMem();
-            else
-                $this->_updateUserCache($mvo, $updated, $fbData);
+                if (!$updated)
+                    $resultCode = $mvo->setData($data)->saveInMem();
+                else
+                    $this->_updateUserCache($mvo, $updated, $data);
+            }
 
             return TRUE;
         }
@@ -129,5 +134,27 @@ class UserBo extends \Processus\Lib\Bo\UserBo
             $prefixList[] = $prefix . $idItem;
         }
         return $prefixList;
+    }
+
+    /**
+     * @param $fbUserId
+     * @param $score
+     * @param $level
+     * @param $firstTime
+     * @return array|mixed
+     */
+
+    private function _getFbData($fbUserId, $score, $level, $firstTime)
+    {
+
+        $fbClient          = $this->getProcessusContext()->getFacebookClient();
+        $fbData            = $fbClient->getUserDataById($fbUserId);
+
+        $fbData['created'] = convertUnixTimeToIso(time());
+        $fbData['high_score'] = $score;
+        $fbData['level'] = $level;
+        $fbData['firstTime'] = $firstTime;
+
+        return $fbData;
     }
 }

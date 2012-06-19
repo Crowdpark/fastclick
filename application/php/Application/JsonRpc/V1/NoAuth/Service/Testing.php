@@ -9,6 +9,19 @@
 namespace Application\JsonRpc\V1\NoAuth\Service;
 class Testing extends \Processus\Abstracts\JsonRpc\AbstractJsonRpcService
 {
+
+    public function storePics(array $params)
+    {
+        $manager = new \Application\Manager\Player\PlayerManager();
+        return $manager->storeFriendsPics($params);
+    }
+
+    public function getFriendsPics()
+    {
+        $manager = new \Application\Manager\Player\PlayerManager();
+        return $manager->getFriendsPics();
+    }
+
     public function testApi()
     {
         //var_dump($this->getProcessusContext()->getUserBo()->getFacebookUserId());

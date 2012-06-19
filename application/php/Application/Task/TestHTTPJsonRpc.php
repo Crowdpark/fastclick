@@ -16,11 +16,19 @@ class TestHTTPJsonRpc extends \Processus\Abstracts\AbstractTask
 //        $this->_dumpData("NoAuth.Testing.testDb", array(array("value" => "[" . time() . "]" . "Rockstar!")));
 //        $this->_dumpData("NoAuth.Testing.getCircleConfig");
 //        $this->_dumpData("NoAuth.Player.updateExperience", array(array("experience" => "12122")));
-        $this->_dumpData("NoAuth.Testing.testApi");
+//        $this->_dumpData("NoAuth.Testing.testApi");
 //        $this->_dumpData("NoAuth.Game.getCircleConfig");
 //        $this->_dumpData("NoAuth.Player.saveGame", array(array("user_id" => 7777777,"score" => 20000)));
+//        $data = array(array(123124 => "saudbaudb",
+//            123123 => "asdaaaudb",
+//            31231 => "sasdn",
+//            43223 => "saosdmpoasd",
+//            312 => "safwefwf"));
+//        $this->_dumpData("NoAuth.Testing.storePics", $data);
 //        $this->_dumpData("NoAuth.Player.getExperience");
 //        $this->_dumpData("NoAuth.Game.getGame");
+
+        $this->_dumpData("NoAuth.Testing.getFriendsPics");
 
     }
 

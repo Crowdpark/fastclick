@@ -31,6 +31,10 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
             $mvo->setHighScore($score);
         }
 
+        $scoresMvo = $this->getApplicationContext()->getScoresMvo();
+        $scoresMvo->addScore($score);
+        $scoresMvo->saveInMem();
+
         return $mvo;
     }
 
@@ -46,6 +50,9 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
             $level = $mvo->getLevel();
 
         $mvo->setLevel($level);
+        $scoresMvo = $this->getApplicationContext()->getScoresMvo();
+        $scoresMvo->setLevel($level);
+        $scoresMvo->saveInMem();
         return $mvo;
     }
 
@@ -61,24 +68,33 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
 
         $friends = $this->getApplicationContext()->getUserBo()->getAppFriends($friendsRawList);
 
-        $friendsListSize = sizeof($friendsRawList);
+        $appFriends = array();
 
-        foreach($friends as $friendMvo) {
-            $friendObject = json_decode($friendMvo->getData());
-            $key = $friendObject->id;
+        if (!empty($friends) || !$friends) {
 
-            for($i = 0; $i < $friendsListSize; $i++) {
-                if ($key == $friendsRawList[$i]["id"]){
-                    $friendsRawList[$i]["type"] = "appfriend";
-                    $friendsRawList[$i]["high_score"] = $friendObject->high_score;
-                    $friendsRawList[$i]["level"] = $friendObject->level;
+            foreach ($friends as $friendMvo) {
+
+                $friendObject = json_decode($friendMvo->getData());
+                $key = $friendObject->id;
+
+                foreach($friendsRawList as $friend) {
+                    if ($key === $friend["id"]) {
+
+                        $friend["type"] = "appfriend";
+                        $friend["high_score"] = $friendObject->high_score;
+                        $friend["level"] = $friendObject->level;
+
+                        $appFriends[] = $friend;
+                    }
                 }
-                else
-                    $friendsRawList[$i]["type"] = "friend";
             }
+            $return["friends"] = $appFriends;
+
+        } else {
+
+            $return["friends"] = FALSE;
         }
 
-        $return["friends"] = $friendsRawList;
         return $return;
     }
 

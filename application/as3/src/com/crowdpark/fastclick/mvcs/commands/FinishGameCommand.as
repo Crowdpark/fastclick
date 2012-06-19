@@ -16,22 +16,21 @@ package com.crowdpark.fastclick.mvcs.commands
 	{
 		[Inject]
 		public var playerModel : PlayerModel;
-		
 		[Inject]
-		public var backendService:BackendService;
+		public var backendService : BackendService;
+		[Inject]
+		public var stateMachineModel : StateMachineModel;
 
-		[Inject]
-		public var stateMachineModel:StateMachineModel;
 		override public function execute() : void
 		{
 			backendService.storeResults(playerModel.getCurrentPlayer());
-			
+
 			var mainSprite : Sprite = Sprite(contextView.getChildByName('mainSprite'));
 			mainSprite.removeChildAt(0);
-			
+
 			var resultView : ResultView = new ResultView();
 			resultView.init();
-			
+
 			mainSprite.addChild(resultView);
 		}
 	}

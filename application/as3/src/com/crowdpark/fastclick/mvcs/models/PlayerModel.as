@@ -1,6 +1,5 @@
 package com.crowdpark.fastclick.mvcs.models
 {
-	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
@@ -19,8 +18,7 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _playerArray : Vector.<PlayerVo>;
 		private var _playerFriends : Vector.<PlayerVo>;
 		private var _playerApplicationFriends : Vector.< PlayerVo>;
-		private var _currentFetchIndex : uint = 0;
-		private var _facebookFriendsList : Object;
+		public var _currentFetchIndex : uint = 0;
 
 		public function addPlayer(player : PlayerVo) : PlayerModel
 		{
@@ -90,7 +88,7 @@ package com.crowdpark.fastclick.mvcs.models
 			return this;
 		}
 
-		public function createPlayer(playerName : String, playerLastName : String, id : uint) : void
+		public function createPlayer(playerName : String, playerLastName : String, id : uint) : PlayerVo
 		{
 			var currentPlayer : PlayerVo = getCurrentPlayer();
 			currentPlayer.setPlayerName(playerName);
@@ -106,19 +104,20 @@ package com.crowdpark.fastclick.mvcs.models
 			var event : GameEvents = new GameEvents(GameEvents.SET_PLAYER_COOKIE);
 			event.setDataprovider(currentPlayer);
 			dispatch(event);
+
+			return currentPlayer;
 		}
 
 		public function createFriend(index : uint) : void
 		{
-			var appfriend = getFacebookFriendsList()[index];
+			var appfriend : Object = getCurrentPlayer().getFriendsList()[index];
 			var playerVo : PlayerVo = new PlayerVo();
 			playerVo.setPlayerId(appfriend.id);
 			playerVo.setPlayerFullName(appfriend.name);
-			playerVo.setPlayerType(appfriend.type);
+			playerVo.setPlayerType('friend');
 			playerVo.setPlayerPictureUrl('http://graph.facebook.com/' + appfriend.id + '/picture');
-			playerVo.setCurrentLevel(appfriend.level);
-			playerVo.setCurrentScore(appfriend.high_score);
-
+			playerVo.setCurrentLevel(0);
+			playerVo.setCurrentScore(0);
 			playerVo.setFetchIndex(index);
 
 			getPlayerFriends().push(playerVo);
@@ -153,26 +152,25 @@ package com.crowdpark.fastclick.mvcs.models
 			getCurrentPlayer().setSelectedLevel(level);
 		}
 
-		public function getFacebookFriendsList() : Object
+		public function filterAppFriends() : void
 		{
-			return _facebookFriendsList;
-		}
+			var allFriends : Vector.<PlayerVo> = getPlayerFriends();
+			var appFriends = getCurrentPlayer().getAppFriendsList();
 
-		public function setFacebookFriendsList(facebookFriendsList : Object) : PlayerModel
-		{
-			_facebookFriendsList = facebookFriendsList;
-			return this;
-		}
+			for (var i : uint = 0;i < appFriends.length;i++)
+			{
+				for (var j : uint = 0; j < allFriends.length;j++)
+				{
+					if (appFriends[i].id == allFriends[j].getPlayerId())
+					{
+						allFriends[j].setPlayerType('appfriend');
 
-		public function getCurrentFetchIndex() : uint
-		{
-			return _currentFetchIndex;
-		}
-
-		public function setCurrentFetchIndex(currentFetchIndex : uint) : PlayerModel
-		{
-			_currentFetchIndex = currentFetchIndex;
-			return this;
+						var gameEvent : GameEvents = new GameEvents(GameEvents.CREATE_APP_FRIEND);
+						gameEvent.getDataprovider().setValueByKey('currentFriend', allFriends[j]);
+						dispatch(gameEvent);
+					}
+				}
+			}
 		}
 	}
 }

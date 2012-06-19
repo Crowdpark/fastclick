@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
+	import com.crowdpark.fastclick.mvcs.services.BackendService;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import org.robotlegs.mvcs.Command;
@@ -7,7 +9,7 @@ package com.crowdpark.fastclick.mvcs.commands
 	/**
 	 * @author fatmatekin
 	 */
-	public class CreatePlayerCommand extends Command
+	public class CreateStorePlayerCommand extends Command
 	{
 		
 		[Inject]
@@ -16,11 +18,16 @@ package com.crowdpark.fastclick.mvcs.commands
 		[Inject]
 		public var playerModel:PlayerModel;
 		
+		[Inject]
+		public var backendService:BackendService;
+		
 		override public function execute() : void
 		{
-			playerModel.createPlayer(String(facebookServiceEvent.getDataprovider().getValueByKey('firstName')), 
+			var player:PlayerVo = playerModel.createPlayer(String(facebookServiceEvent.getDataprovider().getValueByKey('firstName')), 
 			String(facebookServiceEvent.getDataprovider().getValueByKey('lastName')), 
 			uint(facebookServiceEvent.getDataprovider().getValueByKey('id')));
+			
+			backendService.storePlayer(player);
 		}
 	}
 }

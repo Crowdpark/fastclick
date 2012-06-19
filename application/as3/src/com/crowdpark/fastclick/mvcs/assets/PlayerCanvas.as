@@ -97,7 +97,7 @@ package com.crowdpark.fastclick.mvcs.assets
 
 		public function setLevelField(levelString : String) : PlayerCanvas
 		{
-			this.getLevelField().text = levelString;
+			this.getLevelField().text = 'Level '+levelString;
 			return this;
 		}
 
@@ -113,7 +113,7 @@ package com.crowdpark.fastclick.mvcs.assets
 
 		public function setPointsField(pointsString : String) : PlayerCanvas
 		{
-			this.getPointsField().text = pointsString;
+			this.getPointsField().text = 'score '+pointsString;
 			return this;
 		}
 

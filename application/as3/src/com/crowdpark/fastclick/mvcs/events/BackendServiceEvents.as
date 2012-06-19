@@ -7,9 +7,9 @@ package com.crowdpark.fastclick.mvcs.events
 	 */
 	public class BackendServiceEvents extends BaseEvent
 	{
-		public static const STORE_PLAYER : String = "STORE_PLAYER";
 		public static const SAVE_CONFIG_DATA : String = "SAVE_CONFIG_DATA";
-		public static const SET_ALL_FRIENDS : String = "SET_ALL_FRIENDS";
+		public static const SET_APP_FRIENDS : String = "SET_APP_FRIENDS";
+		public static const START_FETCH_FRIENDS : String = "START_FETCH_FRIENDS";
 		
 		public function BackendServiceEvents(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{

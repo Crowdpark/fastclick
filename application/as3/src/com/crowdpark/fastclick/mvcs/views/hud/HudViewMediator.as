@@ -24,7 +24,6 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			addContextListener(HudViewEvent.UPDATE, updateTime);
 			addContextListener(PointClickEvent.POINT_CLICK, handlePointClickEvent);
 
-			trace(playerModel.getCurrentPlayer().getSelectedLevel());
 			view.updateLevel(uint(playerModel.getCurrentPlayer().getSelectedLevel()));
 		}
 

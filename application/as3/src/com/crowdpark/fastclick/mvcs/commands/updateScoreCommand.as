@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
@@ -19,10 +20,10 @@ package com.crowdpark.fastclick.mvcs.commands
 		override public function execute() : void
 		{
 			var ballScore : uint = BaseGraphic(pointClickEvent.getDataprovider().getValueByKey('fcCircle')).getScore();
-			var score : uint = ballScore + playerModel.getCurrentPlayer().getCurrentScore();
+			var score : uint = ballScore + playerModel.getCurrentPlayer().getCurrentScore().getScore();
 			var ballAmount : uint = playerModel.getCurrentPlayer().getClickedBallAmount() + 1;
 
-			playerModel.getCurrentPlayer().setCurrentScore(score);
+			playerModel.getCurrentPlayer().setCurrentScore(new ScoreVo().setScore(score).setDate(new Date().dateUTC));
 			playerModel.getCurrentPlayer().setClickedBallAmount(ballAmount);
 		}
 	}

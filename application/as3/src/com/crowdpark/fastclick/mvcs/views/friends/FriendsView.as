@@ -81,7 +81,7 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			playerCanvas.setPicture(friend.getPlayerPicture());
 			playerCanvas.setNameField(friend.getPlayerFullName());
 			playerCanvas.setLevelField(String(friend.getCurrentLevel()));
-			playerCanvas.setPointsField(String(friend.getCurrentScore()));
+			playerCanvas.setPointsField(String(friend.getCurrentScore().getScore()));
 			hbox.addChild(playerCanvas);
 			friendPane.update();
 		}

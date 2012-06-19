@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.result
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import utils.draw.createRectangleShape;
 	import utils.textField.createField;
 
@@ -25,7 +26,7 @@ package com.crowdpark.fastclick.mvcs.views.result
 		public var leaderboardResult : TextField;
 		public var leaderboardPane : ScrollPane = new ScrollPane();
 		public var vbox : VBox = new VBox();
-		public var scoreArray : Array = new Array;
+		public var scoreArray : Vector.<ScoreVo> = new Vector.<ScoreVo>();
 
 		override public function  init() : void
 		{
@@ -91,6 +92,7 @@ package com.crowdpark.fastclick.mvcs.views.result
 			leaderboardTitle.y = result.y + result.height + 40;
 			leaderboardTitle.x = (stage.stageWidth - leaderboardTitle.width) / 2;
 
+			leaderboardResult.x = (stage.stageWidth - leaderboardResult.width) / 2;
 			leaderboardResult.y = leaderboardTitle.y + leaderboardTitle.height + 20;
 			leaderboardPane.y = leaderboardResult.y + 50;
 
@@ -106,29 +108,15 @@ package com.crowdpark.fastclick.mvcs.views.result
 			result.text = this.getDataProvider().getValueByKey('clickedBallAmount') + ' clicks ' + this.getDataProvider().getValueByKey('currentScore') + ' points';
 		}
 
-		public function showHighestScore() : void
-		{
-			var obj = this.getDataProvider().getValueByKey('highestScore');
-
-			for (var key:String in obj)
-			{
-				scoreArray.push({score:obj[key], time:key});
-			}
-
-			scoreArray.sortOn('score', Array.DESCENDING | Array.NUMERIC);
-			addToPane();
-			leaderboardResult.x = (stage.stageWidth - leaderboardResult.width) / 2;
-		}
-
-		private function addToPane() : void
+		public function addToPane(scoreArray:Vector.<ScoreVo>) : void
 		{
 			for (var i : uint = 0;i < scoreArray.length;i++)
 			{
-				var scoreVo = (scoreArray[i]);
-				var currDate : Date = new Date(Number(scoreVo['time']) * 1000);
+				var scoreVo:ScoreVo = (scoreArray[i]);
+				var currDate:Date = new Date(scoreVo.getDate()*1000);
 				var _date : String = currDate.getDate() + '-' + (currDate.getMonth()+1) + '-' + currDate.getFullYear();
 
-				vbox.addChild(createField('Score=' + scoreVo['score'] + '        ' + 'Date=' + _date, 10, 10, 200, 20, false, 'Verdana', 15, 0x000000));
+				vbox.addChild(createField('Score=' + scoreVo.getScore() + '        ' + 'Date=' + _date, 10, 10, 200, 20, false, 'Verdana', 15, 0x000000));
 				leaderboardPane.update();
 			}
 		}

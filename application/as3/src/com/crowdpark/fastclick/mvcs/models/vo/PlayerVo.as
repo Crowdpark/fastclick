@@ -31,13 +31,14 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			return String(getValueByKey('playerLastName'));
 		}
 
-		public function getCurrentScore() : uint
+		public function getCurrentScore() : ScoreVo
 		{
-			return uint(getValueByKey('currentScore'));
+			return ScoreVo(getValueByKey('currentScore'));
 		}
 
-		public function setCurrentScore(score : uint) : PlayerVo
+		public function setCurrentScore(score : ScoreVo) : PlayerVo
 		{
+			
 			this.setValueByKey('currentScore', score);
 			return this;
 		}
@@ -53,15 +54,15 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			return this;
 		}
 
-		public function setPlayerId(id : uint) : PlayerVo
+		public function setPlayerId(id : String) : PlayerVo
 		{
 			this.setValueByKey('id', id);
 			return this;
 		}
 
-		public function getPlayerId() : uint
+		public function getPlayerId() : String
 		{
-			return uint(this.getValueByKey('id'));
+			return String(this.getValueByKey('id'));
 		}
 
 		public function setPlayerFullName(fullName : String) : PlayerVo

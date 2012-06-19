@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs
 {
+	import com.crowdpark.fastclick.mvcs.models.GameModel;
 	import com.crowdpark.fastclick.mvcs.commands.BitmapFetchedCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CreateStorePlayerCommand;
@@ -87,6 +88,7 @@ package com.crowdpark.fastclick.mvcs
 			injector.mapSingleton(ConfigService);
 			injector.mapSingleton(FacebookService);
 			injector.mapSingleton(BackendService);
+			injector.mapSingleton(GameModel);
 			injector.mapClass(BitmapFetcherService, BitmapFetcherService);
 
 			mediatorMap.mapView(StartView, StartViewMediator);

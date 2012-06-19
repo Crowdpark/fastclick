@@ -41,7 +41,9 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			if (gameModel.getState() == GameModel.REPLAY)
 			{
+				backendService.storeResult(playerModel.getCurrentPlayer());
 				highestScoreModel.addScore(playerModel.getCurrentPlayer().getCurrentScore());
+				
 			}
 			else
 			{

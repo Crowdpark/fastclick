@@ -49,7 +49,7 @@ package com.crowdpark.fastclick.mvcs.services
 		public function storeResult(player : PlayerVo) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
-			jsonClient.params = [{'id':player.getPlayerId(), 'currentScore':player.getCurrentScore(), 'currentLevel':player.getCurrentLevel()}];
+			jsonClient.params = [{'id':player.getPlayerId(), 'currentScore':player.getCurrentScore().getScore(), 'currentLevel':player.getCurrentLevel()}];
 			jsonClient.method = 'NoAuth.Player.updateUser';
 			jsonClient.url = configModel.getUrl();
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStoreResults);

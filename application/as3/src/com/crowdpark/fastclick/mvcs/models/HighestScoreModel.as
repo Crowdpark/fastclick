@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 
 	import org.robotlegs.mvcs.Actor;
@@ -9,21 +10,26 @@ package com.crowdpark.fastclick.mvcs.models
 	 */
 	public class HighestScoreModel extends Actor
 	{
-		private var _highscoreList : Vector.<PlayerVo> = new Vector.<PlayerVo>();
+		private var _highscoreList : Vector.<ScoreVo> = new Vector.<ScoreVo>();
 
-		public function getHighscoreList() : Vector.<PlayerVo>
+		public function getHighscoreList() : Vector.<ScoreVo>
 		{
-			if(!_highscoreList)
+			if (!_highscoreList)
 			{
-				_highscoreList = new Vector.<PlayerVo>();
+				_highscoreList = new Vector.<ScoreVo>();
 			}
 			return _highscoreList;
 		}
 
-		public function setHighscoreList(highscoreList : Vector.<PlayerVo>) : HighestScoreModel
+		public function setHighscoreList(highscoreList : Vector.<ScoreVo>) : HighestScoreModel
 		{
 			_highscoreList = highscoreList;
 			return this;
+		}
+
+		public function addScore(score : ScoreVo) : void
+		{
+			getHighscoreList().push(score);
 		}
 	}
 }

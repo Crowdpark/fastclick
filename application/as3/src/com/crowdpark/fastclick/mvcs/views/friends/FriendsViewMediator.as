@@ -1,12 +1,10 @@
 package com.crowdpark.fastclick.mvcs.views.friends
 {
-	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
-
-	import flash.events.Event;
-
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
-	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
+
+	import flash.events.Event;
 
 	/**
 	 * @author fatmatekin
@@ -18,12 +16,6 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			super.onRegister();
 			addViewListener(FriendsView.INVITE_BUTTON_CLICKED, onInviteListener);
 			addContextListener(GameEvents.CREATE_APP_FRIEND, onCreateAppFriendListener);
-			addContextListener(StateMachineEvents.READY_TO_PLAY, onReadyToPlayListener);
-		}
-
-		private function onReadyToPlayListener(e : StateMachineEvents) : void
-		{
-			view.showAppFriends();
 		}
 
 		private function onInviteListener(event : Event) : void

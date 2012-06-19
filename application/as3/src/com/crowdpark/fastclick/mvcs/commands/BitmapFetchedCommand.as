@@ -27,17 +27,15 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			currentFriend.setPlayerPicture(Bitmap(bitmapFetcherServiceEvent.getDataprovider().getValueByKey('bitmap')));
 
-			var gameEvent : GameEvents = new GameEvents(GameEvents.CREATE_APP_FRIEND);
-			gameEvent.getDataprovider().setValueByKey('currentFriend', currentFriend);
-			dispatch(gameEvent);
-
-			if (playerModel.getCurrentFetchIndex() < playerModel.getFacebookFriendsList().length)
+			var currentFetchIndex : uint = currentFriend.getFetchIndex();
+			if ( currentFetchIndex < playerModel.getCurrentPlayer().getFriendsList().length - 1)
 			{
-				playerModel.createFriend(playerModel.getCurrentFetchIndex());
-				playerModel.setCurrentFetchIndex(playerModel.getCurrentFetchIndex() + 1);
+				currentFriend.setFetchIndex(currentFetchIndex + 1);
+				playerModel.createFriend(currentFriend.getFetchIndex());
 			}
 			else
 			{
+				playerModel.filterAppFriends();
 				dispatch(new StateMachineEvents(StateMachineEvents.READY_TO_PLAY));
 			}
 		}

@@ -77,28 +77,13 @@ package com.crowdpark.fastclick.mvcs.views.friends
 		public function createFriend() : void
 		{
 			var friend : PlayerVo = PlayerVo(this.getDataProvider().getValueByKey('currentFriend'));
-
-			if (friend.getPlayerType() == 'appfriend')
-			{
-				var playerCanvas : PlayerCanvas = new PlayerCanvas();
-				playerCanvas.setPicture(friend.getPlayerPicture());
-				playerCanvas.setNameField(friend.getPlayerFullName());
-				playerCanvas.setLevelField(String(friend.getCurrentLevel()));
-				playerCanvas.setPointsField(String(friend.getCurrentScore()));
-				appFriendsCanvasList.push(playerCanvas);
-			}
-		}
-
-		public function showAppFriends() : void
-		{
-			for (var i : uint = 0;i < appFriendsCanvasList.length;i++)
-			{
-				var playerCanvas : PlayerCanvas = appFriendsCanvasList[i];
-				playerCanvas.setLeaderboardPlace(String(i));
-
-				hbox.addChild(playerCanvas);
-				friendPane.update();
-			}
+			var playerCanvas : PlayerCanvas = new PlayerCanvas();
+			playerCanvas.setPicture(friend.getPlayerPicture());
+			playerCanvas.setNameField(friend.getPlayerFullName());
+			playerCanvas.setLevelField(String(friend.getCurrentLevel()));
+			playerCanvas.setPointsField(String(friend.getCurrentScore()));
+			hbox.addChild(playerCanvas);
+			friendPane.update();
 		}
 	}
 }

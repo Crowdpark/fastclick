@@ -7,9 +7,9 @@ package com.crowdpark.fastclick.mvcs.events
 	 */
 	public class FacebookServiceEvent extends BaseEvent
 	{
-		public static const CREATE_PLAYER : String = "CREATE_PLAYER";	
 		public static const SET_USER : String = "SET_USER";
 		public static const INVITE_FRIEND : String = "INVITE_FRIEND";
+		public static const CREATE_STORE_PLAYER : String = "CREATE_STORE_PLAYER";
 		
 		public function FacebookServiceEvent(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{

@@ -126,7 +126,7 @@ package com.crowdpark.fastclick.mvcs.views.result
 			{
 				var scoreVo = (scoreArray[i]);
 				var currDate : Date = new Date(Number(scoreVo['time']) * 1000);
-				var _date : String = currDate.getDate() + '-' + currDate.getMonth() + '-' + currDate.getFullYear();
+				var _date : String = currDate.getDate() + '-' + (currDate.getMonth()+1) + '-' + currDate.getFullYear();
 
 				vbox.addChild(createField('Score=' + scoreVo['score'] + '        ' + 'Date=' + _date, 10, 10, 200, 20, false, 'Verdana', 15, 0x000000));
 				leaderboardPane.update();

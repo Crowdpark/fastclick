@@ -20,17 +20,19 @@ package com.crowdpark.fastclick.mvcs.services
 		public function storePlayer(player : PlayerVo) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
-			jsonClient.params = [player.getValues()];
+			//jsonClient.params = [player.getValues()];
+			jsonClient.params = [{'id':player.getPlayerId()},{'friendsList':player.getFriendsList()}];
 			jsonClient.method = 'NoAuth.Player.getAppFriends';
 			jsonClient.url = configModel.getUrl();
-			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStorePointResult);
+			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onGetAppFriends);
 			jsonClient.send();
 		}
 
 		public function storeResults(player : PlayerVo) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
-			jsonClient.params = [player.getValues()];
+			//jsonClient.params = [player.getValues()];
+			jsonClient.params = [{'id':player.getPlayerId()},{'curretScore':player.getCurrentScore()},{'currentLevel':player.getCurrentLevel()}] 
 			jsonClient.method = 'NoAuth.Player.updateUser';
 			jsonClient.url = configModel.getUrl();
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStoreResults);
@@ -46,13 +48,13 @@ package com.crowdpark.fastclick.mvcs.services
 			dispatch(leaderboardEvent);
 		}
 
-		private function onStorePointResult(event : JsonRpcClientEvent) : void
+		private function onGetAppFriends(event : JsonRpcClientEvent) : void
 		{
 			var allFriends = event.getDataprovider().getValueByKey('friends');
 			var user = event.getDataprovider().getValueByKey('user');
 
-			var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.SET_ALL_FRIENDS);
-			backendServiceEvent.getDataprovider().setValueByKey('allFriends', allFriends);
+			var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.SET_APP_FRIENDS);
+			backendServiceEvent.getDataprovider().setValueByKey('appFriends', allFriends);
 			backendServiceEvent.getDataprovider().setValueByKey('user', user);
 			dispatch(backendServiceEvent);
 		}

@@ -171,5 +171,16 @@ package com.crowdpark.fastclick.mvcs.models.vo
 		{
 			return uint(this.getValueByKey('fetchIndex'));
 		}
+
+		public function setAppFriendsList(appFriends : *) : PlayerVo
+		{
+			this.setValueByKey('appFriends', appFriends);
+			return this;
+		}
+		public function getAppFriendsList() : Object
+		{
+			return this.getValueByKey('appFriends');
+		}
+
 	}
 }

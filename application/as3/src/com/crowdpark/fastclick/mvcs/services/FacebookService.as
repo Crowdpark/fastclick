@@ -1,13 +1,11 @@
 package com.crowdpark.fastclick.mvcs.services
 {
-	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.facebook.graph.Facebook;
 
 	import org.robotlegs.mvcs.Actor;
 
-	import flash.display.Loader;
 	import flash.external.ExternalInterface;
 	import flash.system.Security;
 
@@ -29,7 +27,7 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onMe(params : Object) : void
 		{
-			var facebookServiceEvent : FacebookServiceEvent = new FacebookServiceEvent(FacebookServiceEvent.CREATE_PLAYER);
+			var facebookServiceEvent : FacebookServiceEvent = new FacebookServiceEvent(FacebookServiceEvent.CREATE_STORE_PLAYER);
 			facebookServiceEvent.getDataprovider().setValueByKey('firstName', String(params.first_name));
 			facebookServiceEvent.getDataprovider().setValueByKey('lastName', String(params.last_name));
 			facebookServiceEvent.getDataprovider().setValueByKey('id', String(params.id));
@@ -38,7 +36,7 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onFetchFriends(params : Object) : void
 		{
-			var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.STORE_PLAYER);
+			var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.START_FETCH_FRIENDS);
 			backendServiceEvent.getDataprovider().setValueByKey('data', params.data);
 			dispatch(backendServiceEvent);
 		}
@@ -60,12 +58,6 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onUICallback(result : Object) : void
 		{
-			trace(result.to);
-		}
-
-		public function readyToPlay() : void
-		{
-			dispatch(new StateMachineEvents(StateMachineEvents.READY_TO_PLAY));
 		}
 	}
 }

@@ -13,7 +13,7 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
 
     /**
      * @param int $score
-     * @return \Processus\Abstracts\Vo\AbstractVO
+     * @return \Application\Mvo\PlayerDataMvo
      */
     public function addScore(\int $score)
     {
@@ -37,6 +37,7 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
      */
     public function getScores()
     {
+
         return $this->getValueByKey("scores");
     }
 

@@ -12,7 +12,7 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
 {
     /**
      * @param $score
-     * @return \Application\Mvo\FacebookUserMvo|\Processus\Lib\Mvo\FacebookUserMvo
+     * @return \Application\Mvo\PlayerDataMvo
      */
     public function setScore($score)
     {
@@ -26,7 +26,7 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
 
     /**
      * @param $level
-     * @return \Application\Mvo\FacebookUserMvo|\Processus\Lib\Mvo\FacebookUserMvo
+     * @return \Application\Mvo\PlayerDataMvo
      */
     public function setLevel($level)
     {

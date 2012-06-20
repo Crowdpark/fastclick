@@ -5,7 +5,7 @@
 				{"levelIndex":"1","gameDuration":"15","scoreLimit":"0"},
 				{"levelIndex":"2","gameDuration":"10","scoreLimit":"500"},
 				{"levelIndex":"3","gameDuration":"8","scoreLimit":"1000"},
-				{"levelIndex":"4","gameDuration":"6","scoreLimit":"3000"}
+				{"levelIndex":"4","gameDuration":"1","scoreLimit":"3000"}
 			],
 	"colors":
 			[

@@ -30,7 +30,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 		override public function onAddedToStageListener(e : Event) : void
 		{
 			gameTitleSprite.x = (stage.stageWidth - gameTitleSprite.width) / 2;
-			gameTitleSprite.y = 10;
+			gameTitleSprite.y = 20;
 
 			title.x = (stage.stageWidth - title.width) / 2;
 			title.y = gameTitleSprite.y + gameTitleSprite.height + 30;

@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.views.control.ControlView;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 	import com.crowdpark.fastclick.mvcs.services.ConfigService;
 	import com.crowdpark.fastclick.mvcs.services.FacebookService;
@@ -31,6 +32,10 @@ package com.crowdpark.fastclick.mvcs.commands
 			mainSprite.name = 'mainSprite';
 			var friendsSprite : Sprite = new Sprite();
 			friendsSprite.name = 'friendsSprite';
+			
+
+			var controlView:ControlView = new ControlView();
+			controlView.init();
 
 			var startView : StartView = new StartView();
 			startView.init();
@@ -43,6 +48,7 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			contextView.addChild(mainSprite);
 			contextView.addChild(friendsSprite);
+			contextView.addChild(controlView); 
 		}
 	}
 }

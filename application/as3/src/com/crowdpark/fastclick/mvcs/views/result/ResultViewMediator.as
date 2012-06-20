@@ -47,13 +47,11 @@ package com.crowdpark.fastclick.mvcs.views.result
 				highestScoreModel.getHighscoreList().push(score);
 			}
 			highestScoreModel.sortHighestScores();
-			
 
 			view.addToPane(highestScoreModel.getHighscoreList());
 			view.enableRetry();
 		}
 
-		
 		private function onRetryGameListener(event : Event) : void
 		{
 			dispatch(new StateMachineEvents(StateMachineEvents.REPLAY));

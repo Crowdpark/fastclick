@@ -36,14 +36,13 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			mainSprite.addChild(resultView);
 
-			
-
 			highestScoreModel.addScore(playerModel.getCurrentPlayer().getCurrentScore());
 			backendService.storeResult(playerModel.getCurrentPlayer());
 
-			if (stateMachineModel.state != StateMachineState.REPLAY)
+			if (stateMachineModel.getGameState() != StateMachineState.REPLAYED)
 			{
 				backendService.getHighestScores(playerModel.getCurrentPlayer());
+				stateMachineModel.state = StateMachineState.REPLAY;
 			}
 			else
 			{

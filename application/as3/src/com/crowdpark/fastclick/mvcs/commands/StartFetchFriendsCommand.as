@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.services.BackendService;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
@@ -20,6 +21,8 @@ package com.crowdpark.fastclick.mvcs.commands
 
 		override public function execute() : void
 		{
+			dispatch(new StateMachineEvents(StateMachineEvents.LOADING));
+			
 			playerModel.getCurrentPlayer().setFriendsList(backendServiceEvent.getDataprovider().getValueByKey('data'));
 			backendService.storePlayer(playerModel.getCurrentPlayer());
 

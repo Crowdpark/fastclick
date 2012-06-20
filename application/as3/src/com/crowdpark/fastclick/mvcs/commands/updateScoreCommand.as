@@ -23,7 +23,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			var score : uint = ballScore + playerModel.getCurrentPlayer().getCurrentScore().getScore();
 			var ballAmount : uint = playerModel.getCurrentPlayer().getClickedBallAmount() + 1;
 
-			playerModel.getCurrentPlayer().setCurrentScore(new ScoreVo().setScore(score).setDate(new Date().dateUTC));
+			playerModel.getCurrentPlayer().setCurrentScore(new ScoreVo().setScore(score).setDate(uint(new Date().dateUTC)));
 			playerModel.getCurrentPlayer().setClickedBallAmount(ballAmount);
 		}
 	}

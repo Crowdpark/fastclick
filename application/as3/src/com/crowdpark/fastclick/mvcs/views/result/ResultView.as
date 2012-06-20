@@ -1,6 +1,7 @@
 package com.crowdpark.fastclick.mvcs.views.result
 {
 	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
+
 	import utils.draw.createRectangleShape;
 	import utils.textField.createField;
 
@@ -108,14 +109,22 @@ package com.crowdpark.fastclick.mvcs.views.result
 			result.text = this.getDataProvider().getValueByKey('clickedBallAmount') + ' clicks ' + this.getDataProvider().getValueByKey('currentScore') + ' points';
 		}
 
-		public function addToPane(scoreArray:Vector.<ScoreVo>) : void
+		public function addToPane(scoreArray : Vector.<ScoreVo>) : void
 		{
 			for (var i : uint = 0;i < scoreArray.length;i++)
 			{
-				var scoreVo:ScoreVo = (scoreArray[i]);
-				var currDate:Date = new Date(scoreVo.getDate()*1000);
-				var _date : String = currDate.getDate() + '-' + (currDate.getMonth()+1) + '-' + currDate.getFullYear();
-
+				var scoreVo : ScoreVo = (scoreArray[i]);
+				var currDate : Date;
+				if (scoreVo.getDate())
+				{
+					currDate = new Date(Number(scoreVo.getDate()) * 1000);
+				}
+				else
+				{
+					currDate = new Date();
+				}
+				var _date : String = currDate.getDate() + '-' + (currDate.getMonth() + 1) + '-' + currDate.getFullYear();
+				
 				vbox.addChild(createField('Score=' + scoreVo.getScore() + '        ' + 'Date=' + _date, 10, 10, 200, 20, false, 'Verdana', 15, 0x000000));
 				leaderboardPane.update();
 			}

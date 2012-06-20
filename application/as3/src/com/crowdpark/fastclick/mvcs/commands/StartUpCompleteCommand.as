@@ -1,7 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
-	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
 	import com.crowdpark.fastclick.mvcs.services.ConfigService;
 	import com.crowdpark.fastclick.mvcs.services.FacebookService;
 	import com.crowdpark.fastclick.mvcs.views.friends.FriendsView;
@@ -27,8 +26,6 @@ package com.crowdpark.fastclick.mvcs.commands
 		{
 			configService.fetchData("data/Config.json");
 			facebookService.init();
-
-			stateMachineModel.state = StateMachineState.LOADING;
 
 			var mainSprite : Sprite = new Sprite();
 			mainSprite.name = 'mainSprite';

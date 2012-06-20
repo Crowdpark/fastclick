@@ -11,6 +11,7 @@ package com.crowdpark.fastclick.mvcs.events
 		public static const SHOW_LEVELS : String = "SHOW_LEVELS";
 		public static const LEVEL_SELECT : String = "LEVEL_SELECT";
 		public static const CREATE_APP_FRIEND : String = "CREATE_APP_FRIEND";
+		public static const REPLAY : String = "REPLAY";
 
 		public function GameEvents(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{

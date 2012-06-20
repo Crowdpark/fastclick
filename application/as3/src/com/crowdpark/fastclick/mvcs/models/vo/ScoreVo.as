@@ -18,15 +18,13 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			return uint(this.getValueByKey('score'));
 		}
 
-		public function getDate() : Number
+		public function getDate() : uint
 		{
-			return Number(this.getValueByKey('date'));
+			return uint(this.getValueByKey('date'));
 		}
 
-		public function setDate(timeStamp : Number) : ScoreVo
+		public function setDate(timeStamp : uint) : ScoreVo
 		{
-		//	var date : Date = new Date(timeStamp * 1000);
-
 			this.setValueByKey('date', timeStamp);
 			return this;
 		}

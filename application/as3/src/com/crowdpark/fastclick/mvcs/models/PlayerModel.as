@@ -98,7 +98,7 @@ package com.crowdpark.fastclick.mvcs.models
 
 			var score : ScoreVo = new ScoreVo();
 			score.setScore(0);
-			score.setDate(new Date().dayUTC);
+			score.setDate(0);
 
 			currentPlayer.setCurrentScore(score);
 			currentPlayer.setCurrentLevel(1);
@@ -116,15 +116,15 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function createFriend(index : uint) : void
 		{
-			var appfriend : Object = getCurrentPlayer().getFriendsList()[index];
+			var friendData : Object = getCurrentPlayer().getFriendsList()[index];
 			var playerVo : PlayerVo = new PlayerVo();
-			playerVo.setPlayerId(appfriend.id);
-			playerVo.setPlayerFullName(appfriend.name);
+			playerVo.setPlayerId(friendData.id);
+			playerVo.setPlayerFullName(friendData.name);
 			playerVo.setPlayerType('friend');
-			playerVo.setPlayerPictureUrl('http://graph.facebook.com/' + appfriend.id + '/picture');
+			playerVo.setPlayerPictureUrl('http://graph.facebook.com/' + friendData.id + '/picture');
 			playerVo.setCurrentLevel(0);
 
-			var score : ScoreVo = new ScoreVo().setScore(appfriend.high_score);
+			var score : ScoreVo = new ScoreVo().setScore(friendData.high_score);
 
 			playerVo.setCurrentScore(score);
 			playerVo.setFetchIndex(index);
@@ -166,6 +166,14 @@ package com.crowdpark.fastclick.mvcs.models
 			var allFriends : Vector.<PlayerVo> = getPlayerFriends();
 			var appFriends = getCurrentPlayer().getAppFriendsList();
 
+			if (appFriends)
+			{
+				startFilter(allFriends, appFriends);
+			}
+		}
+
+		private function startFilter(allFriends : Vector.<PlayerVo>, appFriends : *) : void
+		{
 			for (var i : uint = 0;i < appFriends.length;i++)
 			{
 				for (var j : uint = 0; j < allFriends.length;j++)

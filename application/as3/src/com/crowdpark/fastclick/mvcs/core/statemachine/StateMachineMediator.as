@@ -1,7 +1,7 @@
 package com.crowdpark.fastclick.mvcs.core.statemachine
 {
-	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
+	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 
 	import org.robotlegs.mvcs.Mediator;
@@ -25,37 +25,38 @@ package com.crowdpark.fastclick.mvcs.core.statemachine
 			addContextListener(StateMachineEvents.START, handleStart);
 			addContextListener(StateMachineEvents.GAME, handleGame);
 			addContextListener(StateMachineEvents.FINISH, handleFinish);
-			addContextListener(StateMachineEvents.RETRY, handleRetry);
-			addContextListener(StateMachineEvents.READY_TO_PLAY, handleReady);
+			addContextListener(StateMachineEvents.REPLAY, handleReplay);
+			addContextListener(StateMachineEvents.READY_TO_START, handleReadyToStart);
+			addContextListener(StateMachineEvents.LOADING, handleLoading);
 		}
 
-		protected function handleRetry(e : StateMachineEvents) : void
+		protected function handleReplay(e : StateMachineEvents) : void
 		{
-			removeContextListener(StateMachineEvents.RETRY, handleRetry);
-			stateMachineModel.state = StateMachineState.RETRY;
+			stateMachineModel.state = StateMachineState.REPLAY;
+		}
+
+		protected function handleLoading(e : StateMachineEvents) : void
+		{
+			stateMachineModel.state = StateMachineState.LOADING;
 		}
 
 		protected function handleStart(e : StateMachineEvents) : void
 		{
-			removeContextListener(StateMachineEvents.START, handleStart);
 			stateMachineModel.state = StateMachineState.START;
 		}
 
 		protected function handleGame(e : StateMachineEvents) : void
 		{
-			removeContextListener(StateMachineEvents.GAME, handleGame);
 			stateMachineModel.state = StateMachineState.GAME;
 		}
 
 		protected function handleFinish(e : StateMachineEvents) : void
 		{
-			removeContextListener(StateMachineEvents.FINISH, handleFinish);
 			stateMachineModel.state = StateMachineState.FINISH;
 		}
 
-		public function handleReady(e : StateMachineEvents) : void
+		public function handleReadyToStart(e : StateMachineEvents) : void
 		{
-			removeContextListener(StateMachineEvents.READY_TO_PLAY, handleRetry);
 			stateMachineModel.state = StateMachineState.READY_TO_PLAY;
 		}
 	}

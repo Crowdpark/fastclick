@@ -1,9 +1,9 @@
 package com.crowdpark.fastclick.mvcs.views.result
 {
-	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
+	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 
 	import flash.events.Event;
 
@@ -35,23 +35,28 @@ package com.crowdpark.fastclick.mvcs.views.result
 
 		private function onLeaderboardEvent(e : LeaderboardEvent) : void
 		{
-			createHighestScores(e.getDataprovider().getValueByKey('result'));
+			var result = e.getDataprovider().getValueByKey('result');
+			createHighestScores(result);
 		}
 
 		private function createHighestScores(scores : Object) : void
 		{
 			for (var key:String in scores)
 			{
-				var score : ScoreVo = new ScoreVo().setScore(scores[key]).setDate(Number(key));
+				var score : ScoreVo = new ScoreVo().setScore(scores[key]).setDate(uint(key));
 				highestScoreModel.getHighscoreList().push(score);
 			}
+			highestScoreModel.sortHighestScores();
+			
+
 			view.addToPane(highestScoreModel.getHighscoreList());
 			view.enableRetry();
 		}
 
+		
 		private function onRetryGameListener(event : Event) : void
 		{
-			dispatch(new StateMachineEvents(StateMachineEvents.RETRY));
+			dispatch(new StateMachineEvents(StateMachineEvents.REPLAY));
 		}
 
 		private function get view() : ResultView

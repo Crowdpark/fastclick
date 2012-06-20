@@ -1,19 +1,18 @@
 package com.crowdpark.fastclick.mvcs
 {
-	import com.crowdpark.fastclick.mvcs.models.GameModel;
 	import com.crowdpark.fastclick.mvcs.commands.BitmapFetchedCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CreateStorePlayerCommand;
 	import com.crowdpark.fastclick.mvcs.commands.FetchBitmapCommand;
 	import com.crowdpark.fastclick.mvcs.commands.FinishGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.InviteFriendCommand;
-	import com.crowdpark.fastclick.mvcs.commands.RetryGameCommand;
+	import com.crowdpark.fastclick.mvcs.commands.ReplayGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SaveConfigDataCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SetAppFriendsCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SetPlayerCookieCommand;
+	import com.crowdpark.fastclick.mvcs.commands.StartFetchFriendsCommand;
 	import com.crowdpark.fastclick.mvcs.commands.StartGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.StartUpCompleteCommand;
-	import com.crowdpark.fastclick.mvcs.commands.StartFetchFriendsCommand;
 	import com.crowdpark.fastclick.mvcs.commands.UpdateScoreCommand;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
@@ -67,6 +66,7 @@ package com.crowdpark.fastclick.mvcs
 		{
 			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, StartUpCompleteCommand, ContextEvent);
 			commandMap.mapEvent(StateMachineEvents.START, CountDownCommand, StateMachineEvents);
+			
 			commandMap.mapEvent(BackendServiceEvents.SAVE_CONFIG_DATA, SaveConfigDataCommand);
 			commandMap.mapEvent(FacebookServiceEvent.CREATE_STORE_PLAYER, CreateStorePlayerCommand);
 			commandMap.mapEvent(GameEvents.SET_PLAYER_COOKIE, SetPlayerCookieCommand, GameEvents);
@@ -79,7 +79,7 @@ package com.crowdpark.fastclick.mvcs
 
 			commandMap.mapEvent(StateMachineEvents.GAME, StartGameCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.FINISH, FinishGameCommand, StateMachineEvents);
-			commandMap.mapEvent(StateMachineEvents.RETRY, RetryGameCommand, StateMachineEvents);
+			commandMap.mapEvent(StateMachineEvents.REPLAY, ReplayGameCommand, StateMachineEvents);
 
 			injector.mapSingleton(PlayerModel);
 			injector.mapSingleton(StateMachineModel);
@@ -88,7 +88,6 @@ package com.crowdpark.fastclick.mvcs
 			injector.mapSingleton(ConfigService);
 			injector.mapSingleton(FacebookService);
 			injector.mapSingleton(BackendService);
-			injector.mapSingleton(GameModel);
 			injector.mapClass(BitmapFetcherService, BitmapFetcherService);
 
 			mediatorMap.mapView(StartView, StartViewMediator);

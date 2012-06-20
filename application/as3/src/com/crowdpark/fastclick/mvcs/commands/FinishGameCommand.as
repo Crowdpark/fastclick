@@ -1,10 +1,9 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
-	import com.crowdpark.fastclick.mvcs.models.GameModel;
-	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
-	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
+	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.services.BackendService;
 	import com.crowdpark.fastclick.mvcs.views.result.ResultView;
@@ -26,8 +25,6 @@ package com.crowdpark.fastclick.mvcs.commands
 		public var stateMachineModel : StateMachineModel;
 		[Inject]
 		public var highestScoreModel : HighestScoreModel;
-		[Inject]
-		public var gameModel : GameModel;
 
 		override public function execute() : void
 		{
@@ -39,14 +36,18 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			mainSprite.addChild(resultView);
 
+			
+
+			highestScoreModel.addScore(playerModel.getCurrentPlayer().getCurrentScore());
 			backendService.storeResult(playerModel.getCurrentPlayer());
-			if (gameModel.getState() == GameModel.REPLAY)
+
+			if (stateMachineModel.state != StateMachineState.REPLAY)
 			{
-				highestScoreModel.addScore(playerModel.getCurrentPlayer().getCurrentScore());
+				backendService.getHighestScores(playerModel.getCurrentPlayer());
 			}
 			else
 			{
-				backendService.getHighestScores(playerModel.getCurrentPlayer());
+				dispatch(new LeaderboardEvent(LeaderboardEvent.SHOW_HIGHEST_SCORE));
 			}
 		}
 	}

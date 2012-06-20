@@ -32,7 +32,7 @@ class Player extends \Application\Core\Abstracts\AbstractService
         $manager = new \Application\Manager\Player\PlayerManager();
 
         $manager->setLevel($params["currentLevel"]);
-        $mvo = $manager->setScore($params["curretScore"]);
+        $mvo = $manager->setScore($params["currentScore"]);
 
         return $mvo->saveInMem();
 
@@ -44,7 +44,7 @@ class Player extends \Application\Core\Abstracts\AbstractService
 
     public function getScores()
     {
-        $mvo = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo();
+        $mvo = $this->getApplicationContext()->getPlayerDataMvo();
 
         $scoreHistory = get_object_vars(($mvo->getScores()));
         arsort($scoreHistory, SORT_NUMERIC);

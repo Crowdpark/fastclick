@@ -13,15 +13,22 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
 
     /**
      * @param int $score
+     * @return \Processus\Abstracts\Vo\AbstractVO
      */
     public function addScore(\int $score)
     {
+        if (is_null($this->getHighScore()) || $score > $this->getHighScore())
+            $this->setHighScore($score);
+
+        if ($score === 0)
+            return $this;
+
         $scoreArray = array(time() => $score);
         $scores = get_object_vars($this->getScores());
 
         (is_null($scores)) ? $scores = $scoreArray : $scores[] = $score;
 
-        $this->setScores($scores);
+        return $this->setScores($scores);
 
     }
 

@@ -16,26 +16,12 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
      */
     public function setScore($score)
     {
-        $mvo = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo();
 
-        if (is_null($score))
-            $score = $mvo->getHighScore();
-
-        $scores = $mvo->getScores();
-
-        $timestamp = time();
-        $scores->$timestamp = $score;
-        $mvo->setScores($scores);
-
-        if ($mvo->getHighScore() < $score || is_null($mvo->getHighScore())) {
-            $mvo->setHighScore($score);
-        }
-
-        $scoresMvo = $this->getApplicationContext()->getScoresMvo();
+        $scoresMvo = $this->getApplicationContext()->getPlayerDataMvo();
         $scoresMvo->addScore($score);
         $scoresMvo->saveInMem();
 
-        return $mvo;
+        return $scoresMvo;
     }
 
     /**
@@ -44,16 +30,10 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
      */
     public function setLevel($level)
     {
-        $mvo = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo();
+        $scoresMvo = $this->getApplicationContext()->getPlayerDataMvo();
+        $scoresMvo->setLevel($level)->saveInMem();
 
-        if (is_null($level))
-            $level = $mvo->getLevel();
-
-        $mvo->setLevel($level);
-        $scoresMvo = $this->getApplicationContext()->getScoresMvo();
-        $scoresMvo->setLevel($level);
-        $scoresMvo->saveInMem();
-        return $mvo;
+        return $scoresMvo;
     }
 
     /**
@@ -63,10 +43,13 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     public function getAppFriends(array $friendsRawList)
     {
         $return = array();
-        $return['user']["high_score"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getHighScore();
-        $return['user']["level"] = $this->getApplicationContext()->getUserBo()->getFacebookUserMvo()->getLevel();
+        $return['user']["high_score"] = $this->getApplicationContext()->getPlayerDataMvo()->getHighScore();
+        $return['user']["level"] = $this->getApplicationContext()->getPlayerDataMvo()->getLevel();
 
-        $friends = $this->getApplicationContext()->getUserBo()->getAppFriends($friendsRawList);
+        $appFriendData = $this->getApplicationContext()->getUserBo()->getAppFriends($friendsRawList);
+
+        $friends = $appFriendData["userMvos"];
+        $playerData = $appFriendData["playerDataMvos"];
 
         $appFriends = array();
 
@@ -74,15 +57,16 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
 
             foreach ($friends as $friendMvo) {
 
-                $friendObject = json_decode($friendMvo->getData());
-                $key = $friendObject->id;
+                $friendObject = json_decode($friendMvo);
+                $id = $friendObject->id;
 
                 foreach($friendsRawList as $friend) {
-                    if ($key === $friend["id"]) {
+                    if ($id === $friend["id"]) {
+                        $data = get_object_vars(json_decode($playerData["PlayerData_".$id]));
 
                         $friend["type"] = "appfriend";
-                        $friend["high_score"] = $friendObject->high_score;
-                        $friend["level"] = $friendObject->level;
+                        $friend["high_score"] = $data["high_score"];
+                        $friend["level"] = $data["level"];
 
                         $appFriends[] = $friend;
                     }

@@ -90,20 +90,20 @@ namespace Application
         /**
          * @var \Application\Mvo\UserScoreMvo
          */
-        private $_scoresMvo;
+        private $_playerDataMvo;
 
         /**
-         * @return Mvo\UserScoreMvo
+         * @return Mvo\PlayerDataMvo
          */
-        public function getScoresMvo()
+        public function getPlayerDataMvo()
         {
-            if (!$this->_scoresMvo) {
-                $this->_scoresMvo = new \Application\Mvo\UserScoreMvo();
-                $this->_scoresMvo->setMemId('PlayerData_' . $this->getUserBo()->getFacebookUserId());
-                $this->_scoresMvo->getFromMem();
+            if (!$this->_playerDataMvo) {
+                $this->_playerDataMvo = new \Application\Mvo\PlayerDataMvo();
+                $this->_playerDataMvo->setMemId('PlayerData_' . $this->getUserBo()->getFacebookUserId());
+                $this->_playerDataMvo->getFromMem();
             }
 
-            return $this->_scoresMvo;
+            return $this->_playerDataMvo;
         }
 
     }

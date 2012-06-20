@@ -55,19 +55,6 @@ namespace Application
             return $this->_sendGridConfig;
         }
 
-        /**
-         * @return Mvo\AppUserMvo
-         */
-        public function getAppUserMvo()
-        {
-            if (!$this->_userAppMvo) {
-                $this->_userAppMvo = new \Application\Mvo\AppUserMvo();
-                $this->_userAppMvo->setMemId($this->getUserBo()->getFacebookUserId());
-                $this->_userAppMvo->getFromMem();
-            }
-
-            return $this->_userAppMvo;
-        }
 
 
         /**
@@ -100,5 +87,24 @@ namespace Application
             }
             return $this->_facebookClient;
         }
+        /**
+         * @var \Application\Mvo\UserScoreMvo
+         */
+        private $_playerDataMvo;
+
+        /**
+         * @return Mvo\PlayerDataMvo
+         */
+        public function getPlayerDataMvo()
+        {
+            if (!$this->_playerDataMvo) {
+                $this->_playerDataMvo = new \Application\Mvo\PlayerDataMvo();
+                $this->_playerDataMvo->setMemId('PlayerData_' . $this->getUserBo()->getFacebookUserId());
+                $this->_playerDataMvo->getFromMem();
+            }
+
+            return $this->_playerDataMvo;
+        }
+
     }
 }

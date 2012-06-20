@@ -70,4 +70,14 @@ class FacebookUserMvo extends \Processus\Lib\Mvo\FacebookUserMvo
         return $this->getValueByKey('scores');
     }
 
+    /**
+     * @return array|bool|mixed
+     */
+    public function isFirstTime()
+    {
+        if (is_null(parent::isFirstTime()))
+            return TRUE;
+        else
+            return FALSE;
+    }
 }

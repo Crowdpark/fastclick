@@ -10,7 +10,7 @@ namespace Application\Bo;
 class UserBo extends \Processus\Lib\Bo\UserBo
 {
 
-    private function getIdFromItem($item)
+    private function _getIdFromItem($item)
     {
         return $item["id"];
     }
@@ -39,26 +39,27 @@ class UserBo extends \Processus\Lib\Bo\UserBo
     public function getAppFriends(array $friendsRawList)
     {
         $connector = $this->getProcessusContext()->getDefaultCache();
-//        $friendsIdList = $this->getApplicationContext()->getFacebookClient()->getFriendsIdList();
 
-        $friendsIdList = array_map(array($this, "getIdFromItem"), $friendsRawList);
+        $friendsIdList = array_map(array($this, "_getIdFromItem"), $friendsRawList);
+
         if (count($friendsIdList) <= 0) {
             return FALSE;
         }
 
-        $mvoFriendsList = array();
         $friendsKeys = $this->_array_prefixing("FacebookUserMvo_", $friendsIdList);
         $appUsers = array_filter($connector->getMultipleByKey($friendsKeys));
 
-        foreach ($appUsers as $item) {
-            $mvo = new \Processus\Lib\Mvo\FacebookUserMvo();
-            $mvo->setData($item);
+        $playerDataKeys = $this->_array_prefixing("PlayerData_", $friendsIdList);
+        $playerData = array_filter($connector->getMultipleByKey($playerDataKeys));
 
-            $mvoFriendsList[] = $mvo;
-        }
+        $return["userMvos"] = $appUsers;
+        $return["playerDataMvos"] = $playerData;
 
-        return $mvoFriendsList;
+        return $return;
     }
+
+
+
     /**
      * @return bool|string
      */
@@ -70,30 +71,32 @@ class UserBo extends \Processus\Lib\Bo\UserBo
         if ($fbUserId > 0) {
 
             $mvo      = $this->getFacebookUserMvo();
-            $userData = $mvo->getData();
-            $fbClient          = $this->getProcessusContext()->getFacebookClient();
-            $fbData            = $fbClient->getUserDataById($fbUserId);
+            $playerDataMvo = $this->getApplicationContext()->getPlayerDataMvo();
 
-            if (is_null($userData)) {
+            if ($mvo->isFirstTime()) {
+                $mvo->setFirstTime(FALSE);
                 $score = 0;
                 $level = 1;
-            } else {
-                $score = $mvo->getHighScore();
-                $level = $mvo->getLevel();
+                $data = $this->_getFbData($fbUserId, $mvo->isFirstTime());
+                $mvo->setData($data)->saveInMem();
+                $playerDataMvo->addScore($score)->setLevel($level)->saveInMem();
+
             }
 
-            $fbData['created'] = convertUnixTimeToIso(time());
-            $fbData['high_score'] = $score;
-            $fbData['level'] = $level;
+            else {
+                $userData = $mvo->getData();
+                $data = get_object_vars($userData);
+                $data['created'] = convertUnixTimeToIso(time());
 
-            $updated = $mvo->getValueByKey("updated");
+                $updated = $mvo->getValueByKey("updated");
 
-            $updated = (is_null($updated)) ? strtotime($mvo->getCreated()) : $updated;
+                $updated = (is_null($updated)) ? strtotime($mvo->getCreated()) : $updated;
 
-            if (!$updated)
-                $resultCode = $mvo->setData($fbData)->saveInMem();
-            else
-                $this->_updateUserCache($mvo, $updated, $fbData);
+                if (!$updated)
+                    $resultCode = $mvo->setData($data)->saveInMem();
+                else
+                    $this->_updateUserCache($mvo, $updated, $data);
+            }
 
             return TRUE;
         }
@@ -129,5 +132,25 @@ class UserBo extends \Processus\Lib\Bo\UserBo
             $prefixList[] = $prefix . $idItem;
         }
         return $prefixList;
+    }
+
+    /**
+     * @param $fbUserId
+     * @param $score
+     * @param $level
+     * @param $firstTime
+     * @return array|mixed
+     */
+
+    private function _getFbData($fbUserId, $firstTime)
+    {
+
+        $fbClient          = $this->getProcessusContext()->getFacebookClient();
+        $fbData            = $fbClient->getUserDataById($fbUserId);
+
+        $fbData['created'] = convertUnixTimeToIso(time());
+        $fbData['firstTime'] = $firstTime;
+
+        return $fbData;
     }
 }

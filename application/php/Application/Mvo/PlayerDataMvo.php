@@ -17,14 +17,21 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
      */
     public function addScore(\int $score)
     {
+        $scores = get_object_vars($this->getScores());
+
         if (is_null($this->getHighScore()) || $score > $this->getHighScore())
             $this->setHighScore($score);
 
         if ($score === 0)
             return $this;
 
+        if ((sizeof($scores)) > 9 && (min($scores) <= $score)) {
+
+            $minimumKey = array_keys($scores, min($scores));
+            unset($scores[$minimumKey[0]]);
+        }
+
         $scoreArray = array(time() => $score);
-        $scores = get_object_vars($this->getScores());
 
         (is_null($scores)) ? $scores = $scoreArray : $scores[] = $score;
 

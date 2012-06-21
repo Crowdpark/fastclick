@@ -19,7 +19,6 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
 
         $scoresMvo = $this->getApplicationContext()->getPlayerDataMvo();
         $scoresMvo->addScore($score);
-        $scoresMvo->saveInMem();
 
         return $scoresMvo;
     }
@@ -31,7 +30,7 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     public function setLevel($level)
     {
         $scoresMvo = $this->getApplicationContext()->getPlayerDataMvo();
-        $scoresMvo->setLevel($level)->saveInMem();
+        $scoresMvo->setLevel($level);
 
         return $scoresMvo;
     }

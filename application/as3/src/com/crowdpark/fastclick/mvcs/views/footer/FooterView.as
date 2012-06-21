@@ -27,7 +27,8 @@ package com.crowdpark.fastclick.mvcs.views.footer
 			hbox.x = 30;
 			hbox.y = 30;
 			hbox.spacing = 20;
-			ballPanel.move(0, stage.stageHeight - 180);
+			
+			ballPanel.y = stage.stageHeight - 210;
 		}
 
 		public function addBallPane() : void

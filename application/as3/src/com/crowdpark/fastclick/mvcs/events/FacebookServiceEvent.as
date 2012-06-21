@@ -10,6 +10,7 @@ package com.crowdpark.fastclick.mvcs.events
 		public static const SET_USER : String = "SET_USER";
 		public static const INVITE_FRIEND : String = "INVITE_FRIEND";
 		public static const CREATE_STORE_PLAYER : String = "CREATE_STORE_PLAYER";
+		public static const SEND_GIFT : String = "SEND_GIFT";
 		
 		public function FacebookServiceEvent(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{

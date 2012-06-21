@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
@@ -69,6 +70,21 @@ package com.crowdpark.fastclick.mvcs.services
 			backendServiceEvent.getDataprovider().setValueByKey('appFriends', allFriends);
 			backendServiceEvent.getDataprovider().setValueByKey('user', user);
 			dispatch(backendServiceEvent);
+		}
+
+		public function sendGift(data : GiftVo) : void
+		{
+			var jsonClient : JsonRpcClient = new JsonRpcClient();
+			jsonClient.params = [{'id':data.getFriendId(), 'amount':data.getAmount(), 'type':data.getGiftType(), 'request':data.getRequest()}];
+
+			jsonClient.method = 'NoAuth.Game.sendGift';
+			jsonClient.url = configModel.getUrl();
+			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onSendGift);
+			jsonClient.send();
+		}
+
+		private function onSendGift(event : JsonRpcClientEvent) : void
+		{
 		}
 	}
 }

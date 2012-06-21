@@ -31,8 +31,6 @@ package com.crowdpark.fastclick.mvcs.views.levels
 			addChild(hbox);
 			hbox.mouseEnabled = false;
 			hbox.mouseChildren = false;
-
-			// createLevels();
 		}
 
 		public function createLevels() : void

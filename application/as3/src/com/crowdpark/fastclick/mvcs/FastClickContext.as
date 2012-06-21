@@ -1,5 +1,8 @@
 package com.crowdpark.fastclick.mvcs
 {
+	import com.crowdpark.fastclick.mvcs.models.GiftModel;
+	import com.crowdpark.fastclick.mvcs.commands.SendGiftBackendCommand;
+	import com.crowdpark.fastclick.mvcs.commands.SendGiftCommand;
 	import com.crowdpark.fastclick.mvcs.commands.PlayGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.BitmapFetchedCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
@@ -71,10 +74,11 @@ package com.crowdpark.fastclick.mvcs
 		override public function startup() : void
 		{
 			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, StartUpCompleteCommand, ContextEvent);
+			commandMap.mapEvent(FacebookServiceEvent.CREATE_STORE_PLAYER, CreateStorePlayerCommand);
+
 			commandMap.mapEvent(StateMachineEvents.START, CountDownCommand, StateMachineEvents);
 			
 			commandMap.mapEvent(BackendServiceEvents.SAVE_CONFIG_DATA, SaveConfigDataCommand);
-			commandMap.mapEvent(FacebookServiceEvent.CREATE_STORE_PLAYER, CreateStorePlayerCommand);
 			commandMap.mapEvent(GameEvents.SET_PLAYER_COOKIE, SetPlayerCookieCommand, GameEvents);
 			commandMap.mapEvent(BackendServiceEvents.START_FETCH_FRIENDS, StartFetchFriendsCommand);
 			commandMap.mapEvent(BackendServiceEvents.SET_APP_FRIENDS, SetAppFriendsCommand);
@@ -82,6 +86,8 @@ package com.crowdpark.fastclick.mvcs
 			commandMap.mapEvent(BitmapFetcherServiceEvent.BITMAP_FETCHED, BitmapFetchedCommand);
 			commandMap.mapEvent(PointClickEvent.POINT_CLICK, UpdateScoreCommand, PointClickEvent);
 			commandMap.mapEvent(FacebookServiceEvent.INVITE_FRIEND, InviteFriendCommand);
+			commandMap.mapEvent(FacebookServiceEvent.SEND_GIFT, SendGiftCommand,FacebookServiceEvent);
+			commandMap.mapEvent(BackendServiceEvents.SEND_GIFT, SendGiftBackendCommand,BackendServiceEvents);
 
 			commandMap.mapEvent(StateMachineEvents.PLAY_GAME, PlayGameCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.GAME, StartGameCommand, StateMachineEvents);
@@ -98,6 +104,8 @@ package com.crowdpark.fastclick.mvcs
 			injector.mapSingleton(StateMachineModel);
 			injector.mapSingleton(ConfigModel);
 			injector.mapSingleton(HighestScoreModel);
+			injector.mapSingleton(GiftModel);
+			
 			injector.mapSingleton(ConfigService);
 			injector.mapSingleton(FacebookService);
 			injector.mapSingleton(BackendService);

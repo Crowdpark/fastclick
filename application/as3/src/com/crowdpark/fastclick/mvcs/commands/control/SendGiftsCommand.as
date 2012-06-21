@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.commands.control
 {
+	import com.crowdpark.fastclick.mvcs.services.FacebookService;
+
 	import org.robotlegs.mvcs.Command;
 
 	/**
@@ -7,5 +9,12 @@ package com.crowdpark.fastclick.mvcs.commands.control
 	 */
 	public class SendGiftsCommand extends Command
 	{
+		[Inject]
+		public var facebookService : FacebookService;
+
+		override public function execute() : void
+		{
+			facebookService.sendGift(null);
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.facebook.graph.Facebook;
@@ -14,6 +15,8 @@ package com.crowdpark.fastclick.mvcs.services
 	 */
 	public class FacebookService extends Actor
 	{
+		var currentObject : GiftVo;
+
 		public function init() : void
 		{
 			Security.loadPolicyFile("http://graph.facebook.com/crossdomain.xml");
@@ -48,16 +51,53 @@ package com.crowdpark.fastclick.mvcs.services
 
 		public function inviteFriend() : void
 		{
-			var dat : Object = new Object();
+			/*var dat : Object = new Object();
 			dat.message = 'invite';
 			dat.title = 'fastclick';
 			dat.filters = ['app_non_users'];
+			Facebook.ui('apprequests', dat, onUICallback, 'iframe');*/
 
-			Facebook.ui('apprequests', dat, onUICallback, 'iframe');
+			var data = new Object();
+			data.id = 100003894794078;
+			data.trackingUid = 100003894794078;
+
+			ExternalInterface.call('crowdparkFlash.facebookInviteFriends', data);
+		}
+
+		private function facebookInviteFriends(result : Object) : void
+		{
 		}
 
 		private function onUICallback(result : Object) : void
 		{
+		}
+
+		public function sendGift(gift : GiftVo) : void
+		{
+			var data = new Object();
+			data.message = 'test gift send';
+			data.type = 1;
+			data.amount = 10;
+			if (gift)
+			{
+				currentObject = gift;
+				data.uid = gift.getFriendId();
+			}
+
+			ExternalInterface.call('crowdparkFlash.facebookSendGift', data);
+			ExternalInterface.addCallback('facebookSendGift', facebookSendGift);
+		}
+
+		private function facebookSendGift(result : Object) : void
+		{
+			if (result != 0)
+			{
+				currentObject.setRequest(String(result));
+
+				var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.SEND_GIFT);
+				backendServiceEvent.getDataprovider().setValueByKey('data', currentObject);
+				dispatch(backendServiceEvent);
+			}
 		}
 	}
 }

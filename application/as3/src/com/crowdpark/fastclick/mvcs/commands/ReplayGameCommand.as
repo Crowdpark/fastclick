@@ -26,6 +26,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			mainSprite.removeChildAt(0);
 
 			stateMachineModel.state = StateMachineState.REPLAY;
+			stateMachineModel.setGameState(StateMachineState.REPLAYED);
 
 			playerModel.getCurrentPlayer().setCurrentScore(new ScoreVo().setScore(0).setDate(uint(new Date().dateUTC)));
 			playerModel.getCurrentPlayer().setClickedBallAmount(0);

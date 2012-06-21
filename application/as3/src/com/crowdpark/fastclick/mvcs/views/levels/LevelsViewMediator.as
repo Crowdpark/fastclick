@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.levels
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.LevelVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
@@ -16,11 +17,16 @@ package com.crowdpark.fastclick.mvcs.views.levels
 
 			if (stateMachineModel.state == StateMachineState.REPLAY)
 			{
-				onShowLevelsListener(null);
+				view.enableSelect();
 			}
 
 			addViewListener(GameEvents.LEVEL_SELECT, onLevelSelectListener);
-			addContextListener(GameEvents.SHOW_LEVELS, onShowLevelsListener);
+			// addContextListener(GameEvents.SHOW_LEVELS, onShowLevelsListener);
+			var levelArray : Vector.<LevelVo> = configModel.getLevelArray();
+			if (levelArray)
+			{
+				showLevels(levelArray);
+			}
 		}
 
 		override public function handleReadyToStart(e : StateMachineEvents) : void
@@ -36,14 +42,14 @@ package com.crowdpark.fastclick.mvcs.views.levels
 			dispatch(new StateMachineEvents(StateMachineEvents.START));
 		}
 
-		private function onShowLevelsListener(e : GameEvents) : void
+		private function showLevels(levelArray : Vector.<LevelVo>) : void
 		{
-			view.getDataProvider().setValueByKey('levelArray', configModel.getLevelArray());
+			view.getDataProvider().setValueByKey('levelArray', levelArray);
 			view.createLevels();
 			view.enableSelect();
 		}
 
-		private function get view() : LevelsView
+		protected function get view() : LevelsView
 		{
 			return viewComponent as LevelsView;
 		}

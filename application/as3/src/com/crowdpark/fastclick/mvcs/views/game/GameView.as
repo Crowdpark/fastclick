@@ -20,6 +20,7 @@ package com.crowdpark.fastclick.mvcs.views.game
 			addChild(pointsView);
 
 			hudView = new HudView();
+			hudView.y = 60;
 			hudView.init();
 			addChild(hudView);
 

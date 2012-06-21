@@ -23,17 +23,27 @@ package com.crowdpark.fastclick.mvcs.views.start
 			}
 			if (stateMachineModel.state == StateMachineState.REPLAY)
 			{
-				view.removeLoading();
+				//view.removeLoading();
+				handleReadyToStart(null);
+				
 			}
 
 			addViewListener(StartView.START_GAME, onStartGameListener);
+			addViewListener(StartView.PLAY_GAME, onPlayGameListener);
+
 			addContextListener(GameEvents.SET_PLAYER_COOKIE, setPlayerListener);
+		}
+
+		private function onPlayGameListener(e : Event) : void
+		{
+			dispatch(new StateMachineEvents(StateMachineEvents.PLAY_GAME));
 		}
 
 		override public function handleReadyToStart(e : StateMachineEvents) : void
 		{
 			super.handleReadyToStart(e);
 			view.removeLoading();
+			view.addStartButton();
 		}
 
 		private function setPlayerListener(event : GameEvents) : void
@@ -43,7 +53,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 		private function onStartGameListener(e : Event) : void
 		{
-			dispatch(new StateMachineEvents(StateMachineEvents.START));
+			//dispatch(new StateMachineEvents(StateMachineEvents.START));
 		}
 
 		protected function get view() : StartView

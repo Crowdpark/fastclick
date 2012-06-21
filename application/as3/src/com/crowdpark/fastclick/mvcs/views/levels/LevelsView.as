@@ -31,12 +31,14 @@ package com.crowdpark.fastclick.mvcs.views.levels
 			addChild(hbox);
 			hbox.mouseEnabled = false;
 			hbox.mouseChildren = false;
+
+			// createLevels();
 		}
 
 		public function createLevels() : void
 		{
 			var levelArray : Vector.<LevelVo> = Vector.<LevelVo>(getDataProvider().getValueByKey('levelArray'));
-			
+
 			for (var i : uint; i < levelArray.length;i++)
 			{
 				var levelSprite : Sprite = createLevelSprite(levelArray[i]);
@@ -44,9 +46,8 @@ package com.crowdpark.fastclick.mvcs.views.levels
 				levelSprite.buttonMode = true;
 				levelSprite.addEventListener(MouseEvent.CLICK, onLevelClickListener);
 				hbox.addChild(levelSprite);
-				
 			}
-			this.x = (stage.stageWidth - this.width) / 2;
+			hbox.x = (stage.stageWidth - this.width) / 2;
 		}
 
 		private function onLevelClickListener(event : MouseEvent) : void
@@ -55,9 +56,9 @@ package com.crowdpark.fastclick.mvcs.views.levels
 
 			var selectedLevel = event.currentTarget.name;
 
-			trace(levelArray[uint(selectedLevel-1)].getGameDuration() + 'selectedLevelduration');
+			trace(levelArray[uint(selectedLevel - 1)].getGameDuration() + 'selectedLevelduration');
 			var gameEvent : GameEvents = new GameEvents(GameEvents.LEVEL_SELECT);
-			gameEvent.getDataprovider().setValueByKey('selectedLevelDuration', levelArray[selectedLevel-1].getGameDuration());
+			gameEvent.getDataprovider().setValueByKey('selectedLevelDuration', levelArray[selectedLevel - 1].getGameDuration());
 			gameEvent.getDataprovider().setValueByKey('selectedLevel', selectedLevel);
 			dispatchEvent(gameEvent);
 		}
@@ -80,13 +81,12 @@ package com.crowdpark.fastclick.mvcs.views.levels
 			levelSprite.addChild(levelTf);
 			levelSprite.mouseChildren = false;
 
-			
 			return levelSprite;
 		}
 
 		override public function onAddedToStageListener(e : Event) : void
 		{
-			
+			hbox.y = (stage.stageHeight - hbox.height) / 2;
 		}
 
 		public function enableSelect() : void

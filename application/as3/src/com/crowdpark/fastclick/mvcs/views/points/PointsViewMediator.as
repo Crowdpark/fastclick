@@ -50,18 +50,25 @@ package com.crowdpark.fastclick.mvcs.views.points
 		private function createFastClickBall() : FastClickBall
 		{
 			var playerFriends : Vector.<PlayerVo> = playerModel.getPlayerFriends();
-			var ball : FastClickBall = new FastClickBall();
-			ball.mouseChildren = false;
-			ball.setEndPoint(new Point(30, contextView.stage.stageHeight - 160));
-			var point = Math.ceil(1000 / ball.getShape().width);
+			if (playerFriends)
+			{
+				var ball : FastClickBall = new FastClickBall();
+				ball.mouseChildren = false;
+				ball.setEndPoint(new Point(30, contextView.stage.stageHeight - 160));
+				var point = Math.ceil(1000 / ball.getShape().width);
 
-			ball.setScore(point);
-			ball.setLifeTime(Math.ceil(ball.getShape().width / 10));
-			ball.addEventListener(FastClickBallEvent.REMOVE_CIRCLE, onRemoveCircleListener);
-			ball.setStartPoint(randomPoint(ball.getShape().width / 2, contextView.stage.stageWidth - ball.getShape().width, 60, contextView.stage.stageHeight - 140 - ball.getShape().height));
-			ball.setPicture(playerFriends[randomIntegerWithinRange(0, playerFriends.length - 1)].getPlayerPicture());
-			ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
-			return ball;
+				ball.setScore(point);
+				ball.setLifeTime(Math.ceil(ball.getShape().width / 10));
+				ball.addEventListener(FastClickBallEvent.REMOVE_CIRCLE, onRemoveCircleListener);
+				ball.setStartPoint(randomPoint(ball.getShape().width / 2, contextView.stage.stageWidth - ball.getShape().width, 60, contextView.stage.stageHeight - 140 - ball.getShape().height));
+				ball.setPicture(playerFriends[randomIntegerWithinRange(0, playerFriends.length - 1)].getPlayerPicture());
+				ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
+				return ball;
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 		private function onRemoveCircleListener(event : FastClickBallEvent) : void
@@ -79,8 +86,9 @@ package com.crowdpark.fastclick.mvcs.views.points
 
 		private function removeOne() : void
 		{
-			if (stateMachineModel.state != StateMachineState.FINISH)
+			if (view)
 			{
+				
 				if (view.numChildren > 2)
 				{
 					view.removeChildAt(0);

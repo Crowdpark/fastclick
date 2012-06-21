@@ -42,10 +42,10 @@ package com.crowdpark.fastclick.mvcs.views.hud
 
 		override public function onAddedToStageListener(e : Event) : void
 		{
-			var hudViewBackground : Shape = createRectangleShape(stage.stageWidth, 60, 0x000000);
+			// var hudViewBackground : Shape = createRectangleShape(stage.stageWidth, 60, 0x000000);
 
-			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 240, 0, 10, stage.stageWidth - 10, hudViewBackground.height);
-			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 240, 0, 10, stage.stageWidth - 10, hudViewBackground.height);
+			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 240, 0, 10, stage.stageWidth - 10, 60);
+			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 240, 0, 10, stage.stageWidth - 10, 60);
 			timeBar.mask = barMask;
 
 			TweenMax.to(barMask, uint(this.getDataProvider().getValueByKey('gameDuration')), {y:stage.stageHeight - 220, ease:Linear.easeNone});
@@ -75,7 +75,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			logoutSprite.x = stage.stageWidth - 50;
 			logoutSprite.y = 60 - logoutSprite.height;
 
-			addChildAt(hudViewBackground, 0);
+			// addChildAt(hudViewBackground, 0);
 			addChild(timeBar);
 			addChild(barMask);
 			addChild(playerNameField);
@@ -110,7 +110,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 		{
 			timeSprite = new Sprite();
 
-			time = createField("", 0, 0, 200, 20, false, "Verdana", 25, 0xffffff);
+			time = createField("", 0, 0, 200, 20, false, "Verdana", 25, 0x000000);
 
 			timeSprite.addChild(time);
 			addChild(timeSprite);
@@ -118,16 +118,16 @@ package com.crowdpark.fastclick.mvcs.views.hud
 
 		private function createScoreView() : void
 		{
-			scoreTitle = createField("score", 0, 0, 200, 20, false, "Verdana", 15, 0xffffff);
+			scoreTitle = createField("score", 0, 0, 200, 20, false, "Verdana", 15, 0x000000);
 			addChild(scoreTitle);
 
-			score = createField("0", 0, 0, 200, 20, false, "Verdana", 20, 0xffffff);
+			score = createField("0", 0, 0, 200, 20, false, "Verdana", 20, 0x000000);
 			addChild(score);
 		}
 
 		private function createLevel() : void
 		{
-			level = createField("0", 0, 0, 200, 20, false, "Verdana", 20, 0xffffff);
+			level = createField("0", 0, 0, 200, 20, false, "Verdana", 20, 0x000000);
 			level.background = true;
 			level.backgroundColor = 0xcacaca;
 			addChild(level);

@@ -25,7 +25,7 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _gameDuration : uint;
 		private var _colorArray : Array;
 		private var _levelArray : Vector.<LevelVo>;
-		private var _url:String;
+		private var _url : String;
 		[Inject]
 		public var playerModel : PlayerModel;
 

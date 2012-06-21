@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.views.friends
 {
+	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
+
 	import utils.draw.createRectangleShape;
 	import utils.textField.createField;
 
@@ -21,10 +23,12 @@ package com.crowdpark.fastclick.mvcs.views.friends
 	public class FriendsView extends BaseView
 	{
 		public static const  INVITE_BUTTON_CLICKED : String = 'INVITE_BUTTON_CLICKED';
+		public static const SEND_GIFT : String = "SEND_GIFT";
 		private var friendPane : ScrollPane = new ScrollPane();
 		private var hbox : HBox = new HBox();
 		private	var inviteSprite : Sprite = new Sprite();
-		
+		private var paneHeight : uint = 140;
+
 		override public function init() : void
 		{
 			super.init();
@@ -53,8 +57,6 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			inviteSprite.addChild(inviteButton);
 			inviteSprite.addChild(inviteText);
 			inviteSprite.addEventListener(MouseEvent.CLICK, onInviteClickListener);
-
-			// addChild(inviteSprite);
 		}
 
 		private function onInviteClickListener(event : MouseEvent) : void
@@ -65,7 +67,7 @@ package com.crowdpark.fastclick.mvcs.views.friends
 		override public function onAddedToStageListener(e : Event) : void
 		{
 			friendPane.width = stage.stageWidth;
-			friendPane.height = 110;
+			friendPane.height = paneHeight;
 			hbox.spacing = 10;
 
 			inviteSprite.x = -70;
@@ -77,12 +79,24 @@ package com.crowdpark.fastclick.mvcs.views.friends
 		{
 			var friend : PlayerVo = PlayerVo(this.getDataProvider().getValueByKey('currentFriend'));
 			var playerCanvas : PlayerCanvas = new PlayerCanvas();
+			playerCanvas.setHeight(paneHeight);
+			playerCanvas.setFriendId(friend.getPlayerId());
 			playerCanvas.setPicture(friend.getPlayerPicture());
 			playerCanvas.setNameField(friend.getPlayerFullName());
 			playerCanvas.setLevelField(String(friend.getCurrentLevel()));
 			playerCanvas.setPointsField(String(friend.getCurrentScore().getScore()));
+
+			playerCanvas.getGiftBox().addEventListener(MouseEvent.CLICK, onGiftBoxListener);
 			hbox.addChild(playerCanvas);
 			friendPane.update();
+		}
+
+		private function onGiftBoxListener(event : MouseEvent) : void
+		{
+			var friendId : String = PlayerCanvas(event.currentTarget.parent).getFriendId();
+
+			getDataProvider().setValueByKey('friendId', friendId);
+			dispatchEvent(new Event(FriendsView.SEND_GIFT));
 		}
 	}
 }

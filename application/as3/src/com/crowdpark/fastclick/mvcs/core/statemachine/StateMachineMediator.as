@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.core.statemachine
 {
+	import com.crowdpark.fastclick.mvcs.models.GiftModel;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
@@ -19,6 +20,8 @@ package com.crowdpark.fastclick.mvcs.core.statemachine
 		public var configModel : ConfigModel;
 		[Inject]
 		public var highestScoreModel : HighestScoreModel;
+		[Inject]
+		public var giftModel : GiftModel;
 
 		override public function onRegister() : void
 		{

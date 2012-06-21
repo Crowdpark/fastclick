@@ -54,13 +54,13 @@ package com.crowdpark.fastclick.mvcs.views.points
 			{
 				var ball : FastClickBall = new FastClickBall();
 				ball.mouseChildren = false;
-				ball.setEndPoint(new Point(30, contextView.stage.stageHeight - 160));
+				ball.setEndPoint(new Point(30, contextView.stage.stageHeight - 190));
 				var point = Math.ceil(1000 / ball.getShape().width);
 
 				ball.setScore(point);
 				ball.setLifeTime(Math.ceil(ball.getShape().width / 10));
 				ball.addEventListener(FastClickBallEvent.REMOVE_CIRCLE, onRemoveCircleListener);
-				ball.setStartPoint(randomPoint(ball.getShape().width / 2, contextView.stage.stageWidth - ball.getShape().width, 60, contextView.stage.stageHeight - 140 - ball.getShape().height));
+				ball.setStartPoint(randomPoint(ball.getShape().width / 2, contextView.stage.stageWidth - ball.getShape().width, 90, contextView.stage.stageHeight - 210 - ball.getShape().height));
 				ball.setPicture(playerFriends[randomIntegerWithinRange(0, playerFriends.length - 1)].getPlayerPicture());
 				ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
 				return ball;
@@ -88,7 +88,6 @@ package com.crowdpark.fastclick.mvcs.views.points
 		{
 			if (view)
 			{
-				
 				if (view.numChildren > 2)
 				{
 					view.removeChildAt(0);

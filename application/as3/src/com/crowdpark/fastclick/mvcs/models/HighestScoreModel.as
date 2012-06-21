@@ -30,6 +30,7 @@ package com.crowdpark.fastclick.mvcs.models
 		public function addScore(score : ScoreVo) : void
 		{
 			getHighscoreList().push(score);
+			sortHighestScores();
 		}
 
 		public function sortHighestScores() : void

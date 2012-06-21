@@ -6,7 +6,7 @@
 <booleanAttribute key="KILL_PREVIOUS_VIEWER" value="true"/>
 <stringAttribute key="LAUNCHER_DEPENDENCIES" value="[Self]"/>
 <stringAttribute key="MAIN_CLASS" value="src/FastClick.as"/>
-<stringAttribute key="OUTPUT" value="bin/FastClick.swf"/>
+<stringAttribute key="OUTPUT" value="bin/MainApp.swf"/>
 <booleanAttribute key="PASS_CP" value="true"/>
 <booleanAttribute key="PASS_EXTERNS" value="true"/>
 <booleanAttribute key="PASS_MAIN_CLASS" value="true"/>

@@ -49,6 +49,7 @@ package com.crowdpark.fastclick.mvcs.views.control
 
 				buttonSprite.addChild(button);
 				buttonSprite.addChild(title);
+				buttonSprite.mouseChildren = false;
 				buttonSprite.buttonMode = true;
 				buttonSprite.addEventListener(MouseEvent.CLICK, handleButtonSelect);
 

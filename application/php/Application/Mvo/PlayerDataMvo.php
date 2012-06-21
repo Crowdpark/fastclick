@@ -31,7 +31,7 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
 
             $minimumKey = array_keys($scores, $lowestScore);
             unset($scores[$minimumKey[0]]);
-            
+
         } else if ($lowestScore >= $score)
             return $this;
 

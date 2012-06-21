@@ -20,6 +20,12 @@ class Player extends \Application\Core\Abstracts\AbstractService
         $manager = new \Application\Manager\Player\PlayerManager();
         $return = $manager->getAppFriends($params["friendsList"]);
 
+        $gameManager = new \Application\Manager\Game\GameManager();
+        $gifts = $gameManager->getGifts();
+//        var_dump($gifts);die("bye");
+        if (!is_null($gifts))
+            $return["gifts"] = $gifts;
+
         return $return;
     }
 

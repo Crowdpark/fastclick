@@ -11,25 +11,20 @@ namespace Application\Manager\Game;
 class GameManager extends \Processus\Abstracts\Manager\AbstractManager
 {
 
-    /**
-     * @return mixed|null
-     */
-
-    public function getCircleConfig()
+    public function getGifts()
     {
-        return $this->fetchAll($this->
-            ccFactory()->
-            setSqlStmt("SELECT * FROM circles")->
-            setExpiredTime(260)->
-            setMemId("circle_config"));
+        $giftsMvo = new \Application\Mvo\GiftsMvo();
+        $giftsMvo->setMemId($this->getApplicationContext()->getUserBo()->getFacebookUserId());
+        return $giftsMvo->getGifts();
     }
 
-    public function getGameDuration()
+    public function sendGift(array $giftData)
     {
-        //TODO: Get facebook user from context.
-        return $this->fetchOne($this->ccFactory()
-        ->setSqlStmt("SELECT duration FROM levels WHERE id = :id")->setSqlParams(array("id" => 2))
-            ->setExpiredTime(400));
+        $id = $giftData["id"];
+        unset($giftData["id"]);
+        $giftsMvo = new \Application\Mvo\GiftsMvo();
+        $giftsMvo->setId($id);
+        return $giftsMvo->setMemId($id)->addGift($giftData)->saveInMem();
     }
 
 }

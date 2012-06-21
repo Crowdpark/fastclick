@@ -10,16 +10,11 @@ namespace Application\JsonRpc\V1\NoAuth\Service;
 class Game extends \Application\Core\Abstracts\AbstractService
 {
 
-    public function getCircleConfig()
+    public function sendGift(array $params)
     {
-        $manager = new \Application\Manager\Game\GameManager();
-        return $manager->getCircleConfig();
-    }
 
-    public function getGameDuration()
-    {
         $manager = new \Application\Manager\Game\GameManager();
-        return $manager->getGameDuration();
+        return $manager->sendGift($params);
     }
 
 }

@@ -25,11 +25,15 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
         if ($score === 0)
             return $this;
 
-        if ((sizeof($scores)) > 9 && (min($scores) <= $score)) {
+        $lowestScore = min($score);
 
-            $minimumKey = array_keys($scores, min($scores));
+        if ((sizeof($scores)) > 9 && ($lowestScore < $score)) {
+
+            $minimumKey = array_keys($scores, $lowestScore);
             unset($scores[$minimumKey[0]]);
-        }
+
+        } else if ($lowestScore >= $score)
+            return $this;
 
         $scoreArray = array(time() => $score);
 

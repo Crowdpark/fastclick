@@ -79,6 +79,7 @@ package com.crowdpark.fastclick.mvcs.views.control
 			var controlViewBackground : Shape = createRectangleShape(stage.stageWidth, 40, 0x000000);
 			addChildAt(controlViewBackground, 0);
 
+			buttonContainer.x = 10;
 			buttonContainer.y = controlViewBackground.height - buttonContainer.height;
 		}
 	}

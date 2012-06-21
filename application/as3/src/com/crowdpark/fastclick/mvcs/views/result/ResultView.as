@@ -60,9 +60,6 @@ package com.crowdpark.fastclick.mvcs.views.result
 
 			retryButton.addChild(title);
 
-			
-			
-			
 			addChild(retryButton);
 		}
 
@@ -114,18 +111,14 @@ package com.crowdpark.fastclick.mvcs.views.result
 
 		public function addToPane(scoreArray : Vector.<ScoreVo>) : void
 		{
-		
 			for (var i : uint = 0;i < scoreArray.length;i++)
 			{
 				var scoreVo : ScoreVo = (scoreArray[i]);
-				var currDate : Date;
-				if (scoreVo.getDate()!=0)
+				var currDate : Date = new Date();
+
+				if (scoreVo.getDate() != 0)
 				{
 					currDate = new Date(Number(scoreVo.getDate()) * 1000);
-				}
-				else
-				{
-					currDate = new Date();
 				}
 				var _date : String = currDate.getDate() + '-' + (currDate.getMonth() + 1) + '-' + currDate.getFullYear();
 

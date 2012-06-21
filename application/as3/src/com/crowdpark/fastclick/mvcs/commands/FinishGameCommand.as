@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
+	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
@@ -36,12 +38,16 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			mainSprite.addChild(resultView);
 
-			highestScoreModel.addScore(playerModel.getCurrentPlayer().getCurrentScore());
-			backendService.storeResult(playerModel.getCurrentPlayer());
+			var currentPlayer : PlayerVo = playerModel.getCurrentPlayer();
+			var currentScore : ScoreVo = currentPlayer.getCurrentScore();
+			currentScore.setDate(0);
+
+			highestScoreModel.addScore(currentScore);
+			backendService.storeResult(currentPlayer);
 
 			if (stateMachineModel.getGameState() != StateMachineState.REPLAYED)
 			{
-				backendService.getHighestScores(playerModel.getCurrentPlayer());
+				backendService.getHighestScores(currentPlayer);
 				stateMachineModel.state = StateMachineState.REPLAY;
 			}
 			else

@@ -64,7 +64,9 @@ package com.crowdpark.fastclick.mvcs.views.points
 				ball.setPicture(playerFriends[randomIntegerWithinRange(0, playerFriends.length - 1)].getPlayerPicture());
 				ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
 				return ball;
-			}else{
+			}
+			else
+			{
 				return null;
 			}
 		}
@@ -84,8 +86,9 @@ package com.crowdpark.fastclick.mvcs.views.points
 
 		private function removeOne() : void
 		{
-			if (stateMachineModel.state != StateMachineState.FINISH)
+			if (view)
 			{
+				
 				if (view.numChildren > 2)
 				{
 					view.removeChildAt(0);

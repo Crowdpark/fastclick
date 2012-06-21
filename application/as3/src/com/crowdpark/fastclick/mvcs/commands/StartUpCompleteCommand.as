@@ -32,9 +32,8 @@ package com.crowdpark.fastclick.mvcs.commands
 			mainSprite.name = 'mainSprite';
 			var friendsSprite : Sprite = new Sprite();
 			friendsSprite.name = 'friendsSprite';
-			
 
-			var controlView:ControlView = new ControlView();
+			var controlView : ControlView = new ControlView();
 			controlView.init();
 
 			var startView : StartView = new StartView();
@@ -48,7 +47,7 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			contextView.addChild(mainSprite);
 			contextView.addChild(friendsSprite);
-			contextView.addChild(controlView); 
+			contextView.addChild(controlView);
 		}
 	}
 }

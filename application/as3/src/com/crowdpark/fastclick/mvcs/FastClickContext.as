@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs
 {
+	import com.crowdpark.fastclick.mvcs.commands.PlayGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.BitmapFetchedCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CreateStorePlayerCommand;
@@ -82,6 +83,7 @@ package com.crowdpark.fastclick.mvcs
 			commandMap.mapEvent(PointClickEvent.POINT_CLICK, UpdateScoreCommand, PointClickEvent);
 			commandMap.mapEvent(FacebookServiceEvent.INVITE_FRIEND, InviteFriendCommand);
 
+			commandMap.mapEvent(StateMachineEvents.PLAY_GAME, PlayGameCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.GAME, StartGameCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.FINISH, FinishGameCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.REPLAY, ReplayGameCommand, StateMachineEvents);

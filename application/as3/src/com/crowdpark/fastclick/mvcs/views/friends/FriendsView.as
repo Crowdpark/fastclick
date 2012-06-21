@@ -24,8 +24,7 @@ package com.crowdpark.fastclick.mvcs.views.friends
 		private var friendPane : ScrollPane = new ScrollPane();
 		private var hbox : HBox = new HBox();
 		private	var inviteSprite : Sprite = new Sprite();
-		private var appFriendsCanvasList : Array = new Array();
-
+		
 		override public function init() : void
 		{
 			super.init();
@@ -55,7 +54,7 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			inviteSprite.addChild(inviteText);
 			inviteSprite.addEventListener(MouseEvent.CLICK, onInviteClickListener);
 
-			addChild(inviteSprite);
+			// addChild(inviteSprite);
 		}
 
 		private function onInviteClickListener(event : MouseEvent) : void

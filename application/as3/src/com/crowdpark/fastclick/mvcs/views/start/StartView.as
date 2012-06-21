@@ -1,14 +1,13 @@
 package com.crowdpark.fastclick.mvcs.views.start
 {
-	import utils.draw.createRectangleShape;
 	import utils.textField.createField;
 
 	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
-	import com.crowdpark.fastclick.mvcs.views.levels.LevelsView;
+	import com.greensock.TweenMax;
 
-	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 
@@ -17,46 +16,42 @@ package com.crowdpark.fastclick.mvcs.views.start
 	 */
 	public class StartView extends BaseView
 	{
+		public static const PLAY_GAME : String = "PLAY_GAME";
+		public static const START_GAME : String = "START_GAME";
 		public var gameTitleSprite : Sprite = new Sprite();
 		public var startButtonSprite : Sprite = new Sprite();
 		public var playerNameSprite : Sprite = new Sprite();
 		private var playerNameField : TextField;
-		public var levelsView : LevelsView;
 		private var tfm : TextFormat;
 		private var title : TextField;
 		private var loadingTextField : TextField;
-		public static const START_GAME : String = "START_GAME";
 
 		override public function onAddedToStageListener(e : Event) : void
 		{
 			gameTitleSprite.x = (stage.stageWidth - gameTitleSprite.width) / 2;
-			gameTitleSprite.y = 20;
+			gameTitleSprite.y = 60;
 
 			title.x = (stage.stageWidth - title.width) / 2;
-			title.y = gameTitleSprite.y + gameTitleSprite.height + 30;
+			title.y = gameTitleSprite.y + gameTitleSprite.height + 70;
 
 			playerNameField.x = (stage.stageWidth - playerNameField.width) / 2;
-			playerNameField.y = title.y + title.height + 30;
-
-			levelsView.x = (stage.stageWidth - levelsView.width) / 2;
-			levelsView.y = playerNameField.y + playerNameField.height + 50;
+			playerNameField.y = title.y + title.height + 20;
 
 			loadingTextField.x = (stage.stageWidth - loadingTextField.width) / 2;
-			loadingTextField.y = levelsView.y + levelsView.height + 200;
+			loadingTextField.y = playerNameField.y + playerNameField.height + 120;
+
+			startButtonSprite.x = stage.stageWidth;
+			startButtonSprite.y = loadingTextField.y;
 		}
 
 		override public function init() : void
 		{
 			tfm = new TextFormat("Arial", 20, 0xffffff, true);
 
-			loadingTextField = createField('LOADING...', 0, 0, 0200, 20, false, 'Verdana', 15);
-
-			levelsView = new LevelsView();
-			levelsView.init();
+			loadingTextField = createField('LOADING...', 0, 0, 200, 20, false, 'Verdana', 20);
 
 			addChild(gameTitleSprite);
 			addChild(playerNameSprite);
-			addChild(levelsView);
 			addChild(loadingTextField);
 
 			createGameTitle();
@@ -66,24 +61,20 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 		private function createGameTitle() : void
 		{
-			var titleBackground : Shape = createRectangleShape(200, 30, 0x00e0e6);
-			var title : TextField = createField('FAST CLICK!', 0, 0, 200, 20, false, 'Verdana', 20, 0xffffff);
-			title.x = (titleBackground.width - title.width) / 2;
+			var title : TextField = createField('FAST CLICK!', 0, 0, 200, 20, false, 'Verdana', 30, 0xffffff);
+			title.background = true;
+			title.backgroundColor = 0x00e0e6;
 
-			gameTitleSprite.addChild(titleBackground);
 			gameTitleSprite.addChild(title);
 		}
 
 		private function createStartButton() : void
 		{
-			var startButtonBackground : Shape = createRectangleShape(100, 30, 0x00e0e6);
-
-			var startButtonTitle : TextField = createField('PLAY!', 0, 0, 200, 20, false, 'Verdana', 20, 0xffffff);
-			startButtonTitle.x = (startButtonBackground.width - startButtonTitle.width) / 2;
-
+			var startButtonTitle : TextField = createField('PLAY!', 0, 0, 200, 20, false, 'Verdana', 25, 0xffffff);
+			startButtonTitle.background = true;
+			startButtonTitle.backgroundColor = 0x00e0e6;
 			startButtonSprite.mouseChildren = false;
 
-			startButtonSprite.addChild(startButtonBackground);
 			startButtonSprite.addChild(startButtonTitle);
 		}
 
@@ -95,7 +86,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 			tf.align = "center";
 
 			title = createField("Welcome", 0, 0, 200, 20, false, "Verdana", 15, 0);
-			playerNameField = createField("", 0, title.height + 5, 200, 20, false, "Verdana", 20, 0);
+			playerNameField = createField("", 0, title.height + 5, 200, 20, false, "Verdana", 25, 0);
 
 			addChild(title);
 			addChild(playerNameField);
@@ -135,6 +126,20 @@ package com.crowdpark.fastclick.mvcs.views.start
 			{
 				removeChild(loadingTextField);
 			}
+		}
+
+		public function addStartButton() : void
+		{
+			addChild(startButtonSprite);
+			startButtonSprite.buttonMode = true;
+			startButtonSprite.addEventListener(MouseEvent.CLICK, handleStartButtonClick);
+			TweenMax.to(startButtonSprite, 0.5, {x:(stage.stageWidth - startButtonSprite.width) / 2});
+		}
+
+		public function handleStartButtonClick(event : MouseEvent) : void
+		{
+			removeChild(startButtonSprite);
+			dispatchEvent(new Event(StartView.PLAY_GAME));
 		}
 	}
 }

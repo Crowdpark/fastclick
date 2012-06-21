@@ -58,8 +58,27 @@ class UserBo extends \Processus\Lib\Bo\UserBo
         return $return;
     }
 
+    private $_facebookUserId;
 
+    /**
+     * @param $id
+     */
+    public function setFacebookUserId($id)
+    {
+        $this->_facebookUserId = $id;
+    }
 
+    /**
+     * @return string
+     */
+    public function getFacebookUserId()
+    {
+        if (!is_null($this->_facebookUserId))
+            return $this->_facebookUserId;
+        else {
+            return parent::getFacebookUserId();
+        }
+    }
     /**
      * @return bool|string
      */
@@ -67,6 +86,11 @@ class UserBo extends \Processus\Lib\Bo\UserBo
     {
 
         $fbUserId = $this->getFacebookUserId();
+
+        if (is_null($fbUserId)) {
+            $fbUserId = $this->getFacebookUserId();
+            $this->setFacebookUserId($fbUserId);
+        }
 
         if ($fbUserId > 0) {
 

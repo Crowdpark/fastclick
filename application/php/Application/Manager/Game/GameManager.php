@@ -21,10 +21,22 @@ class GameManager extends \Processus\Abstracts\Manager\AbstractManager
     public function sendGift(array $giftData)
     {
         $id = $giftData["id"];
+        $giftData["sender_id"] = $this->getApplicationContext()->getUserBo()->getFacebookUserId();
+
         unset($giftData["id"]);
+
         $giftsMvo = new \Application\Mvo\GiftsMvo();
         $giftsMvo->setId($id);
         return $giftsMvo->setMemId($id)->addGift($giftData)->saveInMem();
+    }
+
+    public function acceptGift(array $gift)
+    {
+        $giftsMvo = new \Application\Mvo\GiftsMvo();
+        if (!$giftsMvo->removeGift($gift))
+            $giftsMvo->deleteFromMem();
+        else
+            return $giftsMvo->saveInMem();
     }
 
 }

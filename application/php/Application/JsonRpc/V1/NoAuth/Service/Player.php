@@ -22,7 +22,7 @@ class Player extends \Application\Core\Abstracts\AbstractService
 
         $gameManager = new \Application\Manager\Game\GameManager();
         $gifts = $gameManager->getGifts();
-//        var_dump($gifts);die("bye");
+
         if (!is_null($gifts))
             $return["gifts"] = $gifts;
 

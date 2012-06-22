@@ -14,7 +14,7 @@ package com.crowdpark.fastclick.mvcs.commands
 	{
 		[Inject]
 		public var configModel : ConfigModel;
-	
+
 		override public function execute() : void
 		{
 			var mainSprite : Sprite = Sprite(contextView.getChildByName('mainSprite'));
@@ -23,7 +23,6 @@ package com.crowdpark.fastclick.mvcs.commands
 			var gameView : GameView = new GameView();
 			gameView.init();
 
-			
 			mainSprite.addChild(gameView);
 			configModel.startTimer();
 		}

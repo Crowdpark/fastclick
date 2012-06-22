@@ -12,8 +12,6 @@ package com.crowdpark.fastclick.mvcs.commands
 	public class SendGiftCommand extends Command
 	{
 		[Inject]
-		public var facebookServiceEvent : FacebookServiceEvent;
-		[Inject]
 		public var facebookService : FacebookService;
 		[Inject]
 		public var giftModel : GiftModel;

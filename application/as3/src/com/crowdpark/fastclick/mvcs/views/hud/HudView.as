@@ -26,6 +26,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 		public var scoreTitle : TextField = new TextField();
 		public var score : TextField = new TextField();
 		public var level : TextField = new TextField();
+		public var exp : TextField = new TextField();
 		public var timeSprite : Sprite = new Sprite();
 		public var time : TextField = new TextField();
 		public var timeBarSprite : Sprite = new Sprite();
@@ -44,11 +45,11 @@ package com.crowdpark.fastclick.mvcs.views.hud
 		{
 			// var hudViewBackground : Shape = createRectangleShape(stage.stageWidth, 60, 0x000000);
 
-			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 240, 0, 10, stage.stageWidth - 10, 60);
-			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 240, 0, 10, stage.stageWidth - 10, 60);
+			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 265, 0, 10, stage.stageWidth - 10, 60);
+			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 265, 0, 10, stage.stageWidth - 10, 60);
 			timeBar.mask = barMask;
 
-			TweenMax.to(barMask, uint(this.getDataProvider().getValueByKey('gameDuration')), {y:stage.stageHeight - 220, ease:Linear.easeNone});
+			TweenMax.to(barMask, uint(this.getDataProvider().getValueByKey('gameDuration')), {y:stage.stageHeight - 265, ease:Linear.easeNone});
 
 			scoreTitle.y = 20;
 			scoreTitle.x = 5;
@@ -65,7 +66,9 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			playerNameField.x = stage.stageWidth - playerNameField.width;
 
 			level.x = stage.stageWidth - level.width;
-			level.y = 60 - level.height;
+			level.y = playerNameField.height;
+
+			exp.y = level.y + level.height;
 
 			time.text = String(this.getDataProvider().getValueByKey('gameDuration'));
 			timeSprite.x = (stage.stageWidth - timeSprite.width) / 2;
@@ -131,6 +134,13 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			level.background = true;
 			level.backgroundColor = 0xcacaca;
 			addChild(level);
+
+			exp = createField("", 0, 0, 200, 20, false, "Verdana", 12, 0x000000);
+			exp.background = true;
+			exp.backgroundColor = 0x00ff00;
+			exp.visible = false;
+			addChild(exp);
+			
 		}
 
 		public function updateTime() : void
@@ -138,10 +148,17 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			time.text = String(this.getDataProvider().getValueByKey('time'));
 		}
 
-		public function updateLevel(currentLevel : uint) : void
+		public function updateLevel(currentLevel : uint, neededScore : uint, upperLevel : uint) : void
 		{
 			level.text = 'LEVEL ' + String(currentLevel);
 			level.x = stage.stageWidth - level.width;
+
+			if (neededScore && upperLevel)
+			{
+				exp.text = neededScore + ' needed for level ' + upperLevel;
+				exp.x = stage.stageWidth - exp.width;
+				exp.visible = true;
+			}
 		}
 	}
 }

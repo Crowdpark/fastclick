@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import flash.net.SharedObject;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
@@ -18,9 +19,14 @@ package com.crowdpark.fastclick.mvcs.commands
 
 		override public function execute() : void
 		{
+			var data : PlayerVo = PlayerVo(gameEvents.getDataprovider());
 			var flashCookie : SharedObject = SharedObject.getLocal("MyFlashCookie");
-			flashCookie.data.playername = gameEvents.getDataprovider().getValueByKey('playerName');
-			flashCookie.data.playername = gameEvents.getDataprovider().getValueByKey('playerLastName');
+			
+
+			flashCookie.data.playername = data.getPlayerName();
+			flashCookie.data.playerLastName = data.getPlayerLastName();
+			flashCookie.data.id = data.getPlayerId();
+			
 			
 			playerModel.setFlashCookie(flashCookie);
 			

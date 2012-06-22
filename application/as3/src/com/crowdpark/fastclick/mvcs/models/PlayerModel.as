@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.models
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
+	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
@@ -96,9 +98,7 @@ package com.crowdpark.fastclick.mvcs.models
 			currentPlayer.setPlayerLastName(playerLastName);
 			currentPlayer.setPlayerId(id);
 
-			var score : ScoreVo = new ScoreVo();
-			score.setScore(0);
-			score.setDate(0);
+			var score : ScoreVo = new ScoreVo().setScore(0).setDate(0);
 
 			currentPlayer.setCurrentScore(score);
 			currentPlayer.setCurrentLevel(1);
@@ -117,6 +117,7 @@ package com.crowdpark.fastclick.mvcs.models
 		public function createFriend(index : uint) : void
 		{
 			var friendData : Object = getCurrentPlayer().getFriendsList()[index];
+			
 			var playerVo : PlayerVo = new PlayerVo();
 			playerVo.setPlayerId(friendData.id);
 			playerVo.setPlayerFullName(friendData.name);
@@ -192,5 +193,7 @@ package com.crowdpark.fastclick.mvcs.models
 				}
 			}
 		}
+
+		
 	}
 }

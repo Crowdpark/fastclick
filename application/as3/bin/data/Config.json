@@ -2,10 +2,10 @@
 	"url":"http://rino.fastclick.com/api/v1/notauth/",
 	"levels":
 			[
-				{"levelIndex":"1","gameDuration":"15","scoreLimit":"0"},
-				{"levelIndex":"2","gameDuration":"10","scoreLimit":"500"},
-				{"levelIndex":"3","gameDuration":"8","scoreLimit":"1000"},
-				{"levelIndex":"4","gameDuration":"6","scoreLimit":"3000"}
+				{"levelIndex":"1","gameDuration":"21","scoreLimit":"200"},
+				{"levelIndex":"2","gameDuration":"13","scoreLimit":"120"},
+				{"levelIndex":"3","gameDuration":"8","scoreLimit":"70"},
+				{"levelIndex":"4","gameDuration":"5","scoreLimit":"40"}
 			],
 	"colors":
 			[

@@ -60,7 +60,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 				ball.setScore(point);
 				ball.setLifeTime(Math.ceil(ball.getShape().width / 10));
 				ball.addEventListener(FastClickBallEvent.REMOVE_CIRCLE, onRemoveCircleListener);
-				ball.setStartPoint(randomPoint(ball.getShape().width / 2, contextView.stage.stageWidth - ball.getShape().width, 90, contextView.stage.stageHeight - 210 - ball.getShape().height));
+				ball.setStartPoint(randomPoint(ball.getShape().width / 2, contextView.stage.stageWidth - ball.getShape().width, 130, contextView.stage.stageHeight - 210 - ball.getShape().height));
 				ball.setPicture(playerFriends[randomIntegerWithinRange(0, playerFriends.length - 1)].getPlayerPicture());
 				ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
 				return ball;

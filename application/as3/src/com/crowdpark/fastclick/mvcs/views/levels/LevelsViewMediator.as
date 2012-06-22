@@ -21,11 +21,12 @@ package com.crowdpark.fastclick.mvcs.views.levels
 			}
 
 			addViewListener(GameEvents.LEVEL_SELECT, onLevelSelectListener);
-			// addContextListener(GameEvents.SHOW_LEVELS, onShowLevelsListener);
 			var levelArray : Vector.<LevelVo> = configModel.getLevelArray();
+			var currentLevel:uint = playerModel.getCurrentPlayer().getCurrentLevel();
+			
 			if (levelArray)
 			{
-				showLevels(levelArray);
+				showLevels(levelArray,currentLevel);
 			}
 		}
 
@@ -42,10 +43,10 @@ package com.crowdpark.fastclick.mvcs.views.levels
 			dispatch(new StateMachineEvents(StateMachineEvents.START));
 		}
 
-		private function showLevels(levelArray : Vector.<LevelVo>) : void
+		private function showLevels(levelArray : Vector.<LevelVo>,currentLevel) : void
 		{
 			view.getDataProvider().setValueByKey('levelArray', levelArray);
-			view.createLevels();
+			view.createLevels(currentLevel);
 			view.enableSelect();
 		}
 

@@ -18,6 +18,7 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			var levelView : LevelsView = new LevelsView();
 			levelView.init();
+			
 
 			mainSprite.addChild(levelView);
 		}

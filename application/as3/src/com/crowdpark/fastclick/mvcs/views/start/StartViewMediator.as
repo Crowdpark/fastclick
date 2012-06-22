@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.views.start
 {
+	import com.crowdpark.fastclick.mvcs.events.GiftEvent;
+	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
@@ -21,17 +23,35 @@ package com.crowdpark.fastclick.mvcs.views.start
 			{
 				view.updatePlayerNameField(playerModel.getCurrentPlayer().getPlayerName(), playerModel.getCurrentPlayer().getPlayerLastName());
 			}
-			if (stateMachineModel.state == StateMachineState.REPLAY)
+			if (stateMachineModel.getGameState() == StateMachineState.REPLAYED)
 			{
-				//view.removeLoading();
+				// view.removeLoading();
 				handleReadyToStart(null);
-				
+				onShowGiftListener(null);
 			}
 
 			addViewListener(StartView.START_GAME, onStartGameListener);
 			addViewListener(StartView.PLAY_GAME, onPlayGameListener);
-
+			addViewListener(StartView.RECEIVE_GIFT, onReceiveGiftListener);
+	
 			addContextListener(GameEvents.SET_PLAYER_COOKIE, setPlayerListener);
+			addContextListener(GiftEvent.SHOW_GIFT, onShowGiftListener);
+		}
+
+		private function onReceiveGiftListener(event:Event) : void
+		{
+			var receivedGift = view.getDataProvider().getValueByKey('receivedGift');
+			var giftEvent:GiftEvent = new GiftEvent(GiftEvent.ADD_GIFT);
+			giftEvent.getDataprovider().setValueByKey('receivedGift', receivedGift);
+			
+			dispatch(giftEvent);
+		}
+
+		private function onShowGiftListener(event : GiftEvent) : void
+		{
+			
+			view.getDataProvider().setValueByKey('gift', giftModel.getReceivedGiftList());
+			view.showGifts();
 		}
 
 		private function onPlayGameListener(e : Event) : void
@@ -53,7 +73,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 		private function onStartGameListener(e : Event) : void
 		{
-			//dispatch(new StateMachineEvents(StateMachineEvents.START));
+			// dispatch(new StateMachineEvents(StateMachineEvents.START));
 		}
 
 		protected function get view() : StartView

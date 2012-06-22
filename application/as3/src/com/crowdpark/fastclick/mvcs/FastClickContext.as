@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs
 {
+	import com.crowdpark.fastclick.mvcs.commands.AddGiftCommand;
+	import com.crowdpark.fastclick.mvcs.events.GiftEvent;
 	import com.crowdpark.fastclick.mvcs.models.GiftModel;
 	import com.crowdpark.fastclick.mvcs.commands.SendGiftBackendCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SendGiftCommand;
@@ -78,16 +80,21 @@ package com.crowdpark.fastclick.mvcs
 
 			commandMap.mapEvent(StateMachineEvents.START, CountDownCommand, StateMachineEvents);
 			
-			commandMap.mapEvent(BackendServiceEvents.SAVE_CONFIG_DATA, SaveConfigDataCommand);
+			commandMap.mapEvent(BackendServiceEvents.SAVE_CONFIG_DATA, SaveConfigDataCommand,BackendServiceEvents);
 			commandMap.mapEvent(GameEvents.SET_PLAYER_COOKIE, SetPlayerCookieCommand, GameEvents);
-			commandMap.mapEvent(BackendServiceEvents.START_FETCH_FRIENDS, StartFetchFriendsCommand);
-			commandMap.mapEvent(BackendServiceEvents.SET_APP_FRIENDS, SetAppFriendsCommand);
-			commandMap.mapEvent(BitmapFetcherServiceEvent.FETCH_BITMAP, FetchBitmapCommand);
-			commandMap.mapEvent(BitmapFetcherServiceEvent.BITMAP_FETCHED, BitmapFetchedCommand);
+			commandMap.mapEvent(BackendServiceEvents.START_FETCH_FRIENDS, StartFetchFriendsCommand,BackendServiceEvents);
+			commandMap.mapEvent(BackendServiceEvents.SET_APP_FRIENDS, SetAppFriendsCommand,BackendServiceEvents);
+			commandMap.mapEvent(BitmapFetcherServiceEvent.FETCH_BITMAP, FetchBitmapCommand,BitmapFetcherServiceEvent);
+			commandMap.mapEvent(BitmapFetcherServiceEvent.BITMAP_FETCHED, BitmapFetchedCommand,BitmapFetcherServiceEvent);
 			commandMap.mapEvent(PointClickEvent.POINT_CLICK, UpdateScoreCommand, PointClickEvent);
-			commandMap.mapEvent(FacebookServiceEvent.INVITE_FRIEND, InviteFriendCommand);
-			commandMap.mapEvent(FacebookServiceEvent.SEND_GIFT, SendGiftCommand,FacebookServiceEvent);
-			commandMap.mapEvent(BackendServiceEvents.SEND_GIFT, SendGiftBackendCommand,BackendServiceEvents);
+			commandMap.mapEvent(FacebookServiceEvent.INVITE_FRIEND, InviteFriendCommand,FacebookServiceEvent);
+			
+			commandMap.mapEvent(GiftEvent.SEND_GIFT, SendGiftCommand,GiftEvent);
+			commandMap.mapEvent(GiftEvent.ADD_GIFT, AddGiftCommand,GiftEvent);
+			
+			
+			
+			commandMap.mapEvent(BackendServiceEvents.SEND_GIFT_BACKEND, SendGiftBackendCommand,BackendServiceEvents);
 
 			commandMap.mapEvent(StateMachineEvents.PLAY_GAME, PlayGameCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.GAME, StartGameCommand, StateMachineEvents);

@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
+	import com.crowdpark.fastclick.mvcs.models.vo.LevelVo;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
@@ -27,6 +29,8 @@ package com.crowdpark.fastclick.mvcs.commands
 		public var stateMachineModel : StateMachineModel;
 		[Inject]
 		public var highestScoreModel : HighestScoreModel;
+		[Inject]
+		public var configModel : ConfigModel;
 
 		override public function execute() : void
 		{
@@ -40,7 +44,15 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			var currentPlayer : PlayerVo = playerModel.getCurrentPlayer();
 			var currentScore : ScoreVo = currentPlayer.getCurrentScore();
-			currentScore.setDate(0);
+			var currentLevel : uint = currentPlayer.getCurrentLevel();
+			var selectedLevel : uint = currentPlayer.getSelectedLevel();
+
+			if (selectedLevel == currentLevel)
+			{
+				var newLevel : uint = configModel.calculateLevel(currentScore.getScore(), currentLevel);
+				currentPlayer.setCurrentLevel(newLevel);
+				currentScore.setDate(0);
+			}
 
 			highestScoreModel.addScore(currentScore);
 			backendService.storeResult(currentPlayer);
@@ -48,7 +60,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			if (stateMachineModel.getGameState() != StateMachineState.REPLAYED)
 			{
 				backendService.getHighestScores(currentPlayer);
-				stateMachineModel.state = StateMachineState.REPLAY;
+				// stateMachineModel.setGameState(StateMachineState.REPLAYED);
 			}
 			else
 			{

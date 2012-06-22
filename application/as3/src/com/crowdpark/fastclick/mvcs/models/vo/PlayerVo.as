@@ -38,7 +38,6 @@ package com.crowdpark.fastclick.mvcs.models.vo
 
 		public function setCurrentScore(score : ScoreVo) : PlayerVo
 		{
-			
 			this.setValueByKey('currentScore', score);
 			return this;
 		}
@@ -178,10 +177,20 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			this.setValueByKey('appFriends', appFriends);
 			return this;
 		}
+
 		public function getAppFriendsList() : Object
 		{
 			return this.getValueByKey('appFriends');
 		}
 
+		public function setReceivedGifts(receivedGifts : Vector.<GiftVo>) : void
+		{
+			this.setValueByKey('receivedGifts', receivedGifts);
+		}
+
+		public function getReceivedGifts() : Vector.<GiftVo>
+		{
+			return Vector.<GiftVo>(this.getValueByKey('receivedGifts'));
+		}
 	}
 }

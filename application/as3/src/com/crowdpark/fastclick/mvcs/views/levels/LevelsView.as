@@ -33,16 +33,26 @@ package com.crowdpark.fastclick.mvcs.views.levels
 			hbox.mouseChildren = false;
 		}
 
-		public function createLevels() : void
+		public function createLevels(currentLevel : uint) : void
 		{
 			var levelArray : Vector.<LevelVo> = Vector.<LevelVo>(getDataProvider().getValueByKey('levelArray'));
 
-			for (var i : uint; i < levelArray.length;i++)
+			for (var i : uint = 0; i < levelArray.length;i++)
 			{
 				var levelSprite : Sprite = createLevelSprite(levelArray[i]);
 				levelSprite.name = String(levelArray[i].getLevelIndex());
-				levelSprite.buttonMode = true;
-				levelSprite.addEventListener(MouseEvent.CLICK, onLevelClickListener);
+
+				if (i <= currentLevel - 1)
+				{
+					levelSprite.buttonMode = true;
+					levelSprite.addEventListener(MouseEvent.CLICK, onLevelClickListener);
+				}
+				else
+				{
+					var cross : TextField = createField('X', 0, 0, 200, 20, false, 'Verdana', 20, 0xff0000);
+					levelSprite.addChild(cross);
+				}
+
 				hbox.addChild(levelSprite);
 			}
 			hbox.x = (stage.stageWidth - this.width) / 2;

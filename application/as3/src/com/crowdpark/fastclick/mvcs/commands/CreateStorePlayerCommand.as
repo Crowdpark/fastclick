@@ -17,7 +17,11 @@ package com.crowdpark.fastclick.mvcs.commands
 
 		override public function execute() : void
 		{
-			playerModel.createPlayer(String(facebookServiceEvent.getDataprovider().getValueByKey('firstName')), String(facebookServiceEvent.getDataprovider().getValueByKey('lastName')), String(facebookServiceEvent.getDataprovider().getValueByKey('id')));
+			var params = facebookServiceEvent.getDataprovider().getValueByKey('params');
+			if (params)
+			{
+				playerModel.createPlayer(String(params.first_name), String(params.last_name), String(params.id));
+			}
 		}
 	}
 }

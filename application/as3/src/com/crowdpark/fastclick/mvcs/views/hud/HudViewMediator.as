@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.hud
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
@@ -25,7 +26,20 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			addContextListener(HudViewEvent.UPDATE, updateTime);
 			addContextListener(PointClickEvent.POINT_CLICK, handlePointClickEvent);
 
-			view.updateLevel(uint(playerModel.getCurrentPlayer().getSelectedLevel()));
+			var currentPlayer : PlayerVo = playerModel.getCurrentPlayer();
+			var selectedLevel : uint = uint(currentPlayer.getSelectedLevel());
+			
+			var neededScore:uint; 
+			var upperLevel:uint;
+			 
+			if (selectedLevel < configModel.getLevelArray().length)
+			{
+				neededScore = uint(configModel.getLevelArray()[selectedLevel - 1].getScoreLimit());
+				upperLevel  = configModel.getLevelArray()[selectedLevel].getLevelIndex();
+			}
+
+			view.updateLevel(selectedLevel, neededScore, upperLevel);
+			view.score.text = String(currentPlayer.getCurrentScore().getScore());
 		}
 
 		private function updateTime(e : HudViewEvent) : void
@@ -36,7 +50,7 @@ package com.crowdpark.fastclick.mvcs.views.hud
 
 		private function handlePointClickEvent(event : PointClickEvent) : void
 		{
-			var currentScore : ScoreVo = ScoreVo(playerModel.getCurrentPlayer().getValueByKey('currentScore'))
+			var currentScore : ScoreVo = ScoreVo(playerModel.getCurrentPlayer().getCurrentScore());
 			view.score.text = String(currentScore.getScore());
 
 			var scoreBox : BaseGraphic = BaseGraphic(event.getDataprovider().getValueByKey('scoreBox'));

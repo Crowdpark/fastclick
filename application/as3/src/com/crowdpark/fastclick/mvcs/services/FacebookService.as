@@ -31,9 +31,7 @@ package com.crowdpark.fastclick.mvcs.services
 		private function onMe(params : Object) : void
 		{
 			var facebookServiceEvent : FacebookServiceEvent = new FacebookServiceEvent(FacebookServiceEvent.CREATE_STORE_PLAYER);
-			facebookServiceEvent.getDataprovider().setValueByKey('firstName', String(params.first_name));
-			facebookServiceEvent.getDataprovider().setValueByKey('lastName', String(params.last_name));
-			facebookServiceEvent.getDataprovider().setValueByKey('id', String(params.id));
+			facebookServiceEvent.getDataprovider().setValueByKey('params', params);
 			dispatch(facebookServiceEvent);
 		}
 
@@ -80,8 +78,11 @@ package com.crowdpark.fastclick.mvcs.services
 			data.amount = 10;
 			if (gift)
 			{
-				currentObject = gift;
 				data.uid = gift.getFriendId();
+				currentObject = gift;
+			}else
+			{
+				currentObject = new GiftVo();
 			}
 
 			ExternalInterface.call('crowdparkFlash.facebookSendGift', data);
@@ -92,9 +93,9 @@ package com.crowdpark.fastclick.mvcs.services
 		{
 			if (result != 0)
 			{
-				currentObject.setRequest(String(result));
+				currentObject.setGiftRequest(String(result));
 
-				var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.SEND_GIFT);
+				var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.SEND_GIFT_BACKEND);
 				backendServiceEvent.getDataprovider().setValueByKey('data', currentObject);
 				dispatch(backendServiceEvent);
 			}

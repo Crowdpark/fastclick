@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.friends
 {
+	import com.crowdpark.fastclick.mvcs.events.GiftEvent;
 	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
@@ -16,7 +17,7 @@ package com.crowdpark.fastclick.mvcs.views.friends
 		{
 			super.onRegister();
 			addViewListener(FriendsView.INVITE_BUTTON_CLICKED, onInviteListener);
-			addViewListener(FriendsView.SEND_GIFT, onSendGiftListener);
+			addViewListener(FriendsView.SEND_GIFT_EVENT, onSendGiftListener);
 			addContextListener(GameEvents.CREATE_APP_FRIEND, onCreateAppFriendListener);
 		}
 
@@ -25,12 +26,12 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			var giftVo : GiftVo = new GiftVo();
 			giftVo.setFriendId(String(view.getDataProvider().getValueByKey('friendId')));
 			giftVo.setGiftType(1);
-			giftVo.setAmount(10);
+			giftVo.setGiftAmount(10);
 			giftVo.setMessage('Send gift Test');
 
 			giftModel.addGift(giftVo);
 
-			dispatch(new FacebookServiceEvent(FacebookServiceEvent.SEND_GIFT));
+			dispatch(new GiftEvent(GiftEvent.SEND_GIFT));
 		}
 
 		private function onInviteListener(event : Event) : void

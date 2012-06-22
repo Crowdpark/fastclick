@@ -49,13 +49,13 @@ object:focus {
 		var params = {};
 		params.quality = "high";
 		params.bgcolor = "#ffffff";
-		params.allowscriptaccess = "sameDomain";
+		params.allowscriptaccess = "always";
 		params.allowfullscreen = "true";
 		var attributes = {};
-		attributes.id = "Main";
-		attributes.name = "Main";
+		attributes.id = "Testing";
+		attributes.name = "Testing";
 		attributes.align = "middle";
-		swfobject.embedSWF("MainApp.swf", "flashObject", "100%", "100%",
+		swfobject.embedSWF("FastClick.swf", "flashObject", "100%", "100%",
 				swfVersionStr, xiSwfUrlStr, flashvars, params, attributes);
 		// JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
 		swfobject.createCSS("#flashObject", "display:block;text-align:left;");
@@ -91,11 +91,14 @@ object:focus {
 				
 			function fetchMeFriends(response){
 				FB.api("/me", function(response){
-	            	window.swfobject.getObjectById('Main').onMe(response);
+	            	window.swfobject.getObjectById('Testing').onMe(response);
+	            	
+	            	FB.api("/me/friends", function(response){
+		            	window.swfobject.getObjectById('Testing').onFetchFriends(response);
+		            });
+	            	
 	            });
-	            FB.api("/me/friends", function(response){
-	            	window.swfobject.getObjectById('Main').onFetchFriends(response);
-	            });
+	            
 			}
 			
 			FB.getLoginStatus(function(response){
@@ -183,7 +186,7 @@ object:focus {
 				                }
 				                console.log(data);
 				                
-				                window.swfobject.getObjectById('Main').facebookSendGift(data);
+				                window.swfobject.getObjectById('Testing').facebookSendGift(data);
 				            }
 				        );
 				    },

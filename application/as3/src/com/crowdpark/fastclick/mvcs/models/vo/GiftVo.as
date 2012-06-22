@@ -29,12 +29,12 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			return this;
 		}
 
-		public function setAmount(amount : uint) : void
+		public function setGiftAmount(amount : uint) : void
 		{
 			this.setValueByKey('amount', amount);
 		}
 
-		public function getAmount() : uint
+		public function getGiftAmount() : uint
 		{
 			return uint(this.getValueByKey('amount'));
 		}
@@ -49,13 +49,13 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			this.setValueByKey('friendId', friendId);
 		}
 
-		public function setRequest(request : String) : GiftVo
+		public function setGiftRequest(request : String) : GiftVo
 		{
 			this.setValueByKey('request', request);
 			return this;
 		}
 
-		public function getRequest() : String
+		public function getGiftRequest() : String
 		{
 			return String(this.getValueByKey('request'));
 		}

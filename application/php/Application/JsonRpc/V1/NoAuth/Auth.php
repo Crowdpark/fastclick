@@ -8,9 +8,9 @@ namespace Application\JsonRpc\V1\NoAuth
         public function setAuthData($authData)
         {
             $params = $authData->getParams();
-
-            if (!is_null($params[0]["id"]))
-                $this->getApplicationContext()->getUserBo()->setFacebookUserId($params[0]["id"]);
+            $id = $params[0]["id"];
+            if ("null" != ($id) && !is_null($id))
+                $this->getApplicationContext()->getUserBo()->setFacebookUserId($id);
 
                 return $this->_isAuth = $this->getApplicationContext()
                 ->getUserBo()

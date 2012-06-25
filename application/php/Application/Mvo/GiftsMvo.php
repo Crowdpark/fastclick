@@ -40,7 +40,7 @@ class GiftsMvo extends \Processus\Abstracts\Vo\AbstractMVO
             }
 
             $gifts[] = $giftData;
-            var_dump($gifts);
+
             return $this->setGift($gifts);
         }
 

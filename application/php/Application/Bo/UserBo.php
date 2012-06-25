@@ -73,10 +73,11 @@ class UserBo extends \Processus\Lib\Bo\UserBo
      */
     public function getFacebookUserId()
     {
-        if (!is_null($this->_facebookUserId))
+        if (!is_null($this->_facebookUserId) && ($this->_facebookUserId != "null"))
             return $this->_facebookUserId;
         else {
             $this->setFacebookUserId(parent::getFacebookUserId());
+            
             return $this->getFacebookUserId();
         }
     }

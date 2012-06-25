@@ -105,7 +105,7 @@ class UserBo extends \Processus\Lib\Bo\UserBo
                 $level = 1;
                 $data = $this->_getFbData($fbUserId, $mvo->isFirstTime());
                 $mvo->setData($data)->saveInMem();
-                $playerDataMvo->addScore($score)->setLevel($level)->saveInMem();
+                $playerDataMvo->setHighScore($score)->addScore($score, $level)->setLevel($level)->saveInMem();
 
             }
 

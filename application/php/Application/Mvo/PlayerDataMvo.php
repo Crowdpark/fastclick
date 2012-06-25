@@ -13,47 +13,16 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
 
     /**
      * @param int $score
-     * @return \Application\Mvo\PlayerDataMvo
+     * @param int $level
+     * @return PlayerDataMvo|\Processus\Abstracts\Vo\AbstractVO
      */
-    public function addScore(\int $score)
+
+    public function addScore(\int $score, \int $level)
     {
 
-        $scores = get_object_vars($this->getScores());
-
-        if (is_null($this->getHighScore()) || $score > $this->getHighScore())
-            $this->setHighScore($score);
-
-        if ($score === 0)
-            return $this;
-
-        $lowestScore = min($scores);
-
-        if ((sizeof($scores)) > 9) {
-
-            if ($lowestScore >= $score)
-                return $this;
-
-            $minimumKey = array_keys($scores, $lowestScore);
-            unset($scores[$minimumKey[0]]);
-
-        }
-
-        $scoreArray = array(time() => $score);
-        (is_null($scores)) ? $scores = $scoreArray : $scores[] = $score;
-
-        return $this->setScores($scores);
-
-    }
-
-    public function addScoreLevel(\int $score, \int $level)
-    {
         $allScores = get_object_vars($this->getScores());
-
         $scores = get_object_vars($allScores[$level]);
 
-        if (is_null($this->getHighScore()) || $score > $this->getHighScore())
-            $this->setHighScore($score);
-
         if ($score === 0)
             return $this;
 
@@ -64,18 +33,15 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
             if ($lowestScore >= $score)
                 return $this;
 
-            $minimumKey = array_keys($scores, $lowestScore);
-            unset($scores[$minimumKey[0]]);
-
+            $minimumKeys = array_keys($scores, $lowestScore);
+            unset($scores[$minimumKeys[0]]);
         }
 
         $scoreArray = array(time() => $score);
         (is_null($scores)) ? $scores = $scoreArray : $scores[] = $score;
-
         $allScores[$level] = $scores;
 
         return $this->setScores($allScores);
-
     }
 
     /**
@@ -146,4 +112,5 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
     {
         return $this->getValueByKey("experience");
     }
+
 }

@@ -20,12 +20,12 @@ package com.crowdpark.fastclick.mvcs.views.control
 	public class ControlView extends BaseView
 	{
 		public static const SEND_GIFTS : String = "SEND_GIFTS";
-		public static const PLAY : String = "PLAY";
 		public static const INVITE_FRIENDS : String = "INVITE_FRIENDS";
+		public static const LOBBY : String = "LOBBY";
 		
 		
 		private var buttonContainer : Sprite = new Sprite();
-		private var options : Array = ['Free Gifts', 'Play', 'Invite Friends'];
+		private var options : Array = ['Free Gifts', 'Lobby', 'Invite Friends'];
 
 		override public function init() : void
 		{
@@ -67,7 +67,7 @@ package com.crowdpark.fastclick.mvcs.views.control
 					dispatchEvent(new Event(ControlView.SEND_GIFTS));
 					return;
 				case options[1]:
-					dispatchEvent(new Event(ControlView.PLAY));
+					dispatchEvent(new Event(ControlView.LOBBY));
 					return;
 				case options[2]:
 					dispatchEvent(new Event(ControlView.INVITE_FRIENDS));

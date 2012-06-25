@@ -117,7 +117,7 @@ package com.crowdpark.fastclick.mvcs.models
 		public function createFriend(index : uint) : void
 		{
 			var friendData : Object = getCurrentPlayer().getFriendsList()[index];
-			
+
 			var playerVo : PlayerVo = new PlayerVo();
 			playerVo.setPlayerId(friendData.id);
 			playerVo.setPlayerFullName(friendData.name);
@@ -131,23 +131,8 @@ package com.crowdpark.fastclick.mvcs.models
 			playerVo.setFetchIndex(index);
 
 			getPlayerFriends().push(playerVo);
-
 			var bitmapFetcherServiceEvent : BitmapFetcherServiceEvent = new BitmapFetcherServiceEvent(BitmapFetcherServiceEvent.FETCH_BITMAP);
 			dispatch(bitmapFetcherServiceEvent);
-		}
-
-		public function getPlayerAppFriends() : Vector.<PlayerVo>
-		{
-			if (!_playerApplicationFriends)
-			{
-				_playerApplicationFriends = new Vector.<PlayerVo>();
-			}
-			return _playerApplicationFriends;
-		}
-
-		public function setPlayerApplicationFriends(playerApplicationFriends : Vector.<PlayerVo>) : void
-		{
-			_playerApplicationFriends = playerApplicationFriends;
 		}
 
 		public function setCurrentLevel(user : Object) : void
@@ -185,6 +170,7 @@ package com.crowdpark.fastclick.mvcs.models
 						var score : ScoreVo = new ScoreVo();
 						score.setScore(appFriends[i].high_score);
 						allFriends[j].setCurrentScore(score);
+						allFriends[j].setCurrentLevel(appFriends[i].level);
 
 						var gameEvent : GameEvents = new GameEvents(GameEvents.CREATE_APP_FRIEND);
 						gameEvent.getDataprovider().setValueByKey('currentFriend', allFriends[j]);
@@ -193,7 +179,5 @@ package com.crowdpark.fastclick.mvcs.models
 				}
 			}
 		}
-
-		
 	}
 }

@@ -39,16 +39,6 @@ package com.crowdpark.fastclick.mvcs.models.vo
 			return uint(this.getValueByKey('amount'));
 		}
 
-		public function getFriendId() : String
-		{
-			return String(this.getValueByKey('friendId'));
-		}
-
-		public function setFriendId(friendId : String) : void
-		{
-			this.setValueByKey('friendId', friendId);
-		}
-
 		public function setGiftRequest(request : String) : GiftVo
 		{
 			this.setValueByKey('request', request);
@@ -58,6 +48,26 @@ package com.crowdpark.fastclick.mvcs.models.vo
 		public function getGiftRequest() : String
 		{
 			return String(this.getValueByKey('request'));
+		}
+
+		public function setId(playerId : String) : void
+		{
+			this.setValueByKey('id', playerId);
+		}
+
+		public function getId() : String
+		{
+			return String(this.getValueByKey('id'));
+		}
+
+		public function setRecipientId(string : String) : void
+		{
+			this.setValueByKey('recipient_id', string);
+		}
+
+		public function getRecipientId() : String
+		{
+			return String(this.getValueByKey('recipient_id'));
 		}
 	}
 }

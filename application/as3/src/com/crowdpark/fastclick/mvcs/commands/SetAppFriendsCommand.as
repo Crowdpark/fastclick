@@ -23,7 +23,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			var data = backendServiceEvent.getDataprovider().getValueByKey('data');
 
 			playerModel.setCurrentLevel(data.user);
-			playerModel.getCurrentPlayer().setAppFriendsList(data.allFriends);
+			playerModel.getCurrentPlayer().setAppFriendsList(data.appFriends);
 			
 			giftModel.createReceivedGifts(data.gifts);
 			playerModel.getCurrentPlayer().setReceivedGifts(giftModel.getReceivedGiftList());

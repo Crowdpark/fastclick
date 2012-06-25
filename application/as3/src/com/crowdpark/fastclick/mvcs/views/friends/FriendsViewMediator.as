@@ -24,12 +24,13 @@ package com.crowdpark.fastclick.mvcs.views.friends
 		private function onSendGiftListener(event : Event) : void
 		{
 			var giftVo : GiftVo = new GiftVo();
-			giftVo.setFriendId(String(view.getDataProvider().getValueByKey('friendId')));
+			giftVo.setId(playerModel.getCurrentPlayer().getPlayerId());
+			giftVo.setRecipientId(String(view.getDataProvider().getValueByKey('friendId')));
 			giftVo.setGiftType(1);
 			giftVo.setGiftAmount(10);
 			giftVo.setMessage('Send gift Test');
 
-			giftModel.addGift(giftVo);
+			giftModel.setCurrentGift(giftVo);
 
 			dispatch(new GiftEvent(GiftEvent.SEND_GIFT));
 		}

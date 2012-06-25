@@ -53,14 +53,13 @@ package com.crowdpark.fastclick.mvcs.commands
 				currentPlayer.setCurrentLevel(newLevel);
 				currentScore.setDate(0);
 			}
-
-			highestScoreModel.addScore(currentScore);
+			
+			highestScoreModel.addScore(currentScore, selectedLevel);
 			backendService.storeResult(currentPlayer);
 
 			if (stateMachineModel.getGameState() != StateMachineState.REPLAYED)
 			{
 				backendService.getHighestScores(currentPlayer);
-				// stateMachineModel.setGameState(StateMachineState.REPLAYED);
 			}
 			else
 			{

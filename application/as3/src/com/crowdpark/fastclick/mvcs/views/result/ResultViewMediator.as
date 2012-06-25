@@ -29,26 +29,18 @@ package com.crowdpark.fastclick.mvcs.views.result
 
 		private function onShowHighestScore(e : LeaderboardEvent) : void
 		{
-			view.addToPane(highestScoreModel.getHighscoreList());
+			var currentLevel : String = String(playerModel.getCurrentPlayer().getSelectedLevel());
+
+			view.addToPane(highestScoreModel.getAllLevelsList()[String(currentLevel)]);
 			view.enableRetry();
 		}
 
 		private function onLeaderboardEvent(e : LeaderboardEvent) : void
 		{
 			var result = e.getDataprovider().getValueByKey('result');
-			createHighestScores(result);
-		}
-
-		private function createHighestScores(scores : Object) : void
-		{
-			for (var key:String in scores)
-			{
-				var score : ScoreVo = new ScoreVo().setScore(scores[key]).setDate(uint(key));
-				highestScoreModel.getHighscoreList().push(score);
-			}
-			highestScoreModel.sortHighestScores();
-
-			view.addToPane(highestScoreModel.getHighscoreList());
+			var currentLevel : String = String(playerModel.getCurrentPlayer().getSelectedLevel());
+			highestScoreModel.createHighestScoreLists(result);
+			view.addToPane(highestScoreModel.getAllLevelsList()[String(currentLevel)]);
 			view.enableRetry();
 		}
 

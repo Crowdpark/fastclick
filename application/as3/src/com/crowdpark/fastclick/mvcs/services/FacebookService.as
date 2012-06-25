@@ -1,9 +1,8 @@
 package com.crowdpark.fastclick.mvcs.services
 {
-	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
-	import com.facebook.graph.Facebook;
+	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
 
 	import org.robotlegs.mvcs.Actor;
 
@@ -15,8 +14,6 @@ package com.crowdpark.fastclick.mvcs.services
 	 */
 	public class FacebookService extends Actor
 	{
-		var currentObject : GiftVo;
-
 		public function init() : void
 		{
 			Security.loadPolicyFile("http://graph.facebook.com/crossdomain.xml");
@@ -74,15 +71,11 @@ package com.crowdpark.fastclick.mvcs.services
 		{
 			var data = new Object();
 			data.message = 'test gift send';
-			data.type = 1;
-			data.amount = 10;
 			if (gift)
 			{
-				data.uid = gift.getFriendId();
-				currentObject = gift;
-			}else
-			{
-				currentObject = new GiftVo();
+				data.type = gift.getGiftType();
+				data.amount = gift.getGiftAmount();
+				data.uid = gift.getRecipientId();
 			}
 
 			ExternalInterface.call('crowdparkFlash.facebookSendGift', data);
@@ -93,10 +86,8 @@ package com.crowdpark.fastclick.mvcs.services
 		{
 			if (result != 0)
 			{
-				currentObject.setGiftRequest(String(result));
-
 				var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.SEND_GIFT_BACKEND);
-				backendServiceEvent.getDataprovider().setValueByKey('data', currentObject);
+				backendServiceEvent.getDataprovider().setValueByKey('result', result);
 				dispatch(backendServiceEvent);
 			}
 		}

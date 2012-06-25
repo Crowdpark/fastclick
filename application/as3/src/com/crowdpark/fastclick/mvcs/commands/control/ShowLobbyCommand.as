@@ -5,7 +5,11 @@ package com.crowdpark.fastclick.mvcs.commands.control
 	/**
 	 * @author fatmatekin
 	 */
-	public class PlayCommand extends Command
+	public class ShowLobbyCommand extends Command
 	{
+		override public function execute() : void
+		{
+					
+		}
 	}
 }

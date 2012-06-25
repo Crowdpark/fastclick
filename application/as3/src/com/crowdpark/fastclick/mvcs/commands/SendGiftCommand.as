@@ -18,7 +18,7 @@ package com.crowdpark.fastclick.mvcs.commands
 
 		override public function execute() : void
 		{
-			facebookService.sendGift(giftModel.getGiftList()[0]);
+			facebookService.sendGift(giftModel.getCurrentGift());
 		}
 	}
 }

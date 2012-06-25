@@ -22,10 +22,10 @@ package com.crowdpark.fastclick.mvcs.commands
 		override public function execute() : void
 		{
 			dispatch(new StateMachineEvents(StateMachineEvents.LOADING));
-			
-			playerModel.getCurrentPlayer().setFriendsList(backendServiceEvent.getDataprovider().getValueByKey('data'));
-			backendService.storePlayer(playerModel.getCurrentPlayer());
 
+			playerModel.getCurrentPlayer().setFriendsList(backendServiceEvent.getDataprovider().getValueByKey('data'));
+
+			backendService.storePlayer(playerModel.getCurrentPlayer());
 			playerModel.createFriend(playerModel._currentFetchIndex);
 		}
 	}

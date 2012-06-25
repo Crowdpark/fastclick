@@ -10,6 +10,7 @@ package com.crowdpark.fastclick.mvcs.models
 	public class HighestScoreModel extends Actor
 	{
 		private var _highscoreList : Vector.<ScoreVo> = new Vector.<ScoreVo>();
+		private var _allLevelsList : Object;
 
 		public function getHighscoreList() : Vector.<ScoreVo>
 		{
@@ -27,15 +28,26 @@ package com.crowdpark.fastclick.mvcs.models
 			return this;
 		}
 
-		public function addScore(score : ScoreVo) : void
+		public function addScore(score : ScoreVo, currentLevel : uint) : void
 		{
-			getHighscoreList().push(score);
-			sortHighestScores();
+			// getHighscoreList().push(score);
+			// sortHighestScores();
+			var currentList : Vector.<ScoreVo> = getAllLevelsList()[String(currentLevel)];
+			if (!currentList)
+			{
+				var newScoreList : Vector.<ScoreVo> = new Vector.<ScoreVo>();
+				currentList = newScoreList;
+				getAllLevelsList()[String(currentLevel)] = currentList;
+			}
+			currentList.push(score);
+			sortHighestScores(currentList);
 		}
 
-		public function sortHighestScores() : void
+		public function sortHighestScores(scoreList : Vector.<ScoreVo>) : Vector.<ScoreVo>
 		{
-			getHighscoreList().sort(sortScoreVos);
+			// getHighscoreList().sort(sortScoreVos);
+			scoreList.sort(sortScoreVos);
+			return scoreList;
 		}
 
 		private function sortScoreVos(x : ScoreVo, y : ScoreVo) : Number
@@ -58,6 +70,40 @@ package com.crowdpark.fastclick.mvcs.models
 			{
 				return 0;
 			}
+		}
+
+		public function createHighestScoreLists(result : Object) : void
+		{
+			for (var key:String in result )
+			{
+				_allLevelsList[key] = createLevelScoreList(result[key]);
+			}
+		}
+
+		public function createLevelScoreList(scores : Object) : Vector.<ScoreVo>
+		{
+			var scoreList : Vector.<ScoreVo> = new Vector.<ScoreVo>();
+			for (var key:String in scores)
+			{
+				var score : ScoreVo = new ScoreVo().setScore(scores[key]).setDate(uint(key));
+				scoreList.push(score);
+			}
+			return sortHighestScores(scoreList);
+		}
+
+		public function getAllLevelsList() : Object
+		{
+			if (!_allLevelsList)
+			{
+				_allLevelsList = new Object();
+			}
+			return _allLevelsList;
+		}
+
+		public function setAllLevelsList(allLevelsList : Object) : HighestScoreModel
+		{
+			_allLevelsList = allLevelsList;
+			return this;
 		}
 	}
 }

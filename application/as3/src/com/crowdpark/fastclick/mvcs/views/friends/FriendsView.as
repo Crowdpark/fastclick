@@ -92,8 +92,8 @@ package com.crowdpark.fastclick.mvcs.views.friends
 		private function onGiftBoxListener(event : MouseEvent) : void
 		{
 			var friendId : String = PlayerCanvas(event.currentTarget.parent).getFriendId();
-
 			getDataProvider().setValueByKey('friendId', friendId);
+			
 			dispatchEvent(new Event(FriendsView.SEND_GIFT_EVENT));
 		}
 	}

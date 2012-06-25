@@ -1,18 +1,16 @@
 package com.crowdpark.fastclick.mvcs
 {
 	import com.crowdpark.fastclick.mvcs.commands.AddGiftCommand;
-	import com.crowdpark.fastclick.mvcs.events.GiftEvent;
-	import com.crowdpark.fastclick.mvcs.models.GiftModel;
-	import com.crowdpark.fastclick.mvcs.commands.SendGiftBackendCommand;
-	import com.crowdpark.fastclick.mvcs.commands.SendGiftCommand;
-	import com.crowdpark.fastclick.mvcs.commands.PlayGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.BitmapFetchedCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CreateStorePlayerCommand;
 	import com.crowdpark.fastclick.mvcs.commands.FetchBitmapCommand;
 	import com.crowdpark.fastclick.mvcs.commands.FinishGameCommand;
+	import com.crowdpark.fastclick.mvcs.commands.PlayGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.ReplayGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SaveConfigDataCommand;
+	import com.crowdpark.fastclick.mvcs.commands.SendGiftBackendCommand;
+	import com.crowdpark.fastclick.mvcs.commands.SendGiftCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SetAppFriendsCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SetPlayerCookieCommand;
 	import com.crowdpark.fastclick.mvcs.commands.StartFetchFriendsCommand;
@@ -20,16 +18,18 @@ package com.crowdpark.fastclick.mvcs
 	import com.crowdpark.fastclick.mvcs.commands.StartUpCompleteCommand;
 	import com.crowdpark.fastclick.mvcs.commands.UpdateScoreCommand;
 	import com.crowdpark.fastclick.mvcs.commands.control.InviteFriendCommand;
-	import com.crowdpark.fastclick.mvcs.commands.control.PlayCommand;
 	import com.crowdpark.fastclick.mvcs.commands.control.SendGiftsCommand;
+	import com.crowdpark.fastclick.mvcs.commands.control.ShowLobbyCommand;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
+	import com.crowdpark.fastclick.mvcs.events.GiftEvent;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
+	import com.crowdpark.fastclick.mvcs.models.GiftModel;
 	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.services.BackendService;
@@ -57,11 +57,11 @@ package com.crowdpark.fastclick.mvcs
 	import com.crowdpark.fastclick.mvcs.views.result.ResultViewMediator;
 	import com.crowdpark.fastclick.mvcs.views.start.StartView;
 	import com.crowdpark.fastclick.mvcs.views.start.StartViewMediator;
-	import flash.display.DisplayObjectContainer;
+
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Context;
 
-
+	import flash.display.DisplayObjectContainer;
 
 	/**
 	 * @author fatmatekin
@@ -79,40 +79,36 @@ package com.crowdpark.fastclick.mvcs
 			commandMap.mapEvent(FacebookServiceEvent.CREATE_STORE_PLAYER, CreateStorePlayerCommand);
 
 			commandMap.mapEvent(StateMachineEvents.START, CountDownCommand, StateMachineEvents);
-			
-			commandMap.mapEvent(BackendServiceEvents.SAVE_CONFIG_DATA, SaveConfigDataCommand,BackendServiceEvents);
+
+			commandMap.mapEvent(BackendServiceEvents.SAVE_CONFIG_DATA, SaveConfigDataCommand, BackendServiceEvents);
 			commandMap.mapEvent(GameEvents.SET_PLAYER_COOKIE, SetPlayerCookieCommand, GameEvents);
-			commandMap.mapEvent(BackendServiceEvents.START_FETCH_FRIENDS, StartFetchFriendsCommand,BackendServiceEvents);
-			commandMap.mapEvent(BackendServiceEvents.SET_APP_FRIENDS, SetAppFriendsCommand,BackendServiceEvents);
-			commandMap.mapEvent(BitmapFetcherServiceEvent.FETCH_BITMAP, FetchBitmapCommand,BitmapFetcherServiceEvent);
-			commandMap.mapEvent(BitmapFetcherServiceEvent.BITMAP_FETCHED, BitmapFetchedCommand,BitmapFetcherServiceEvent);
+			commandMap.mapEvent(BackendServiceEvents.START_FETCH_FRIENDS, StartFetchFriendsCommand, BackendServiceEvents);
+			commandMap.mapEvent(BackendServiceEvents.SET_APP_FRIENDS, SetAppFriendsCommand, BackendServiceEvents);
+			commandMap.mapEvent(BitmapFetcherServiceEvent.FETCH_BITMAP, FetchBitmapCommand, BitmapFetcherServiceEvent);
+			commandMap.mapEvent(BitmapFetcherServiceEvent.BITMAP_FETCHED, BitmapFetchedCommand, BitmapFetcherServiceEvent);
 			commandMap.mapEvent(PointClickEvent.POINT_CLICK, UpdateScoreCommand, PointClickEvent);
-			commandMap.mapEvent(FacebookServiceEvent.INVITE_FRIEND, InviteFriendCommand,FacebookServiceEvent);
-			
-			commandMap.mapEvent(GiftEvent.SEND_GIFT, SendGiftCommand,GiftEvent);
-			commandMap.mapEvent(GiftEvent.ADD_GIFT, AddGiftCommand,GiftEvent);
-			
-			
-			
-			commandMap.mapEvent(BackendServiceEvents.SEND_GIFT_BACKEND, SendGiftBackendCommand,BackendServiceEvents);
+			commandMap.mapEvent(FacebookServiceEvent.INVITE_FRIEND, InviteFriendCommand, FacebookServiceEvent);
+
+			commandMap.mapEvent(GiftEvent.SEND_GIFT, SendGiftCommand, GiftEvent);
+			commandMap.mapEvent(GiftEvent.ADD_GIFT, AddGiftCommand, GiftEvent);
+
+			commandMap.mapEvent(BackendServiceEvents.SEND_GIFT_BACKEND, SendGiftBackendCommand, BackendServiceEvents);
 
 			commandMap.mapEvent(StateMachineEvents.PLAY_GAME, PlayGameCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.GAME, StartGameCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.FINISH, FinishGameCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.REPLAY, ReplayGameCommand, StateMachineEvents);
-			
+
 			commandMap.mapEvent(ControlViewEvent.INVITE_FRIENDS, InviteFriendCommand);
-			commandMap.mapEvent(ControlViewEvent.PLAY, PlayCommand);
+			commandMap.mapEvent(ControlViewEvent.SHOW_LOBBY, ShowLobbyCommand);
 			commandMap.mapEvent(ControlViewEvent.SEND_GIFTS, SendGiftsCommand);
-			
-			
 
 			injector.mapSingleton(PlayerModel);
 			injector.mapSingleton(StateMachineModel);
 			injector.mapSingleton(ConfigModel);
 			injector.mapSingleton(HighestScoreModel);
 			injector.mapSingleton(GiftModel);
-			
+
 			injector.mapSingleton(ConfigService);
 			injector.mapSingleton(FacebookService);
 			injector.mapSingleton(BackendService);

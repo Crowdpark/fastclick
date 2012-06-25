@@ -15,12 +15,12 @@ package com.crowdpark.fastclick.mvcs.views.control
 
 			addViewListener(ControlView.INVITE_FRIENDS, onInviteFriendsListener);
 			addViewListener(ControlView.SEND_GIFTS, onSendGiftsListener);
-			addViewListener(ControlView.PLAY, onPlayListener);
+			addViewListener(ControlView.LOBBY, onPlayListener);
 		}
 
 		private function onPlayListener(event : Event) : void
 		{
-			dispatch(new ControlViewEvent(ControlViewEvent.PLAY));
+			dispatch(new ControlViewEvent(ControlViewEvent.SHOW_LOBBY));
 		}
 
 		private function onSendGiftsListener(event : Event) : void

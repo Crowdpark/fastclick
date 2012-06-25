@@ -43,8 +43,6 @@ package com.crowdpark.fastclick.mvcs.views.hud
 
 		override public function onAddedToStageListener(e : Event) : void
 		{
-			// var hudViewBackground : Shape = createRectangleShape(stage.stageWidth, 60, 0x000000);
-
 			var timeBar : Shape = createRectangleShape(10, stage.stageHeight - 265, 0, 10, stage.stageWidth - 10, 60);
 			var barMask : Shape = createRectangleShape(10, stage.stageHeight - 265, 0, 10, stage.stageWidth - 10, 60);
 			timeBar.mask = barMask;
@@ -78,7 +76,6 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			logoutSprite.x = stage.stageWidth - 50;
 			logoutSprite.y = 60 - logoutSprite.height;
 
-			// addChildAt(hudViewBackground, 0);
 			addChild(timeBar);
 			addChild(barMask);
 			addChild(playerNameField);
@@ -140,7 +137,6 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			exp.backgroundColor = 0x00ff00;
 			exp.visible = false;
 			addChild(exp);
-			
 		}
 
 		public function updateTime() : void

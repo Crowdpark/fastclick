@@ -77,7 +77,7 @@ class UserBo extends \Processus\Lib\Bo\UserBo
             return $this->_facebookUserId;
         else {
             $this->setFacebookUserId(parent::getFacebookUserId());
-            
+
             return $this->getFacebookUserId();
         }
     }

@@ -10,15 +10,12 @@ namespace Application\Manager\Player;
 
 class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
 {
-    /**
-     * @param $score
-     * @return \Application\Mvo\PlayerDataMvo
-     */
-    public function setScore($score)
-    {
 
+
+    public function setScore($score, $level)
+    {
         $scoresMvo = $this->getApplicationContext()->getPlayerDataMvo();
-        $scoresMvo->addScore($score);
+        $scoresMvo->addScoreLevel($score, $level);
 
         return $scoresMvo;
     }

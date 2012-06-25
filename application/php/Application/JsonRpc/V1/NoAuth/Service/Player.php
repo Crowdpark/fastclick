@@ -16,7 +16,6 @@ class Player extends \Application\Core\Abstracts\AbstractService
      */
     public function getAppFriends(array $params)
     {
-
         $manager = new \Application\Manager\Player\PlayerManager();
         $return = $manager->getAppFriends($params["friendsList"]);
 
@@ -36,14 +35,12 @@ class Player extends \Application\Core\Abstracts\AbstractService
 
     public function updateUser(array $params)
     {
-
         $manager = new \Application\Manager\Player\PlayerManager();
 
         $manager->setLevel($params["currentLevel"]);
-        $mvo = $manager->setScore($params["currentScore"]);
+        $mvo = $manager->setScore($params["currentScore"], $params["selectedLevel"]);
 
         return $mvo->saveInMem();
-
     }
 
     /**
@@ -52,7 +49,6 @@ class Player extends \Application\Core\Abstracts\AbstractService
 
     public function getScores()
     {
-
         $mvo = $this->getApplicationContext()->getPlayerDataMvo();
 
         $scoreHistory = get_object_vars(($mvo->getScores()));

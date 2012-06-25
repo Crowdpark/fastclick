@@ -17,6 +17,7 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
      */
     public function addScore(\int $score)
     {
+
         $scores = get_object_vars($this->getScores());
 
         if (is_null($this->getHighScore()) || $score > $this->getHighScore())
@@ -25,21 +26,55 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
         if ($score === 0)
             return $this;
 
-        $lowestScore = min($score);
+        $lowestScore = min($scores);
 
-        if ((sizeof($scores)) > 9 && ($lowestScore < $score)) {
+        if ((sizeof($scores)) > 9) {
+
+            if ($lowestScore >= $score)
+                return $this;
 
             $minimumKey = array_keys($scores, $lowestScore);
             unset($scores[$minimumKey[0]]);
 
-        } else if ($lowestScore >= $score)
-            return $this;
+        }
 
         $scoreArray = array(time() => $score);
-
         (is_null($scores)) ? $scores = $scoreArray : $scores[] = $score;
 
         return $this->setScores($scores);
+
+    }
+
+    public function addScoreLevel(\int $score, \int $level)
+    {
+        $allScores = get_object_vars($this->getScores());
+
+        $scores = get_object_vars($allScores[$level]);
+
+        if (is_null($this->getHighScore()) || $score > $this->getHighScore())
+            $this->setHighScore($score);
+
+        if ($score === 0)
+            return $this;
+
+        $lowestScore = min($scores);
+
+        if ((sizeof($scores)) > 9) {
+
+            if ($lowestScore >= $score)
+                return $this;
+
+            $minimumKey = array_keys($scores, $lowestScore);
+            unset($scores[$minimumKey[0]]);
+
+        }
+
+        $scoreArray = array(time() => $score);
+        (is_null($scores)) ? $scores = $scoreArray : $scores[] = $score;
+
+        $allScores[$level] = $scores;
+
+        return $this->setScores($allScores);
 
     }
 
@@ -48,7 +83,6 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
      */
     public function getScores()
     {
-
         return $this->getValueByKey("scores");
     }
 

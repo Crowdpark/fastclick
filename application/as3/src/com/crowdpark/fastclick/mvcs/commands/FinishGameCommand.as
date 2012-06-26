@@ -1,14 +1,13 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
-	import com.crowdpark.fastclick.mvcs.models.vo.LevelVo;
-	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
-	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
+	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
+	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.services.BackendService;
 	import com.crowdpark.fastclick.mvcs.views.result.ResultView;
 
@@ -51,9 +50,9 @@ package com.crowdpark.fastclick.mvcs.commands
 			{
 				var newLevel : uint = configModel.calculateLevel(currentScore.getScore(), currentLevel);
 				currentPlayer.setCurrentLevel(newLevel);
-				currentScore.setDate(0);
 			}
-			
+
+			currentScore.setDate(0);
 			highestScoreModel.addScore(currentScore, selectedLevel);
 			backendService.storeResult(currentPlayer);
 

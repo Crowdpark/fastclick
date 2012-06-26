@@ -1,10 +1,9 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
-	import com.crowdpark.fastclick.mvcs.models.GiftModel;
-	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
-	import com.crowdpark.fastclick.mvcs.services.BackendService;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
+	import com.crowdpark.fastclick.mvcs.models.GiftModel;
+	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
+	import com.crowdpark.fastclick.mvcs.services.BackendService;
 
 	import org.robotlegs.mvcs.Command;
 

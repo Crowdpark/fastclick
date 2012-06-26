@@ -46,12 +46,6 @@ package com.crowdpark.fastclick.mvcs.services
 
 		public function inviteFriend() : void
 		{
-			/*var dat : Object = new Object();
-			dat.message = 'invite';
-			dat.title = 'fastclick';
-			dat.filters = ['app_non_users'];
-			Facebook.ui('apprequests', dat, onUICallback, 'iframe');*/
-
 			var data = new Object();
 			data.id = 100003894794078;
 			data.trackingUid = 100003894794078;

@@ -1,11 +1,12 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
-	import flash.net.SharedObject;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 
 	import org.robotlegs.mvcs.Command;
+
+	import flash.net.SharedObject;
 
 	/**
 	 * @author fatmatekin

@@ -1,7 +1,5 @@
 package com.crowdpark.fastclick.mvcs.services
 {
-	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
-	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;

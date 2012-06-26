@@ -30,7 +30,7 @@ package com.crowdpark.fastclick.mvcs.views.levels
 			}
 		}
 
-		override public function handleReadyToStart(e : StateMachineEvents) : void
+		override protected function handleReadyToStart(e : StateMachineEvents) : void
 		{
 			super.handleReadyToStart(e);
 			view.enableSelect();

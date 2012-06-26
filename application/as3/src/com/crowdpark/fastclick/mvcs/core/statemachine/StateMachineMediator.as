@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.core.statemachine
 {
+	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
 	import com.crowdpark.fastclick.mvcs.models.GiftModel;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
@@ -22,6 +23,8 @@ package com.crowdpark.fastclick.mvcs.core.statemachine
 		public var highestScoreModel : HighestScoreModel;
 		[Inject]
 		public var giftModel : GiftModel;
+		[Inject]
+		public var loadingModel : LoadingModel;
 
 		override public function onRegister() : void
 		{
@@ -29,10 +32,15 @@ package com.crowdpark.fastclick.mvcs.core.statemachine
 			addContextListener(StateMachineEvents.GAME, handleGame);
 			addContextListener(StateMachineEvents.FINISH, handleFinish);
 			addContextListener(StateMachineEvents.REPLAY, handleReplay);
+			addContextListener(StateMachineEvents.REPLAYED, handleReplayedListener);
 			addContextListener(StateMachineEvents.READY_TO_START, handleReadyToStart);
 			addContextListener(StateMachineEvents.LOADING, handleLoading);
 		}
 
+		protected function handleReplayedListener(e : StateMachineEvents) : void
+		{
+			stateMachineModel.state = StateMachineState.REPLAYED;
+		}
 		protected function handleReplay(e : StateMachineEvents) : void
 		{
 			stateMachineModel.state = StateMachineState.REPLAY;
@@ -58,7 +66,7 @@ package com.crowdpark.fastclick.mvcs.core.statemachine
 			stateMachineModel.state = StateMachineState.FINISH;
 		}
 
-		public function handleReadyToStart(e : StateMachineEvents) : void
+		protected function handleReadyToStart(e : StateMachineEvents) : void
 		{
 			stateMachineModel.state = StateMachineState.READY_TO_PLAY;
 		}

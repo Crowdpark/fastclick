@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.views.start
 {
+	import com.crowdpark.fastclick.mvcs.views.loading.LoadingView;
+
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 
@@ -30,9 +32,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 		public var startButtonSprite : Sprite = new Sprite();
 		public var playerNameSprite : Sprite = new Sprite();
 		private var playerNameField : TextField;
-		private var tfm : TextFormat;
 		private var title : TextField;
-		private var loadingTextField : TextField;
 		public var giftContainer : Sprite = new Sprite();
 		public var giftsBox : Sprite = new Sprite();
 
@@ -50,22 +50,14 @@ package com.crowdpark.fastclick.mvcs.views.start
 			giftsBox.y = playerNameField.y + playerNameField.height + 90;
 			giftContainer.y = giftsBox.y + giftsBox.height + 20;
 
-			loadingTextField.x = (stage.stageWidth - loadingTextField.width) / 2;
-			loadingTextField.y = playerNameField.y + playerNameField.height + 180;
-
 			startButtonSprite.x = stage.stageWidth;
-			startButtonSprite.y = loadingTextField.y;
+			startButtonSprite.y = giftContainer.y + 70;
 		}
 
 		override public function init() : void
 		{
-			tfm = new TextFormat("Arial", 20, 0xffffff, true);
-
-			loadingTextField = createField('LOADING...', 0, 0, 200, 20, false, 'Verdana', 20);
-
 			addChild(gameTitleSprite);
 			addChild(playerNameSprite);
-			addChild(loadingTextField);
 
 			createGameTitle();
 			createStartButton();
@@ -133,14 +125,6 @@ package com.crowdpark.fastclick.mvcs.views.start
 			return this;
 		}
 
-		public function removeLoading() : void
-		{
-			if (contains(loadingTextField))
-			{
-				removeChild(loadingTextField);
-			}
-		}
-
 		public function addStartButton() : void
 		{
 			addChild(startButtonSprite);
@@ -168,7 +152,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 			{
 				giftsBox.removeChildAt(0);
 			}
-			if (gifts.length>0)
+			if (gifts.length > 0)
 			{
 				addChild(giftsBox);
 				addChild(giftContainer);

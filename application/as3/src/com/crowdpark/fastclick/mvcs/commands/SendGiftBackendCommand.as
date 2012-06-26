@@ -1,6 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
+	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvent;
 	import com.crowdpark.fastclick.mvcs.models.GiftModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.services.BackendService;
@@ -13,7 +13,7 @@ package com.crowdpark.fastclick.mvcs.commands
 	public class SendGiftBackendCommand extends Command
 	{
 		[Inject]
-		public var backendServiceEvent : BackendServiceEvents;
+		public var backendServiceEvent : BackendServiceEvent;
 		[Inject]
 		public var backendService : BackendService;
 		[Inject]

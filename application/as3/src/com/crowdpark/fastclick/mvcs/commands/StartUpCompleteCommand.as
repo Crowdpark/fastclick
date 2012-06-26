@@ -1,5 +1,8 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.events.LoadingEvent;
+	import com.crowdpark.fastclick.mvcs.views.loading.LoadingView;
+	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
 	import com.crowdpark.fastclick.mvcs.views.control.ControlView;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 	import com.crowdpark.fastclick.mvcs.services.ConfigService;
@@ -22,12 +25,15 @@ package com.crowdpark.fastclick.mvcs.commands
 		public var configService : ConfigService;
 		[Inject]
 		public var stateMachineModel : StateMachineModel;
+		[Inject]
+		public var loadingModel : LoadingModel;
 
 		override public function execute() : void
 		{
 			configService.fetchData("data/Config.json");
-			facebookService.init();
 
+			facebookService.init();
+			
 			var mainSprite : Sprite = new Sprite();
 			mainSprite.name = 'mainSprite';
 			var friendsSprite : Sprite = new Sprite();
@@ -39,6 +45,11 @@ package com.crowdpark.fastclick.mvcs.commands
 			var startView : StartView = new StartView();
 			startView.init();
 
+			var loadingView : LoadingView = new LoadingView();
+			loadingView.name = 'loading';
+			loadingView.init();
+			loadingModel.setLoadingState('connecting to facebook');
+
 			var friends : FriendsView = new FriendsView();
 			friends.init();
 
@@ -48,6 +59,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			contextView.addChild(mainSprite);
 			contextView.addChild(friendsSprite);
 			contextView.addChild(controlView);
+			contextView.addChild(loadingView);
 		}
 	}
 }

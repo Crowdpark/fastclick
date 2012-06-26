@@ -9,7 +9,7 @@ package com.crowdpark.fastclick.mvcs.commands
 	/**
 	 * @author fatmatekin
 	 */
-	public class PlayGameCommand extends Command
+	public class ShowLevelsCommand extends Command
 	{
 		override public function execute() : void
 		{
@@ -18,7 +18,6 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			var levelView : LevelsView = new LevelsView();
 			levelView.init();
-			
 
 			mainSprite.addChild(levelView);
 		}

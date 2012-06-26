@@ -13,18 +13,74 @@ class GameManager extends \Processus\Abstracts\Manager\AbstractManager
 
     public function getGifts()
     {
-        $giftsMvo = new \Application\Mvo\GiftsMvo();
+        $giftsMvo = $this->getApplicationContext()->getPlayerGiftsMvo();
         $giftsMvo->setMemId($this->getApplicationContext()->getUserBo()->getFacebookUserId());
+
         return $giftsMvo->getGifts();
     }
 
     public function sendGift(array $giftData)
     {
-        $id = $giftData["id"];
-        unset($giftData["id"]);
-        $giftsMvo = new \Application\Mvo\GiftsMvo();
-        $giftsMvo->setId($id);
-        return $giftsMvo->setMemId($id)->addGift($giftData)->saveInMem();
+        $recipients = array_keys($giftData["recipient_list"]);
+
+        foreach ($recipients as $recipient) {
+            $gift = array();
+            $gift["request"] = $giftData["recipient_list"][$recipient]["request"];
+            $gift["amount"] = $giftData["recipient_list"][$recipient]["amount"];
+            $gift["type"] = $giftData["recipient_list"][$recipient]["type"];
+            $gift["sender_id"] = $this->getApplicationContext()->getUserBo()->getFacebookUserId();
+
+            $giftsMvo = new \Application\Mvo\GiftsMvo();
+            $giftsMvo->setId($recipient);
+            $giftsMvo->setMemId($recipient)->addGift($gift)->saveInMem();
+
+        }
+
+    }
+
+    /**
+     * @param array $giftData
+     * @return bool|int
+     */
+
+    public function acceptGift(array $giftData)
+    {
+        $giftsMvo = $this->getApplicationContext()->getPlayerGiftsMvo();
+
+        $gifts = $giftsMvo->getGifts();
+        if (sizeof($gifts) === 1)
+            return $giftsMvo->deleteFromMem();
+
+        $c = 0;
+
+        foreach ($gifts as $gift) {
+
+            if ($giftData["requestId"] === $gift->request)
+                break;
+
+            $c++;
+        }
+
+        unset($gifts[$c]);
+
+        return $giftsMvo->setGift($gifts)->saveInMem();
+    }
+
+    /**
+     * @param $requestId
+     * @return array|mixed
+     */
+    protected function _removeFacebookRequest($requestId)
+    {
+
+        return $this->getApplicationContext()->getFacebookClient()->getFacebookSdk()
+            ->api('/'.$requestId,
+                                    'DELETE',
+                                        array('access_token' => $this->
+                                            getApplicationContext()->
+                                            getFacebookClient()->
+                                            getFacebookSdk()->
+                                            getAccessToken()));
     }
 
 }

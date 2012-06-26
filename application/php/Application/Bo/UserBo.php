@@ -73,10 +73,11 @@ class UserBo extends \Processus\Lib\Bo\UserBo
      */
     public function getFacebookUserId()
     {
-        if (!is_null($this->_facebookUserId))
+        if (!is_null($this->_facebookUserId) && ($this->_facebookUserId != "null"))
             return $this->_facebookUserId;
         else {
             $this->setFacebookUserId(parent::getFacebookUserId());
+
             return $this->getFacebookUserId();
         }
     }
@@ -104,7 +105,7 @@ class UserBo extends \Processus\Lib\Bo\UserBo
                 $level = 1;
                 $data = $this->_getFbData($fbUserId, $mvo->isFirstTime());
                 $mvo->setData($data)->saveInMem();
-                $playerDataMvo->addScore($score)->setLevel($level)->saveInMem();
+                $playerDataMvo->setHighScore($score)->addScore($score, $level)->setLevel($level)->saveInMem();
 
             }
 

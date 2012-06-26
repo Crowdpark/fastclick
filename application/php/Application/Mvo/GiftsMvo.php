@@ -10,6 +10,12 @@ namespace Application\Mvo;
 class GiftsMvo extends \Processus\Abstracts\Vo\AbstractMVO
 {
 
+    function __construct()
+    {
+        if (is_null($this->getMemId()))
+            $this->setMemId($this->getApplicationContext()->getUserBo()->getFacebookUserId());
+    }
+
     public function setId($id)
     {
         return $this->setValueByKey($id, "id");
@@ -22,10 +28,19 @@ class GiftsMvo extends \Processus\Abstracts\Vo\AbstractMVO
     {
         $gifts = $this->getGifts();
 
-        if (is_null($giftData))
-            return $this->setGift($gifts);
+        if (is_null($gifts))
+            return $this->setGift(array($giftData));
         else {
+
+            if (sizeof($gifts) == 1) {
+                foreach($gifts as $gift) {
+                    $gifts = array(get_object_vars($gift));
+                    break;
+                }
+            }
+
             $gifts[] = $giftData;
+
             return $this->setGift($gifts);
         }
 
@@ -37,6 +52,7 @@ class GiftsMvo extends \Processus\Abstracts\Vo\AbstractMVO
      */
     public function setGift(array $giftData)
     {
+
         return $this->setValueByKey("gifts", $giftData);
     }
 
@@ -49,8 +65,13 @@ class GiftsMvo extends \Processus\Abstracts\Vo\AbstractMVO
 
         $gifts = get_object_vars(json_decode($connector->fetch($this->getMemId())));
 
-        return $gifts["gifts"];
+        $return = array();
+        foreach ($gifts["gifts"] as $gift)
+        {
+            $return[] = $gift;
+        }
 
+        return $return;
     }
 
     /**

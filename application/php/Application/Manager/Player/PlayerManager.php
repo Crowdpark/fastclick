@@ -12,13 +12,14 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
 {
     /**
      * @param $score
+     * @param $level
      * @return \Application\Mvo\PlayerDataMvo
      */
-    public function setScore($score)
+    public function setScore($score, $level)
     {
-
         $scoresMvo = $this->getApplicationContext()->getPlayerDataMvo();
-        $scoresMvo->addScore($score);
+        $scoresMvo->addScore($score, $level);
+        $this->_setHighScore($score);
 
         return $scoresMvo;
     }
@@ -72,6 +73,18 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
         $return["friends"] = $appFriends;
 
         return $return;
+    }
+
+    /**
+     * Evaluates and sets the high score if it's the highest.
+     * @param int $score
+     */
+    private function _setHighScore(\int $score)
+    {
+        $mvo = $this->getApplicationContext()->getPlayerDataMvo();
+        
+        if (is_null($mvo) || $score > $mvo->getHighScore())
+            $mvo->setHighScore($score)->saveInMem();
     }
 
 }

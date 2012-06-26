@@ -17,4 +17,10 @@ class Game extends \Application\Core\Abstracts\AbstractService
         return $manager->sendGift($params);
     }
 
+    public function acceptGift(array $params)
+    {
+        $manager = new \Application\Manager\Game\GameManager();
+        return $manager->acceptGift($params);
+    }
+
 }

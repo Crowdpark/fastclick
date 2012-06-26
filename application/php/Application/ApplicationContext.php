@@ -106,5 +106,20 @@ namespace Application
             return $this->_playerDataMvo;
         }
 
+        private $_playerGiftsMvo;
+
+        /**
+         * @return Mvo\GiftsMvo
+         */
+        public function getPlayerGiftsMvo()
+        {
+            if (!$this->_playerGiftsMvo) {
+                $this->_playerGiftsMvo = new \Application\Mvo\GiftsMvo();
+                $this->_playerGiftsMvo->getFromMem();
+            }
+
+            return $this->_playerGiftsMvo;
+        }
+
     }
 }

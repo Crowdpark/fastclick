@@ -13,34 +13,35 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
 
     /**
      * @param int $score
-     * @return \Application\Mvo\PlayerDataMvo
+     * @param int $level
+     * @return PlayerDataMvo|\Processus\Abstracts\Vo\AbstractVO
      */
-    public function addScore(\int $score)
-    {
-        $scores = get_object_vars($this->getScores());
 
-        if (is_null($this->getHighScore()) || $score > $this->getHighScore())
-            $this->setHighScore($score);
+    public function addScore(\int $score, \int $level)
+    {
+
+        $allScores = get_object_vars($this->getScores());
+        $scores = get_object_vars($allScores[$level]);
 
         if ($score === 0)
             return $this;
 
-        $lowestScore = min($score);
+        $lowestScore = min($scores);
 
-        if ((sizeof($scores)) > 9 && ($lowestScore < $score)) {
+        if ((sizeof($scores)) > 9) {
 
-            $minimumKey = array_keys($scores, $lowestScore);
-            unset($scores[$minimumKey[0]]);
+            if ($lowestScore >= $score)
+                return $this;
 
-        } else if ($lowestScore >= $score)
-            return $this;
+            $minimumKeys = array_keys($scores, $lowestScore);
+            unset($scores[$minimumKeys[0]]);
+        }
 
         $scoreArray = array(time() => $score);
-
         (is_null($scores)) ? $scores = $scoreArray : $scores[] = $score;
+        $allScores[$level] = $scores;
 
-        return $this->setScores($scores);
-
+        return $this->setScores($allScores);
     }
 
     /**
@@ -48,7 +49,6 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
      */
     public function getScores()
     {
-
         return $this->getValueByKey("scores");
     }
 
@@ -112,4 +112,5 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
     {
         return $this->getValueByKey("experience");
     }
+
 }

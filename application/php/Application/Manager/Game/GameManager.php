@@ -48,7 +48,6 @@ class GameManager extends \Processus\Abstracts\Manager\AbstractManager
         $giftsMvo = $this->getApplicationContext()->getPlayerGiftsMvo();
 
         $gifts = $giftsMvo->getGifts();
-
         if (sizeof($gifts) === 1)
             return $giftsMvo->deleteFromMem();
 
@@ -67,5 +66,21 @@ class GameManager extends \Processus\Abstracts\Manager\AbstractManager
         return $giftsMvo->setGift($gifts)->saveInMem();
     }
 
+    /**
+     * @param $requestId
+     * @return array|mixed
+     */
+    protected function _removeFacebookRequest($requestId)
+    {
+
+        return $this->getApplicationContext()->getFacebookClient()->getFacebookSdk()
+            ->api('/'.$requestId,
+                                    'DELETE',
+                                        array('access_token' => $this->
+                                            getApplicationContext()->
+                                            getFacebookClient()->
+                                            getFacebookSdk()->
+                                            getAccessToken()));
+    }
 
 }

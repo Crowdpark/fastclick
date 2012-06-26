@@ -49,7 +49,9 @@ package com.crowdpark.fastclick.mvcs.views.points
 
 		private function createFastClickBall() : FastClickBall
 		{
-			var playerFriends : Vector.<PlayerVo> = playerModel.getPlayerFriends();
+			//var playerFriends : Vector.<PlayerVo> = playerModel.getPlayerFriends();
+			var playerFriends :Vector.<PlayerVo> = playerModel.getLoadedFriends();
+			
 			if (playerFriends)
 			{
 				var ball : FastClickBall = new FastClickBall();

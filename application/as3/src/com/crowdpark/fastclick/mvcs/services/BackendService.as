@@ -1,6 +1,6 @@
 package com.crowdpark.fastclick.mvcs.services
 {
-	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
+	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
@@ -17,7 +17,7 @@ package com.crowdpark.fastclick.mvcs.services
 		[Inject]
 		public var configModel : ConfigModel;
 
-		public function storePlayer(player : PlayerVo) : void
+		public function storePlayerGetAppFriend(player : PlayerVo) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
 			jsonClient.params = [{'id':player.getPlayerId(), 'friendsList':player.getFriendsList()}];
@@ -25,6 +25,18 @@ package com.crowdpark.fastclick.mvcs.services
 			jsonClient.url = configModel.getUrl();
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onGetAppFriends);
 			jsonClient.send();
+		}
+
+		private function onGetAppFriends(event : JsonRpcClientEvent) : void
+		{
+			var data : Object = new Object();
+			data.appFriends = event.getDataprovider().getValueByKey('friends');
+			data.user = event.getDataprovider().getValueByKey('user');
+			data.gifts = event.getDataprovider().getValueByKey('gifts');
+
+			var backendServiceEvent : BackendServiceEvent = new BackendServiceEvent(BackendServiceEvent.SET_APP_FRIENDS);
+			backendServiceEvent.getDataprovider().setValueByKey('data', data);
+			dispatch(backendServiceEvent);
 		}
 
 		public function getHighestScores(player : PlayerVo) : void
@@ -37,10 +49,19 @@ package com.crowdpark.fastclick.mvcs.services
 			jsonClient.send();
 		}
 
-		public function removeGift(requestId : String,player:PlayerVo) : void
+		private function onHighestScores(event : JsonRpcClientEvent) : void
+		{
+			var data = event.getDataprovider();
+
+			var leaderboardEvent : LeaderboardEvent = new LeaderboardEvent(LeaderboardEvent.CREATE_HIGHEST_SCORES);
+			leaderboardEvent.getDataprovider().setValueByKey('result', data.getValues());
+			dispatch(leaderboardEvent);
+		}
+
+		public function removeGift(requestId : String, player : PlayerVo) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
-			jsonClient.params = [{'id':player.getPlayerId(),'requestId':requestId}];
+			jsonClient.params = [{'id':player.getPlayerId(), 'requestId':requestId}];
 			jsonClient.method = 'NoAuth.Game.acceptGift';
 			jsonClient.url = configModel.getUrl();
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onAcceptGift);
@@ -51,19 +72,10 @@ package com.crowdpark.fastclick.mvcs.services
 		{
 		}
 
-		private function onHighestScores(event : JsonRpcClientEvent) : void
-		{
-			var data = event.getDataprovider();
-
-			var leaderboardEvent : LeaderboardEvent = new LeaderboardEvent(LeaderboardEvent.CREATE_HIGHEST_SCORES);
-			leaderboardEvent.getDataprovider().setValueByKey('result', data.getValues());
-			dispatch(leaderboardEvent);
-		}
-
 		public function storeResult(player : PlayerVo) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
-			jsonClient.params = [{'id':player.getPlayerId(), 'currentScore':player.getCurrentScore().getScore(), 'currentLevel':player.getCurrentLevel(),'selectedLevel':player.getSelectedLevel()}];
+			jsonClient.params = [{'id':player.getPlayerId(), 'currentScore':player.getCurrentScore().getScore(), 'currentLevel':player.getCurrentLevel(), 'selectedLevel':player.getSelectedLevel()}];
 			jsonClient.method = 'NoAuth.Player.updateUser';
 			jsonClient.url = configModel.getUrl();
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onStoreResults);
@@ -74,22 +86,10 @@ package com.crowdpark.fastclick.mvcs.services
 		{
 		}
 
-		private function onGetAppFriends(event : JsonRpcClientEvent) : void
-		{
-			var data : Object = new Object();
-			data.appFriends = event.getDataprovider().getValueByKey('friends');
-			data.user = event.getDataprovider().getValueByKey('user');
-			data.gifts = event.getDataprovider().getValueByKey('gifts');
-
-			var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.SET_APP_FRIENDS);
-			backendServiceEvent.getDataprovider().setValueByKey('data', data);
-			dispatch(backendServiceEvent);
-		}
-
-		public function sendGift(playerId,data : Object) : void
+		public function sendGift(playerId, data : Object) : void
 		{
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
-			jsonClient.params = [{'id':playerId,'recipient_list':data}];
+			jsonClient.params = [{'id':playerId, 'recipient_list':data}];
 			jsonClient.method = 'NoAuth.Game.sendGift';
 			jsonClient.url = configModel.getUrl();
 			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onSendGift);

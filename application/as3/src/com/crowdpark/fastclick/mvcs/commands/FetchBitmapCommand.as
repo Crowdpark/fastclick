@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
@@ -15,13 +16,14 @@ package com.crowdpark.fastclick.mvcs.commands
 		public var bitmapService : BitmapFetcherService;
 		[Inject]
 		public var playerModel : PlayerModel;
-		
+		[Inject]
+		public var bitmapFetcherServiceEvent : BitmapFetcherServiceEvent;
+
 		override public function execute() : void
 		{
-			var playerFriendsVector:Vector.<PlayerVo> = playerModel.getPlayerFriends();
-			var currentFriend:PlayerVo = playerFriendsVector[playerFriendsVector.length-1];
-			
-			bitmapService.fetchBitMap(currentFriend.getPlayerPictureUrl());
+			var url : String = String(bitmapFetcherServiceEvent.getDataprovider().getValueByKey('url'));
+
+			bitmapService.fetchBitMap(url);
 		}
 	}
 }

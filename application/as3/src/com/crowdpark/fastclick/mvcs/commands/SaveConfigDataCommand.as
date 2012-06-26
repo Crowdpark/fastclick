@@ -1,7 +1,7 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
-	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
+	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvent;
 
 	import org.robotlegs.mvcs.Command;
 
@@ -13,7 +13,7 @@ package com.crowdpark.fastclick.mvcs.commands
 		[Inject]
 		public var configModel : ConfigModel;
 		[Inject]
-		public var backendServiceEvent : BackendServiceEvents;
+		public var backendServiceEvent : BackendServiceEvent;
 
 		override public function execute() : void
 		{

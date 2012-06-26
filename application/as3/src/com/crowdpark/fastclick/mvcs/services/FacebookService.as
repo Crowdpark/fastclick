@@ -1,6 +1,6 @@
 package com.crowdpark.fastclick.mvcs.services
 {
-	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvents;
+	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
 
@@ -27,14 +27,15 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onMe(params : Object) : void
 		{
-			var facebookServiceEvent : FacebookServiceEvent = new FacebookServiceEvent(FacebookServiceEvent.CREATE_STORE_PLAYER);
+			
+			var facebookServiceEvent : FacebookServiceEvent = new FacebookServiceEvent(FacebookServiceEvent.CREATE_PLAYER);
 			facebookServiceEvent.getDataprovider().setValueByKey('params', params);
 			dispatch(facebookServiceEvent);
 		}
 
 		private function onFetchFriends(params : Object) : void
 		{
-			var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.START_FETCH_FRIENDS);
+			var backendServiceEvent : BackendServiceEvent = new BackendServiceEvent(BackendServiceEvent.CREATE_FRIENDS);
 			backendServiceEvent.getDataprovider().setValueByKey('data', params.data);
 			dispatch(backendServiceEvent);
 		}
@@ -80,7 +81,7 @@ package com.crowdpark.fastclick.mvcs.services
 		{
 			if (result != 0)
 			{
-				var backendServiceEvent : BackendServiceEvents = new BackendServiceEvents(BackendServiceEvents.SEND_GIFT_BACKEND);
+				var backendServiceEvent : BackendServiceEvent = new BackendServiceEvent(BackendServiceEvent.SEND_GIFT_BACKEND);
 				backendServiceEvent.getDataprovider().setValueByKey('result', result);
 				dispatch(backendServiceEvent);
 			}

@@ -26,11 +26,12 @@ package com.crowdpark.fastclick.mvcs.commands
 		{
 			var loadedFriends : Vector.<PlayerVo> = playerModel.getLoadedFriends();
 			var friendsList : Object = playerModel.getCurrentPlayer().getFriendsList();
+			var appFriendList : Object = playerModel.getCurrentPlayer().getAppFriendsList();
 
 			var bitmap : Bitmap = Bitmap(bitmapFetcherServiceEvent.getDataprovider().getValueByKey('bitmap'));
-			playerModel.createFriendVo(bitmap, loadedFriends.length);
+			playerModel.createFriendVo(bitmap, loadedFriends.length, playerModel.getCurrentList());
 
-			if (loadedFriends.length == playerModel.getCurrentPlayer().getAppFriendsList().length)
+			if (loadedFriends.length == appFriendList.length)
 			{
 				contextView.removeChild(contextView.getChildByName('loading'));
 				dispatch(new StateMachineEvents(StateMachineEvents.READY_TO_START));

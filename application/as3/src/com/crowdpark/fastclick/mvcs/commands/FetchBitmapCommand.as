@@ -2,7 +2,6 @@ package com.crowdpark.fastclick.mvcs.commands
 {
 	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
-	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
 
 	import org.robotlegs.mvcs.Command;

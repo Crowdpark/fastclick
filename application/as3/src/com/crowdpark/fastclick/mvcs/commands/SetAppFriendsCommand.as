@@ -29,13 +29,11 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			playerModel.setCurrentLevel(data.user.level);
 			playerModel.getCurrentPlayer().setAppFriendsList(data.appFriends);
-			//playerModel.addAppFriends(data.appFriends);
 
 			giftModel.createReceivedGifts(data.gifts);
 			playerModel.getCurrentPlayer().setReceivedGifts(giftModel.getReceivedGiftList());
 
-			//playerModel.startFetchingBitmaps();
-			playerModel.startFetchingBitmaps(playerModel.getCurrentPlayer().getFriendsList());
+			playerModel.startFetchingBitmaps(data.appFriends);
 		}
 	}
 }

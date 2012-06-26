@@ -13,7 +13,7 @@ class GameManager extends \Processus\Abstracts\Manager\AbstractManager
 
     public function getGifts()
     {
-        $giftsMvo = new \Application\Mvo\GiftsMvo();
+        $giftsMvo = $this->getApplicationContext()->getPlayerGiftsMvo();
         $giftsMvo->setMemId($this->getApplicationContext()->getUserBo()->getFacebookUserId());
 
         return $giftsMvo->getGifts();
@@ -38,14 +38,34 @@ class GameManager extends \Processus\Abstracts\Manager\AbstractManager
 
     }
 
-    public function acceptGift(array $gift)
-    {
-        $giftsMvo = new \Application\Mvo\GiftsMvo();
+    /**
+     * @param array $giftData
+     * @return bool|int
+     */
 
-        if (!$giftsMvo->removeGift($gift))
-            $giftsMvo->deleteFromMem();
-        else
-            return $giftsMvo->saveInMem();
+    public function acceptGift(array $giftData)
+    {
+        $giftsMvo = $this->getApplicationContext()->getPlayerGiftsMvo();
+
+        $gifts = $giftsMvo->getGifts();
+
+        if (sizeof($gifts) === 1)
+            return $giftsMvo->deleteFromMem();
+
+        $c = 0;
+
+        foreach ($gifts as $gift) {
+
+            if ($giftData["requestId"] === $gift->request)
+                break;
+
+            $c++;
+        }
+
+        unset($gifts[$c]);
+
+        return $giftsMvo->setGift($gifts)->saveInMem();
     }
+
 
 }

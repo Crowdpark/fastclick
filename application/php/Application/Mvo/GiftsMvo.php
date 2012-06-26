@@ -72,34 +72,6 @@ class GiftsMvo extends \Processus\Abstracts\Vo\AbstractMVO
         }
 
         return $return;
-
-    }
-
-    /**
-     * @param array $giftData
-     * @return GiftsMvo|bool|\Processus\Abstracts\Vo\AbstractVO
-     */
-    public function removeGift(array $giftData)
-    {
-        $gifts = $this->getGifts();
-
-        if (sizeof($gifts) === 1)
-            return false;
-
-        $c = 0;
-
-        foreach ($gifts as $gift) {
-
-            if ($giftData["requestId"] === $gift->request)
-                break;
-
-            $c++;
-        }
-
-        unset($gifts[$c]);
-
-        return $this->setGift($gifts);
-
     }
 
     /**

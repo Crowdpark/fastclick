@@ -38,9 +38,9 @@ package com.crowdpark.fastclick.mvcs.views.start
 		private function onReceiveGiftListener(event : Event) : void
 		{
 			var receivedGift = view.getDataProvider().getValueByKey('receivedGift');
+
 			var giftEvent : GiftEvent = new GiftEvent(GiftEvent.ADD_GIFT);
 			giftEvent.getDataprovider().setValueByKey('receivedGift', receivedGift);
-
 			dispatch(giftEvent);
 		}
 

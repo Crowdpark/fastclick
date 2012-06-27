@@ -18,7 +18,13 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			super.onRegister();
 			addViewListener(FriendsView.INVITE_BUTTON_CLICKED, onInviteListener);
 			addViewListener(FriendsView.SEND_GIFT_EVENT, onSendGiftListener);
-			addContextListener(GameEvents.CREATE_APP_FRIEND, onCreateAppFriendListener);
+			addContextListener(GameEvents.UPDATE_APP_FRIENDS_VIEW, onUpdateAppFriendsListener);
+		}
+
+		private function onUpdateAppFriendsListener(event : GameEvents) : void
+		{
+			view.getDataProvider().setValueByKey('appFriends', playerModel.getPlayerAppFriends());
+			view.createFriends();
 		}
 
 		private function onSendGiftListener(event : Event) : void
@@ -40,10 +46,10 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			dispatch(new FacebookServiceEvent(FacebookServiceEvent.INVITE_FRIEND));
 		}
 
-		private function onCreateAppFriendListener(event : GameEvents) : void
+		private function onCreateAppFriendsListener(event : GameEvents) : void
 		{
-			view.getDataProvider().setValueByKey('currentFriend', event.getDataprovider().getValueByKey('currentFriend'));
-			view.createFriend();
+			view.getDataProvider().setValueByKey('appFriends', playerModel.getPlayerAppFriends());
+			view.createFriends();
 		}
 
 		private function get view() : FriendsView

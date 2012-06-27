@@ -73,22 +73,6 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			this.y = stage.stageHeight - friendPane.height - 10;
 		}
 
-		public function createFriend() : void
-		{
-			var friend : PlayerVo = PlayerVo(this.getDataProvider().getValueByKey('currentFriend'));
-			var playerCanvas : PlayerCanvas = new PlayerCanvas();
-			playerCanvas.setHeight(paneHeight);
-			playerCanvas.setFriendId(friend.getPlayerId());
-			playerCanvas.setPicture(friend.getPlayerPicture());
-			playerCanvas.setNameField(friend.getPlayerFullName());
-			playerCanvas.setLevelField(String(friend.getCurrentLevel()));
-			playerCanvas.setPointsField(String(friend.getCurrentScore().getScore()));
-
-			playerCanvas.getGiftBox().addEventListener(MouseEvent.CLICK, onGiftBoxListener);
-			hbox.addChild(playerCanvas);
-			friendPane.update();
-		}
-
 		private function onGiftBoxListener(event : MouseEvent) : void
 		{
 			var friendId : String = PlayerCanvas(event.currentTarget.parent).getFriendId();
@@ -97,5 +81,33 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			dispatchEvent(new Event(FriendsView.SEND_GIFT_EVENT));
 		}
 
+		public function createFriends() : void
+		{
+			while (hbox.numChildren > 0)
+			{
+				hbox.removeChildAt(0);
+			}
+
+			var friends : Vector.<PlayerVo> = Vector.<PlayerVo>(getDataProvider().getValueByKey('appFriends'));
+			for (var i : uint = 0;i < friends.length;i++)
+			{
+				var friend : PlayerVo = friends[i];
+				var playerCanvas : PlayerCanvas = new PlayerCanvas();
+				if (friend.getPlayerType() == 'player')
+				{
+					playerCanvas.getGiftBox().visible = false;
+				}
+				playerCanvas.setHeight(paneHeight);
+				playerCanvas.setFriendId(friend.getPlayerId());
+				playerCanvas.setPicture(friend.getPlayerPicture());
+				playerCanvas.setNameField(friend.getPlayerFullName());
+				playerCanvas.setLevelField(String(friend.getCurrentLevel()));
+				playerCanvas.setPointsField(String(friend.getHighestScore().getScore()));
+
+				playerCanvas.getGiftBox().addEventListener(MouseEvent.CLICK, onGiftBoxListener);
+				hbox.addChild(playerCanvas);
+				friendPane.update();
+			}
+		}
 	}
 }

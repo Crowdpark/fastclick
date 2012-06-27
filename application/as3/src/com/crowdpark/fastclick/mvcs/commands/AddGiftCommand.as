@@ -17,10 +17,10 @@ package com.crowdpark.fastclick.mvcs.commands
 		[Inject]
 		public var giftModel : GiftModel;
 		[Inject]
-		public var giftEvent:GiftEvent;
+		public var giftEvent : GiftEvent;
 		[Inject]
-		public var backendService:BackendService;
-		
+		public var backendService : BackendService;
+
 		override public function execute() : void
 		{
 			var score : uint = 10 + playerModel.getCurrentPlayer().getCurrentScore().getScore();
@@ -29,7 +29,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			giftModel.getReceivedGiftList().pop();
 
 			var receivedGift : String = String(giftEvent.getDataprovider().getValueByKey('receivedGift'));
-			backendService.removeGift(receivedGift,playerModel.getCurrentPlayer());
+			backendService.removeGift(receivedGift, playerModel.getCurrentPlayer());
 		}
 	}
 }

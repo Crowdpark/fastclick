@@ -45,13 +45,26 @@ package com.crowdpark.fastclick.mvcs.commands
 			var currentScore : ScoreVo = currentPlayer.getCurrentScore();
 			var currentLevel : uint = currentPlayer.getCurrentLevel();
 			var selectedLevel : uint = currentPlayer.getSelectedLevel();
+			var highestScore : ScoreVo = currentPlayer.getHighestScore();
 
 			if (selectedLevel == currentLevel)
 			{
 				var newLevel : uint = configModel.calculateLevel(currentScore.getScore(), currentLevel);
 				currentPlayer.setCurrentLevel(newLevel);
+				if (newLevel == currentLevel && currentScore.getScore() > highestScore.getScore())
+				{
+					currentPlayer.setHighestScore(currentScore);
+					playerModel.sortLeaderBoard();
+				}
+				else if (newLevel > currentLevel)
+				{
+					var newScore : ScoreVo = new ScoreVo();
+					newScore.setScore(0);
+					currentPlayer.setHighestScore(newScore);
+					currentScore = newScore;
+					playerModel.sortLeaderBoard();
+				}
 			}
-
 			currentScore.setDate(0);
 			highestScoreModel.addScore(currentScore, selectedLevel);
 			backendService.storeResult(currentPlayer);

@@ -22,15 +22,12 @@ package com.crowdpark.fastclick.mvcs.commands
 		{
 			var data : PlayerVo = PlayerVo(gameEvents.getDataprovider());
 			var flashCookie : SharedObject = SharedObject.getLocal("MyFlashCookie");
-			
 
 			flashCookie.data.playername = data.getPlayerName();
 			flashCookie.data.playerLastName = data.getPlayerLastName();
 			flashCookie.data.id = data.getPlayerId();
-			
-			
+
 			playerModel.setFlashCookie(flashCookie);
-			
 		}
 	}
 }

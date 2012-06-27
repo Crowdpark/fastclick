@@ -30,8 +30,6 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function addScore(score : ScoreVo, currentLevel : uint) : void
 		{
-			// getHighscoreList().push(score);
-			// sortHighestScores();
 			var currentList : Vector.<ScoreVo> = getAllLevelsList()[String(currentLevel)];
 			if (!currentList)
 			{
@@ -45,7 +43,6 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function sortHighestScores(scoreList : Vector.<ScoreVo>) : Vector.<ScoreVo>
 		{
-			// getHighscoreList().sort(sortScoreVos);
 			scoreList.sort(sortScoreVos);
 			return scoreList;
 		}

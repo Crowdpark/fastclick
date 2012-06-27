@@ -1,14 +1,12 @@
 package com.crowdpark.fastclick.mvcs.models
 {
-	import flash.display.Bitmap;
-
-	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 
 	import org.robotlegs.mvcs.Actor;
 
+	import flash.display.Bitmap;
 	import flash.net.SharedObject;
 
 	/**
@@ -23,6 +21,8 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _loadedFriends : Vector.<PlayerVo>;
 		public var _currentFetchIndex : uint = 0;
 		private var _currentList : Object = new Object();
+		private var _playerAppFriends : Vector.<PlayerVo>;
+		public var appLoaded : Boolean = true;
 
 		public function addPlayer(player : PlayerVo) : PlayerModel
 		{
@@ -142,19 +142,6 @@ package com.crowdpark.fastclick.mvcs.models
 			return this;
 		}
 
-		public function startFetchingBitmaps(friendData) : void
-		{
-			setCurrentList(friendData);
-			for (var i : uint = 0;i < friendData.length;i++)
-			{
-				var url : String = 'http://graph.facebook.com/' + friendData[i].id + '/picture';
-
-				var bitmapFetcherServiceEvent : BitmapFetcherServiceEvent = new BitmapFetcherServiceEvent(BitmapFetcherServiceEvent.FETCH_BITMAP);
-				bitmapFetcherServiceEvent.getDataprovider().setValueByKey('url', url);
-				dispatch(bitmapFetcherServiceEvent);
-			}
-		}
-
 		public function setCurrentList(currentList : *) : void
 		{
 			_currentList = currentList;
@@ -165,32 +152,58 @@ package com.crowdpark.fastclick.mvcs.models
 			return _currentList;
 		}
 
-		public function createFriendVo(bitmap : Bitmap, index : uint, currentList : Object) : void
+		public function createFriendVo(bitmap : Bitmap, index : uint) : void
 		{
-			var friend = currentList[index];
+			var friend = getCurrentPlayer().getFriendsList();
 
 			if (friend)
 			{
 				var playerVo : PlayerVo = new PlayerVo();
-				getLoadedFriends().push(playerVo);
 
 				playerVo.setPlayerPicture(bitmap);
 				playerVo.setPlayerId(friend.id);
 
-				if (friend.type == 'appfriend')
-				{
-					playerVo.setPlayerType(friend.type);
-					playerVo.setPlayerFullName(friend.name);
-					playerVo.setCurrentLevel(friend.level);
+				getLoadedFriends().push(playerVo);
+			}
+		}
 
-					var score : ScoreVo = new ScoreVo();
-					score.setScore(friend.high_score);
-					playerVo.setCurrentScore(score);
+		public function getPlayerAppFriends() : Vector.<PlayerVo>
+		{
+			if (!_playerAppFriends)
+			{
+				_playerAppFriends = new Vector.<PlayerVo>();
+			}
+			return _playerAppFriends;
+		}
 
-					var gameEvent : GameEvents = new GameEvents(GameEvents.CREATE_APP_FRIEND);
-					gameEvent.getDataprovider().setValueByKey('currentFriend', playerVo);
-					dispatch(gameEvent);
-				}
+		public function setPlayerAppFriends(playerAppFriends : Vector.<PlayerVo>) : void
+		{
+			_playerAppFriends = playerAppFriends;
+		}
+
+		public function createAppFriendVos(arr : Array) : void
+		{
+			for (var i : uint = 0;i < arr.length;i++)
+			{
+				var friend = getCurrentPlayer().getAppFriendsList()[i];
+				var playerVo : PlayerVo = new PlayerVo();
+
+				playerVo.setPlayerPicture(arr[i]);
+				playerVo.setPlayerId(friend.id);
+
+				playerVo.setPlayerType(friend.type);
+				playerVo.setPlayerFullName(friend.name);
+				playerVo.setCurrentLevel(friend.level);
+
+				var score : ScoreVo = new ScoreVo();
+				score.setScore(friend.high_score);
+				playerVo.setCurrentScore(score);
+
+				getLoadedFriends().push(playerVo);
+
+				var gameEvent : GameEvents = new GameEvents(GameEvents.CREATE_APP_FRIEND);
+				gameEvent.getDataprovider().setValueByKey('currentFriend', playerVo);
+				dispatch(gameEvent);
 			}
 		}
 	}

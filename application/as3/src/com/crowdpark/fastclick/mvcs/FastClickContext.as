@@ -1,24 +1,21 @@
 package com.crowdpark.fastclick.mvcs
 {
-	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
-	import com.crowdpark.fastclick.mvcs.views.loading.LoadingViewMediator;
-	import com.crowdpark.fastclick.mvcs.views.loading.LoadingView;
 	import com.crowdpark.fastclick.mvcs.commands.AddGiftCommand;
 	import com.crowdpark.fastclick.mvcs.commands.BitmapFetchedCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CreatePlayerCommand;
-	import com.crowdpark.fastclick.mvcs.commands.FetchBitmapCommand;
 	import com.crowdpark.fastclick.mvcs.commands.FinishGameCommand;
-	import com.crowdpark.fastclick.mvcs.commands.ShowLevelsCommand;
 	import com.crowdpark.fastclick.mvcs.commands.ReplayGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SaveConfigDataCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SendGiftBackendCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SendGiftCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SetAppFriendsCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SetPlayerCookieCommand;
-	import com.crowdpark.fastclick.mvcs.commands.StoreGetAppFriendsCommand;
+	import com.crowdpark.fastclick.mvcs.commands.ShowAppFriendsCommand;
+	import com.crowdpark.fastclick.mvcs.commands.ShowLevelsCommand;
 	import com.crowdpark.fastclick.mvcs.commands.StartGameCommand;
 	import com.crowdpark.fastclick.mvcs.commands.StartUpCompleteCommand;
+	import com.crowdpark.fastclick.mvcs.commands.StoreGetAppFriendsCommand;
 	import com.crowdpark.fastclick.mvcs.commands.UpdateScoreCommand;
 	import com.crowdpark.fastclick.mvcs.commands.control.InviteFriendCommand;
 	import com.crowdpark.fastclick.mvcs.commands.control.SendGiftsCommand;
@@ -34,6 +31,7 @@ package com.crowdpark.fastclick.mvcs
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.models.GiftModel;
 	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
+	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.services.BackendService;
 	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
@@ -54,6 +52,8 @@ package com.crowdpark.fastclick.mvcs
 	import com.crowdpark.fastclick.mvcs.views.hud.HudViewMediator;
 	import com.crowdpark.fastclick.mvcs.views.levels.LevelsView;
 	import com.crowdpark.fastclick.mvcs.views.levels.LevelsViewMediator;
+	import com.crowdpark.fastclick.mvcs.views.loading.LoadingView;
+	import com.crowdpark.fastclick.mvcs.views.loading.LoadingViewMediator;
 	import com.crowdpark.fastclick.mvcs.views.points.PointsView;
 	import com.crowdpark.fastclick.mvcs.views.points.PointsViewMediator;
 	import com.crowdpark.fastclick.mvcs.views.result.ResultView;
@@ -80,6 +80,10 @@ package com.crowdpark.fastclick.mvcs
 		{
 			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, StartUpCompleteCommand, ContextEvent);
 			commandMap.mapEvent(FacebookServiceEvent.CREATE_PLAYER, CreatePlayerCommand);
+			commandMap.mapEvent(BackendServiceEvent.CREATE_FRIENDS, StoreGetAppFriendsCommand, BackendServiceEvent);
+			commandMap.mapEvent(BackendServiceEvent.SET_APP_FRIENDS, SetAppFriendsCommand, BackendServiceEvent);
+			commandMap.mapEvent(BitmapFetcherServiceEvent.BITMAP_FETCHED, BitmapFetchedCommand, BitmapFetcherServiceEvent);
+			commandMap.mapEvent(BitmapFetcherServiceEvent.APP_FETCHED, ShowAppFriendsCommand, BitmapFetcherServiceEvent);
 
 			commandMap.mapEvent(StateMachineEvents.PLAY_GAME, ShowLevelsCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.START, CountDownCommand, StateMachineEvents);
@@ -87,10 +91,6 @@ package com.crowdpark.fastclick.mvcs
 
 			commandMap.mapEvent(BackendServiceEvent.SAVE_CONFIG_DATA, SaveConfigDataCommand, BackendServiceEvent);
 			commandMap.mapEvent(GameEvents.SET_PLAYER_COOKIE, SetPlayerCookieCommand, GameEvents);
-			commandMap.mapEvent(BackendServiceEvent.CREATE_FRIENDS, StoreGetAppFriendsCommand, BackendServiceEvent);
-			commandMap.mapEvent(BackendServiceEvent.SET_APP_FRIENDS, SetAppFriendsCommand, BackendServiceEvent);
-			commandMap.mapEvent(BitmapFetcherServiceEvent.FETCH_BITMAP, FetchBitmapCommand, BitmapFetcherServiceEvent);
-			commandMap.mapEvent(BitmapFetcherServiceEvent.BITMAP_FETCHED, BitmapFetchedCommand, BitmapFetcherServiceEvent);
 			commandMap.mapEvent(PointClickEvent.POINT_CLICK, UpdateScoreCommand, PointClickEvent);
 			commandMap.mapEvent(FacebookServiceEvent.INVITE_FRIEND, InviteFriendCommand, FacebookServiceEvent);
 

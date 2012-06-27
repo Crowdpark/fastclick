@@ -9,6 +9,7 @@ package com.crowdpark.fastclick.mvcs.events
 	{
 		public static const FETCH_BITMAP : String = "FETCH_BITMAP";
 		public static const BITMAP_FETCHED : String = "BITMAP_FETCHED";
+		public static const APP_FETCHED : String = "APP_FETCHED";
 		
 		public function BitmapFetcherServiceEvent(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{

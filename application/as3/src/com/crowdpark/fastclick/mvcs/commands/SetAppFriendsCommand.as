@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvent;
 	import com.crowdpark.fastclick.mvcs.models.GiftModel;
@@ -20,20 +22,23 @@ package com.crowdpark.fastclick.mvcs.commands
 		public var giftModel : GiftModel;
 		[Inject]
 		public var loadingModel : LoadingModel;
+		[Inject]
+		public var bitmapFetcherService : BitmapFetcherService;
 
 		override public function execute() : void
 		{
 			loadingModel.setLoadingState('fetching friends');
 
-			var data = backendServiceEvent.getDataprovider().getValueByKey('data');
+			var data : Object = backendServiceEvent.getDataprovider().getValueByKey('data');
+			var currentPlayer : PlayerVo = playerModel.getCurrentPlayer();
 
 			playerModel.setCurrentLevel(data.user.level);
-			playerModel.getCurrentPlayer().setAppFriendsList(data.appFriends);
-
+			currentPlayer.setAppFriendsList(data.appFriends);
 			giftModel.createReceivedGifts(data.gifts);
-			playerModel.getCurrentPlayer().setReceivedGifts(giftModel.getReceivedGiftList());
 
-			playerModel.startFetchingBitmaps(data.appFriends);
+			currentPlayer.setReceivedGifts(giftModel.getReceivedGiftList());
+
+			bitmapFetcherService.fetchAppBitmaps(currentPlayer.getAppFriendsList());
 		}
 	}
 }

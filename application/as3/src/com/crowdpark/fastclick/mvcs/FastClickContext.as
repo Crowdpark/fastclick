@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs
 {
+	import com.crowdpark.fastclick.mvcs.commands.SetPlayerBitmapCommand;
 	import com.crowdpark.fastclick.mvcs.commands.AddGiftCommand;
 	import com.crowdpark.fastclick.mvcs.commands.BitmapFetchedCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
@@ -82,8 +83,9 @@ package com.crowdpark.fastclick.mvcs
 			commandMap.mapEvent(FacebookServiceEvent.CREATE_PLAYER, CreatePlayerCommand);
 			commandMap.mapEvent(BackendServiceEvent.CREATE_FRIENDS, StoreGetAppFriendsCommand, BackendServiceEvent);
 			commandMap.mapEvent(BackendServiceEvent.SET_APP_FRIENDS, SetAppFriendsCommand, BackendServiceEvent);
+			commandMap.mapEvent(BitmapFetcherServiceEvent.APP_BITMAP_FETCHED, ShowAppFriendsCommand, BitmapFetcherServiceEvent);
 			commandMap.mapEvent(BitmapFetcherServiceEvent.BITMAP_FETCHED, BitmapFetchedCommand, BitmapFetcherServiceEvent);
-			commandMap.mapEvent(BitmapFetcherServiceEvent.APP_FETCHED, ShowAppFriendsCommand, BitmapFetcherServiceEvent);
+			commandMap.mapEvent(BitmapFetcherServiceEvent.PLAYER_BITMAP_FETCHED, SetPlayerBitmapCommand, BitmapFetcherServiceEvent);
 
 			commandMap.mapEvent(StateMachineEvents.PLAY_GAME, ShowLevelsCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.START, CountDownCommand, StateMachineEvents);

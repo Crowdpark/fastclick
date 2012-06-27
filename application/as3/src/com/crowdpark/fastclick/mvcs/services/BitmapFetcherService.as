@@ -13,7 +13,6 @@ package com.crowdpark.fastclick.mvcs.services
 	 */
 	public class BitmapFetcherService extends Actor
 	{
-		private var loader : Loader;
 		private var currentList : Object;
 		private var appImageArray : Array = new Array();
 		private var appFriendIndex : uint = 0;
@@ -60,7 +59,7 @@ package com.crowdpark.fastclick.mvcs.services
 			appImageArray.push(event.currentTarget.content);
 			if (appImageArray.length == currentList.length)
 			{
-				var serviceEvent : BitmapFetcherServiceEvent = new BitmapFetcherServiceEvent(BitmapFetcherServiceEvent.APP_FETCHED);
+				var serviceEvent : BitmapFetcherServiceEvent = new BitmapFetcherServiceEvent(BitmapFetcherServiceEvent.APP_BITMAP_FETCHED);
 				serviceEvent.getDataprovider().setValueByKey('array', appImageArray);
 				dispatch(serviceEvent);
 			}
@@ -69,6 +68,21 @@ package com.crowdpark.fastclick.mvcs.services
 				appFriendIndex++;
 				fetchAppBitmaps(currentList);
 			}
+		}
+
+		public function fetchPlayerBitmap(id : String) : void
+		{
+			var url : String = 'http://graph.facebook.com/' + id + '/picture';
+			var loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onFetchPlayerBitmapListener);
+			loader.load(new URLRequest(url));
+		}
+
+		private function onFetchPlayerBitmapListener(event : Event) : void
+		{
+			var bfsEvent : BitmapFetcherServiceEvent = new BitmapFetcherServiceEvent(BitmapFetcherServiceEvent.PLAYER_BITMAP_FETCHED);
+			bfsEvent.getDataprovider().setValueByKey('playerBitmap', event.currentTarget.content);
+			dispatch(bfsEvent);
 		}
 	}
 }

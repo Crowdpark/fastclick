@@ -19,10 +19,8 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _playerArray : Vector.<PlayerVo>;
 		private var _playerFriends : Vector.<PlayerVo>;
 		private var _loadedFriends : Vector.<PlayerVo>;
-		public var _currentFetchIndex : uint = 0;
 		private var _currentList : Object = new Object();
 		private var _playerAppFriends : Vector.<PlayerVo>;
-		public var appLoaded : Boolean = true;
 
 		public function addPlayer(player : PlayerVo) : PlayerModel
 		{
@@ -94,15 +92,16 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function createPlayer(playerName : String, playerLastName : String, id : String) : PlayerVo
 		{
-			var currentPlayer : PlayerVo = getCurrentPlayer();
+			var currentPlayer : PlayerVo = new PlayerVo();
 			currentPlayer.setPlayerName(playerName);
 			currentPlayer.setPlayerLastName(playerLastName);
+			currentPlayer.setPlayerFullName(playerName + ' ' + playerLastName);
 			currentPlayer.setPlayerId(id);
+			currentPlayer.setPlayerType('player');
 
 			var score : ScoreVo = new ScoreVo().setScore(0).setDate(0);
-
 			currentPlayer.setCurrentScore(score);
-			currentPlayer.setCurrentLevel(1);
+
 			currentPlayer.setClickedBallAmount(0);
 			currentPlayer.setPlayerPictureUrl('https://graph.facebook.com/' + id + '/picture');
 
@@ -113,18 +112,6 @@ package com.crowdpark.fastclick.mvcs.models
 			dispatch(event);
 
 			return currentPlayer;
-		}
-
-		public function setCurrentLevel(level : uint) : void
-		{
-			trace(level + ' user currentlevel');
-
-			getCurrentPlayer().setCurrentLevel(level);
-		}
-
-		public function setSelectedLevel(level : uint)
-		{
-			getCurrentPlayer().setSelectedLevel(level);
 		}
 
 		public function getLoadedFriends() : Vector.<PlayerVo>
@@ -194,16 +181,72 @@ package com.crowdpark.fastclick.mvcs.models
 				playerVo.setPlayerType(friend.type);
 				playerVo.setPlayerFullName(friend.name);
 				playerVo.setCurrentLevel(friend.level);
+				if (friend.level == null)
+				{
+					playerVo.setCurrentLevel(0);
+				}
 
 				var score : ScoreVo = new ScoreVo();
 				score.setScore(friend.high_score);
-				playerVo.setCurrentScore(score);
+
+				if (friend.high_score == null)
+				{
+					score.setScore(0);
+				}
+				playerVo.setHighestScore(score);
 
 				getLoadedFriends().push(playerVo);
+				getPlayerAppFriends().push(playerVo);
+			}
 
-				var gameEvent : GameEvents = new GameEvents(GameEvents.CREATE_APP_FRIEND);
-				gameEvent.getDataprovider().setValueByKey('currentFriend', playerVo);
-				dispatch(gameEvent);
+			addCurrentPlayerAndShow();
+		}
+
+		private function addCurrentPlayerAndShow() : void
+		{
+			getPlayerAppFriends().push(getCurrentPlayer());
+			getPlayerAppFriends().sort(sortPlayerVos);
+
+			dispatch(new GameEvents(GameEvents.UPDATE_APP_FRIENDS_VIEW));
+		}
+
+		public function sortLeaderBoard() : void
+		{
+			getPlayerAppFriends().sort(sortPlayerVos);
+			dispatch(new GameEvents(GameEvents.UPDATE_APP_FRIENDS_VIEW));
+		}
+
+		private function sortPlayerVos(x : PlayerVo, y : PlayerVo) : int
+		{
+			return sortLevels(x, y);
+		}
+
+		private function sortLevels(x : PlayerVo, y : PlayerVo) : int
+		{
+			var levelSort : int = sortItems(x.getCurrentLevel(), y.getCurrentLevel());
+			if ( levelSort != 0)
+			{
+				return levelSort;
+			}
+			else
+			{
+				return sortItems(x.getHighestScore().getScore(), y.getHighestScore().getScore());
+			}
+		}
+
+		private function sortItems(x : int, y : int) : int
+		{
+			if (x < y)
+			{
+				return -1;
+			}
+			else if (x > y)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
 			}
 		}
 	}

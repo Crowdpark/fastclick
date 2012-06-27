@@ -192,5 +192,15 @@ package com.crowdpark.fastclick.mvcs.models.vo
 		{
 			return Vector.<GiftVo>(this.getValueByKey('receivedGifts'));
 		}
+
+		public function setHighestScore(score : ScoreVo) : void
+		{
+			this.setValueByKey('highestScore', score);
+		}
+
+		public function getHighestScore() : ScoreVo
+		{
+			return ScoreVo(this.getValueByKey('highestScore'));
+		}
 	}
 }

@@ -69,7 +69,7 @@ package com.crowdpark.fastclick.mvcs.assets
 			}
 			return _gifBox;
 		}
-
+		
 		public function getPicture() : DisplayObject
 		{
 			if (!_picture)
@@ -186,5 +186,7 @@ package com.crowdpark.fastclick.mvcs.assets
 		{
 			return _height;
 		}
+
+		
 	}
 }

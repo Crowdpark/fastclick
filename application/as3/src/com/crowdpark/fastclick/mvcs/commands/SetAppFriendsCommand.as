@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
@@ -32,12 +33,13 @@ package com.crowdpark.fastclick.mvcs.commands
 			var data : Object = backendServiceEvent.getDataprovider().getValueByKey('data');
 			var currentPlayer : PlayerVo = playerModel.getCurrentPlayer();
 
-			playerModel.setCurrentLevel(data.user.level);
+			currentPlayer.setCurrentLevel(data.user.level);
 			currentPlayer.setAppFriendsList(data.appFriends);
+			currentPlayer.setHighestScore(new ScoreVo().setScore(data.user.high_score));
+
 			giftModel.createReceivedGifts(data.gifts);
-
 			currentPlayer.setReceivedGifts(giftModel.getReceivedGiftList());
-
+			
 			bitmapFetcherService.fetchAppBitmaps(currentPlayer.getAppFriendsList());
 		}
 	}

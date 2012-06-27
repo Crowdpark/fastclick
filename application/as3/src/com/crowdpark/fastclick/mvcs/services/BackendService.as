@@ -1,5 +1,8 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import flash.system.Security;
+	import flash.external.ExternalInterface;
+
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
@@ -70,6 +73,8 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onAcceptGift(event : JsonRpcClientEvent) : void
 		{
+			
+			ExternalInterface.call('crowdparkFlash.facebookAppRequestHandler');
 		}
 
 		public function storeResult(player : PlayerVo) : void

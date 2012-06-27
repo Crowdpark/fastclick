@@ -190,6 +190,29 @@ object:focus {
 				            }
 				        );
 				    },
+				    
+				    facebookAppRequestHandler:function () {
+				        console.log('>>> facebookAppRequestsHandler');
+
+				        FB.api("/me/apprequests/", function (response) {
+				            console.debug(response);
+
+				            var appRequests = response.data;
+				            if (appRequests && appRequests.length) {
+
+				                var inviteRequests = [];
+				                var index;
+				                for (index in appRequests) {
+				                    inviteRequests.push({method:"DELETE", relative_url:appRequests[index].id});
+				                }
+
+				                /* Send delete batch request to Facebook */
+				                FB.api("/", "POST", {batch:inviteRequests}, function () {
+				                    console.log('>>> inviteRequestsBatchDelete callback!');
+				                });
+				            }
+				        });
+				    },
 				
 		}
 		

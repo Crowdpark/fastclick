@@ -33,4 +33,5 @@ class FacebookClient extends \Processus\Lib\Facebook\FacebookClient
 
         return $facebookFriends;
     }
+
 }

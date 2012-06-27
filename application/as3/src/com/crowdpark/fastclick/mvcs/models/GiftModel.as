@@ -27,6 +27,7 @@ package com.crowdpark.fastclick.mvcs.models
 					this.getReceivedGiftList().push(gift);
 				}
 				dispatch(new GiftEvent(GiftEvent.SHOW_GIFT));
+				
 			}
 		}
 

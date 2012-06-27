@@ -1,5 +1,5 @@
 {
-	"url":"http://rino.fastclick.com/api/v1/notauth/",
+	"url":"http://local.fastclick.com/api/v1/notauth/",
 	"levels":
 			[
 				{"levelIndex":"1","gameDuration":"21","scoreLimit":"200"},

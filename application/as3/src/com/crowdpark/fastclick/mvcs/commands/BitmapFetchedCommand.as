@@ -1,10 +1,10 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
 	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
+	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
 
 	import org.robotlegs.mvcs.Command;
 
@@ -21,21 +21,15 @@ package com.crowdpark.fastclick.mvcs.commands
 		public var playerModel : PlayerModel;
 		[Inject]
 		public var loadingModel : LoadingModel;
+		[Inject]
+		public var bitmapFetcherService : BitmapFetcherService;
 
 		override public function execute() : void
 		{
 			var loadedFriends : Vector.<PlayerVo> = playerModel.getLoadedFriends();
-			var friendsList : Object = playerModel.getCurrentPlayer().getFriendsList();
 
 			var bitmap : Bitmap = Bitmap(bitmapFetcherServiceEvent.getDataprovider().getValueByKey('bitmap'));
 			playerModel.createFriendVo(bitmap, loadedFriends.length);
-
-			if (loadedFriends.length == playerModel.getCurrentPlayer().getAppFriendsList().length)
-			{
-				contextView.removeChild(contextView.getChildByName('loading'));
-				dispatch(new StateMachineEvents(StateMachineEvents.READY_TO_START));
-				playerModel.startFetchingBitmaps(friendsList);
-			}
 		}
 	}
 }

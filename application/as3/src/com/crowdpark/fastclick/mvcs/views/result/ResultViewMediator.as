@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.result
 {
+	import com.crowdpark.fastclick.mvcs.events.HighestScoreEvent;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
@@ -23,11 +24,11 @@ package com.crowdpark.fastclick.mvcs.views.result
 			view.disableRetry();
 
 			addViewListener(ResultView.RETRY_GAME, onRetryGameListener);
-			addContextListener(LeaderboardEvent.CREATE_HIGHEST_SCORES, onLeaderboardEvent);
-			addContextListener(LeaderboardEvent.SHOW_HIGHEST_SCORE, onShowHighestScore);
+			addContextListener(HighestScoreEvent.CREATE_HIGHEST_SCORES, onLeaderboardEvent);
+			addContextListener(HighestScoreEvent.SHOW_HIGHEST_SCORE, onShowHighestScore);
 		}
 
-		private function onShowHighestScore(e : LeaderboardEvent) : void
+		private function onShowHighestScore(e : HighestScoreEvent) : void
 		{
 			var currentLevel : String = String(playerModel.getCurrentPlayer().getSelectedLevel());
 
@@ -35,7 +36,7 @@ package com.crowdpark.fastclick.mvcs.views.result
 			view.enableRetry();
 		}
 
-		private function onLeaderboardEvent(e : LeaderboardEvent) : void
+		private function onLeaderboardEvent(e : HighestScoreEvent) : void
 		{
 			var result = e.getDataprovider().getValueByKey('result');
 			var currentLevel : String = String(playerModel.getCurrentPlayer().getSelectedLevel());

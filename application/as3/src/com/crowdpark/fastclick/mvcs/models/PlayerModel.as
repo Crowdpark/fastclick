@@ -1,6 +1,7 @@
 package com.crowdpark.fastclick.mvcs.models
 {
 	import com.crowdpark.fastclick.mvcs.events.GameEvents;
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 
@@ -21,6 +22,7 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _loadedFriends : Vector.<PlayerVo>;
 		private var _currentList : Object = new Object();
 		private var _playerAppFriends : Vector.<PlayerVo>;
+		private var _leaderboardPlace : uint;
 
 		public function addPlayer(player : PlayerVo) : PlayerModel
 		{
@@ -181,39 +183,35 @@ package com.crowdpark.fastclick.mvcs.models
 				playerVo.setPlayerType(friend.type);
 				playerVo.setPlayerFullName(friend.name);
 				playerVo.setCurrentLevel(friend.level);
-				if (friend.level == null)
-				{
-					playerVo.setCurrentLevel(0);
-				}
 
 				var score : ScoreVo = new ScoreVo();
 				score.setScore(friend.high_score);
 
-				if (friend.high_score == null)
-				{
-					score.setScore(0);
-				}
 				playerVo.setHighestScore(score);
 
 				getLoadedFriends().push(playerVo);
 				getPlayerAppFriends().push(playerVo);
 			}
 
-			addCurrentPlayerAndShow();
-		}
-
-		private function addCurrentPlayerAndShow() : void
-		{
 			getPlayerAppFriends().push(getCurrentPlayer());
-			getPlayerAppFriends().sort(sortPlayerVos);
-
-			dispatch(new GameEvents(GameEvents.UPDATE_APP_FRIENDS_VIEW));
+			sortLeaderBoard();
 		}
 
 		public function sortLeaderBoard() : void
 		{
 			getPlayerAppFriends().sort(sortPlayerVos);
 			dispatch(new GameEvents(GameEvents.UPDATE_APP_FRIENDS_VIEW));
+
+			var newLeaderboardPlace : uint = getPlayerAppFriends().indexOf(getCurrentPlayer());
+			if (getLeaderboardPlace())
+			{
+				if (newLeaderboardPlace > getLeaderboardPlace())
+				{
+					setLeaderboardPlace(newLeaderboardPlace);
+					dispatch(new LeaderboardEvent(LeaderboardEvent.BEAT_FRIEND));
+				}
+			}
+			setLeaderboardPlace(newLeaderboardPlace);
 		}
 
 		private function sortPlayerVos(x : PlayerVo, y : PlayerVo) : int
@@ -248,6 +246,17 @@ package com.crowdpark.fastclick.mvcs.models
 			{
 				return 0;
 			}
+		}
+
+		public function getLeaderboardPlace() : uint
+		{
+			return _leaderboardPlace;
+		}
+
+		public function setLeaderboardPlace(leaderboardPlace : uint) : PlayerModel
+		{
+			this._leaderboardPlace = leaderboardPlace;
+			return this;
 		}
 	}
 }

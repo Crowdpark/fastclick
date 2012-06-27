@@ -1,38 +1,31 @@
 package com.crowdpark.fastclick.mvcs.views.points
 {
-	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
-
-	import flash.display.DisplayObject;
-
-	import com.crowdpark.fastclick.mvcs.events.FastClickBallEvent;
-	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
-	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
-	import com.crowdpark.fastclick.mvcs.assets.ScoreBox;
-	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
-	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
-	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceCircle;
-	import com.crowdpark.fastclick.mvcs.models.vo.BallVo;
-	import com.greensock.TweenMax;
-
-	import flash.events.MouseEvent;
-	import flash.geom.Point;
-
 	import utils.display.addChild;
 	import utils.geom.randomPoint;
 	import utils.number.randomIntegerWithinRange;
+
+	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
+	import com.crowdpark.fastclick.mvcs.assets.ScoreBox;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
+	import com.crowdpark.fastclick.mvcs.events.FastClickBallEvent;
+	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceCircle;
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
+	import com.greensock.TweenMax;
+
+	import flash.display.DisplayObject;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
 
 	/**
 	 * @author fatmatekin
 	 */
 	public class PointsViewMediator extends StateMachineMediator
 	{
-		private var _listOfBalls : Array = new Array();
-
 		override public function onRegister() : void
 		{
 			super.onRegister();
-			var pointArray : Vector.<BallVo> = configModel.getBallArray();
-			var playerArray : Vector.<PlayerVo> = playerModel.getPlayerFriends();
 
 			randomizeCircles();
 		}
@@ -40,7 +33,6 @@ package com.crowdpark.fastclick.mvcs.views.points
 		private function randomizeCircles() : void
 		{
 			var ball : FastClickBall = createFastClickBall();
-			_listOfBalls.push(ball);
 			addChild(ball, view);
 
 			TweenMax.from(ball, Math.random() / 2, {onComplete:checkState});
@@ -49,28 +41,20 @@ package com.crowdpark.fastclick.mvcs.views.points
 
 		private function createFastClickBall() : FastClickBall
 		{
-			//var playerFriends : Vector.<PlayerVo> = playerModel.getPlayerFriends();
-			var playerFriends :Vector.<PlayerVo> = playerModel.getLoadedFriends();
-			
-			if (playerFriends)
-			{
-				var ball : FastClickBall = new FastClickBall();
-				ball.mouseChildren = false;
-				ball.setEndPoint(new Point(30, contextView.stage.stageHeight - 190));
-				var point = Math.ceil(1000 / ball.getShape().width);
+			var playerFriends : Vector.<PlayerVo> = playerModel.getLoadedFriends();
 
-				ball.setScore(point);
-				ball.setLifeTime(Math.ceil(ball.getShape().width / 10));
-				ball.addEventListener(FastClickBallEvent.REMOVE_CIRCLE, onRemoveCircleListener);
-				ball.setStartPoint(randomPoint(ball.getShape().width / 2, contextView.stage.stageWidth - ball.getShape().width, 130, contextView.stage.stageHeight - 210 - ball.getShape().height));
-				ball.setPicture(playerFriends[randomIntegerWithinRange(0, playerFriends.length - 1)].getPlayerPicture());
-				ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
-				return ball;
-			}
-			else
-			{
-				return null;
-			}
+			var ball : FastClickBall = new FastClickBall();
+			ball.mouseChildren = false;
+			ball.setEndPoint(new Point(30, contextView.stage.stageHeight - 190));
+			var point : uint = Math.ceil(1000 / ball.getShape().width);
+
+			ball.setScore(point);
+			ball.setLifeTime(Math.ceil(ball.getShape().width / 10));
+			ball.addEventListener(FastClickBallEvent.REMOVE_CIRCLE, onRemoveCircleListener);
+			ball.setStartPoint(randomPoint(ball.getShape().width / 2, contextView.stage.stageWidth - ball.getShape().width, 130, contextView.stage.stageHeight - 210 - ball.getShape().height));
+			ball.setPicture(playerFriends[randomIntegerWithinRange(0, playerFriends.length - 1)].getPlayerPicture());
+			ball.addEventListener(MouseEvent.CLICK, handleCircleClickEvent);
+			return ball;
 		}
 
 		private function onRemoveCircleListener(event : FastClickBallEvent) : void
@@ -90,7 +74,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 		{
 			if (view)
 			{
-				if (view.numChildren > 2)
+				if (view.numChildren > 4)
 				{
 					view.removeChildAt(0);
 				}

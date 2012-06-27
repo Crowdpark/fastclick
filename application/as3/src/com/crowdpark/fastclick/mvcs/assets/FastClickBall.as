@@ -22,7 +22,7 @@ package com.crowdpark.fastclick.mvcs.assets
 		private var _ownWidth : uint;
 		private var _ownHeight : uint;
 		private var _lifeTime : uint;
-		
+
 		override public function onAddedToStage(event : Event) : void
 		{
 			super.onAddedToStage(event);

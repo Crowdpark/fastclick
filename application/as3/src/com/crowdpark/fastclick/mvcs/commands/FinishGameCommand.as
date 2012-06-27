@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.events.HighestScoreEvent;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
@@ -75,7 +76,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			}
 			else
 			{
-				dispatch(new LeaderboardEvent(LeaderboardEvent.SHOW_HIGHEST_SCORE));
+				dispatch(new HighestScoreEvent(HighestScoreEvent.SHOW_HIGHEST_SCORE));
 			}
 		}
 	}

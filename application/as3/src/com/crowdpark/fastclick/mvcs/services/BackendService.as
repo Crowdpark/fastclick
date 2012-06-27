@@ -1,16 +1,15 @@
 package com.crowdpark.fastclick.mvcs.services
 {
-	import flash.system.Security;
-	import flash.external.ExternalInterface;
-
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvent;
-	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
+	import com.crowdpark.fastclick.mvcs.events.HighestScoreEvent;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.net.rpc.json.JsonRpcClient;
 	import com.crowdpark.net.rpc.json.JsonRpcClientEvent;
 
 	import org.robotlegs.mvcs.Actor;
+
+	import flash.external.ExternalInterface;
 
 	/**
 	 * @author fatmatekin
@@ -56,7 +55,7 @@ package com.crowdpark.fastclick.mvcs.services
 		{
 			var data = event.getDataprovider();
 
-			var leaderboardEvent : LeaderboardEvent = new LeaderboardEvent(LeaderboardEvent.CREATE_HIGHEST_SCORES);
+			var leaderboardEvent : HighestScoreEvent = new HighestScoreEvent(HighestScoreEvent.CREATE_HIGHEST_SCORES);
 			leaderboardEvent.getDataprovider().setValueByKey('result', data.getValues());
 			dispatch(leaderboardEvent);
 		}

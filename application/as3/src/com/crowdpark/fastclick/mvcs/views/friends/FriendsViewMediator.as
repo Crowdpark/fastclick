@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.friends
 {
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.events.GiftEvent;
 	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
@@ -19,6 +20,13 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			addViewListener(FriendsView.INVITE_BUTTON_CLICKED, onInviteListener);
 			addViewListener(FriendsView.SEND_GIFT_EVENT, onSendGiftListener);
 			addContextListener(GameEvents.UPDATE_APP_FRIENDS_VIEW, onUpdateAppFriendsListener);
+			
+			addContextListener(LeaderboardEvent.BEAT_FRIEND, onBeatFriendListener);
+		}
+
+		private function onBeatFriendListener(event:LeaderboardEvent) : void
+		{
+			view.showBeatFriend(playerModel.getPlayerAppFriends()[playerModel.getLeaderboardPlace()-1]);
 		}
 
 		private function onUpdateAppFriendsListener(event : GameEvents) : void

@@ -9,7 +9,6 @@ package com.crowdpark.fastclick.mvcs.commands.control
 	{
 		override public function execute() : void
 		{
-					
 		}
 	}
 }

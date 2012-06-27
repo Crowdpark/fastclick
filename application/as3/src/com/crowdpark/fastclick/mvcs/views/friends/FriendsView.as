@@ -109,5 +109,13 @@ package com.crowdpark.fastclick.mvcs.views.friends
 				friendPane.update();
 			}
 		}
+
+		public function showBeatFriend(friend : PlayerVo) : void
+		{
+			var tf:TextField = createField(('You beat '+friend.getPlayerFullName()),0,0,200,20,false,'Verdana',15 );
+			tf.background = true;
+			tf.backgroundColor = 0xff0000;
+			addChild(tf);
+		}
 	}
 }

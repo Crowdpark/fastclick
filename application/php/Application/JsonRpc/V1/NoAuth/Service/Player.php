@@ -56,4 +56,10 @@ class Player extends \Application\Core\Abstracts\AbstractService
         return $scoreHistory;
     }
 
+    public function getFriendsHighscores(array $params)
+    {
+        $manager = new \Application\Manager\Player\PlayerManager();
+        return $manager->getHighscores($params);
+    }
+
 }

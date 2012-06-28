@@ -85,6 +85,40 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     }
 
     /**
+     * @param array $ids
+     * @return array
+     */
+    public function getHighscores(array $ids)
+    {
+        $connector = $this->getApplicationContext()->getDefaultCache();
+
+        $withPrefixes = $this->_array_prefixing("PlayerData_", $ids["app_friends"]);
+
+        $data = $connector->getMultipleByKey($withPrefixes);
+
+        $return = array();
+        foreach ($data as $id => $playerData) {
+            $elements = get_object_vars(json_decode($playerData));
+            $return[str_replace("PlayerData_", "", $id)] = $elements["high_score"]->score;
+        }
+
+        return $return;
+    }
+
+    /**
+     * @param string $prefix
+     * @param array $idList
+     * @return array
+     */
+    private function _array_prefixing(string $prefix, array $idList)
+    {
+        $prefixList = array();
+        foreach ($idList as $idItem) {
+            $prefixList[] = $prefix . $idItem;
+        }
+        return $prefixList;
+    }
+    /**
      * Evaluates and sets the high score if it's the highest.
      * @param int $score
      */

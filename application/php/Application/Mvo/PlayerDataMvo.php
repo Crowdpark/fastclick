@@ -66,9 +66,9 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
      * @param int $score
      * @return \Processus\Abstracts\Vo\AbstractVO
      */
-    public function setHighScore(\int $score)
+    public function setHighScore(\int $score, \int $level)
     {
-        return $this->setValueByKey("high_score", $score);
+        return $this->setValueByKey("high_score", array("score" => $score, "level" => $level));
     }
 
     /**

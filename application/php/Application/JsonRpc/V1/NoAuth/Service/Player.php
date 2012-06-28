@@ -37,10 +37,9 @@ class Player extends \Application\Core\Abstracts\AbstractService
     {
         $manager = new \Application\Manager\Player\PlayerManager();
 
-        $manager->setLevel($params["currentLevel"]);
-        $mvo = $manager->setScore($params["currentScore"], $params["selectedLevel"]);
+        $manager->setScore($params["currentScore"], $params["selectedLevel"]);
 
-        return $mvo->saveInMem();
+        return $manager->setLevel($params["currentLevel"])->saveInMem();
     }
 
     /**

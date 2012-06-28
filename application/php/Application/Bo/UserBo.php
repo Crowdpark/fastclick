@@ -100,13 +100,13 @@ class UserBo extends \Processus\Lib\Bo\UserBo
             $playerDataMvo = $this->getApplicationContext()->getPlayerDataMvo();
 
             if ($mvo->isFirstTime()) {
+
                 $mvo->setFirstTime(FALSE);
                 $score = 0;
                 $level = 1;
                 $data = $this->_getFbData($fbUserId, $mvo->isFirstTime());
                 $mvo->setData($data)->saveInMem();
-                $playerDataMvo->setHighScore($score)->addScore($score, $level)->setLevel($level)->saveInMem();
-
+                $playerDataMvo->setHighScore($score, $level)->addScore($score, $level)->setLevel($level)->saveInMem();
             }
 
             else {

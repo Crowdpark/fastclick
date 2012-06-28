@@ -1,6 +1,8 @@
 package com.crowdpark.fastclick.mvcs
 {
-	import com.crowdpark.fastclick.mvcs.commands.SetPlayerBitmapCommand;
+	import com.crowdpark.fastclick.mvcs.commands.RefreshLeaderboardCommand;
+	import com.crowdpark.fastclick.mvcs.commands.ShareBeatCommand;
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.commands.AddGiftCommand;
 	import com.crowdpark.fastclick.mvcs.commands.BitmapFetchedCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
@@ -11,6 +13,7 @@ package com.crowdpark.fastclick.mvcs
 	import com.crowdpark.fastclick.mvcs.commands.SendGiftBackendCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SendGiftCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SetAppFriendsCommand;
+	import com.crowdpark.fastclick.mvcs.commands.SetPlayerBitmapCommand;
 	import com.crowdpark.fastclick.mvcs.commands.SetPlayerCookieCommand;
 	import com.crowdpark.fastclick.mvcs.commands.ShowAppFriendsCommand;
 	import com.crowdpark.fastclick.mvcs.commands.ShowLevelsCommand;
@@ -20,7 +23,6 @@ package com.crowdpark.fastclick.mvcs
 	import com.crowdpark.fastclick.mvcs.commands.UpdateScoreCommand;
 	import com.crowdpark.fastclick.mvcs.commands.control.InviteFriendCommand;
 	import com.crowdpark.fastclick.mvcs.commands.control.SendGiftsCommand;
-	import com.crowdpark.fastclick.mvcs.commands.control.ShowLobbyCommand;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvent;
@@ -81,11 +83,11 @@ package com.crowdpark.fastclick.mvcs
 		{
 			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, StartUpCompleteCommand, ContextEvent);
 			commandMap.mapEvent(FacebookServiceEvent.CREATE_PLAYER, CreatePlayerCommand);
-			commandMap.mapEvent(BackendServiceEvent.CREATE_FRIENDS, StoreGetAppFriendsCommand, BackendServiceEvent);
+			commandMap.mapEvent(BackendServiceEvent.SET_FRIENDS_GET_APPF, StoreGetAppFriendsCommand, BackendServiceEvent);
 			commandMap.mapEvent(BackendServiceEvent.SET_APP_FRIENDS, SetAppFriendsCommand, BackendServiceEvent);
+			commandMap.mapEvent(BitmapFetcherServiceEvent.PLAYER_BITMAP_FETCHED, SetPlayerBitmapCommand, BitmapFetcherServiceEvent);
 			commandMap.mapEvent(BitmapFetcherServiceEvent.APP_BITMAP_FETCHED, ShowAppFriendsCommand, BitmapFetcherServiceEvent);
 			commandMap.mapEvent(BitmapFetcherServiceEvent.BITMAP_FETCHED, BitmapFetchedCommand, BitmapFetcherServiceEvent);
-			commandMap.mapEvent(BitmapFetcherServiceEvent.PLAYER_BITMAP_FETCHED, SetPlayerBitmapCommand, BitmapFetcherServiceEvent);
 
 			commandMap.mapEvent(StateMachineEvents.PLAY_GAME, ShowLevelsCommand, StateMachineEvents);
 			commandMap.mapEvent(StateMachineEvents.START, CountDownCommand, StateMachineEvents);
@@ -105,8 +107,11 @@ package com.crowdpark.fastclick.mvcs
 			commandMap.mapEvent(StateMachineEvents.REPLAY, ReplayGameCommand, StateMachineEvents);
 
 			commandMap.mapEvent(ControlViewEvent.INVITE_FRIENDS, InviteFriendCommand);
-			commandMap.mapEvent(ControlViewEvent.SHOW_LOBBY, ShowLobbyCommand);
+			// commandMap.mapEvent(ControlViewEvent.SHOW_LOBBY, ShowLobbyCommand);
 			commandMap.mapEvent(ControlViewEvent.SEND_GIFTS, SendGiftsCommand);
+
+			commandMap.mapEvent(LeaderboardEvent.SHARE_BEAT_FRIEND, ShareBeatCommand);
+			commandMap.mapEvent(LeaderboardEvent.REFRESH_LEADERBOARD, RefreshLeaderboardCommand);
 
 			injector.mapSingleton(PlayerModel);
 			injector.mapSingleton(StateMachineModel);

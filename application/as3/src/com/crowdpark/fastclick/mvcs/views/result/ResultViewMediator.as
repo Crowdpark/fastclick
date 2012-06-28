@@ -2,6 +2,7 @@ package com.crowdpark.fastclick.mvcs.views.result
 {
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
+	import com.crowdpark.fastclick.mvcs.events.HighestScoreEvent;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 
@@ -23,11 +24,25 @@ package com.crowdpark.fastclick.mvcs.views.result
 			view.disableRetry();
 
 			addViewListener(ResultView.RETRY_GAME, onRetryGameListener);
-			addContextListener(LeaderboardEvent.CREATE_HIGHEST_SCORES, onLeaderboardEvent);
-			addContextListener(LeaderboardEvent.SHOW_HIGHEST_SCORE, onShowHighestScore);
+			addViewListener(ResultView.SHARE_BEAT, onShareBeatListener);
+
+			addContextListener(HighestScoreEvent.CREATE_HIGHEST_SCORES, onLeaderboardEvent);
+			addContextListener(HighestScoreEvent.SHOW_HIGHEST_SCORE, onShowHighestScore);
+			addContextListener(LeaderboardEvent.BEAT_FRIEND, onBeatFriendListener);
+			
 		}
 
-		private function onShowHighestScore(e : LeaderboardEvent) : void
+		private function onShareBeatListener(e : Event) : void
+		{
+			dispatch(new LeaderboardEvent(LeaderboardEvent.SHARE_BEAT_FRIEND));
+		}
+
+		private function onBeatFriendListener(event : LeaderboardEvent) : void
+		{
+			view.showBeatFriend(playerModel.getPlayerAppFriends()[playerModel.getLeaderboardPlace() - 1]);
+		}
+
+		private function onShowHighestScore(e : HighestScoreEvent) : void
 		{
 			var currentLevel : String = String(playerModel.getCurrentPlayer().getSelectedLevel());
 
@@ -35,9 +50,9 @@ package com.crowdpark.fastclick.mvcs.views.result
 			view.enableRetry();
 		}
 
-		private function onLeaderboardEvent(e : LeaderboardEvent) : void
+		private function onLeaderboardEvent(e : HighestScoreEvent) : void
 		{
-			var result = e.getDataprovider().getValueByKey('result');
+			var result : Object = e.getDataprovider().getValueByKey('result');
 			var currentLevel : String = String(playerModel.getCurrentPlayer().getSelectedLevel());
 			highestScoreModel.createHighestScoreLists(result);
 			view.addToPane(highestScoreModel.getAllLevelsList()[String(currentLevel)]);

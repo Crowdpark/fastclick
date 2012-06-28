@@ -9,7 +9,7 @@ package com.crowdpark.fastclick.mvcs.events
 	{
 		public static const SAVE_CONFIG_DATA : String = "SAVE_CONFIG_DATA";
 		public static const SET_APP_FRIENDS : String = "SET_APP_FRIENDS";
-		public static const CREATE_FRIENDS : String = "CREATE_FRIENDS";
+		public static const SET_FRIENDS_GET_APPF : String = "SET_FRIENDS_GET_APPF";
 		public static const SEND_GIFT_BACKEND : String = "SEND_GIFT_BACKEND";
 
 		public function BackendServiceEvent(type : String, bubbles : Boolean = false, cancelable : Boolean = true)

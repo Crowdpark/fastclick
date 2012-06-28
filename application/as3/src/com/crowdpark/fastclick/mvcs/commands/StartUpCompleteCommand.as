@@ -1,13 +1,12 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.events.LoadingEvent;
-	import com.crowdpark.fastclick.mvcs.views.loading.LoadingView;
-	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
-	import com.crowdpark.fastclick.mvcs.views.control.ControlView;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
+	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
 	import com.crowdpark.fastclick.mvcs.services.ConfigService;
 	import com.crowdpark.fastclick.mvcs.services.FacebookService;
+	import com.crowdpark.fastclick.mvcs.views.control.ControlView;
 	import com.crowdpark.fastclick.mvcs.views.friends.FriendsView;
+	import com.crowdpark.fastclick.mvcs.views.loading.LoadingView;
 	import com.crowdpark.fastclick.mvcs.views.start.StartView;
 
 	import org.robotlegs.mvcs.Command;
@@ -33,7 +32,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			configService.fetchData("data/Config.json");
 
 			facebookService.init();
-			
+
 			var mainSprite : Sprite = new Sprite();
 			mainSprite.name = 'mainSprite';
 			var friendsSprite : Sprite = new Sprite();

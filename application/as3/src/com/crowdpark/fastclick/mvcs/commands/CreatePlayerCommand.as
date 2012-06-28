@@ -1,9 +1,9 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
-	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
 	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
+	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
+	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
 
 	import org.robotlegs.mvcs.Command;
 
@@ -28,8 +28,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			var params = facebookServiceEvent.getDataprovider().getValueByKey('params');
 			if (params)
 			{
-				playerModel.createPlayer(String(params.first_name), String(params.last_name), String(params.id));
-				bitmapFetcherService.fetchPlayerBitmap(String(params.id));
+				playerModel.createPlayer(String(params.first_name), String(params.last_name), String(params.id));			
 			}
 		}
 	}

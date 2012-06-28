@@ -164,14 +164,15 @@ package com.crowdpark.fastclick.mvcs.models
 			return this;
 		}
 
-		public function calculateLevel(currentScore:uint,currentLevel: uint) : uint
+		public function calculateLevel(currentScore : uint, currentLevel : uint) : uint
 		{
-			var currentLevelVo:LevelVo = getLevelArray()[currentLevel-1];
-			
-			if(currentScore >= currentLevelVo.getScoreLimit() && currentLevelVo.getLevelIndex()<= getLevelArray().length-1)
+			var currentLevelVo : LevelVo = getLevelArray()[currentLevel - 1];
+
+			if (currentScore >= currentLevelVo.getScoreLimit() && currentLevelVo.getLevelIndex() <= getLevelArray().length - 1)
 			{
-				return currentLevelVo.getLevelIndex()+1;
-			}else
+				return currentLevelVo.getLevelIndex() + 1;
+			}
+			else
 			{
 				return currentLevelVo.getLevelIndex();
 			}

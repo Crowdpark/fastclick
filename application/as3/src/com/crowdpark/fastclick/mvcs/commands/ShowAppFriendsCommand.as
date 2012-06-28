@@ -1,9 +1,8 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
-	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
 	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
+	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
 
 	import org.robotlegs.mvcs.Command;
 
@@ -25,9 +24,6 @@ package com.crowdpark.fastclick.mvcs.commands
 			playerModel.createAppFriendVos(arr);
 
 			bitmapFetcherService.startFetchingBitmaps(playerModel.getCurrentPlayer().getFriendsList());
-
-			contextView.removeChild(contextView.getChildByName('loading'));
-			dispatch(new StateMachineEvents(StateMachineEvents.READY_TO_START));
 		}
 	}
 }

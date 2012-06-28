@@ -2,7 +2,7 @@ package com.crowdpark.fastclick.mvcs.commands
 {
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineModel;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
-	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
+	import com.crowdpark.fastclick.mvcs.events.HighestScoreEvent;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
 	import com.crowdpark.fastclick.mvcs.models.HighestScoreModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
@@ -43,31 +43,16 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			var currentPlayer : PlayerVo = playerModel.getCurrentPlayer();
 			var currentScore : ScoreVo = currentPlayer.getCurrentScore();
-			var currentLevel : uint = currentPlayer.getCurrentLevel();
 			var selectedLevel : uint = currentPlayer.getSelectedLevel();
-			var highestScore : ScoreVo = currentPlayer.getHighestScore();
 
-			if (selectedLevel == currentLevel)
-			{
-				var newLevel : uint = configModel.calculateLevel(currentScore.getScore(), currentLevel);
-				currentPlayer.setCurrentLevel(newLevel);
-				if (newLevel == currentLevel && currentScore.getScore() > highestScore.getScore())
-				{
-					currentPlayer.setHighestScore(currentScore);
-					playerModel.sortLeaderBoard();
-				}
-				else if (newLevel > currentLevel)
-				{
-					var newScore : ScoreVo = new ScoreVo();
-					newScore.setScore(0);
-					currentPlayer.setHighestScore(newScore);
-					currentScore = newScore;
-					playerModel.sortLeaderBoard();
-				}
-			}
 			currentScore.setDate(0);
 			highestScoreModel.addScore(currentScore, selectedLevel);
-			backendService.storeResult(currentPlayer);
+
+			var appFriends : Vector.<PlayerVo> = playerModel.getPlayerAppFriends();
+			var indexOf : uint = appFriends.indexOf(playerModel.getCurrentPlayer());
+			appFriends.splice(indexOf, 1);
+
+			backendService.refreshLeaderboard(currentPlayer, appFriends);
 
 			if (stateMachineModel.getGameState() != StateMachineState.REPLAYED)
 			{
@@ -75,7 +60,7 @@ package com.crowdpark.fastclick.mvcs.commands
 			}
 			else
 			{
-				dispatch(new LeaderboardEvent(LeaderboardEvent.SHOW_HIGHEST_SCORE));
+				dispatch(new HighestScoreEvent(HighestScoreEvent.SHOW_HIGHEST_SCORE));
 			}
 		}
 	}

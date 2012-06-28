@@ -81,13 +81,12 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			dispatchEvent(new Event(FriendsView.SEND_GIFT_EVENT));
 		}
 
-		public function createFriends() : void
+		public function createAppFriends() : void
 		{
 			while (hbox.numChildren > 0)
 			{
 				hbox.removeChildAt(0);
 			}
-
 			var friends : Vector.<PlayerVo> = Vector.<PlayerVo>(getDataProvider().getValueByKey('appFriends'));
 			for (var i : uint = 0;i < friends.length;i++)
 			{
@@ -109,5 +108,7 @@ package com.crowdpark.fastclick.mvcs.views.friends
 				friendPane.update();
 			}
 		}
+
+		
 	}
 }

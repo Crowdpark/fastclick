@@ -1,12 +1,12 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
-	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
-	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
-	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
-	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvent;
 	import com.crowdpark.fastclick.mvcs.models.GiftModel;
+	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
+	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
+	import com.crowdpark.fastclick.mvcs.services.BitmapFetcherService;
 
 	import org.robotlegs.mvcs.Command;
 
@@ -36,11 +36,19 @@ package com.crowdpark.fastclick.mvcs.commands
 			currentPlayer.setCurrentLevel(data.user.level);
 			currentPlayer.setAppFriendsList(data.appFriends);
 			currentPlayer.setHighestScore(new ScoreVo().setScore(data.user.high_score));
+			bitmapFetcherService.fetchPlayerBitmap(currentPlayer.getPlayerId());
 
 			giftModel.createReceivedGifts(data.gifts);
 			currentPlayer.setReceivedGifts(giftModel.getReceivedGiftList());
-			
-			bitmapFetcherService.fetchAppBitmaps(currentPlayer.getAppFriendsList());
+
+			if (currentPlayer.getAppFriendsList().length > 0)
+			{
+				bitmapFetcherService.fetchAppBitmaps(currentPlayer.getAppFriendsList());
+			}
+			else
+			{
+				bitmapFetcherService.startFetchingBitmaps(currentPlayer.getFriendsList());
+			}
 		}
 	}
 }

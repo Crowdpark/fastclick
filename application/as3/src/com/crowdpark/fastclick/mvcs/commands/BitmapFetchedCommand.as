@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.events.BitmapFetcherServiceEvent;
 	import com.crowdpark.fastclick.mvcs.models.LoadingModel;
 	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
@@ -30,6 +31,12 @@ package com.crowdpark.fastclick.mvcs.commands
 
 			var bitmap : Bitmap = Bitmap(bitmapFetcherServiceEvent.getDataprovider().getValueByKey('bitmap'));
 			playerModel.createFriendVo(bitmap, loadedFriends.length);
+
+			if (loadedFriends.length == 2)
+			{
+				contextView.removeChild(contextView.getChildByName('loading'));
+				dispatch(new StateMachineEvents(StateMachineEvents.READY_TO_START));
+			}
 		}
 	}
 }

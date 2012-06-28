@@ -1,5 +1,8 @@
 package com.crowdpark.fastclick.mvcs.views.result
 {
+	import flash.display.Shape;
+
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 
 	import utils.draw.createRectangleShape;
@@ -20,6 +23,7 @@ package com.crowdpark.fastclick.mvcs.views.result
 	public class ResultView extends BaseView
 	{
 		public static const RETRY_GAME : String = "RETRY_GAME";
+		public static const SHARE_BEAT : String = "SHARE_BEAT";
 		public var resultText : TextField;
 		public var result : TextField;
 		public var retryButton : Sprite;
@@ -28,6 +32,8 @@ package com.crowdpark.fastclick.mvcs.views.result
 		public var leaderboardPane : ScrollPane = new ScrollPane();
 		public var vbox : VBox = new VBox();
 		public var scoreArray : Vector.<ScoreVo> = new Vector.<ScoreVo>();
+		private var beatSprite : Sprite = new Sprite();
+		public var beatText : TextField;
 
 		override public function  init() : void
 		{
@@ -50,6 +56,10 @@ package com.crowdpark.fastclick.mvcs.views.result
 			addChild(leaderboardResult);
 			addChild(leaderboardPane);
 
+			beatSprite.visible = false;
+			addChild(beatSprite);
+			createBeatSprite();
+
 			retryButton = new Sprite;
 
 			retryButton.addChild(createRectangleShape(80, 30, 0x00e0e6));
@@ -61,6 +71,34 @@ package com.crowdpark.fastclick.mvcs.views.result
 			retryButton.addChild(title);
 
 			addChild(retryButton);
+		}
+
+		private function createBeatSprite() : void
+		{
+			var beatBackground : Shape = createRectangleShape(300, 80, 0xff0000);
+
+			beatText = createField('', 0, 0, 200, 20, false, 'Verdana', 15, 0xffffff);
+
+			var buttonText : TextField = createField('Share', 0, 0, 200, 30, false, 'Verdana', 15, 0);
+			buttonText.background = true;
+			buttonText.backgroundColor = 0x7f007f;
+			var buttonSprite : Sprite = new Sprite();
+			buttonSprite.addChild(buttonText);
+			buttonSprite.mouseChildren = false;
+			buttonSprite.buttonMode = true;
+			buttonSprite.addEventListener(MouseEvent.CLICK, onShareListener);
+
+			buttonSprite.x = (beatBackground.width - buttonSprite.width) / 2;
+			buttonSprite.y = beatBackground.height - buttonSprite.height - 10;
+
+			beatSprite.addChild(beatBackground);
+			beatSprite.addChild(beatText);
+			beatSprite.addChild(buttonSprite);
+		}
+
+		private function onShareListener(event : MouseEvent) : void
+		{
+			dispatchEvent(new Event(ResultView.SHARE_BEAT));
 		}
 
 		public function enableRetry() : void
@@ -102,6 +140,9 @@ package com.crowdpark.fastclick.mvcs.views.result
 
 			leaderboardPane.setSize(280, 150);
 			leaderboardPane.x = (stage.stageWidth - leaderboardPane.width) / 2;
+
+			beatSprite.x = (stage.stageWidth - beatSprite.width) / 2;
+			beatSprite.y = leaderboardPane.y + leaderboardPane.height + 80;
 		}
 
 		public function setResultText() : void
@@ -125,6 +166,13 @@ package com.crowdpark.fastclick.mvcs.views.result
 				vbox.addChild(createField('Score=' + scoreVo.getScore() + '        ' + 'Date=' + _date, 10, 10, 200, 20, false, 'Verdana', 15, 0x000000));
 				leaderboardPane.update();
 			}
+		}
+
+		public function showBeatFriend(friend : PlayerVo) : void
+		{
+			beatSprite.visible = true;
+			beatText.text = 'Congrats! You beat ' + friend.getPlayerFullName();
+			beatText.x = (beatSprite.width - beatText.width) / 2;
 		}
 	}
 }

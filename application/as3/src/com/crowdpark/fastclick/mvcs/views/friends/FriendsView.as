@@ -81,13 +81,12 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			dispatchEvent(new Event(FriendsView.SEND_GIFT_EVENT));
 		}
 
-		public function createFriends() : void
+		public function createAppFriends() : void
 		{
 			while (hbox.numChildren > 0)
 			{
 				hbox.removeChildAt(0);
 			}
-
 			var friends : Vector.<PlayerVo> = Vector.<PlayerVo>(getDataProvider().getValueByKey('appFriends'));
 			for (var i : uint = 0;i < friends.length;i++)
 			{
@@ -110,12 +109,6 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			}
 		}
 
-		public function showBeatFriend(friend : PlayerVo) : void
-		{
-			var tf:TextField = createField(('You beat '+friend.getPlayerFullName()),0,0,200,20,false,'Verdana',15 );
-			tf.background = true;
-			tf.backgroundColor = 0xff0000;
-			addChild(tf);
-		}
+		
 	}
 }

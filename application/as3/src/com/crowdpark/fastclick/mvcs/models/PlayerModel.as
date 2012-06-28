@@ -22,7 +22,7 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _loadedFriends : Vector.<PlayerVo>;
 		private var _currentList : Object = new Object();
 		private var _playerAppFriends : Vector.<PlayerVo>;
-		private var _leaderboardPlace : uint;
+		private var _leaderboardPlace : int = -1;
 
 		public function addPlayer(player : PlayerVo) : PlayerModel
 		{
@@ -143,7 +143,7 @@ package com.crowdpark.fastclick.mvcs.models
 
 		public function createFriendVo(bitmap : Bitmap, index : uint) : void
 		{
-			var friend = getCurrentPlayer().getFriendsList();
+			var friend = getCurrentPlayer().getFriendsList()[index];
 
 			if (friend)
 			{
@@ -189,29 +189,28 @@ package com.crowdpark.fastclick.mvcs.models
 
 				playerVo.setHighestScore(score);
 
-				getLoadedFriends().push(playerVo);
 				getPlayerAppFriends().push(playerVo);
 			}
-
-			getPlayerAppFriends().push(getCurrentPlayer());
 			sortLeaderBoard();
 		}
 
 		public function sortLeaderBoard() : void
 		{
 			getPlayerAppFriends().sort(sortPlayerVos);
-			dispatch(new GameEvents(GameEvents.UPDATE_APP_FRIENDS_VIEW));
 
-			var newLeaderboardPlace : uint = getPlayerAppFriends().indexOf(getCurrentPlayer());
-			if (getLeaderboardPlace())
+			var newLeaderboardPlace : int = getPlayerAppFriends().indexOf(getCurrentPlayer());
+			var oldLeaderboardPlace : int = getLeaderboardPlace();
+			setLeaderboardPlace(newLeaderboardPlace);
+
+			if (oldLeaderboardPlace > -1)
 			{
-				if (newLeaderboardPlace > getLeaderboardPlace())
+				if (newLeaderboardPlace > oldLeaderboardPlace)
 				{
-					setLeaderboardPlace(newLeaderboardPlace);
 					dispatch(new LeaderboardEvent(LeaderboardEvent.BEAT_FRIEND));
 				}
 			}
-			setLeaderboardPlace(newLeaderboardPlace);
+
+			dispatch(new GameEvents(GameEvents.UPDATE_APP_FRIENDS_VIEW));
 		}
 
 		private function sortPlayerVos(x : PlayerVo, y : PlayerVo) : int
@@ -248,15 +247,35 @@ package com.crowdpark.fastclick.mvcs.models
 			}
 		}
 
-		public function getLeaderboardPlace() : uint
+		public function getLeaderboardPlace() : int
 		{
 			return _leaderboardPlace;
 		}
 
-		public function setLeaderboardPlace(leaderboardPlace : uint) : PlayerModel
+		public function setLeaderboardPlace(leaderboardPlace : int) : PlayerModel
 		{
 			this._leaderboardPlace = leaderboardPlace;
 			return this;
+		}
+
+		public function updateHighScores(result : Object) : void
+		{
+			for (var i : uint = 0;i < getPlayerAppFriends().length;i++)
+			{
+				checkIds(getPlayerAppFriends()[i], result);
+			}
+		}
+
+		private function checkIds(appFriend : PlayerVo, result : Object) : void
+		{
+			for (var key:String in result)
+			{
+				if (appFriend.getPlayerId() == key)
+				{
+					appFriend.setHighestScore(new ScoreVo().setScore(result[key].score));
+					appFriend.setCurrentLevel(result[key].level);
+				}
+			}
 		}
 	}
 }

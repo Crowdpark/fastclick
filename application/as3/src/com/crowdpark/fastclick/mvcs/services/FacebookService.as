@@ -35,7 +35,7 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onFetchFriends(params : Object) : void
 		{
-			var backendServiceEvent : BackendServiceEvent = new BackendServiceEvent(BackendServiceEvent.CREATE_FRIENDS);
+			var backendServiceEvent : BackendServiceEvent = new BackendServiceEvent(BackendServiceEvent.SET_FRIENDS_GET_APPF);
 			backendServiceEvent.getDataprovider().setValueByKey('data', params.data);
 			dispatch(backendServiceEvent);
 		}
@@ -85,6 +85,11 @@ package com.crowdpark.fastclick.mvcs.services
 				backendServiceEvent.getDataprovider().setValueByKey('result', result);
 				dispatch(backendServiceEvent);
 			}
+		}
+
+		public function facebookShareScore() : void
+		{
+			
 		}
 	}
 }

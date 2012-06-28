@@ -1,19 +1,12 @@
 package com.crowdpark.fastclick.mvcs.views.start
 {
-	import com.crowdpark.fastclick.mvcs.views.loading.LoadingView;
-
-	import flash.display.DisplayObject;
-	import flash.display.Shape;
-
-	import utils.draw.createRectangleShape;
-
-	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
-
 	import utils.textField.createField;
 
 	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
+	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
 	import com.greensock.TweenMax;
 
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -28,8 +21,8 @@ package com.crowdpark.fastclick.mvcs.views.start
 		public static const PLAY_GAME : String = "PLAY_GAME";
 		public static const START_GAME : String = "START_GAME";
 		public static const RECEIVE_GIFT : String = "RECEIVE_GIFT";
-		public var gameTitleSprite : Sprite = new Sprite();
-		public var startButtonSprite : Sprite = new Sprite();
+		public var gameTitleSprite : Sprite;
+		public var startButtonSprite : Sprite;
 		public var playerNameSprite : Sprite = new Sprite();
 		private var playerNameField : TextField;
 		private var title : TextField;
@@ -56,6 +49,9 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 		override public function init() : void
 		{
+			gameTitleSprite = new Sprite();
+			startButtonSprite = new Sprite();
+
 			addChild(gameTitleSprite);
 			addChild(playerNameSprite);
 

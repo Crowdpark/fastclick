@@ -1,6 +1,7 @@
 package com.crowdpark.fastclick.mvcs.core.base
 {
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceView;
+
 	import flash.events.Event;
 
 	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceVO;
@@ -17,7 +18,11 @@ package com.crowdpark.fastclick.mvcs.core.base
 		public function BaseView()
 		{
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStageListener);
-			
+			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStageListener);
+		}
+
+		protected function onRemovedFromStageListener(event : Event) : void
+		{
 		}
 
 		public function onAddedToStageListener(e : Event) : void
@@ -26,7 +31,6 @@ package com.crowdpark.fastclick.mvcs.core.base
 
 		public function init() : void
 		{
-			
 		}
 
 		public function getDataProvider() : InterfaceVO

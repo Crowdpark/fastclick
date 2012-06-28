@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.HighestScoreEvent;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;
@@ -72,7 +73,6 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onAcceptGift(event : JsonRpcClientEvent) : void
 		{
-			
 			ExternalInterface.call('crowdparkFlash.facebookAppRequestHandler');
 		}
 
@@ -102,6 +102,31 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onSendGift(event : JsonRpcClientEvent) : void
 		{
+		}
+
+		public function refreshLeaderboard(player : PlayerVo, appfriends : Vector.<PlayerVo>) : void
+		{
+			var arr : Array = new Array();
+			for (var i : uint = 0 ;i < appfriends.length;i++)
+			{
+				arr.push(appfriends[i].getPlayerId());
+			}
+
+			var jsonClient : JsonRpcClient = new JsonRpcClient();
+			jsonClient.params = [{'id':player.getPlayerId(), 'app_friends':arr}];
+			jsonClient.method = 'NoAuth.Player.getFriendsHighscores';
+			jsonClient.url = configModel.getUrl();
+			jsonClient.addEventListener(JsonRpcClientEvent.RESULT, onRefreshLeaderboard);
+			jsonClient.send();
+		}
+
+		private function onRefreshLeaderboard(event : JsonRpcClientEvent) : void
+		{
+			var data : Object = event.getDataprovider();
+
+			var leaderboardEvent : LeaderboardEvent = new LeaderboardEvent(LeaderboardEvent.REFRESH_LEADERBOARD);
+			leaderboardEvent.getDataprovider().setValueByKey('result', data.getValues());
+			dispatch(leaderboardEvent);
 		}
 	}
 }

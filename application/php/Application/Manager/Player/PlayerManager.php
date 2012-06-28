@@ -99,7 +99,7 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
         $return = array();
         foreach ($data as $id => $playerData) {
             $elements = get_object_vars(json_decode($playerData));
-            $return[str_replace("PlayerData_", "", $id)] = $elements["high_score"]->score;
+            $return[str_replace("PlayerData_", "", $id)] = $elements["high_score"];
         }
 
         return $return;

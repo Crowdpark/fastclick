@@ -10,12 +10,19 @@ namespace Application\JsonRpc\V1\NoAuth\Service;
 class Player extends \Application\Core\Abstracts\AbstractService
 {
 
+
     /**
      * @param array $params
      * @return array
      */
     public function getAppFriends(array $params)
     {
+//$memFriends = prosc_array_to_object($this->getApplicationContext()->getUserFriendsMvo()->getFriends());
+//        $paramFriends = prosc_array_to_object($params["friendsList"]);
+//        var_dump($memFriends);
+//        var_dump(md5(serialize($memFriends)));
+//        var_dump(md5(serialize($paramFriends)));
+//        $this->getApplicationContext()->getUserFriendsMvo()->setFriends($params["friendsList"])->saveInMem();
         $manager = new \Application\Manager\Player\PlayerManager();
         $return = $manager->getAppFriends($params["friendsList"]);
 

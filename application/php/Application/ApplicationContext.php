@@ -121,5 +121,23 @@ namespace Application
             return $this->_playerGiftsMvo;
         }
 
+        /**
+         * @var Mvo\UserFacebookFriendsMvo
+         */
+        private $_userFriendsMvo;
+
+        /**
+         * @return Mvo\UserFacebookFriendsMvo
+         */
+        public function getUserFriendsMvo()
+        {
+            if (!$this->_userFriendsMvo) {
+                $this->_userFriendsMvo = new \Application\Mvo\UserFacebookFriendsMvo();
+                $this->_userFriendsMvo->getFromMem();
+            }
+
+            return $this->_userFriendsMvo;
+        }
+
     }
 }

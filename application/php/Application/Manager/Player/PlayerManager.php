@@ -54,7 +54,6 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
 
         $return['user']["high_score"] = $highscore["score"];
         $return['user']["level"] = $this->getApplicationContext()->getPlayerDataMvo()->getLevel();
-
         $appFriendData = $this->getApplicationContext()->getUserBo()->getAppFriends($friendsRawList);
         $return["friends"] = $this->_filterAppFriends($friendsRawList, $appFriendData["userMvos"], $appFriendData["playerDataMvos"]);
 
@@ -74,6 +73,7 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
         $data = $connector->getMultipleByKey($withPrefixes);
 
         $return = array();
+
         foreach ($data as $id => $playerData) {
             $elements = get_object_vars(json_decode($playerData));
             $return[str_replace("PlayerData_", "", $id)] = $elements["high_score"];

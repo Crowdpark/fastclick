@@ -12,6 +12,7 @@ package com.crowdpark.fastclick.mvcs.events
 		public static const BEAT_FRIEND : String = "BEAT_FRIEND";
 		public static const SHARE_BEAT_FRIEND : String = "SHARE_BEAT_FRIEND";
 		public static const REFRESH_LEADERBOARD : String = "REFRESH_LEADERBOARD";
+		public static const SCORE_SHARED : String = "SCORE_SHARED";
 
 		public function LeaderboardEvent(type : String, bubbles : Boolean = false, cancellable : Boolean = true)
 		{

@@ -75,9 +75,10 @@ package com.crowdpark.fastclick.mvcs.views.result
 
 		private function createBeatSprite() : void
 		{
-			var beatBackground : Shape = createRectangleShape(300, 80, 0xff0000);
+			var beatBackground : Shape = createRectangleShape(280, 70, 0xff0000);
 
 			beatText = createField('', 0, 0, 200, 20, false, 'Verdana', 15, 0xffffff);
+			beatText.y = 5;
 
 			var buttonText : TextField = createField('Share', 0, 0, 200, 30, false, 'Verdana', 15, 0);
 			buttonText.background = true;
@@ -168,11 +169,18 @@ package com.crowdpark.fastclick.mvcs.views.result
 			}
 		}
 
-		public function showBeatFriend(friend : PlayerVo) : void
+		public function showBeatFriend() : void
 		{
+			var beatFriend : PlayerVo = PlayerVo(this.getDataProvider().getValueByKey('beatFriend'));
+
 			beatSprite.visible = true;
-			beatText.text = 'Congrats! You beat ' + friend.getPlayerFullName();
+			beatText.text = 'Congrats! You beat ' + beatFriend.getPlayerFullName();
 			beatText.x = (beatSprite.width - beatText.width) / 2;
+		}
+
+		public function hideBeatFriend() : void
+		{
+			beatSprite.visible = false;
 		}
 	}
 }

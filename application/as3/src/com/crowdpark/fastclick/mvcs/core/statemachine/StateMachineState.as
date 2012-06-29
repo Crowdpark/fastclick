@@ -12,5 +12,6 @@ package com.crowdpark.fastclick.mvcs.core.statemachine
 		public static const GAME : String = "GAME";
 		public static const REPLAY : String = "REPLAY";
 		public static const REPLAYED : String = "REPLAYED";
+		public static const LOBBY : String = "LOBBY";
 	}
 }

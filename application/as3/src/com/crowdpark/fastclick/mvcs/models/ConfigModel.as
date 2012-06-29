@@ -72,6 +72,14 @@ package com.crowdpark.fastclick.mvcs.models
 			_timer.start();
 		}
 
+		public function stopTimer() : void
+		{
+			if (_timer)
+			{
+				_timer.removeEventListener(TimerEvent.TIMER, handleTimer);
+			}
+		}
+
 		private function handleTimer(e : TimerEvent) : void
 		{
 			setTime(getGameDuration() - _timer.currentCount);

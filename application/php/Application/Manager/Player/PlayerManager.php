@@ -56,30 +56,7 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
         $return['user']["level"] = $this->getApplicationContext()->getPlayerDataMvo()->getLevel();
 
         $appFriendData = $this->getApplicationContext()->getUserBo()->getAppFriends($friendsRawList);
-
-        $friends = $appFriendData["userMvos"];
-        $playerData = $appFriendData["playerDataMvos"];
-
-        $appFriends = array();
-
-        foreach ($friends as $friendMvo) {
-
-            $friendObject = json_decode($friendMvo);
-            $id = $friendObject->id;
-
-            foreach ($friendsRawList as $friend) {
-                if ($id === $friend["id"]) {
-                    $data = get_object_vars(json_decode($playerData["PlayerData_" . $id]));
-
-                    $friend["type"] = "appfriend";
-                    $friend["high_score"] = $data["high_score"]->score;
-                    $friend["level"] = $data["level"];
-
-                    $appFriends[] = $friend;
-                }
-            }
-        }
-        $return["friends"] = $appFriends;
+        $return["friends"] = $this->_filterAppFriends($friendsRawList, $appFriendData["userMvos"], $appFriendData["playerDataMvos"]);
 
         return $return;
     }
@@ -106,6 +83,37 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     }
 
     /**
+     * @param array $friendsRawList
+     * @param array $mvoRawData
+     * @param array $playerData
+     * @return array
+     */
+    private function _filterAppFriends(array $friendsRawList, array $mvoRawData, array $playerData)
+    {
+        $appFriends = array();
+
+        foreach ($mvoRawData as $friendMvo) {
+
+            $friendObject = json_decode($friendMvo);
+            $id = $friendObject->id;
+
+            foreach ($friendsRawList as $friend) {
+                if ($id === $friend["id"]) {
+                    $data = get_object_vars(json_decode($playerData["PlayerData_" . $id]));
+
+                    $friend["type"] = "appfriend";
+                    $friend["high_score"] = $data["high_score"]->score;
+                    $friend["level"] = $data["level"];
+
+                    $appFriends[] = $friend;
+                    break;
+                }
+            }
+        }
+
+        return $appFriends;
+    }
+    /**
      * @param string $prefix
      * @param array $idList
      * @return array
@@ -113,9 +121,11 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     private function _array_prefixing(string $prefix, array $idList)
     {
         $prefixList = array();
+
         foreach ($idList as $idItem) {
             $prefixList[] = $prefix . $idItem;
         }
+
         return $prefixList;
     }
     /**

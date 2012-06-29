@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.commands
 {
+	import com.crowdpark.fastclick.mvcs.models.PlayerModel;
 	import com.crowdpark.fastclick.mvcs.services.FacebookService;
 	import org.robotlegs.mvcs.Command;
 
@@ -11,9 +12,12 @@ package com.crowdpark.fastclick.mvcs.commands
 		[Inject]
 		public var facebookService:FacebookService;
 		
+		[Inject]
+		public var playerModel:PlayerModel;
+		
 		override public function execute() : void
 		{
-				facebookService.facebookShareScore();
+				facebookService.facebookShareScore(playerModel.getCurrentPlayer(),playerModel.getBeatFriend());
 		}
 	}
 }

@@ -73,7 +73,7 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onAcceptGift(event : JsonRpcClientEvent) : void
 		{
-			ExternalInterface.call('crowdparkFlash.facebookAppRequestHandler');
+			ExternalInterface.call('crowdparkHTML.facebookAppRequestHandler');
 		}
 
 		public function storeResult(player : PlayerVo) : void

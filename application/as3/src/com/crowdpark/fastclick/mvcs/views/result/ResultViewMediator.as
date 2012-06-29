@@ -29,7 +29,13 @@ package com.crowdpark.fastclick.mvcs.views.result
 			addContextListener(HighestScoreEvent.CREATE_HIGHEST_SCORES, onLeaderboardEvent);
 			addContextListener(HighestScoreEvent.SHOW_HIGHEST_SCORE, onShowHighestScore);
 			addContextListener(LeaderboardEvent.BEAT_FRIEND, onBeatFriendListener);
-			
+			addContextListener(LeaderboardEvent.SCORE_SHARED, onScoreSharedEvent);
+
+		}
+
+		private function onScoreSharedEvent(event : LeaderboardEvent) : void
+		{
+			view.hideBeatFriend();
 		}
 
 		private function onShareBeatListener(e : Event) : void
@@ -39,7 +45,8 @@ package com.crowdpark.fastclick.mvcs.views.result
 
 		private function onBeatFriendListener(event : LeaderboardEvent) : void
 		{
-			view.showBeatFriend(playerModel.getPlayerAppFriends()[playerModel.getLeaderboardPlace() - 1]);
+			view.getDataProvider().setValueByKey('beatFriend', playerModel.getBeatFriend())
+			view.showBeatFriend();
 		}
 
 		private function onShowHighestScore(e : HighestScoreEvent) : void

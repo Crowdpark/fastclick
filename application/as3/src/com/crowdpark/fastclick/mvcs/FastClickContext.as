@@ -1,5 +1,8 @@
 package com.crowdpark.fastclick.mvcs
 {
+	import com.crowdpark.fastclick.mvcs.views.gift.GiftViewMediator;
+	import com.crowdpark.fastclick.mvcs.views.gift.GiftView;
+	import com.crowdpark.fastclick.mvcs.commands.control.ShowLobbyCommand;
 	import com.crowdpark.fastclick.mvcs.commands.RefreshLeaderboardCommand;
 	import com.crowdpark.fastclick.mvcs.commands.ShareBeatCommand;
 	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
@@ -107,7 +110,9 @@ package com.crowdpark.fastclick.mvcs
 			commandMap.mapEvent(StateMachineEvents.REPLAY, ReplayGameCommand, StateMachineEvents);
 
 			commandMap.mapEvent(ControlViewEvent.INVITE_FRIENDS, InviteFriendCommand);
-			// commandMap.mapEvent(ControlViewEvent.SHOW_LOBBY, ShowLobbyCommand);
+			
+			commandMap.mapEvent(ControlViewEvent.SHOW_LOBBY, ShowLobbyCommand);
+			
 			commandMap.mapEvent(ControlViewEvent.SEND_GIFTS, SendGiftsCommand);
 
 			commandMap.mapEvent(LeaderboardEvent.SHARE_BEAT_FRIEND, ShareBeatCommand);
@@ -136,6 +141,7 @@ package com.crowdpark.fastclick.mvcs
 			mediatorMap.mapView(LevelsView, LevelsViewMediator);
 			mediatorMap.mapView(ControlView, ControlViewMediator);
 			mediatorMap.mapView(LoadingView, LoadingViewMediator);
+			mediatorMap.mapView(GiftView, GiftViewMediator);
 
 			super.startup();
 		}

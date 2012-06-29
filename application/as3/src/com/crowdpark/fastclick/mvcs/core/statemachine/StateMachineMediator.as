@@ -35,6 +35,12 @@ package com.crowdpark.fastclick.mvcs.core.statemachine
 			addContextListener(StateMachineEvents.REPLAYED, handleReplayedListener);
 			addContextListener(StateMachineEvents.READY_TO_START, handleReadyToStart);
 			addContextListener(StateMachineEvents.LOADING, handleLoading);
+			addContextListener(StateMachineEvents.LOBBY, handleLobbyListener);
+		}
+
+		private function handleLobbyListener(event:StateMachineEvents) : void
+		{
+			stateMachineModel.state = StateMachineState.LOBBY;
 		}
 
 		protected function handleReplayedListener(e : StateMachineEvents) : void

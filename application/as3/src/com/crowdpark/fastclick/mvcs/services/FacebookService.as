@@ -1,5 +1,7 @@
 package com.crowdpark.fastclick.mvcs.services
 {
+	import com.crowdpark.fastclick.mvcs.events.LeaderboardEvent;
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvent;
 	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
@@ -27,7 +29,6 @@ package com.crowdpark.fastclick.mvcs.services
 
 		private function onMe(params : Object) : void
 		{
-			
 			var facebookServiceEvent : FacebookServiceEvent = new FacebookServiceEvent(FacebookServiceEvent.CREATE_PLAYER);
 			facebookServiceEvent.getDataprovider().setValueByKey('params', params);
 			dispatch(facebookServiceEvent);
@@ -51,7 +52,7 @@ package com.crowdpark.fastclick.mvcs.services
 			data.id = 100003894794078;
 			data.trackingUid = 100003894794078;
 
-			ExternalInterface.call('crowdparkFlash.facebookInviteFriends', data);
+			ExternalInterface.call('crowdparkHTML.facebookInviteFriends', data);
 		}
 
 		private function facebookInviteFriends(result : Object) : void
@@ -73,7 +74,7 @@ package com.crowdpark.fastclick.mvcs.services
 				data.uid = gift.getRecipientId();
 			}
 
-			ExternalInterface.call('crowdparkFlash.facebookSendGift', data);
+			ExternalInterface.call('crowdparkHTML.facebookSendGift', data);
 			ExternalInterface.addCallback('facebookSendGift', facebookSendGift);
 		}
 
@@ -87,9 +88,23 @@ package com.crowdpark.fastclick.mvcs.services
 			}
 		}
 
-		public function facebookShareScore() : void
+		public function facebookShareScore(player : PlayerVo, friend : PlayerVo) : void
 		{
-			
+			var object : Object = new Object();
+			object.title = 'Hey ' + friend.getPlayerFullName();
+			object.message = 'I just beat you on level ' + String(player.getSelectedLevel());
+			object.to = friend.getPlayerId();
+
+			ExternalInterface.call('crowdparkHTML.facebookShare', {'title':object.title, 'message':object.message, 'uid':object.to});
+			ExternalInterface.addCallback('facebookShare', facebookShare);
+		}
+
+		private function facebookShare(result : Object) : void
+		{
+			if (result)
+			{
+				dispatch(new LeaderboardEvent(LeaderboardEvent.SCORE_SHARED));
+			}
 		}
 	}
 }

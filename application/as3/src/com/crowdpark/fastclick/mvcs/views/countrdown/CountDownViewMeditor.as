@@ -38,9 +38,12 @@ package com.crowdpark.fastclick.mvcs.views.countrdown
 
 		private function continueCount(numberSprite : Sprite) : void
 		{
-			view.removeChild(numberSprite);
-			cdNumber -= 1;
-			createCountdownNumbers();
+			if (view)
+			{
+				view.removeChild(numberSprite);
+				cdNumber -= 1;
+				createCountdownNumbers();
+			}
 		}
 
 		public function get view() : CountDownView

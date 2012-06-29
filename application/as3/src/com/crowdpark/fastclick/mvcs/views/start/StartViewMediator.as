@@ -22,7 +22,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 			{
 				view.updatePlayerNameField(playerModel.getCurrentPlayer().getPlayerName(), playerModel.getCurrentPlayer().getPlayerLastName());
 			}
-			if (stateMachineModel.getGameState() == StateMachineState.REPLAYED)
+			if (stateMachineModel.getGameState() == StateMachineState.REPLAYED || stateMachineModel.state == StateMachineState.LOBBY) ;
 			{
 				handleReadyToStart(null);
 				onShowGiftListener(null);

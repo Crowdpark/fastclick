@@ -23,6 +23,7 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _currentList : Object = new Object();
 		private var _playerAppFriends : Vector.<PlayerVo>;
 		private var _leaderboardPlace : int = -1;
+		private var _beatFriend : PlayerVo;
 
 		public function addPlayer(player : PlayerVo) : PlayerModel
 		{
@@ -206,6 +207,7 @@ package com.crowdpark.fastclick.mvcs.models
 			{
 				if (newLeaderboardPlace > oldLeaderboardPlace)
 				{
+					setBeatFriend(getPlayerAppFriends()[getLeaderboardPlace() - 1]);
 					dispatch(new LeaderboardEvent(LeaderboardEvent.BEAT_FRIEND));
 				}
 			}
@@ -276,6 +278,23 @@ package com.crowdpark.fastclick.mvcs.models
 					appFriend.setCurrentLevel(result[key].level);
 				}
 			}
+		}
+
+		public function getBeatFriend() : PlayerVo
+		{
+			return _beatFriend;
+		}
+
+		public function setBeatFriend(beatFriend : PlayerVo) : PlayerModel
+		{
+			this._beatFriend = beatFriend;
+			return this;
+		}
+
+		public function resetGame() : void
+		{
+			getCurrentPlayer().setClickedBallAmount(0);
+			getCurrentPlayer().setCurrentScore(new ScoreVo().setScore(0));
 		}
 	}
 }

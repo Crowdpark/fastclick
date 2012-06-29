@@ -15,6 +15,7 @@ package com.crowdpark.fastclick.mvcs.core.statemachine
 		public static const REPLAYED : String = "REPLAYED";
 		public static const REPLAY : String = "REPLAY";
 		public static const PLAY_GAME : String = "PLAY_GAME";
+		public static const LOBBY : String = "LOBBY";
 
 		public function StateMachineEvents(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{

@@ -83,6 +83,7 @@ package com.crowdpark.fastclick.mvcs.views.points
 
 		private function handleCircleClickEvent(e : MouseEvent) : void
 		{
+			e.currentTarget.removeEventListener(MouseEvent.CLICK, handleCircleClickEvent);
 			var fcCircle : InterfaceCircle = InterfaceCircle(e.currentTarget);
 
 			var scoreBox : ScoreBox = ScoreBox(new ScoreBox().setColor(fcCircle.getColor())

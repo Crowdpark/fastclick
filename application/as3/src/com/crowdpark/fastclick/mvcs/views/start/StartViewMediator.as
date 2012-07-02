@@ -38,15 +38,18 @@ package com.crowdpark.fastclick.mvcs.views.start
 		private function onReceiveGiftListener(event : Event) : void
 		{
 			var receivedGift = view.getDataProvider().getValueByKey('receivedGift');
+			var receivedgiftType = view.getDataProvider().getValueByKey('giftType');
 
 			var giftEvent : GiftEvent = new GiftEvent(GiftEvent.ADD_GIFT);
 			giftEvent.getDataprovider().setValueByKey('receivedGift', receivedGift);
+			giftEvent.getDataprovider().setValueByKey('giftType', receivedgiftType);
 			dispatch(giftEvent);
 		}
 
 		private function onShowGiftListener(event : GiftEvent) : void
 		{
-			view.getDataProvider().setValueByKey('gift', giftModel.getReceivedGiftList());
+			view.getDataProvider().setValueByKey('receivedGiftList', giftModel.getReceivedGiftList());
+			view.getDataProvider().setValueByKey('giftVariety', giftModel.getGiftVariety());
 			view.showGifts();
 		}
 

@@ -21,7 +21,7 @@ package com.crowdpark.fastclick.mvcs.views.friends
 	public class FriendsView extends BaseView
 	{
 		public static const  INVITE_BUTTON_CLICKED : String = 'INVITE_BUTTON_CLICKED';
-		public static const SEND_GIFT_EVENT : String = "SEND_GIFT_EVENT";
+		public static const SHOW_GIFTS : String = "SHOW_GIFTS";
 		private var friendPane : ScrollPane = new ScrollPane();
 		private var hbox : HBox = new HBox();
 		private	var inviteSprite : Sprite = new Sprite();
@@ -78,7 +78,7 @@ package com.crowdpark.fastclick.mvcs.views.friends
 			var friendId : String = PlayerCanvas(event.currentTarget.parent).getFriendId();
 			getDataProvider().setValueByKey('friendId', friendId);
 
-			dispatchEvent(new Event(FriendsView.SEND_GIFT_EVENT));
+			dispatchEvent(new Event(FriendsView.SHOW_GIFTS));
 		}
 
 		public function createAppFriends() : void
@@ -108,7 +108,5 @@ package com.crowdpark.fastclick.mvcs.views.friends
 				friendPane.update();
 			}
 		}
-
-		
 	}
 }

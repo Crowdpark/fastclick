@@ -1,4 +1,4 @@
-package com.crowdpark.fastclick.mvcs.commands
+package com.crowdpark.fastclick.mvcs.commands.gifts
 {
 	import com.crowdpark.fastclick.mvcs.events.BackendServiceEvent;
 	import com.crowdpark.fastclick.mvcs.models.GiftModel;
@@ -25,6 +25,8 @@ package com.crowdpark.fastclick.mvcs.commands
 		{
 			var result = backendServiceEvent.getDataprovider().getValueByKey('result');
 			giftModel.createBackendGifts(result);
+			
+			giftModel.setCurrentGift(null);
 			backendService.sendGift(playerModel.getCurrentPlayer().getPlayerId(), giftModel.getBackendGiftList());
 		}
 	}

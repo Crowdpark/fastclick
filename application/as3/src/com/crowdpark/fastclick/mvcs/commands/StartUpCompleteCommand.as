@@ -30,7 +30,6 @@ package com.crowdpark.fastclick.mvcs.commands
 		override public function execute() : void
 		{
 			configService.fetchData("data/Config.json");
-
 			facebookService.init();
 
 			var mainSprite : Sprite = new Sprite();

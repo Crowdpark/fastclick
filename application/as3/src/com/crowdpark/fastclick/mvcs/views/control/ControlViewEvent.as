@@ -7,11 +7,10 @@ package com.crowdpark.fastclick.mvcs.views.control
 	 */
 	public class ControlViewEvent extends BaseEvent
 	{
-		public static const SEND_GIFTS : String = 'SEND_GIFTS';
 		public static const INVITE_FRIENDS : String = "INVITE_FRIENDS";
 		public static const SHOW_LOBBY : String = "SHOW_LOBBY";
 
-		public function ControlViewEvent(type : String, bubble : Boolean = false, cancellable : Boolean = false)
+		public function ControlViewEvent(type : String, bubbles : Boolean = false, cancellable : Boolean = false)
 		{
 			super(type, bubbles, cancellable);
 		}

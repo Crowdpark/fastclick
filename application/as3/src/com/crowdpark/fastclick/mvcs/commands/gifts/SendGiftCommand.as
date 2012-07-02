@@ -1,5 +1,7 @@
-package com.crowdpark.fastclick.mvcs.commands
+package com.crowdpark.fastclick.mvcs.commands.gifts
 {
+	import flash.display.Sprite;
+
 	import com.crowdpark.fastclick.mvcs.models.GiftModel;
 	import com.crowdpark.fastclick.mvcs.services.FacebookService;
 
@@ -17,6 +19,9 @@ package com.crowdpark.fastclick.mvcs.commands
 
 		override public function execute() : void
 		{
+			var mainSprite : Sprite = Sprite(contextView.getChildByName('mainSprite'));
+			mainSprite.removeChild(mainSprite.getChildByName('giftView'));
+
 			facebookService.sendGift(giftModel.getCurrentGift());
 		}
 	}

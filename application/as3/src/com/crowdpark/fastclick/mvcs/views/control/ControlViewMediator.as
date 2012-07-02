@@ -1,5 +1,6 @@
 package com.crowdpark.fastclick.mvcs.views.control
 {
+	import com.crowdpark.fastclick.mvcs.events.GiftEvent;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 
 	import flash.events.Event;
@@ -25,7 +26,8 @@ package com.crowdpark.fastclick.mvcs.views.control
 
 		private function onSendGiftsListener(event : Event) : void
 		{
-			dispatch(new ControlViewEvent(ControlViewEvent.SEND_GIFTS));
+			giftModel.setRecipientId(null);
+			dispatch(new GiftEvent(GiftEvent.SHOW_GIFT_TYPES));
 		}
 
 		private function onInviteFriendsListener(event : Event) : void

@@ -4,6 +4,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
 	import com.crowdpark.fastclick.mvcs.models.vo.GiftVo;
+	import com.crowdpark.fastclick.mvcs.views.gift.SingleGiftView;
 	import com.greensock.TweenMax;
 
 	import flash.display.DisplayObject;
@@ -143,7 +144,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 		public function showGifts() : void
 		{
-			var gifts : Vector.<GiftVo> = Vector.<GiftVo>(getDataProvider().getValueByKey('gift'));
+			var gifts : Vector.<GiftVo> = Vector.<GiftVo>(getDataProvider().getValueByKey('receivedGiftList'));
 			while (giftsBox.numChildren > 0)
 			{
 				giftsBox.removeChildAt(0);
@@ -168,24 +169,25 @@ package com.crowdpark.fastclick.mvcs.views.start
 		private function onGiftContainerListener(event : MouseEvent) : void
 		{
 			giftsBox.removeEventListener(MouseEvent.CLICK, onGiftContainerListener);
-			var gifts : Vector.<GiftVo> = Vector.<GiftVo>(getDataProvider().getValueByKey('gift'));
+			var gifts : Vector.<GiftVo> = Vector.<GiftVo>(getDataProvider().getValueByKey('receivedGiftList'));
+			var giftVariety : Object = getDataProvider().getValueByKey('giftVariety');
 
 			var xpos = 0;
 			for (var i : uint = 0;i < gifts.length;i++)
 			{
-				var giftSprite : Sprite = new Sprite();
-				giftSprite.name = String(gifts[i].getGiftRequest());
-				var giftView : TextField = createField(String(gifts[i].getGiftAmount()), 0, 0, 200, 20, false, 'Verdana', 16, 0xffffff);
-				giftView.background = true;
-				giftView.backgroundColor = 0x00ff00;
-
-				giftSprite.addChild(giftView);
-				giftSprite.x = xpos;
-				xpos += giftSprite.width + 10;
-				giftSprite.mouseChildren = false;
-				giftSprite.addEventListener(MouseEvent.CLICK, onGiftListener);
-
-				giftContainer.addChild(giftSprite);
+				var singleGiftView : SingleGiftView = new SingleGiftView();
+				singleGiftView.init();
+				singleGiftView.setGiftRequest(gifts[i].getGiftRequest());
+				var giftType : String = String(gifts[i].getGiftType());
+				singleGiftView.setGiftType(giftType);
+				var title : String = giftVariety[giftType].amount + ' ' + giftVariety[giftType].type;
+				singleGiftView.setGiftTitleText(title);
+				singleGiftView.setBackgroundColor(0xff0000);
+				singleGiftView.x = xpos;
+				xpos += singleGiftView.width + 10;
+				singleGiftView.mouseChildren = false;
+				singleGiftView.addEventListener(MouseEvent.CLICK, onGiftListener);
+				giftContainer.addChild(singleGiftView);
 			}
 			giftContainer.x = (stage.stageWidth - giftContainer.width) / 2;
 			giftContainer.y = giftsBox.y + giftsBox.height + 20;
@@ -193,7 +195,9 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 		private function onGiftListener(event : MouseEvent) : void
 		{
-			getDataProvider().setValueByKey('receivedGift', event.currentTarget.name);
+			getDataProvider().setValueByKey('receivedGift', SingleGiftView(event.currentTarget).getGiftRequest());
+			getDataProvider().setValueByKey('giftType', SingleGiftView(event.currentTarget).getGiftType());
+
 			dispatchEvent(new Event(StartView.RECEIVE_GIFT));
 			giftContainer.removeChild(DisplayObject(event.currentTarget));
 		}

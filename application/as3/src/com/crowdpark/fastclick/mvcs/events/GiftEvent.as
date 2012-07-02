@@ -10,6 +10,7 @@ package com.crowdpark.fastclick.mvcs.events
 		public static const SEND_GIFT : String = "SEND_GIFT";
 		public static const SHOW_GIFT : String = "SHOW_GIFT";
 		public static const ADD_GIFT : String = "ADD_GIFT";
+		public static const SHOW_GIFT_TYPES : String = "SHOW_GIFT_TYPES";
 		public function GiftEvent(type : String, bubbles : Boolean = false, cancelable : Boolean = true)
 		{
 			super(type, bubbles, cancelable);

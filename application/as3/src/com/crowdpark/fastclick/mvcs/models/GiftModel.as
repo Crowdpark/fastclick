@@ -13,6 +13,9 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _receivedGiftList : Vector.<GiftVo> = new Vector.<GiftVo>();
 		private var _backendGiftList : Object = new Object();
 		private var _currentGift : GiftVo;
+		private var _recipientId : String;
+		private var _giftTypes : Object;
+		private var _currentGiftType : String;
 
 		public function createReceivedGifts(gifts : *) : void
 		{
@@ -49,8 +52,8 @@ package com.crowdpark.fastclick.mvcs.models
 				{
 					var giftObj : Object = new Object();
 					giftObj.request = (String(result.request));
-					giftObj.amount = 10;
-					giftObj.type = 1;
+					giftObj.amount = getGiftVariety()[getCurretGiftType()].amount;
+					giftObj.type = getCurretGiftType();
 					this.getBackendGiftList()[result.to[i]] = giftObj;
 				}
 			}
@@ -78,6 +81,56 @@ package com.crowdpark.fastclick.mvcs.models
 		public function getCurrentGift() : GiftVo
 		{
 			return _currentGift;
+		}
+
+		public function createGift(playerId : String) : void
+		{
+			var giftVo : GiftVo = new GiftVo();
+			giftVo.setId(playerId);
+			giftVo.setRecipientId(getRecipientId());
+			giftVo.setGiftType(getCurretGiftType());
+			giftVo.setGiftAmount(getGiftVariety()[getCurretGiftType()].amount);
+			giftVo.setMessage('Send gift Test');
+
+			setCurrentGift(giftVo);
+		}
+
+		public function getRecipientId() : String
+		{
+			return _recipientId;
+		}
+
+		public function setRecipientId(recipientId : String) : void
+		{
+			_recipientId = recipientId;
+		}
+
+		public function getGiftVariety() : Object
+		{
+			_giftTypes = new Object();
+			_giftTypes['1'] = {'amount':5, 'type':'seconds'};
+			_giftTypes['2'] = {'amount':10, 'type':'points'};
+			return _giftTypes;
+		}
+
+		public function setGiftVariety(giftTypes : Object) : void
+		{
+			_giftTypes = giftTypes;
+		}
+
+		public function setCurrentGiftType(giftType : String) : void
+		{
+			_currentGiftType = giftType;
+		}
+
+		public function getCurretGiftType() : String
+		{
+			return _currentGiftType;
+		}
+
+		public function setCurretGiftType(curretGiftType : String) : void
+		{
+			this._currentGiftType = curretGiftType;
 		}
 	}
 }

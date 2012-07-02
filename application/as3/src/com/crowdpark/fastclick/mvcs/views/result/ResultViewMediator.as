@@ -30,7 +30,6 @@ package com.crowdpark.fastclick.mvcs.views.result
 			addContextListener(HighestScoreEvent.SHOW_HIGHEST_SCORE, onShowHighestScore);
 			addContextListener(LeaderboardEvent.BEAT_FRIEND, onBeatFriendListener);
 			addContextListener(LeaderboardEvent.SCORE_SHARED, onScoreSharedEvent);
-
 		}
 
 		private function onScoreSharedEvent(event : LeaderboardEvent) : void

@@ -7,12 +7,12 @@ package com.crowdpark.fastclick.mvcs.models.vo
 	 */
 	public class GiftVo extends BaseVo
 	{
-		public function getGiftType() : uint
+		public function getGiftType() : String
 		{
-			return uint(this.getValueByKey('type'));
+			return String(this.getValueByKey('type'));
 		}
 
-		public function setGiftType(type : uint) : GiftVo
+		public function setGiftType(type : String) : GiftVo
 		{
 			this.setValueByKey('type', type);
 			return this;

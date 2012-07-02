@@ -22,7 +22,7 @@ package com.crowdpark.fastclick.mvcs.models
 		private var _ballArray : Vector.<BallVo>;
 		private var _time : uint;
 		private var _timer : Timer;
-		private var _gameDuration : uint;
+		private var _gameDuration : uint = 0;
 		private var _colorArray : Array;
 		private var _levelArray : Vector.<LevelVo>;
 		private var _url : String;

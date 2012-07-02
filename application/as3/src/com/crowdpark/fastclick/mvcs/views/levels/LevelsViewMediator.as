@@ -39,7 +39,7 @@ package com.crowdpark.fastclick.mvcs.views.levels
 		private function onLevelSelectListener(event : GameEvents) : void
 		{
 			playerModel.getCurrentPlayer().setSelectedLevel(uint(event.getDataprovider().getValueByKey('selectedLevel')));
-			configModel.setGameDuration(uint(event.getDataprovider().getValueByKey('selectedLevelDuration')));
+			configModel.setGameDuration(configModel.getGameDuration()+uint(event.getDataprovider().getValueByKey('selectedLevelDuration')));
 			dispatch(new StateMachineEvents(StateMachineEvents.START));
 		}
 

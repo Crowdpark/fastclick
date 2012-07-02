@@ -67,10 +67,10 @@ package com.crowdpark.fastclick.mvcs.services
 		{
 			var data = new Object();
 			data.message = 'test gift send';
-			if (gift)
+			data.type = gift.getGiftType();
+			data.amount = gift.getGiftAmount();
+			if (gift.getRecipientId() != 'null')
 			{
-				data.type = gift.getGiftType();
-				data.amount = gift.getGiftAmount();
 				data.uid = gift.getRecipientId();
 			}
 

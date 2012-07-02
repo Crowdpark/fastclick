@@ -22,8 +22,6 @@ package com.crowdpark.fastclick.mvcs.views.control
 		public static const SEND_GIFTS : String = "SEND_GIFTS";
 		public static const INVITE_FRIENDS : String = "INVITE_FRIENDS";
 		public static const LOBBY : String = "LOBBY";
-		
-		
 		private var buttonContainer : Sprite = new Sprite();
 		private var options : Array = ['Free Gifts', 'Lobby', 'Invite Friends'];
 

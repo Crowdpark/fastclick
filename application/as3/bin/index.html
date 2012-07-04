@@ -48,8 +48,7 @@ body {
         ;
 
         FB.getLoginStatus(function (response) {
-            console.log("holalogin");
-            console.log(response.status);
+            console.log(response);
             if (response.status == "connected") {
                 fetchMeFriends(response);
             } else {

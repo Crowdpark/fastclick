@@ -19,7 +19,7 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     {
         $scoresMvo = $this->getApplicationContext()->getPlayerDataMvo();
         $scoresMvo->addScore($score, $level);
-        $this->_setHighScore($score);
+        $this->_setHighScore($score, $level);
 
         return $scoresMvo;
     }
@@ -31,6 +31,10 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     public function setLevel($level)
     {
         $scoresMvo = $this->getApplicationContext()->getPlayerDataMvo();
+
+        if ($scoresMvo->getLevel() < $level)
+            $scoresMvo->setHighScore(0, $level);
+
         $scoresMvo->setLevel($level);
 
         return $scoresMvo;
@@ -43,17 +47,52 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
     public function getAppFriends(array $friendsRawList)
     {
         $return = array();
-        $return['user']["high_score"] = $this->getApplicationContext()->getPlayerDataMvo()->getHighScore();
+        $highscore = $this->getApplicationContext()->getPlayerDataMvo()->getHighScore();
+
+        if (!is_array($highscore))
+            $highscore = get_object_vars($highscore);
+
+        $return['user']["high_score"] = $highscore["score"];
         $return['user']["level"] = $this->getApplicationContext()->getPlayerDataMvo()->getLevel();
-
         $appFriendData = $this->getApplicationContext()->getUserBo()->getAppFriends($friendsRawList);
+        $return["friends"] = $this->_filterAppFriends($friendsRawList, $appFriendData["userMvos"], $appFriendData["playerDataMvos"]);
 
-        $friends = $appFriendData["userMvos"];
-        $playerData = $appFriendData["playerDataMvos"];
+        return $return;
+    }
 
+    /**
+     * @param array $ids
+     * @return array
+     */
+    public function getHighscores(array $ids)
+    {
+        $connector = $this->getApplicationContext()->getDefaultCache();
+
+        $withPrefixes = $this->_array_prefixing("PlayerData_", $ids["app_friends"]);
+
+        $data = $connector->getMultipleByKey($withPrefixes);
+
+        $return = array();
+
+        foreach ($data as $id => $playerData) {
+            $elements = get_object_vars(json_decode($playerData));
+            $return[str_replace("PlayerData_", "", $id)] = $elements["high_score"];
+        }
+
+        return $return;
+    }
+
+    /**
+     * @param array $friendsRawList
+     * @param array $mvoRawData
+     * @param array $playerData
+     * @return array
+     */
+    private function _filterAppFriends(array $friendsRawList, array $mvoRawData, array $playerData)
+    {
         $appFriends = array();
 
-        foreach ($friends as $friendMvo) {
+        foreach ($mvoRawData as $friendMvo) {
 
             $friendObject = json_decode($friendMvo);
             $id = $friendObject->id;
@@ -63,28 +102,43 @@ class PlayerManager extends \Processus\Abstracts\Manager\AbstractManager
                     $data = get_object_vars(json_decode($playerData["PlayerData_" . $id]));
 
                     $friend["type"] = "appfriend";
-                    $friend["high_score"] = $data["high_score"];
+                    $friend["high_score"] = $data["high_score"]->score;
                     $friend["level"] = $data["level"];
 
                     $appFriends[] = $friend;
+                    break;
                 }
             }
         }
-        $return["friends"] = $appFriends;
 
-        return $return;
+        return $appFriends;
     }
+    /**
+     * @param string $prefix
+     * @param array $idList
+     * @return array
+     */
+    private function _array_prefixing(string $prefix, array $idList)
+    {
+        $prefixList = array();
 
+        foreach ($idList as $idItem) {
+            $prefixList[] = $prefix . $idItem;
+        }
+
+        return $prefixList;
+    }
     /**
      * Evaluates and sets the high score if it's the highest.
      * @param int $score
      */
-    private function _setHighScore(\int $score)
+    private function _setHighScore(\int $score, \int $level)
     {
         $mvo = $this->getApplicationContext()->getPlayerDataMvo();
-        
-        if (is_null($mvo) || $score > $mvo->getHighScore())
-            $mvo->setHighScore($score)->saveInMem();
+        $highscore = $mvo->getHighScore();
+
+        if (is_null($mvo) || $level > $highscore->level || (($score > $highscore->score) && ($level == $highscore->level)))
+            $mvo->setHighScore($score, $level)->saveInMem();
     }
 
 }

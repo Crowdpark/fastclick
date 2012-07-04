@@ -10,12 +10,19 @@ namespace Application\Mvo;
 class GiftsMvo extends \Processus\Abstracts\Vo\AbstractMVO
 {
 
+    /**
+     *
+     */
     function __construct()
     {
         if (is_null($this->getMemId()))
             $this->setMemId($this->getApplicationContext()->getUserBo()->getFacebookUserId());
     }
 
+    /**
+     * @param $id
+     * @return \Processus\Abstracts\Vo\AbstractVO
+     */
     public function setId($id)
     {
         return $this->setValueByKey($id, "id");

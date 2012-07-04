@@ -10,12 +10,19 @@ namespace Application\JsonRpc\V1\NoAuth\Service;
 class Player extends \Application\Core\Abstracts\AbstractService
 {
 
+
     /**
      * @param array $params
      * @return array
      */
     public function getAppFriends(array $params)
     {
+//$memFriends = prosc_array_to_object($this->getApplicationContext()->getUserFriendsMvo()->getFriends());
+//        $paramFriends = prosc_array_to_object($params["friendsList"]);
+//        var_dump($memFriends);
+//        var_dump(md5(serialize($memFriends)));
+//        var_dump(md5(serialize($paramFriends)));
+//        $this->getApplicationContext()->getUserFriendsMvo()->setFriends($params["friendsList"])->saveInMem();
         $manager = new \Application\Manager\Player\PlayerManager();
         $return = $manager->getAppFriends($params["friendsList"]);
 
@@ -37,10 +44,9 @@ class Player extends \Application\Core\Abstracts\AbstractService
     {
         $manager = new \Application\Manager\Player\PlayerManager();
 
-        $manager->setLevel($params["currentLevel"]);
-        $mvo = $manager->setScore($params["currentScore"], $params["selectedLevel"]);
+        $manager->setScore($params["currentScore"], $params["selectedLevel"]);
 
-        return $mvo->saveInMem();
+        return $manager->setLevel($params["currentLevel"])->saveInMem();
     }
 
     /**
@@ -55,6 +61,12 @@ class Player extends \Application\Core\Abstracts\AbstractService
         arsort($scoreHistory, SORT_NUMERIC);
 
         return $scoreHistory;
+    }
+
+    public function getFriendsHighscores(array $params)
+    {
+        $manager = new \Application\Manager\Player\PlayerManager();
+        return $manager->getHighscores($params);
     }
 
 }

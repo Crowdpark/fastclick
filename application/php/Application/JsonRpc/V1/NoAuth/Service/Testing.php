@@ -10,6 +10,17 @@ namespace Application\JsonRpc\V1\NoAuth\Service;
 class Testing extends \Processus\Abstracts\JsonRpc\AbstractJsonRpcService
 {
 
+//    public function flushCb(array $params)
+//    {
+//        if ($params["clave"] != "1234567890987654321")
+//            return false;
+//        else {
+//            echo "[Deleting]\n";
+//            var_dump($this->getApplicationContext()->getDefaultCache()->flush());
+//            echo "[\Deleting]\n";
+//        }
+//    }
+
     public function storePics(array $params)
     {
         $manager = new \Application\Manager\Player\PlayerManager();
@@ -27,7 +38,7 @@ class Testing extends \Processus\Abstracts\JsonRpc\AbstractJsonRpcService
         //var_dump($this->getProcessusContext()->getUserBo()->getFacebookUserId());
 //        $friends = $this->getProcessusContext()->getUserBo()->getAppFriends();
 //        var_dump($friends);
-echo "hola";
+        echo "hola";
         var_dump($this->getApplicationContext()->getUserBo()->getAppFriends());
         return "Hello World";
     }
@@ -54,16 +65,16 @@ echo "hola";
     {
         $manager = new \Application\Manager\TestDb();
         return $manager->getDataFromTable("helloworld",
-                                            array("value"),
-                                            array("id" => $userId));
+            array("value"),
+            array("id" => $userId));
     }
 
     public function getCircleConfig(array $params = NULL)
     {
         $manager = new \Application\Manager\TestDb();
         return $manager->getDataFromTable("circles",
-                                            array("color", "score"),
-                                            $params);
+            array("color", "score"),
+            $params);
     }
 
 }

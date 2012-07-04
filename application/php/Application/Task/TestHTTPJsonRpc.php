@@ -28,8 +28,8 @@ class TestHTTPJsonRpc extends \Processus\Abstracts\AbstractTask
 //        $this->_dumpData("NoAuth.Player.getExperience");
 //        $this->_dumpData("NoAuth.Game.getGame");
 
-        $this->_dumpData("NoAuth.Testing.getFriendsPics");
-
+//        $this->_dumpData("NoAuth.Testing.getFriendsPics");
+            $this->_dumpData("NoAuth.Player.getFriendsHighscores", array(array(100003983963561, 100003894794078)));
     }
 
     /**

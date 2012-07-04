@@ -28,14 +28,14 @@ package com.crowdpark.fastclick.mvcs.views.hud
 
 			var currentPlayer : PlayerVo = playerModel.getCurrentPlayer();
 			var selectedLevel : uint = uint(currentPlayer.getSelectedLevel());
-			
-			var neededScore:uint; 
-			var upperLevel:uint;
-			 
+
+			var neededScore : uint;
+			var upperLevel : uint;
+
 			if (selectedLevel < configModel.getLevelArray().length)
 			{
 				neededScore = uint(configModel.getLevelArray()[selectedLevel - 1].getScoreLimit());
-				upperLevel  = configModel.getLevelArray()[selectedLevel].getLevelIndex();
+				upperLevel = configModel.getLevelArray()[selectedLevel].getLevelIndex();
 			}
 
 			view.updateLevel(selectedLevel, neededScore, upperLevel);

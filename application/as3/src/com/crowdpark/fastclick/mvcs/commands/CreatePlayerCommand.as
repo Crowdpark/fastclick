@@ -24,6 +24,8 @@ package com.crowdpark.fastclick.mvcs.commands
 		override public function execute() : void
 		{
 			loadingModel.setLoadingState('logged in');
+			
+			
 
 			var params = facebookServiceEvent.getDataprovider().getValueByKey('params');
 			if (params)

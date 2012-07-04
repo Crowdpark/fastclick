@@ -90,9 +90,8 @@ package com.crowdpark.fastclick.mvcs.services
 		{
 		}
 
-		public function sendGift(playerId, data : Object) : void
+		public function sendGift(playerId : String, data : Object) : void
 		{
-		
 			var jsonClient : JsonRpcClient = new JsonRpcClient();
 			jsonClient.params = [{'id':playerId, 'recipient_list':data}];
 			jsonClient.method = 'NoAuth.Game.sendGift';

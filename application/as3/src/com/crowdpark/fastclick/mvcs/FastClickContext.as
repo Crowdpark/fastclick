@@ -1,6 +1,5 @@
 package com.crowdpark.fastclick.mvcs
 {
-	import com.crowdpark.fastclick.mvcs.commands.AddGiftCommand;
 	import com.crowdpark.fastclick.mvcs.commands.BitmapFetchedCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CountDownCommand;
 	import com.crowdpark.fastclick.mvcs.commands.CreatePlayerCommand;
@@ -20,6 +19,7 @@ package com.crowdpark.fastclick.mvcs
 	import com.crowdpark.fastclick.mvcs.commands.UpdateScoreCommand;
 	import com.crowdpark.fastclick.mvcs.commands.control.InviteFriendCommand;
 	import com.crowdpark.fastclick.mvcs.commands.control.ShowLobbyCommand;
+	import com.crowdpark.fastclick.mvcs.commands.gifts.AddGiftCommand;
 	import com.crowdpark.fastclick.mvcs.commands.gifts.SendGiftBackendCommand;
 	import com.crowdpark.fastclick.mvcs.commands.gifts.SendGiftCommand;
 	import com.crowdpark.fastclick.mvcs.commands.gifts.ShowGiftsCommand;
@@ -67,10 +67,10 @@ package com.crowdpark.fastclick.mvcs
 	import com.crowdpark.fastclick.mvcs.views.start.StartView;
 	import com.crowdpark.fastclick.mvcs.views.start.StartViewMediator;
 
-	import flash.display.DisplayObjectContainer;
-
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Context;
+
+	import flash.display.DisplayObjectContainer;
 
 	/**
 	 * @author fatmatekin
@@ -111,7 +111,6 @@ package com.crowdpark.fastclick.mvcs
 			commandMap.mapEvent(StateMachineEvents.REPLAY, ReplayGameCommand, StateMachineEvents);
 
 			commandMap.mapEvent(ControlViewEvent.INVITE_FRIENDS, InviteFriendCommand);
-
 			commandMap.mapEvent(ControlViewEvent.SHOW_LOBBY, ShowLobbyCommand);
 
 			commandMap.mapEvent(LeaderboardEvent.SHARE_BEAT_FRIEND, ShareBeatCommand);

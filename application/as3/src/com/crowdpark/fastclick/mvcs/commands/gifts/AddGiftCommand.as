@@ -1,4 +1,4 @@
-package com.crowdpark.fastclick.mvcs.commands
+package com.crowdpark.fastclick.mvcs.commands.gifts
 {
 	import com.crowdpark.fastclick.mvcs.events.GiftEvent;
 	import com.crowdpark.fastclick.mvcs.models.ConfigModel;

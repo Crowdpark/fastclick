@@ -15,18 +15,19 @@ package com.crowdpark.fastclick.mvcs.views.levels
 		{
 			super.onRegister();
 
+			addViewListener(GameEvents.LEVEL_SELECT, onLevelSelectListener);
+
 			if (stateMachineModel.state == StateMachineState.REPLAY)
 			{
 				view.enableSelect();
 			}
 
-			addViewListener(GameEvents.LEVEL_SELECT, onLevelSelectListener);
 			var levelArray : Vector.<LevelVo> = configModel.getLevelArray();
-			var currentLevel:uint = playerModel.getCurrentPlayer().getCurrentLevel();
-			
+			var currentLevel : uint = playerModel.getCurrentPlayer().getCurrentLevel();
+
 			if (levelArray)
 			{
-				showLevels(levelArray,currentLevel);
+				showLevels(levelArray, currentLevel);
 			}
 		}
 
@@ -39,11 +40,11 @@ package com.crowdpark.fastclick.mvcs.views.levels
 		private function onLevelSelectListener(event : GameEvents) : void
 		{
 			playerModel.getCurrentPlayer().setSelectedLevel(uint(event.getDataprovider().getValueByKey('selectedLevel')));
-			configModel.setGameDuration(configModel.getGameDuration()+uint(event.getDataprovider().getValueByKey('selectedLevelDuration')));
+			configModel.setGameDuration(configModel.getGameDuration() + uint(event.getDataprovider().getValueByKey('selectedLevelDuration')));
 			dispatch(new StateMachineEvents(StateMachineEvents.START));
 		}
 
-		private function showLevels(levelArray : Vector.<LevelVo>,currentLevel) : void
+		private function showLevels(levelArray : Vector.<LevelVo>, currentLevel) : void
 		{
 			view.getDataProvider().setValueByKey('levelArray', levelArray);
 			view.createLevels(currentLevel);

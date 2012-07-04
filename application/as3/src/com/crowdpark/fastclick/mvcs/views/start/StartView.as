@@ -52,7 +52,6 @@ package com.crowdpark.fastclick.mvcs.views.start
 		{
 			gameTitleSprite = new Sprite();
 			startButtonSprite = new Sprite();
-
 			addChild(gameTitleSprite);
 			addChild(playerNameSprite);
 

@@ -26,14 +26,12 @@ package com.crowdpark.fastclick.mvcs.views.gift
 		override public function init() : void
 		{
 			addChild(gift_container);
-
-			
 		}
 
 		public function createGifts() : void
 		{
 			var xpos : uint = 0;
-			var giftVariety:Object = getDataProvider().getValueByKey('giftVariety');
+			var giftVariety : Object = getDataProvider().getValueByKey('giftVariety');
 
 			for (var key:String in giftVariety)
 			{

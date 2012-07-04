@@ -13,11 +13,73 @@ body {
 	height: 400px;
 }
 </style>
+
+<script type="text/javascript" src="../assets/js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="swfobject.js"></script>
+    <script src="../assets/js/fastclick.js"></script>
+    <script src="//connect.facebook.net/en_US/all.js"></script>
 </head>
-<script type="text/javascript" src="swfobject.js"></script>
-<script src="//connect.facebook.net/en_US/all.js"></script>
-<script src="../assets/js/fastclick.js"></script>
 <body marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
+<script type="text/javascript">
+
+    window.fbAsyncInit = function () {
+
+        FB.init({
+            appId:228369307281845, // App ID
+            frictionlessRequests:true,
+            channelUrl:'/channel.html', // Channel File
+            status:true, // check login status
+            cookie:true, // enable cookies to allow the server to access the session
+            oauth:true
+        });
+
+        function fetchMeFriends(response) {
+            FB.api("/me", function (response) {
+                window.swfobject.getObjectById('Testing').onMe(response);
+
+                FB.api("/me/friends", function (response) {
+                    window.swfobject.getObjectById('Testing').onFetchFriends(response);
+                });
+
+            });
+
+        }
+
+        ;
+
+        FB.getLoginStatus(function (response) {
+            console.log("holalogin");
+            console.log(response.status);
+            if (response.status == "connected") {
+                fetchMeFriends(response);
+            } else {
+                FB.login(function (response) {
+                    console.dir(response);
+                    if (response.authResponse) {
+                        fetchMeFriends(response);
+                    } else {
+                        console.log('User cancelled login or did not fully authorize.');
+                    }
+                }, {scope:'email,user_about_me,publish_stream'});
+
+            }
+        });
+    };
+
+    // Load Facebook SDK Asynchronously
+    (function (d) {
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement('script');
+        js.id = id;
+        js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+    </script>
 	<div id="fb-root"></div>
 	<style type="text/css" media="screen">
 html,body {

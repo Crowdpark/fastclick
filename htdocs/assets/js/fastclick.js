@@ -1,58 +1,11 @@
-const FACEBOOK_APP_ID = '300602210033160';
-var APP_NAME = 'test-fastclik';
-
-
-window.fbAsyncInit = function() {
-
-			FB.init({
-				appId : FACEBOOK_APP_ID, // App ID
-				frictionlessRequests:true,
-				channelUrl:'/channel.html', // Channel File
-				status:true, // check login status
-				cookie:true, // enable cookies to allow the server to access the session
-				oauth:true
-			// parse XFBML
-			});
-				
-			function fetchMeFriends(response){
-				FB.api("/me", function(response){
-	            	window.swfobject.getObjectById('Testing').onMe(response);
-	            	
-	            	FB.api("/me/friends", function(response){
-		            	window.swfobject.getObjectById('Testing').onFetchFriends(response);
-		            });
-	            	
-	            });
-	            
-			};
-			
-			FB.getLoginStatus(function(response){
-				console.dir(response);
-				if(response.status == "connected")
-				{
-					fetchMeFriends(response);
-				}else
-				{
-					FB.login(function(response) {
-	        		  console.dir(response);
-		  				if (response.authResponse) {
-		  					fetchMeFriends(response);
-		  				} else {
-		  					console.log('User cancelled login or did not fully authorize.');
-		  				}
-		  			}, {scope:'email,user_about_me,publish_stream'});
-					
-				}
-			});
-		};
-
-
+const FACEBOOK_APP_ID = '228369307281845';
+var APP_NAME = 'fastclick-game';
 
 var crowdparkHTML = {
-	_data:new Array(),
+    _data:new Array(),
 
 
-	consoleLog:function (content) {
+    consoleLog:function (content) {
         if (navigator.appName != 'Microsoft Internet Explorer') {
             console.log(content);
         }
@@ -63,123 +16,121 @@ var crowdparkHTML = {
         }
     },
 
-    			    getProtocol:function () {
-				        crowdparkHTML.consoleLog('>>> getProtocol');
-				        if (crowdparkHTML._data['protocol'] === undefined) {
-				            var protocol = ('https:' == document.location.protocol) ? 'https://' : 'http://';
-				            crowdparkHTML.setProtocol(protocol);
-				        }
-				        return crowdparkHTML._data['protocol'];
-				    },
-				    setProtocol:function (value) {
-				        crowdparkHTML.consoleLog('>>> setProtocol: ' + value);
-				        crowdparkHTML._data['protocol'] = value;
-				        return crowdparkHTML;
-				    },	
-			
-			facebookInviteFriends:function (data) {
-				        console.log('>>> facebookInviteFriends');
-						
-				        
-				        var dataJson = JSON.stringify(data);
-				        
-				        dataObject = JSON.parse(dataJson);
-				        console.debug(dataObject);
+    getProtocol:function () {
+        crowdparkHTML.consoleLog('>>> getProtocol');
+        if (crowdparkHTML._data['protocol'] === undefined) {
+            var protocol = ('https:' == document.location.protocol) ? 'https://' : 'http://';
+            crowdparkHTML.setProtocol(protocol);
+        }
+        return crowdparkHTML._data['protocol'];
+    },
+    setProtocol:function (value) {
+        crowdparkHTML.consoleLog('>>> setProtocol: ' + value);
+        crowdparkHTML._data['protocol'] = value;
+        return crowdparkHTML;
+    },
 
-				    
-				        FB.ui(
-				            {
-				                app_id:FACEBOOK_APP_ID,
-				                method:'apprequests',
-				                display:'iframe',
-				                title:'Select some of your friends',
-				                message:'Come and play Fastclick',
-				                data:{
-				                    'trackingUid':dataObject.trackingUid,
-				                //    'swfaddress':'/assets/swf/MainApp.swf',
-				                    'type':'invite',
-				                    'model':'',
-				                    'id':dataObject.id
-				                },
-				                'filters':['app_non_users']
-				            },
+    facebookInviteFriends:function (data) {
+        console.log('>>> facebookInviteFriends');
 
-				            function (response) {
-				            }
-				        );
-				    },
-				
-			facebookSendGift:function (data) {
-				        console.log('>>> facebookSendGift');
-				        console.log(data);
-				        var dataJson = JSON.stringify(data);
-				        	
-				       	dataObject = JSON.parse(dataJson);
-				        console.debug(dataObject);
 
-				      
-				        FB.ui(
-				            {
-				                app_id:FACEBOOK_APP_ID,
-				                method:'apprequests',
-				                message:dataObject.message,
-				                data:{
-				                    'type':dataObject.type,
-				                    'amount':dataObject.amount
-				                },
-				                title:'Send Gift',
-				                to:dataObject.uid
-				            },
+        var dataJson = JSON.stringify(data);
 
-				            function (response) {
-				                var data;
-								if (response) {
-				                	data = parseFloat(response.request);
-				                } else {
-				                	data = parseFloat(0);
-				                }
-				                console.log(response);
-				                
-				                window.swfobject.getObjectById('Testing').facebookSendGift(response);
-				            }
-				        );
-				    },
-				    
-				    facebookAppRequestHandler:function () {
-				        console.log('>>> facebookAppRequestsHandler');
+        dataObject = JSON.parse(dataJson);
+        console.debug(dataObject);
 
-				        FB.api("/me/apprequests/", function (response) {
-				            console.debug(response);
 
-				            var appRequests = response.data;
-				            if (appRequests && appRequests.length) {
+        FB.ui(
+            {
+                app_id:FACEBOOK_APP_ID,
+                method:'apprequests',
+                display:'iframe',
+                title:'Select some of your friends',
+                message:'Come and play Fastclick',
+                data:{
+                    'trackingUid':dataObject.trackingUid,
+                    //    'swfaddress':'/assets/swf/MainApp.swf',
+                    'type':'invite',
+                    'model':'',
+                    'id':dataObject.id
+                },
+                'filters':['app_non_users']
+            },
 
-				                var inviteRequests = [];
-				                var index;
-				                for (index in appRequests) {
-				                    inviteRequests.push({method:"DELETE", relative_url:appRequests[index].id});
-				                }
+            function (response) {
+            }
+        );
+    },
 
-				                /* Send delete batch request to Facebook */
-				                FB.api("/", "POST", {batch:inviteRequests}, function () {
-				                    console.log('>>> inviteRequestsBatchDelete callback!');
-				                });
-				            }
-				        });
-				    },
-				    
-	facebookShare:function (dataJson) {
+    facebookSendGift:function (data) {
+        console.log('>>> facebookSendGift');
+        console.log(data);
+        var dataJson = JSON.stringify(data);
+        dataObject = JSON.parse(dataJson);
+
+        FB.ui(
+            {
+                app_id:FACEBOOK_APP_ID,
+                method:'apprequests',
+                message:dataObject.message,
+                data:{
+                    'type':dataObject.type,
+                    'amount':dataObject.amount
+                },
+                title:'Send Gift',
+                to:dataObject.uid
+            },
+
+            function (response) {
+                console.log("[RESPONSE Callback]");
+                var data;
+                if (response) {
+                    data = parseFloat(response.request);
+                } else {
+                    data = parseFloat(0);
+                }
+                console.log(response);
+
+                window.swfobject.getObjectById('Testing').facebookSendGift(response);
+            }
+        );
+    },
+
+    facebookAppRequestHandler:function () {
+        console.log('>>> facebookAppRequestsHandler');
+
+        FB.api("/me/apprequests/", function (response) {
+            console.debug(response);
+
+            var appRequests = response.data;
+            if (appRequests && appRequests.length) {
+
+                var inviteRequests = [];
+                var index;
+                for (index in appRequests) {
+                    inviteRequests.push({method:"DELETE", relative_url:appRequests[index].id});
+                }
+
+                /* Send delete batch request to Facebook */
+                FB.api("/", "POST", {batch:inviteRequests}, function () {
+                    console.log('>>> inviteRequestsBatchDelete callback!');
+                });
+            }
+        });
+    },
+
+    facebookShare:function (dataJson) {
         console.log('>>> facebookShare');
 
         console.log(dataJson);
 
-        
+
         /* build link (check for reward) */
         //var picture = crowdparkHTML.getProtocol() + crowdparkHTML.getImgUrl().replace('//', '') + 'fastclick_icon.gif';
         //var link = crowdparkHTML.getProtocol() + 'apps.facebook.com/' + APP_NAME;
         var link = 'https://apps.facebook.com/fastclick-game/';
         //if (dataJson.rewardId != 0) {
-          //  link = link + '/?rewardToken=' + dataJson.rewardId;
+        //  link = link + '/?rewardToken=' + dataJson.rewardId;
         //}
 
         /* Prepare Facebook UI request parameters */
@@ -193,12 +144,12 @@ var crowdparkHTML = {
             description:dataJson.message
         };
 
- 		console.log(facebookRequestParams);
+        console.log(facebookRequestParams);
         FB.ui(facebookRequestParams, function (response) {
             console.log('>>> facebookShare response=');
             console.debug(response);
 
- 
+
             if (response && response.post_id) {
                 dataJson.openGraphId = response.post_id;
                 dataJson.success = true;
@@ -206,12 +157,11 @@ var crowdparkHTML = {
                 /* Flash callback */
                 //var flashDataJson = JSON.stringify(dataJson);
                 window.swfobject.getObjectById('Testing').facebookShare(response);
-                
+
             }
         });
 
-    },
-			
-				    
-				
-		}
+    }
+
+
+}

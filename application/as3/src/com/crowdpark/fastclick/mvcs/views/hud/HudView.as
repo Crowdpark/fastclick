@@ -1,5 +1,10 @@
 package com.crowdpark.fastclick.mvcs.views.hud
 {
+	import flash.display.DisplayObject;
+
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceCircle;
+	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
+
 	import flash.events.MouseEvent;
 
 	import com.crowdpark.fastclick.mvcs.core.base.BaseView;
@@ -139,9 +144,10 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			addChild(exp);
 		}
 
-		public function updateTime() : void
+		public function updateTime(timeText : int) : void
 		{
-			time.text = String(this.getDataProvider().getValueByKey('time'));
+			getDataProvider().setValueByKey('time', timeText);
+			time.text = String(timeText);
 		}
 
 		public function updateLevel(currentLevel : uint, neededScore : uint, upperLevel : uint) : void
@@ -155,6 +161,23 @@ package com.crowdpark.fastclick.mvcs.views.hud
 				exp.x = stage.stageWidth - exp.width;
 				exp.visible = true;
 			}
+		}
+
+		public function updateScore(scoreText : String) : void
+		{
+			score.text = scoreText;
+		}
+
+		public function addScoreBox(scoreBox : BaseGraphic) : void
+		{
+			addChild(scoreBox);
+
+			TweenMax.to(scoreBox, 0.3, {alpha:1, x:scoreBox.getEndPoint().x, y:scoreBox.getEndPoint().y, onComplete:handleTweenComplete, onCompleteParams:[scoreBox]});
+		}
+
+		private function handleTweenComplete(scoreBox : InterfaceCircle) : void
+		{
+			removeChild(DisplayObject(scoreBox));
 		}
 	}
 }

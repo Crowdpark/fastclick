@@ -1,5 +1,9 @@
 package com.crowdpark.fastclick.mvcs.views.footer
 {
+	import com.greensock.easing.Linear;
+	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceCircle;
+	import com.greensock.TweenMax;
+	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
 	import com.bit101.components.HBox;
 	import com.bit101.components.ScrollPane;
 	import com.crowdpark.fastclick.mvcs.assets.FastClickBall;
@@ -51,6 +55,21 @@ package com.crowdpark.fastclick.mvcs.views.footer
 
 			hbox.addChild(ballShape);
 			ballPanel.update();
+		}
+
+		public function addClickedCircle(ball : BaseGraphic) : void
+		{
+			addChild(ball);
+
+			TweenMax.to(ball, 0.3, {width:30, height:30, y:ball.getEndPoint().y, x:ball.getEndPoint().x, onComplete:handleTweenComplete, onCompleteParams:[ball], ease:Linear.easeOut});
+		}
+
+		private function handleTweenComplete(point : InterfaceCircle) : void
+		{
+			var ball : FastClickBall = FastClickBall(point);
+			ball.width = 30;
+			ball.height = 30;
+			addBallToHbox(ball);
 		}
 	}
 }

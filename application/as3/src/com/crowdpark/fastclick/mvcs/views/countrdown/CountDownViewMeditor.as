@@ -2,48 +2,24 @@ package com.crowdpark.fastclick.mvcs.views.countrdown
 {
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
-	import com.greensock.TweenMax;
 
-	import flash.display.Sprite;
+	import flash.events.Event;
 
 	/**
 	 * @author fatmatekin
 	 */
 	public class CountDownViewMeditor extends StateMachineMediator
 	{
-		private var cdNumber : uint = 3;
-
 		override public function onRegister() : void
 		{
 			super.onRegister();
-			createCountdownNumbers();
+			view.createCountdownNumbers();
+			addViewListener(CountDownView.START_EVENT, onStartListener);
 		}
 
-		private function createCountdownNumbers() : void
+		private function onStartListener(event : Event) : void
 		{
-			if (cdNumber > 0 )
-			{
-				var numberSprite : Sprite = view.createNumber(cdNumber);
-				numberSprite.x = (contextView.stage.stageWidth - 40) / 2;
-				numberSprite.y = (contextView.stage.stageHeight - 40) / 2;
-
-				view.addChild(numberSprite);
-				TweenMax.from(numberSprite, 0.5, {scaleX:0.5, scaleY:0.5, onComplete:continueCount, onCompleteParams:[numberSprite]});
-			}
-			else
-			{
-				dispatch(new StateMachineEvents(StateMachineEvents.GAME));
-			}
-		}
-
-		private function continueCount(numberSprite : Sprite) : void
-		{
-			if (view)
-			{
-				view.removeChild(numberSprite);
-				cdNumber -= 1;
-				createCountdownNumbers();
-			}
+			dispatch(new StateMachineEvents(StateMachineEvents.GAME));
 		}
 
 		public function get view() : CountDownView

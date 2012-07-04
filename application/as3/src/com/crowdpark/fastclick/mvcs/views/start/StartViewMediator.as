@@ -1,6 +1,5 @@
 package com.crowdpark.fastclick.mvcs.views.start
 {
-	import com.crowdpark.fastclick.mvcs.events.FacebookServiceEvent;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineState;
@@ -23,7 +22,7 @@ package com.crowdpark.fastclick.mvcs.views.start
 			{
 				view.updatePlayerNameField(playerModel.getCurrentPlayer().getPlayerName(), playerModel.getCurrentPlayer().getPlayerLastName());
 			}
-			if (stateMachineModel.getGameState() == StateMachineState.REPLAYED || stateMachineModel.state == StateMachineState.LOBBY) ;
+			if (stateMachineModel.getGameState() == StateMachineState.REPLAYED || stateMachineModel.state == StateMachineState.LOBBY)
 			{
 				handleReadyToStart(null);
 				onShowGiftListener(null);
@@ -61,20 +60,8 @@ package com.crowdpark.fastclick.mvcs.views.start
 
 		override protected function handleReadyToStart(e : StateMachineEvents) : void
 		{
-			super.handleReadyToStart(e);
-			if (loadingModel.getLoadingState() == 'logged in')
-			{
-				view.addStartButton();
-			}
-			else
-			{
-				addContextListener(FacebookServiceEvent.CREATE_PLAYER, showPlayerButtonListener);
-			}
-		}
-
-		private function showPlayerButtonListener(event : FacebookServiceEvent) : void
-		{
 			view.addStartButton();
+			super.handleReadyToStart(e);
 		}
 
 		private function setPlayerListener(event : GameEvents) : void

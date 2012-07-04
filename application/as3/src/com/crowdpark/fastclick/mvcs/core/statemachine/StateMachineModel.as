@@ -7,8 +7,8 @@ package com.crowdpark.fastclick.mvcs.core.statemachine
 	 */
 	public class StateMachineModel extends Actor
 	{
-		private var _state : String;
-		private var _gameState : String;
+		private var _state : String='';
+		private var _gameState : String = '';
 		
 		public function StateMachineModel()
 		{

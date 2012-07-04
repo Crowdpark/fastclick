@@ -1,15 +1,10 @@
 package com.crowdpark.fastclick.mvcs.views.hud
 {
-	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
-	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 	import com.crowdpark.fastclick.mvcs.assets.ball.BaseGraphic;
-	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineEvents;
 	import com.crowdpark.fastclick.mvcs.core.statemachine.StateMachineMediator;
 	import com.crowdpark.fastclick.mvcs.events.PointClickEvent;
-	import com.crowdpark.fastclick.mvcs.interfaces.InterfaceCircle;
-	import com.greensock.TweenMax;
-
-	import flash.display.DisplayObject;
+	import com.crowdpark.fastclick.mvcs.models.vo.PlayerVo;
+	import com.crowdpark.fastclick.mvcs.models.vo.ScoreVo;
 
 	/**
 	 * @author fatmatekin
@@ -39,38 +34,23 @@ package com.crowdpark.fastclick.mvcs.views.hud
 			}
 
 			view.updateLevel(selectedLevel, neededScore, upperLevel);
-			view.score.text = String(currentPlayer.getCurrentScore().getScore());
+			view.updateScore(String(currentPlayer.getCurrentScore().getScore()));
 		}
 
 		private function updateTime(e : HudViewEvent) : void
 		{
-			view.getDataProvider().setValueByKey('time', String(configModel.getTime()));
-			view.updateTime();
+			view.updateTime(configModel.getTime());
 		}
 
 		private function handlePointClickEvent(event : PointClickEvent) : void
 		{
 			var currentScore : ScoreVo = ScoreVo(playerModel.getCurrentPlayer().getCurrentScore());
-			view.score.text = String(currentScore.getScore());
+			view.updateScore(String(currentScore.getScore()));
 
 			var scoreBox : BaseGraphic = BaseGraphic(event.getDataprovider().getValueByKey('scoreBox'));
 			scoreBox.alpha = 0;
-			view.addChild(scoreBox);
 
-			TweenMax.to(scoreBox, 0.3, {alpha:1, x:scoreBox.getEndPoint().x, y:scoreBox.getEndPoint().y, onComplete:handleTweenComplete, onCompleteParams:[scoreBox]});
-		}
-
-		private function handleTweenComplete(scoreBox : InterfaceCircle) : void
-		{
-			if (view)
-			{
-				view.removeChild(DisplayObject(scoreBox));
-			}
-		}
-
-		override protected function handleFinish(e : StateMachineEvents) : void
-		{
-			super.handleFinish(e);
+			view.addScoreBox(scoreBox);
 		}
 
 		public function get view() : HudView

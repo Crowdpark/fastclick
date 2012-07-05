@@ -38,7 +38,7 @@ class PlayerDataMvo extends \Processus\Abstracts\Vo\AbstractMVO
         }
 
         $scoreArray = array(time() => $score);
-        (is_null($scores)) ? $scores = $scoreArray : $scores[] = $score;
+        (is_null($scores)) ? $scores = $scoreArray : $scores[time()] = $score;
         $allScores[$level] = $scores;
 
         return $this->setScores($allScores);

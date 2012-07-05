@@ -30,8 +30,8 @@ package com.crowdpark.fastclick.mvcs.views.points
 				var ball : FastClickBall = createFastClickBall();
 				addChild(ball);
 
-				TweenMax.from(ball, Math.random() / 2, {onComplete:checkState});
-				TweenMax.from(ball, Math.random() * 2, {onComplete:removeOne});
+				TweenMax.from(ball, 0.3, {delay:Math.random() / 2, onComplete:checkState});
+				TweenMax.from(ball, 0.3, {delay:Math.random() * 2, onComplete:removeOne});
 			}
 		}
 

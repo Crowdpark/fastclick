@@ -1,4 +1,4 @@
-const FACEBOOK_APP_ID = '228369307281845';
+const FACEBOOK_APP_ID = '300602210033160';
 var APP_NAME = 'fastclick-game';
 
 var crowdparkHTML = {
